@@ -1,0 +1,27 @@
+From 675faaf1584b2403af70b39d8927aadf5082419c Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 2 Aug 2010 13:31:36 +0200
+Subject: [PATCH 104/133] mdraid: remove mdadm.conf on rd_NO_MDADMCONF
+
+---
+ modules.d/90mdraid/parse-md.sh |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/modules.d/90mdraid/parse-md.sh b/modules.d/90mdraid/parse-md.sh
+index 6e2a3bf..5d03d5c 100644
+--- a/modules.d/90mdraid/parse-md.sh
++++ b/modules.d/90mdraid/parse-md.sh
+@@ -30,6 +30,10 @@ if [ -e /etc/mdadm.conf ] && ! getarg rd_NO_MDADMCONF; then
+     rm -f /pre-pivot/*mdraid-cleanup.sh
+ fi
+ 
++if getarg rd_NO_MDADMCONF; then
++	rm -f /etc/mdadm/mdadm.conf /etc/mdadm.conf
++fi
++
+ # noiswmd nodmraid for anaconda / rc.sysinit compatibility
+ # note nodmraid really means nobiosraid, so we don't want MDIMSM then either
+ if getarg rd_NO_MDIMSM || getarg noiswmd || getarg nodmraid; then
+-- 
+1.7.3
+

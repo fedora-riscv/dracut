@@ -1,0 +1,41 @@
+From 92d6107b94bcda52934109caf73cb1061c6d37af Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Tue, 27 Jul 2010 11:51:27 +0200
+Subject: [PATCH 097/133] dracut-functions: fix "-m -a" handling
+
+---
+ dracut-functions |   16 ++++++++++++----
+ 1 files changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/dracut-functions b/dracut-functions
+index 5df4fbb..de0c81d 100755
+--- a/dracut-functions
++++ b/dracut-functions
+@@ -401,12 +401,20 @@ check_modules() {
+ 	strstr "$mods_to_load" " $mod " && continue
+ 	# This should never happen, but...
+ 	[[ -d $moddir ]] || continue
+-	[[ $dracutmodules != all ]] && ! strstr "$dracutmodules" "$mod" && \
+-	    continue
++
+ 	strstr "$omit_dracutmodules" "$mod" && continue
+-	if ! strstr "$add_dracutmodules" "$mod"; then
+-	    should_source_module "$moddir" || continue
++
++        if ! strstr "$dracutmodules $add_dracutmodules" "$mod"; then
++            # module not in our list
++	    if [[ $dracutmodules = all ]]; then
++                # check, if we can install this module
++	        should_source_module "$moddir" || continue
++            else
++                # skip this module
++                continue
++            fi
+         fi
++
+ 	mods_to_load+=" $mod "
+     done
+ 
+-- 
+1.7.3
+

@@ -1,0 +1,29 @@
+From 1b9bb10c590f120b0b400b47a8cb226b6251aa8f Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 28 Jul 2010 14:09:28 +0200
+Subject: [PATCH 098/133] removed redundant 64-lvm.rules install
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Thanks to Amadeusz Żołnowski, who found it.
+---
+ modules.d/90lvm/install |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/modules.d/90lvm/install b/modules.d/90lvm/install
+index 706c2c2..7ee940b 100755
+--- a/modules.d/90lvm/install
++++ b/modules.d/90lvm/install
+@@ -1,7 +1,7 @@
+ #!/bin/bash
+ inst lvm
+ 
+-inst_rules "$moddir/64-lvm.rules" 64-lvm.rules
++inst_rules "$moddir/64-lvm.rules" 
+ 
+ if [[ $hostonly ]] || [[ $lvmconf = "yes" ]]; then 
+     if [ -f /etc/lvm/lvm.conf ]; then
+-- 
+1.7.3
+

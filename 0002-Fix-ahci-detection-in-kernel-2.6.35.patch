@@ -1,0 +1,33 @@
+From bb580a3961502bdf502899ac5c31b19bca9d42dd Mon Sep 17 00:00:00 2001
+From: Andrey Borzenkov <arvidjaar@mail.ru>
+Date: Thu, 5 Aug 2010 20:06:57 +0400
+Subject: [PATCH 002/133] Fix ahci detection in kernel 2.6.35
+
+Kernel 2.6.35 (may be, earlier) split ahci into libahci.ko and ahci.ko
+and added ahci_platform.ko. As a result, drivers ahci and ahci_platform
+do not contain any symbol that are checked for storage modules (it is
+libahci.ko that references ata_scsi_ioctl now). So add additional
+symbol ahci_init_controller; it seems this is expected to be called by
+every driver based on libahci.ko.
+
+Signed-off-by: Andrey Borzenkov <arvidjaar@mail.ru>
+---
+ modules.d/90kernel-modules/installkernel |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/modules.d/90kernel-modules/installkernel b/modules.d/90kernel-modules/installkernel
+index 3416e7c..87819d3 100755
+--- a/modules.d/90kernel-modules/installkernel
++++ b/modules.d/90kernel-modules/installkernel
+@@ -1,7 +1,7 @@
+ #!/bin/bash
+ if [[ -z $drivers ]]; then
+     block_module_test() {
+-	local blockfuncs='ata_scsi_ioctl|scsi_add_host|blk_init_queue|register_mtd_blktrans|scsi_esp_register|register_virtio_device'
++	local blockfuncs='ahci_init_controller|ata_scsi_ioctl|scsi_add_host|blk_init_queue|register_mtd_blktrans|scsi_esp_register|register_virtio_device'
+ 
+ 	 nm -uPA "$1" | egrep -q "$blockfuncs"
+     }
+-- 
+1.7.3
+

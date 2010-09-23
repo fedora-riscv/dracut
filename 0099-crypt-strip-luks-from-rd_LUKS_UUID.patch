@@ -1,0 +1,24 @@
+From 429fbe115d26f4a7967bd86c7bc8bc31029846f5 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 29 Jul 2010 16:35:31 +0200
+Subject: [PATCH 099/133] crypt: strip "luks-" from rd_LUKS_UUID
+
+---
+ modules.d/90crypt/parse-crypt.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/modules.d/90crypt/parse-crypt.sh b/modules.d/90crypt/parse-crypt.sh
+index a360079..9615e73 100755
+--- a/modules.d/90crypt/parse-crypt.sh
++++ b/modules.d/90crypt/parse-crypt.sh
+@@ -16,6 +16,7 @@ else
+ 
+     if [ -n "$LUKS" ]; then
+         for luksid in $LUKS; do 
++            luksid=${luksid##luks-}
+             {
+                 printf 'ENV{ID_FS_TYPE}=="crypto_LUKS", '
+                 printf 'ENV{ID_FS_UUID}=="*%s*", ' $luksid
+-- 
+1.7.3
+

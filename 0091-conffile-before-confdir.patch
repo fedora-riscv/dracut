@@ -1,0 +1,39 @@
+From dbd855ce7b4199404dd8a847c31889ebdd5ce419 Mon Sep 17 00:00:00 2001
+From: Andrey Borzenkov <arvidjaar@mail.ru>
+Date: Wed, 14 Jul 2010 01:30:16 +0200
+Subject: [PATCH 091/133] conffile before confdir
+
+conffile should be sourced before confdir
+
+Signed-off-by: Maarten Vanraes <maarten.vanraes@gmail.com>
+---
+ dracut |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/dracut b/dracut
+index e5ca5d3..36509ac 100755
+--- a/dracut
++++ b/dracut
+@@ -128,6 +128,9 @@ if [[ ! -d $confdir ]]; then
+     [[ $allowlocal ]] && confdir="$dracutbasedir/dracut.conf.d"
+ fi
+ 
++# source our config file
++[[ -f $conffile ]] && . "$conffile"
++
+ # source our config dir
+ if [ "$confdir" ] && [  -d "$confdir" ]; then
+     for f in "$confdir"/*.conf; do 
+@@ -135,9 +138,6 @@ if [ "$confdir" ] && [  -d "$confdir" ]; then
+     done
+ fi
+ 
+-# source our config file
+-[[ -f $conffile ]] && . "$conffile"
+-
+ # these optins add to the stuff in the config file
+ [[ $add_dracutmodules_l ]] && add_dracutmodules+=" $add_dracutmodules_l"
+ [[ $add_drivers_l ]] && add_drivers+=" $add_drivers_l"
+-- 
+1.7.3
+

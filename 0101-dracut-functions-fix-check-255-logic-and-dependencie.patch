@@ -1,0 +1,84 @@
+From e27f3303982c76fbcb9c6f1f227c6eb16d60dcce Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 2 Aug 2010 09:40:18 +0200
+Subject: [PATCH 101/133] dracut-functions: fix check=255 logic and dependencies
+
+---
+ dracut-functions |   24 ++++++++++++++++--------
+ 1 files changed, 16 insertions(+), 8 deletions(-)
+
+diff --git a/dracut-functions b/dracut-functions
+index de0c81d..978e4f0 100755
+--- a/dracut-functions
++++ b/dracut-functions
+@@ -357,7 +357,8 @@ dracut_install() {
+ check_module_deps() {
+     local moddir dep ret
+     # if we are already set to be loaded, we do not have to be checked again.
+-    strstr "$mods_to_load" " $1 " && return
++    strstr " $mods_to_load " " $1 " && return
++    strstr " $omit_dracutmodules " " $1 " && return 1
+     # turn a module name into a directory, if we can.
+     moddir=$(echo ${dracutbasedir}/modules.d/??${1})
+     [[ -d $moddir && -x $moddir/install ]] || return 1
+@@ -378,13 +379,14 @@ check_module_deps() {
+ 
+ should_source_module() {
+     local dep
++    local ret
+     if [[ $kernel_only = yes ]]; then
+         [[ -x $1/installkernel ]] && return 0
+         return 1
+     fi
+     [[ -x $1/install ]] || [[ -x $1/installkernel ]] || return 1
+     [[ -x $1/check ]] || return 0
+-    "$1/check" $hostonly || return 1
++    "$1/check" $hostonly || continue
+     for dep in $("$1/check" -d); do
+ 	check_module_deps "$dep" && continue
+ 	dwarning "Cannot load $mod, dependencies failed."
+@@ -398,13 +400,11 @@ check_modules() {
+     for moddir in "$dracutbasedir/modules.d"/[0-9][0-9]*; do
+ 	local mod=${moddir##*/}; mod=${mod#[0-9][0-9]}
+ 	# If we are already scheduled to be loaded, no need to check again.
+-	strstr "$mods_to_load" " $mod " && continue
++	strstr " $mods_to_load " " $mod " && continue
+ 	# This should never happen, but...
+ 	[[ -d $moddir ]] || continue
+ 
+-	strstr "$omit_dracutmodules" "$mod" && continue
+-
+-        if ! strstr "$dracutmodules $add_dracutmodules" "$mod"; then
++        if ! strstr " $dracutmodules $add_dracutmodules " " $mod "; then
+             # module not in our list
+ 	    if [[ $dracutmodules = all ]]; then
+                 # check, if we can install this module
+@@ -413,6 +413,14 @@ check_modules() {
+                 # skip this module
+                 continue
+             fi
++	else
++	    if [ -x "$moddir/check" ] \
++                && "$moddir/check" -d > /dev/null 2>&1; then
++		check_module_deps "$mod" || {
++		    dwarning "Cannot load dracut module \"$mod\", dependencies failed."
++                    continue
++                }
++            fi
+         fi
+ 
+ 	mods_to_load+=" $mod "
+@@ -421,8 +429,8 @@ check_modules() {
+     modcheck=$add_dracutmodules
+     [[ $dracutmodules != all ]] && modcheck="$m $dracutmodules"
+     for mod in $modcheck; do
+-        strstr "$mods_to_load" "$mod" && continue
+-        strstr "$omit_dracutmodules" "$mod" && continue
++        strstr " $mods_to_load " " $mod " && continue
++        strstr " $omit_dracutmodules " " $mod " && continue
+         dwarning "Dracut module \"$mod\" cannot be found."
+     done
+ }
+-- 
+1.7.3
+

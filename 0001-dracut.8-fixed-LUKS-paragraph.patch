@@ -1,7 +1,7 @@
-From 7ea25f3a3426bd60c26e2deaf07f2c3918e65dcb Mon Sep 17 00:00:00 2001
+From 0e4f752a79eab72aca25875f5fb91dd8f7f5bf0f Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 7 Apr 2010 11:17:46 +0200
-Subject: [PATCH 01/15] dracut.8: fixed LUKS paragraph
+Subject: [PATCH 001/133] dracut.8: fixed LUKS paragraph
 
 ---
  dracut.8 |    3 ++-
@@ -23,5 +23,5 @@ index 3ec9c4f..5220dea 100644
  .SS MD
  .TP
 -- 
-1.7.0.1
+1.7.3
 

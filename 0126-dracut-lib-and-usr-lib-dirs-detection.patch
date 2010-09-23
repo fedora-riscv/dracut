@@ -1,0 +1,46 @@
+From a4e43d3211333c0f0395a101831f9a78bd60e544 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Amadeusz=20=C5=BBo=C5=82nowski?= <aidecoe@aidecoe.name>
+Date: Wed, 18 Aug 2010 20:06:44 +0200
+Subject: [PATCH 126/133] dracut: lib and usr/lib dirs detection
+
+First we check if $libdir and $usrlibdir vars are already set in config
+file. If not we perform simple detect. Vars are exported - to be useful
+in module/check scripts.
+---
+ dracut |   13 ++++++++++++-
+ 1 files changed, 12 insertions(+), 1 deletions(-)
+
+diff --git a/dracut b/dracut
+index 10931b5..0fcf632 100755
+--- a/dracut
++++ b/dracut
+@@ -176,6 +176,17 @@ fi
+ dracutfunctions=$dracutbasedir/dracut-functions
+ export dracutfunctions
+ 
++# Detect lib paths
++[[ $libdir ]] || for libdir in /lib64 /lib; do
++    [[ -d $libdir ]] && break
++done || {
++    derror 'No lib directory?!!!'
++    exit 1
++}
++[[ $usrlibdir ]] || for usrlibdir in /usr/lib64 /usr/lib; do
++    [[ -d $usrlibdir ]] && break
++done || dwarning 'No usr/lib directory!'
++
+ # This is kinda legacy -- eventually it should go away.
+ case $dracutmodules in
+     ""|auto) dracutmodules="all" ;;
+@@ -224,7 +235,7 @@ chmod 755 "$initdir"
+ export initdir hookdirs dracutbasedir dracutmodules drivers \
+     fw_dir drivers_dir debug beverbose no_kernel kernel_only \
+     add_drivers mdadmconf lvmconf filesystems ignore_kmodules \
+-    use_fstab
++    use_fstab libdir usrlibdir
+ 
+ if [[ $kernel_only != yes ]]; then
+     # Create some directory structure first
+-- 
+1.7.3
+

@@ -1,0 +1,30 @@
+From 7360ae71d3b9b559869182225dbf34bbe29d404c Mon Sep 17 00:00:00 2001
+From: Andrey Borzenkov <arvidjaar@mail.ru>
+Date: Sun, 9 May 2010 22:23:58 +0400
+Subject: [PATCH 109/133] Harden check for used modules in hostonly mode
+
+Make sure that we do not accept module name which is substring of
+some other module name. This resulted in piix being mistakenly loaded
+together with ata_piix. It completely broke DVD access here.
+
+Signed-off-by: Andrey Borzenkov <arvidjaar@mail.ru>
+---
+ dracut-functions |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/dracut-functions b/dracut-functions
+index 9985078..9c686fc 100755
+--- a/dracut-functions
++++ b/dracut-functions
+@@ -532,7 +532,7 @@ instmods() {
+ 	        [[ -f $initdir/$1 ]] && { shift; continue; }
+ 		# If we are building a host-specific initramfs and this
+ 		# module is not already loaded, move on to the next one.
+-		[[ $hostonly ]] && ! grep -q "${mod//-/_}" /proc/modules && \
++		[[ $hostonly ]] && ! grep -qe "\<${mod//-/_}\>" /proc/modules && \
+ 	        ! echo $add_drivers | grep -qe "\<${mod}\>" &&	{
+ 		    shift; continue; 
+ 		}
+-- 
+1.7.3
+

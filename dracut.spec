@@ -20,7 +20,7 @@
 
 Name: dracut
 Version: 005
-Release: 2%{?rdist}
+Release: 4%{?rdist}
 Summary: Initramfs generator using udev
 Group: System Environment/Base          
 License: GPLv2+ 
@@ -30,19 +30,138 @@ URL: http://apps.sourceforge.net/trac/dracut/wiki
 Source0: dracut-%{version}%{?dashgittag}.tar.bz2
 
 Patch1: 0001-dracut.8-fixed-LUKS-paragraph.patch
-Patch2: 0002-dracut.8-add-information-which-parameter-can-be-spec.patch
-Patch3: 0003-dmraid-parse-different-error-messages.patch
-Patch4: 0004-init-add-hacky-cdrom-polling-mechanism.patch
-Patch5: 0005-add-module-btrfs.patch
-Patch6: 0006-teach-dmsquash-live-root-to-use-rootflags.patch
-Patch7: 0007-init-trigger-with-action-add.patch
-Patch8: 0008-add-missing-paragraph-for-add-drivers.patch
-Patch9: 0009-manpage-addition-for-kernel-drivers.patch
-Patch10: 0010-dracut-add_drivers-from-the-command-line-should-add-.patch
-Patch11: 0011-AUTHORS-updated.patch
-Patch12: 0012-kernel-modules-hardcode-sr_mod.patch
-Patch13: 0013-kernel-modules-only-remove-ocfs2-if-all-filesystems-.patch
-Patch15: 0015-Use-pigz-for-gzipping-if-available.patch
+Patch2: 0002-Fix-ahci-detection-in-kernel-2.6.35.patch
+Patch3: 0003-dracut.8-add-information-which-parameter-can-be-spec.patch
+Patch4: 0004-dmraid-parse-different-error-messages.patch
+Patch5: 0005-init-add-hacky-cdrom-polling-mechanism.patch
+Patch6: 0006-add-module-btrfs.patch
+Patch7: 0007-teach-dmsquash-live-root-to-use-rootflags.patch
+Patch8: 0008-init-trigger-with-action-add.patch
+Patch9: 0009-add-missing-paragraph-for-add-drivers.patch
+Patch10: 0010-manpage-addition-for-kernel-drivers.patch
+Patch11: 0011-dracut-add_drivers-from-the-command-line-should-add-.patch
+Patch12: 0012-AUTHORS-updated.patch
+Patch13: 0013-kernel-modules-hardcode-sr_mod.patch
+Patch14: 0014-kernel-modules-only-remove-ocfs2-if-all-filesystems-.patch
+Patch15: 0015-dracut.spec-add-btrfs-module.patch
+Patch16: 0016-Use-pigz-for-gzipping-if-available.patch
+Patch17: 0017-nfs-fixed-nsswitch.conf-parsing.patch
+Patch18: 0018-network-removed-bogus-udev-rules.patch
+Patch19: 0019-network-correct-rules-for-multiple-nics.patch
+Patch20: 0020-nfs-add-missing-nfsidmap-libs.patch
+Patch21: 0021-udev-rules-be-more-careful-about-md-devices-and-blki.patch
+Patch22: 0022-dracut-lib-turn-of-shell-debug-mode-in-strstr-and-ge.patch
+Patch23: 0023-mdraid-try-to-start-container-childs-manually-with-m.patch
+Patch24: 0024-init-fix-cdrom-polling-loop.patch
+Patch25: 0025-init-do-not-redirect-to.patch
+Patch26: 0026-loginit-turn-off-debugging.patch
+Patch27: 0027-TEST-12-RAID-DEG-create-root-filter-MD_UUID-only.patch
+Patch28: 0028-run-qemu-add-usr-libexec-qemu-kvm-to-search.patch
+Patch29: 0029-test-change-testsuite-to-local-tcp-rather-than-udp-m.patch
+Patch30: 0030-add-rd_retry-kernel-command-line-parameter.patch
+Patch31: 0031-test-nfs-correct-return-code-and-cleanup.patch
+Patch32: 0032-NBD-kill-server-after-failed-test.patch
+Patch33: 0033-test-TEST-50-MULTINIC-kill-server-after-failed-test.patch
+Patch34: 0034-test-TEST-50-MULTINIC-install-all-nfsidmap-libs-for-.patch
+Patch35: 0035-test-TEST-50-MULTINIC-install-sd_mod-and-ata_piix-ke.patch
+Patch36: 0036-dracut.spec-removed-e2fsprogs-requirement.patch
+Patch37: 0037-test-MULTINIC-kill-server-after-passing-all-tests.patch
+Patch38: 0038-NEWS-update.patch
+Patch39: 0039-test-NBD-check-for-nbd-kernel-module-first.patch
+Patch40: 0040-Needs-btrfsctl-not-btrfs-module.patch
+Patch41: 0041-btfrs-load-btrfs-module-and-updated-NEWS.patch
+Patch42: 0042-kernel-modules-add-more-hardcoded-modules.patch
+Patch43: 0043-dracut-functions-use-udevadm-to-get-ID_FS_.patch
+Patch44: 0044-dracut.conf-use-as-default-for-config-variables.patch
+Patch45: 0045-znet-use-ccw-init-and-ccw-rules-from-s390utils-in-dr.patch
+Patch46: 0046-znet-renamed-rd_CCW-to-rd_ZNET.patch
+Patch47: 0047-fcoe-add-sbin-vconfig-and-the-8021q-kernel-module.patch
+Patch48: 0048-dracut.8-fix-rd_LVM_LV-description.patch
+Patch49: 0049-plymouth-only-display-luksname-and-device-for-multip.patch
+Patch50: 0050-dracut.spec-remove-elfutils-libelf-requirement.patch
+Patch51: 0051-use-grep-directly-without-nm-to-drop-binutils-requir.patch
+Patch52: 0052-plymouth-plymouth-populate-initrd-get-rid-of-awk.patch
+Patch53: 0053-dracut-get-rid-of-the-file-command.patch
+Patch54: 0054-dracut.spec-clean-up-the-requirements.patch
+Patch55: 0055-90mdraid-dracut-functions-fix-md-raid-hostonly-detec.patch
+Patch56: 0056-40network-parse-ip-opts.sh-add-ip-auto6-to-valid-opt.patch
+Patch57: 0057-40network-dhclient-script-be-more-verbose.patch
+Patch58: 0058-40network-ifup-be-more-verbose.patch
+Patch59: 0059-TEST-50-MULTINIC-do-not-provide-a-cdrom-in-the-testc.patch
+Patch60: 0060-95fcoe-fcoe-up-wait_for_if_up.patch
+Patch61: 0061-get-rid-of-rdnetdebug.patch
+Patch62: 0062-95znet-removed-55-ccw.rules-and-ccw_init.patch
+Patch63: 0063-Makefile-make-more-clean.patch
+Patch64: 0064-selinux-loadpolicy.sh-exit-for-selinux-0.patch
+Patch65: 0065-dracut-functions-check-if-specific-dracut-module-is-.patch
+Patch66: 0066-multipath-simplify-and-install-wwids-rhbz-595719.patch
+Patch67: 0067-multipath-remove-multipath-udev-rules-if-no-multipat.patch
+Patch68: 0068-90crypt-crypto_LUKS-identifier-corrected.patch
+Patch69: 0069-selinux-move-selinux-to-a-separate-module.patch
+Patch70: 0070-plymouth-cryptroot-ask.sh-beautify-password-prompt.patch
+Patch71: 0071-network-depend-on-ifcfg-if-etc-sysconfig-network-scr.patch
+Patch72: 0072-network-strip-pxelinux-hardware-type-field-from-BOOT.patch
+Patch73: 0073-dracut.spec-moved-znet-to-dracut-network.patch
+Patch74: 0074-Write-rules-for-symlinks-to-dev-.udev-rules.d-for-la.patch
+Patch75: 0075-dracut-functions-set-LANG-C-for-ldd-output-parsing.patch
+Patch76: 0076-dracut-functions-use-LC_ALL-C-rather-than-LANG-C.patch
+Patch77: 0077-dmsquash-resume-do-not-name-the-dev-.udev-rules-like.patch
+Patch78: 0078-dmsquash-live-mount-live-image-at-dev-.initramfs-liv.patch
+Patch79: 0079-dmsquash-live-depend-on-dm-module.patch
+Patch80: 0080-dmsquash-live-do-not-umount-dev-.initramfs-live-for-.patch
+Patch81: 0081-plymouth-depend-on-crypt-if-cryptsetup-exists.patch
+Patch82: 0082-dracut.spec-removed-duplicate-COPYING.patch
+Patch83: 0083-Just-look-for-cryptroot-instead-of-sbin-cryptroot.patch
+Patch84: 0084-Have-cryptroot-ask-load-dm_crypt-if-needed.patch
+Patch85: 0085-crypt-assemble-70-luks.rules-dynamically.patch
+Patch86: 0086-cryptroot-ask-s-getargs-rd_NO_CRYPTTAB-getarg-rd_NO_.patch
+Patch87: 0087-crypt-parse-crypt.sh-fix-end-label-for-luks-udev-rul.patch
+Patch88: 0088-crypt-wait-for-all-rd_LUKS_UUID-disks-to-appear.patch
+Patch89: 0089-dracut-lib.sh-getarg-returns-the-value-of-the-last-a.patch
+Patch90: 0090-dracut-fixed-stripping-of-kernel-modules.patch
+Patch91: 0091-conffile-before-confdir.patch
+Patch92: 0092-selinux-fixed-error-handling-for-load-policy.patch
+Patch93: 0093-btrfs-add-hostonly-check.patch
+Patch94: 0094-lvm-wait-for-all-rd_LVM_LV-and-rd_LVM_VG-specified-t.patch
+Patch95: 0095-90crypt-keys-on-external-devices-support.patch
+Patch96: 0096-crypt-remove-emergency-source-of-dracut-lib.sh.patch
+Patch97: 0097-dracut-functions-fix-m-a-handling.patch
+Patch98: 0098-removed-redundant-64-lvm.rules-install.patch
+Patch99: 0099-crypt-strip-luks-from-rd_LUKS_UUID.patch
+Patch100: 0100-crypt-loop-until-all-non-busy-crypt-devs-closed.patch
+Patch101: 0101-dracut-functions-fix-check-255-logic-and-dependencie.patch
+Patch102: 0102-crypt-fix-printf.patch
+Patch103: 0103-mdraid-remove-local.patch
+Patch104: 0104-mdraid-remove-mdadm.conf-on-rd_NO_MDADMCONF.patch
+Patch105: 0105-dracut-lib.sh-fixed-getarg-for-nonexistent-parameter.patch
+Patch106: 0106-mkdir-dev-.udev-rules.d-with-mode-0755.patch
+Patch107: 0107-init-create-dev-.udev-rules.d-with-correct-permissio.patch
+Patch108: 0108-dracut-functions-fixed-omit.patch
+Patch109: 0109-Harden-check-for-used-modules-in-hostonly-mode.patch
+Patch110: 0110-fips-udev-trigger-with-action-add.patch
+Patch111: 0111-dracut-let-fwdir-be-specified-multiple-times.patch
+Patch112: 0112-dracut-functions-use-proc-self-mountinfo-instead-of-.patch
+Patch113: 0113-dracut-add-fstab-to-ignore-proc-self-mountinfo.patch
+Patch114: 0114-plymouth-load-dm_crypt-module.patch
+Patch115: 0115-crypt-depend-on-dm.patch
+Patch116: 0116-plymouth-udev-trigger-with-action-add.patch
+Patch117: 0117-dm-install-all-md-dm-kernel-modules.patch
+Patch118: 0118-mkinitrd-do-not-call-dracut-in-host-only-mode.patch
+Patch119: 0119-dmraid-switch-to-rd_NO_MDIMSM-if-no-mdadm-installed.patch
+Patch120: 0120-mknod-with-mode-and-set-umask-for-the-rest.patch
+Patch121: 0121-plymouth-do-not-create-hvc0.patch
+Patch122: 0122-init-set-old-umask-before-switch_root.patch
+Patch123: 0123-init-do-not-set-umask-yet.patch
+Patch124: 0124-lvm-also-handle-LVM1-volumes.patch
+Patch125: 0125-dracut-functions-filter_kernel_modules-search-in-ext.patch
+Patch126: 0126-dracut-lib-and-usr-lib-dirs-detection.patch
+Patch127: 0127-lvm-install-lvm-mirror-and-snaphot-libs.patch
+Patch128: 0128-lvm-support-for-dynamic-LVM-SNAPSHOT-root-volume.patch
+Patch129: 0129-95fstab-sys-mount-all-etc-fstab.sys-volumes-before-s.patch
+Patch130: 0130-TEST-12-RAID-DEG-mark-test-failed-for-multiple-dummy.patch
+Patch131: 0131-test-double-disk-space-for-root-images.patch
+Patch132: 0132-network-kill-9-dhclient-if-normal-kill-does-not-succ.patch
+Patch133: 0133-md-do-not-use-no-degraded-for-incremental-mode.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -72,10 +191,10 @@ Requires: bash
 Requires: dash
 Requires: /bin/sh 
 Requires: fileutils, gzip, tar
-Requires: lvm2 >= 2.02.33-9, dhclient
+Requires: lvm2 >= 2.02.33-9
 Requires: filesystem >= 2.1.0, cpio, device-mapper, initscripts >= 8.63-1
 Requires: e2fsprogs >= 1.38-12, coreutils
-Requires: mdadm, elfutils-libelf 
+Requires: mdadm
 Requires(pre): plymouth >= 0.8.0-0.2009.29.09.19.1
 Requires: plymouth >= 0.8.0-0.2009.29.09.19.1
 Requires: cryptsetup-luks
@@ -102,6 +221,7 @@ Summary: Dracut modules to build a dracut initramfs with network support
 Requires: %{name} = %{version}-%{release}
 Requires: rpcbind nfs-utils 
 Requires: iscsi-initiator-utils
+Requires: dhclient
 %if %{with_nbd}
 Requires: nbd
 %endif
@@ -143,6 +263,7 @@ Requires: coreutils cryptsetup-luks device-mapper
 Requires: diffutils dmraid findutils gawk grep lvm2
 Requires: module-init-tools sed
 Requires: cpio gzip
+Requires: %{name} = %{version}-%{release}
 
 %description tools
 This package contains tools to assemble the local initrd and host configuration.
@@ -163,7 +284,126 @@ This package contains tools to assemble the local initrd and host configuration.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 %patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
+%patch27 -p1
+%patch28 -p1
+%patch29 -p1
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
+%patch39 -p1
+%patch40 -p1
+%patch41 -p1
+%patch42 -p1
+%patch43 -p1
+%patch44 -p1
+%patch45 -p1
+%patch46 -p1
+%patch47 -p1
+%patch48 -p1
+%patch49 -p1
+%patch50 -p1
+%patch51 -p1
+%patch52 -p1
+%patch53 -p1
+%patch54 -p1
+%patch55 -p1
+%patch56 -p1
+%patch57 -p1
+%patch58 -p1
+%patch59 -p1
+%patch60 -p1
+%patch61 -p1
+%patch62 -p1
+%patch63 -p1
+%patch64 -p1
+%patch65 -p1
+%patch66 -p1
+%patch67 -p1
+%patch68 -p1
+%patch69 -p1
+%patch70 -p1
+%patch71 -p1
+%patch72 -p1
+%patch73 -p1
+%patch74 -p1
+%patch75 -p1
+%patch76 -p1
+%patch77 -p1
+%patch78 -p1
+%patch79 -p1
+%patch80 -p1
+%patch81 -p1
+%patch82 -p1
+%patch83 -p1
+%patch84 -p1
+%patch85 -p1
+%patch86 -p1
+%patch87 -p1
+%patch88 -p1
+%patch89 -p1
+%patch90 -p1
+%patch91 -p1
+%patch92 -p1
+%patch93 -p1
+%patch94 -p1
+%patch95 -p1
+%patch96 -p1
+%patch97 -p1
+%patch98 -p1
+%patch99 -p1
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+%patch108 -p1
+%patch109 -p1
+%patch110 -p1
+%patch111 -p1
+%patch112 -p1
+%patch113 -p1
+%patch114 -p1
+%patch115 -p1
+%patch116 -p1
+%patch117 -p1
+%patch118 -p1
+%patch119 -p1
+%patch120 -p1
+%patch121 -p1
+%patch122 -p1
+%patch123 -p1
+%patch124 -p1
+%patch125 -p1
+%patch126 -p1
+%patch127 -p1
+%patch128 -p1
+%patch129 -p1
+%patch130 -p1
+%patch131 -p1
+%patch132 -p1
+%patch133 -p1
 
 %build
 make WITH_SWITCH_ROOT=0%{?with_switch_root}
@@ -226,10 +466,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dracut/modules.d/95dasd
 %{_datadir}/dracut/modules.d/95dasd_mod
 %{_datadir}/dracut/modules.d/95zfcp
-%{_datadir}/dracut/modules.d/95znet
 %{_datadir}/dracut/modules.d/95terminfo
 %{_datadir}/dracut/modules.d/95udev-rules
 %{_datadir}/dracut/modules.d/95uswsusp
+%{_datadir}/dracut/modules.d/98selinux
 %{_datadir}/dracut/modules.d/98syslog
 %{_datadir}/dracut/modules.d/99base
 # logfile needs no logrotate, because it gets overwritten
@@ -245,10 +485,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dracut/modules.d/95nbd
 %{_datadir}/dracut/modules.d/95nfs
 %{_datadir}/dracut/modules.d/45ifcfg
+%{_datadir}/dracut/modules.d/95znet
 
 %files fips
 %defattr(-,root,root,0755)
-%doc COPYING
 %{_datadir}/dracut/modules.d/01fips
 
 %files generic
@@ -257,7 +497,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files tools 
 %defattr(-,root,root,0755)
-%doc COPYING NEWS
 %{_mandir}/man8/dracut-gencmdline.8*
 %{_mandir}/man8/dracut-catimages.8*
 /sbin/dracut-gencmdline
@@ -267,6 +506,16 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Wed Sep 22 2010 Harald Hoyer <harald@redhat.com> 005-4
+- backported a lot of bugfixes from git 
+
+* Tue Apr 20 2010 Harald Hoyer <harald@redhat.com> 005-3
+- fixed network with multiple nics
+- fixed nfsidmap paths
+- do not run blkid on non active container raids
+- fixed cdrom polling mechanism
+- update to latest git
+
 * Thu Apr 15 2010 Harald Hoyer <harald@redhat.com> 005-2
 - fixed dracut manpages
 - dmraid parse different error messages

@@ -1,0 +1,25 @@
+From 1c69437f7acd7370ecc343dc528d0a627f143deb Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 23 Sep 2010 16:05:42 +0200
+Subject: [PATCH 130/133] TEST-12-RAID-DEG: mark test failed for multiple dummy rd_LVM_VG
+
+---
+ test/TEST-12-RAID-DEG/test.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/test/TEST-12-RAID-DEG/test.sh b/test/TEST-12-RAID-DEG/test.sh
+index 4618c0f..37f5891 100755
+--- a/test/TEST-12-RAID-DEG/test.sh
++++ b/test/TEST-12-RAID-DEG/test.sh
+@@ -36,7 +36,7 @@ test_run() {
+ 
+     client_run rd_LVM_VG=dracut || return 1
+ 
+-    client_run rd_LVM_VG=dummy1 rd_LVM_VG=dracut rd_LVM_VG=dummy2 rd_NO_LVMCONF || return 1
++    client_run rd_LVM_VG=dummy1 rd_LVM_VG=dracut rd_LVM_VG=dummy2 rd_NO_LVMCONF failme && return 1
+ 
+     client_run rd_MD_UUID=failme rd_NO_MDADMCONF failme && return 1
+ 
+-- 
+1.7.3
+

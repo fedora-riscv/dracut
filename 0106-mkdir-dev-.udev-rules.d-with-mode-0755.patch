@@ -1,0 +1,47 @@
+From 3c8224f8987c79294d4511814c7976bae5251fb9 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 2 Aug 2010 15:26:55 +0200
+Subject: [PATCH 106/133] mkdir /dev/.udev/rules.d with mode 0755
+
+---
+ .../90dmsquash-live/dmsquash-live-genrules.sh      |    2 +-
+ modules.d/95resume/resume-genrules.sh              |    2 +-
+ modules.d/95rootfs-block/block-genrules.sh         |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/modules.d/90dmsquash-live/dmsquash-live-genrules.sh b/modules.d/90dmsquash-live/dmsquash-live-genrules.sh
+index f3ea0a3..5e5b27b 100644
+--- a/modules.d/90dmsquash-live/dmsquash-live-genrules.sh
++++ b/modules.d/90dmsquash-live/dmsquash-live-genrules.sh
+@@ -1,5 +1,5 @@
+ if [ "${root%%:*}" = "live" ]; then
+-    [ -d /dev/.udev/rules.d ] || mkdir -p /dev/.udev/rules.d
++    [ -d /dev/.udev/rules.d ] || mkdir -m 0755 -p /dev/.udev/rules.d
+     {
+     printf 'KERNEL=="%s", SYMLINK+="live"\n' \
+     	${root#live:/dev/} 
+diff --git a/modules.d/95resume/resume-genrules.sh b/modules.d/95resume/resume-genrules.sh
+index dfe0e2d..91e8a20 100644
+--- a/modules.d/95resume/resume-genrules.sh
++++ b/modules.d/95resume/resume-genrules.sh
+@@ -1,5 +1,5 @@
+ if [ -n "$resume" ]; then
+-    [ -d /dev/.udev/rules.d ] || mkdir -p /dev/.udev/rules.d
++    [ -d /dev/.udev/rules.d ] || mkdir -m 0755 -p /dev/.udev/rules.d
+     {
+     printf "KERNEL==\"%s\", ACTION==\"add|change\", SYMLINK+=\"/dev/resume\"\n" \
+ 		${resume#/dev/};
+diff --git a/modules.d/95rootfs-block/block-genrules.sh b/modules.d/95rootfs-block/block-genrules.sh
+index 80e0c4c..2d9fc43 100644
+--- a/modules.d/95rootfs-block/block-genrules.sh
++++ b/modules.d/95rootfs-block/block-genrules.sh
+@@ -1,5 +1,5 @@
+ if [ "${root%%:*}" = "block" ]; then
+-    [ -d /dev/.udev/rules.d ] || mkdir -p /dev/.udev/rules.d
++    [ -d /dev/.udev/rules.d ] || mkdir -m 0755 -p /dev/.udev/rules.d
+     {
+     printf 'KERNEL=="%s", SYMLINK+="root"\n' \
+ 	${root#block:/dev/} 
+-- 
+1.7.3
+

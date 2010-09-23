@@ -1,0 +1,40 @@
+From 3ddfe6bf424dbadd3d9a1aa538e297a2b078f3e1 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 2 Aug 2010 09:40:55 +0200
+Subject: [PATCH 100/133] crypt: loop until all non-busy crypt devs closed
+
+---
+ modules.d/90crypt/crypt-cleanup.sh |    8 ++++++--
+ modules.d/90crypt/install          |    1 -
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/modules.d/90crypt/crypt-cleanup.sh b/modules.d/90crypt/crypt-cleanup.sh
+index a9c976a..1242b1c 100755
+--- a/modules.d/90crypt/crypt-cleanup.sh
++++ b/modules.d/90crypt/crypt-cleanup.sh
+@@ -2,6 +2,10 @@
+ # close everything which is not busy
+ rm -f /etc/udev/rules.d/70-luks.rules >/dev/null 2>&1
+ 
+-for i in /dev/mapper/luks-*; do
+-    cryptsetup luksClose $i >/dev/null 2>&1
++while true; do
++	local do_break="y"
++	for i in /dev/mapper/luks-*; do
++	    cryptsetup luksClose $i >/dev/null 2>&1 && do_break=n
++	done
++	[ "$do_break" = "y" ] && break
+ done
+diff --git a/modules.d/90crypt/install b/modules.d/90crypt/install
+index 4097592..ee139e3 100755
+--- a/modules.d/90crypt/install
++++ b/modules.d/90crypt/install
+@@ -4,5 +4,4 @@ inst_rules "$moddir/70-luks.rules"
+ inst "$moddir"/cryptroot-ask.sh /sbin/cryptroot-ask
+ inst_hook cmdline 30 "$moddir/parse-crypt.sh"
+ inst_hook pre-pivot 30 "$moddir/crypt-cleanup.sh"
+-inst_hook pre-pivot 31 "$moddir/crypt-cleanup.sh"
+ inst /etc/crypttab
+-- 
+1.7.3
+

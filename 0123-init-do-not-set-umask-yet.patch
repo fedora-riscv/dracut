@@ -1,0 +1,25 @@
+From cf7ee0d589ae38461cf4add515d7fac6a7f8d92c Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 22 Sep 2010 16:10:58 +0200
+Subject: [PATCH 123/133] init: do not set umask, yet
+
+---
+ modules.d/99base/init |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/modules.d/99base/init b/modules.d/99base/init
+index 2a376dd..ed5ec6f 100755
+--- a/modules.d/99base/init
++++ b/modules.d/99base/init
+@@ -64,7 +64,7 @@ NEWROOT="/sysroot"
+ trap "emergency_shell Signal caught!" 0
+ # set umask
+ OLD_UMASK=$(umask)
+-umask 0007
++#umask 0007
+ 
+ RDDEBUG=""
+ . /lib/dracut-lib.sh
+-- 
+1.7.3
+

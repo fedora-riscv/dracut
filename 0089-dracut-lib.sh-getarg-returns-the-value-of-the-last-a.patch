@@ -1,0 +1,29 @@
+From 50ae6519c90f5c0dd7400a18dd0aeaa3e8667944 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 12 Jul 2010 18:52:44 +0200
+Subject: [PATCH 089/133] dracut-lib.sh: getarg() returns the value of the last argument
+
+a=0 a=1 a=2
+$(getarg a) == "2"
+---
+ modules.d/99base/dracut-lib.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/modules.d/99base/dracut-lib.sh b/modules.d/99base/dracut-lib.sh
+index 9666232..d7a632e 100644
+--- a/modules.d/99base/dracut-lib.sh
++++ b/modules.d/99base/dracut-lib.sh
+@@ -18,8 +18,9 @@ getarg() {
+     fi
+     for o in $CMDLINE; do
+ 	[ "$o" = "$1" ] && { [ "$RDDEBUG" = "yes" ] && set -x; return 0; }
+-	[ "${o%%=*}" = "${1%=}" ] && { echo ${o#*=}; [ "$RDDEBUG" = "yes" ] && set -x; return 0; }
++        [ "${o%%=*}" = "${1%=}" ] && val=${o#*=};
+     done
++    [ -n "$val" ] && { echo $val; [ "$RDDEBUG" = "yes" ] && set -x; return 0; }
+     [ "$RDDEBUG" = "yes" ] && set -x 
+     return 1
+ }
+-- 
+1.7.3
+

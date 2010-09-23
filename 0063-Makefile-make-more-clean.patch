@@ -1,0 +1,25 @@
+From c387f858a7fcd56cf1d64a223ac7251883bb6800 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 19 May 2010 09:55:48 +0200
+Subject: [PATCH 063/133] Makefile: make more clean
+
+---
+ Makefile |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 7b1e410..7979725 100644
+--- a/Makefile
++++ b/Makefile
+@@ -50,6 +50,8 @@ endif
+ 
+ clean:
+ 	rm -f *~
++	rm -f */*~
++	rm -f */*/*~
+ 	rm -f modules.d/99base/switch_root
+ 	rm -f test-*.img
+ 	rm -f dracut-*.rpm dracut-*.tar.bz2
+-- 
+1.7.3
+
