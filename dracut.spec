@@ -465,6 +465,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dracut/modules.d/95rootfs-block
 %{_datadir}/dracut/modules.d/95dasd
 %{_datadir}/dracut/modules.d/95dasd_mod
+%{_datadir}/dracut/modules.d/95fstab-sys
 %{_datadir}/dracut/modules.d/95zfcp
 %{_datadir}/dracut/modules.d/95terminfo
 %{_datadir}/dracut/modules.d/95udev-rules
