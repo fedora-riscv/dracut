@@ -1,0 +1,30 @@
+From 84848d34dbf32f3668275e10acc2adb928f0879b Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 23 Aug 2010 10:36:46 +0200
+Subject: [PATCH 118/133] mkinitrd: do not call dracut in host only mode
+
+---
+ mkinitrd-dracut.sh |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/mkinitrd-dracut.sh b/mkinitrd-dracut.sh
+index 64b3069..66e6196 100644
+--- a/mkinitrd-dracut.sh
++++ b/mkinitrd-dracut.sh
+@@ -141,10 +141,10 @@ if [ -n "$img_vers" ]; then
+     target="$target-$kernel"
+ fi
+ 
+-if [ -n "$basicmodules" ]; then
+-	dracut -H $dracut_args --add-drivers "$basicmodules" "$target" "$kernel"
++if [[ $basicmodules ]]; then
++	dracut $dracut_args --add-drivers "$basicmodules" "$target" "$kernel"
+ else
+-	dracut -H $dracut_args "$target" "$kernel"
++	dracut $dracut_args "$target" "$kernel"
+ fi
+ 
+ # vim:ts=8:sw=4:sts=4:et
+-- 
+1.7.3
+

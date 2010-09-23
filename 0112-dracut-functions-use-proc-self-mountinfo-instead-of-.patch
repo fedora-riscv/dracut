@@ -1,0 +1,38 @@
+From 8cc5e4080ac16ffab664b7715fbf892b7777e6bf Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 5 Aug 2010 18:59:51 +0200
+Subject: [PATCH 112/133] dracut-functions: use /proc/self/mountinfo, instead of /proc/mounts
+
+1. it's easier to get the major:minor
+2. it's more failsafe in a chroot() (rescue CD case)
+---
+ dracut-functions |   13 ++++---------
+ 1 files changed, 4 insertions(+), 9 deletions(-)
+
+diff --git a/dracut-functions b/dracut-functions
+index 9c686fc..7f65824 100755
+--- a/dracut-functions
++++ b/dracut-functions
+@@ -75,15 +75,10 @@ get_fs_uuid() (
+ 
+ # finds the major:minor of the block device backing the root filesystem.
+ find_block_device() {
+-    local rootdev blkdev fs type opts misc
+-    while read blkdev fs type opts misc; do
+-	[[ $blkdev = rootfs ]] && continue # skip rootfs entry
+-	[[ $fs = $1 ]] && { rootdev=$blkdev; break; } # we have a winner!
+-    done < /proc/mounts
+-    [[ -b $rootdev ]] || return 1 # oops, not a block device.
+-    # get major/minor for the device
+-    ls -nLl "$rootdev" | \
+-	(read x x x x maj min x; maj=${maj//,/}; echo $maj:$min)
++    local majmin rootdev blkdev fs type opts misc
++    while read a b majmin c mpt opts d fs type opts misc; do
++	[[ $mpt = $1 ]] && { echo $majmin; break; } # we have a winner!
++    done < /proc/self/mountinfo
+ }
+ 
+ find_root_block_device() { find_block_device /; }
+-- 
+1.7.3
+

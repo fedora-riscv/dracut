@@ -1,0 +1,26 @@
+From 35e2b75f9b1a28bf9ad67e8ed2f1755e4a2ed967 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 22 Sep 2010 16:12:55 +0200
+Subject: [PATCH 124/133] lvm: also handle LVM1 volumes
+
+---
+ modules.d/90lvm/64-lvm.rules |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+diff --git a/modules.d/90lvm/64-lvm.rules b/modules.d/90lvm/64-lvm.rules
+index 1c28b54..b2af312 100644
+--- a/modules.d/90lvm/64-lvm.rules
++++ b/modules.d/90lvm/64-lvm.rules
+@@ -7,8 +7,7 @@
+ SUBSYSTEM!="block", GOTO="lvm_end"
+ ACTION!="add|change", GOTO="lvm_end"
+ KERNEL=="dm-[0-9]*", ACTION=="add", GOTO="lvm_end"
+-ENV{ID_FS_TYPE}!="LVM2_member", GOTO="lvm_end"
+-
++ENV{ID_FS_TYPE}!="LVM?_member", GOTO="lvm_end"
+ 
+ PROGRAM=="/bin/sh -c 'for i in $sys/$devpath/holders/dm-[0-9]*; do [ -e $$i ] && exit 0; done; exit 1;' ", \
+     GOTO="lvm_end"
+-- 
+1.7.3
+

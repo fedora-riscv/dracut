@@ -1,0 +1,120 @@
+From 3f090859e527b7cfc6fe20fc8dcf0c62a4247e4d Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Fri, 6 Aug 2010 13:54:34 +0200
+Subject: [PATCH 113/133] dracut: add --fstab, to ignore /proc/self/mountinfo
+
+---
+ dracut           |    8 ++++++--
+ dracut-functions |   41 +++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 43 insertions(+), 6 deletions(-)
+
+diff --git a/dracut b/dracut
+index 33a116c..10931b5 100755
+--- a/dracut
++++ b/dracut
+@@ -61,8 +61,9 @@ Creates initial ramdisk images for preloading modules
+                          directory instead of the system-wide installed in
+                          /usr/share/dracut/modules.d.
+                          Useful when running dracut from a git checkout.
+-  -H, --hostonly          Host-Only mode: Install only what is needed for
++  -H, --hostonly        Host-Only mode: Install only what is needed for
+                          booting the local host instead of a generic host.
++  --fstab               Use /etc/fstab to determine the root device.
+   -i, --include [SOURCE] [TARGET]
+                         Include the files in the SOURCE directory into the
+                          Target directory in the final initramfs.
+@@ -97,6 +98,7 @@ while (($# > 0)); do
+ 	--confdir) confdir="$2"; shift;;
+ 	-l|--local) allowlocal="yes" ;;
+ 	-H|--hostonly) hostonly_l="yes" ;;
++	--fstab) use_fstab_l="yes" ;;
+ 	-i|--include) include_src="$2"; include_target="$3"; shift 2;;
+ 	-I|--install) install_items="$2"; shift;;
+ 	-*) printf "\nUnknown option: %s\n\n" "$1" >&2; usage; exit 1;;
+@@ -151,6 +153,7 @@ fi
+ [[ $fw_dir_l ]] && fw_dir=$fw_dir_l
+ [[ $do_strip_l ]] && do_strip=$do_strip_l
+ [[ $hostonly_l ]] && hostonly=$hostonly_l
++[[ $use_fstab_l ]] && use_fstab=$use_fstab_l
+ [[ $mdadmconf_l ]] && mdadmconf=$mdadmconf_l
+ [[ $lvmconf_l ]] && lvmconf=$lvmconf_l
+ [[ $dracutbasedir ]] || dracutbasedir=/usr/share/dracut
+@@ -220,7 +223,8 @@ chmod 755 "$initdir"
+ 
+ export initdir hookdirs dracutbasedir dracutmodules drivers \
+     fw_dir drivers_dir debug beverbose no_kernel kernel_only \
+-    add_drivers mdadmconf lvmconf filesystems
++    add_drivers mdadmconf lvmconf filesystems ignore_kmodules \
++    use_fstab
+ 
+ if [[ $kernel_only != yes ]]; then
+     # Create some directory structure first
+diff --git a/dracut-functions b/dracut-functions
+index 7f65824..d4cef6f 100755
+--- a/dracut-functions
++++ b/dracut-functions
+@@ -51,6 +51,7 @@ derror() {
+ }
+ 
+ get_fs_env() {
++    [[ $1 ]] || return
+     eval $(udevadm info --query=env --name=$1|egrep 'ID_FS_(TYPE|UUID)=')
+     [[ $ID_FS_TYPE ]] && return
+ 
+@@ -64,6 +65,13 @@ get_fs_env() {
+ }
+ 
+ get_fs_type() (
++    [[ $1 ]] || return
++    if [[ $1 != ${1#/dev/block/nfs:} ]] \
++	|| [[ $1 != ${1#/dev/block/nfs3:} ]] \
++	|| [[ $1 != ${1#/dev/block/nfs4:} ]]; then
++	echo "nfs"
++	return
++    fi
+     get_fs_env $1 || return
+     echo $ID_FS_TYPE
+ )
+@@ -75,10 +83,35 @@ get_fs_uuid() (
+ 
+ # finds the major:minor of the block device backing the root filesystem.
+ find_block_device() {
+-    local majmin rootdev blkdev fs type opts misc
+-    while read a b majmin c mpt opts d fs type opts misc; do
+-	[[ $mpt = $1 ]] && { echo $majmin; break; } # we have a winner!
+-    done < /proc/self/mountinfo
++    local x mpt majmin dev fs misc maj min
++    if [[ $use_fstab != yes ]]; then	
++	while read x x majmin x mpt x x fs misc; do
++            [[ $fs = nfs ]] && { echo $dev; return 0;}
++            [[ $fs = nfs3 ]] && { echo $dev; return 0;}
++            [[ $fs = nfs4 ]] && { echo $dev; return 0;}
++	    if [[ $mpt = $1 ]] && [[ ${majmin#0:} = $majmin ]]; then
++		echo $majmin; 
++		return 0 # we have a winner!
++	    fi
++	done < /proc/self/mountinfo       
++    fi
++    # fall back to /etc/fstab    
++    while read dev mpt fs misc; do
++	if [[ $mpt = $1 ]]; then
++            [[ $fs = nfs ]] && { echo $dev; return 0;}
++            [[ $fs = nfs3 ]] && { echo $dev; return 0;}
++            [[ $fs = nfs4 ]] && { echo $dev; return 0;}
++            [[ $dev != ${dev#UUID=} ]] && dev=/dev/disk/by-uuid/${dev#UUID=}
++            [[ $dev != ${dev#LABEL=} ]] && dev=/dev/disk/by-label/${dev#LABEL=}
++	    [[ -b $dev ]] || return 1 # oops, not a block device.
++	    ls -nLl "$dev" | { 
++		read x x x x maj min x;
++		maj=${maj//,/}; 
++		echo $maj:$min; 
++	    } && return 0
++	fi
++    done < /etc/fstab
++    return 1;
+ }
+ 
+ find_root_block_device() { find_block_device /; }
+-- 
+1.7.3
+

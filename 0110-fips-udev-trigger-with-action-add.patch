@@ -1,0 +1,25 @@
+From b4fbbb923d27df9ac272dd5e525cdb58df78d20c Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 5 Aug 2010 08:47:17 +0200
+Subject: [PATCH 110/133] fips: udev trigger with action=add
+
+---
+ modules.d/01fips/fips.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/modules.d/01fips/fips.sh b/modules.d/01fips/fips.sh
+index 2f6cb97..fbd809e 100755
+--- a/modules.d/01fips/fips.sh
++++ b/modules.d/01fips/fips.sh
+@@ -4,7 +4,7 @@ do_fips()
+     FIPSMODULES=$(cat /etc/fipsmodules)
+     BOOT=$(getarg boot=)
+     KERNEL=$(uname -r)
+-    udevadm trigger >/dev/null 2>&1
++    udevadm trigger --action=add >/dev/null 2>&1
+     case "$boot" in
+     block:LABEL=*|LABEL=*)
+         boot="${boot#block:}"
+-- 
+1.7.3
+

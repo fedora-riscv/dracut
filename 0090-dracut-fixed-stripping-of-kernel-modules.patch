@@ -1,0 +1,25 @@
+From aa09424d798da537fd1377a56e40f1748da35086 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Tue, 20 Jul 2010 11:24:37 +0200
+Subject: [PATCH 090/133] dracut: fixed stripping of kernel modules
+
+---
+ dracut |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/dracut b/dracut
+index 35be7eb..e5ca5d3 100755
+--- a/dracut
++++ b/dracut
+@@ -287,7 +287,7 @@ if [[ $do_strip = yes ]] ; then
+ fi
+ 
+ if [[ $do_strip = yes ]] ; then
+-    for f in $(find "$initdir" -type f \( -perm -0100 -or -perm -0010 -or -perm -0001 -or -path '/lib/modules/*.ko' \) ); do
++    for f in $(find "$initdir" -type f \( -perm -0100 -or -perm -0010 -or -perm -0001 -or -path '*/lib/modules/*.ko' \) ); do
+ 	dinfo "Stripping $f"
+ 	strip -g "$f" 2>/dev/null|| :
+         #
+-- 
+1.7.3
+

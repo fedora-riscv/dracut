@@ -1,0 +1,25 @@
+From 5720124e6d60fe3cade8e4c1068e8b64ff0e0aea Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 2 Aug 2010 11:26:49 +0200
+Subject: [PATCH 102/133] crypt: fix printf
+
+---
+ modules.d/90crypt/parse-crypt.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/modules.d/90crypt/parse-crypt.sh b/modules.d/90crypt/parse-crypt.sh
+index 9615e73..c42ff80 100755
+--- a/modules.d/90crypt/parse-crypt.sh
++++ b/modules.d/90crypt/parse-crypt.sh
+@@ -21,7 +21,7 @@ else
+                 printf 'ENV{ID_FS_TYPE}=="crypto_LUKS", '
+                 printf 'ENV{ID_FS_UUID}=="*%s*", ' $luksid
+                 printf 'RUN+="/sbin/initqueue --unique --onetime %s ' "$settled"
+-                printf '--name cryptroot-ask-%%k /sbin/cryptroot-ask '
++                printf -- '--name cryptroot-ask-%%k /sbin/cryptroot-ask '
+                 printf '$env{DEVNAME} luks-$env{ID_FS_UUID}"\n'
+             } >> /etc/udev/rules.d/70-luks.rules
+ 
+-- 
+1.7.3
+

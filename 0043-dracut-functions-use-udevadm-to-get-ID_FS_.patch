@@ -1,0 +1,26 @@
+From 19cd752d7ce1568226ad437f5f12cd0855600bd5 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 3 May 2010 11:34:30 +0200
+Subject: [PATCH 043/133] dracut-functions: use udevadm to get ID_FS_*
+
+---
+ dracut-functions |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/dracut-functions b/dracut-functions
+index 16b7d3d..fdcfb7e 100755
+--- a/dracut-functions
++++ b/dracut-functions
+@@ -51,6 +51,9 @@ derror() {
+ }
+ 
+ get_fs_env() {
++    eval $(udevadm info --query=env --name=$1|egrep 'ID_FS_(TYPE|UUID)=')
++    [[ $ID_FS_TYPE ]] && return
++
+     if [[ -x /lib/udev/vol_id ]]; then
+ 	eval $(/lib/udev/vol_id --export $1)
+     elif find_binary blkid >/dev/null; then
+-- 
+1.7.3
+

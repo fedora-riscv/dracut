@@ -1,0 +1,25 @@
+From 0ac5b5143924b270df4dede7b0374fa4553ac0b1 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 25 Aug 2010 13:26:13 +0200
+Subject: [PATCH 121/133] plymouth: do not create hvc0
+
+must have been a copy&paste error
+---
+ modules.d/50plymouth/plymouth-pretrigger.sh |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+diff --git a/modules.d/50plymouth/plymouth-pretrigger.sh b/modules.d/50plymouth/plymouth-pretrigger.sh
+index 9fcfde6..36f9966 100755
+--- a/modules.d/50plymouth/plymouth-pretrigger.sh
++++ b/modules.d/50plymouth/plymouth-pretrigger.sh
+@@ -13,7 +13,6 @@ if ! getarg rd_NO_PLYMOUTH; then
+     [ -e /dev/systty ] || ln -s tty0 /dev/systty
+     [ -c /dev/fb0 ] || mknod -m 0660 /dev/fb0 c 29 0
+     [ -e /dev/fb ] || ln -s fb0 /dev/fb
+-    [ -c /dev/hvc0 ] || mknod -m 0600 /dev/hvc0 c 229 0
+ 
+     info "Starting plymouth daemon"
+     [ -x /bin/plymouthd ] && /bin/plymouthd --attach-to-session
+-- 
+1.7.3
+

@@ -1,0 +1,46 @@
+From 6dd74976d3090aca2195c246a6431530961fe635 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 12 Jul 2010 18:47:08 +0200
+Subject: [PATCH 086/133] cryptroot-ask: s/getargs rd_NO_CRYPTTAB/getarg rd_NO_CRYPTTAB/g
+
+---
+ modules.d/50plymouth/cryptroot-ask.sh |    2 +-
+ modules.d/90crypt/cryptroot-ask.sh    |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/modules.d/50plymouth/cryptroot-ask.sh b/modules.d/50plymouth/cryptroot-ask.sh
+index b1a7465..0740cd6 100755
+--- a/modules.d/50plymouth/cryptroot-ask.sh
++++ b/modules.d/50plymouth/cryptroot-ask.sh
+@@ -21,7 +21,7 @@ else
+     device="$1"
+ fi
+ 
+-if [ -f /etc/crypttab ] && ! getargs rd_NO_CRYPTTAB; then
++if [ -f /etc/crypttab ] && ! getarg rd_NO_CRYPTTAB; then
+     while read name dev rest; do
+ 	# ignore blank lines and comments
+ 	if [ -z "$name" -o "${name#\#}" != "$name" ]; then
+diff --git a/modules.d/90crypt/cryptroot-ask.sh b/modules.d/90crypt/cryptroot-ask.sh
+index a6a9af1..3fd75c0 100755
+--- a/modules.d/90crypt/cryptroot-ask.sh
++++ b/modules.d/90crypt/cryptroot-ask.sh
+@@ -24,7 +24,7 @@ else
+     device="$1"
+ fi
+ 
+-if [ -f /etc/crypttab ] && ! getargs rd_NO_CRYPTTAB; then
++if [ -f /etc/crypttab ] && ! getarg rd_NO_CRYPTTAB; then
+     while read name dev rest; do
+ 	# ignore blank lines and comments
+ 	if [ -z "$name" -o "${name#\#}" != "$name" ]; then
+@@ -62,4 +62,4 @@ info "luksOpen $device $luksname"
+ >> /tmp/cryptroot-asked-$2
+ 
+ exit 0
+-# vim:ts=8:sw=4:sts=4:et
+\ No newline at end of file
++# vim:ts=8:sw=4:sts=4:et
+-- 
+1.7.3
+

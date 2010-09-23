@@ -1,0 +1,25 @@
+From d5e7a9520cdcd7353c763386f35c30769a429096 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 23 Sep 2010 16:25:35 +0200
+Subject: [PATCH 133/133] md: do not use --no-degraded for incremental mode
+
+---
+ modules.d/90mdraid/65-md-incremental-imsm.rules |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/modules.d/90mdraid/65-md-incremental-imsm.rules b/modules.d/90mdraid/65-md-incremental-imsm.rules
+index 93715f5..57db798 100644
+--- a/modules.d/90mdraid/65-md-incremental-imsm.rules
++++ b/modules.d/90mdraid/65-md-incremental-imsm.rules
+@@ -37,7 +37,7 @@ LABEL="md_auto_end"
+ #
+ # Incrementally build the md array
+ #
+-RUN+="/sbin/mdadm -I --no-degraded $env{DEVNAME}"
++RUN+="/sbin/mdadm -I $env{DEVNAME}"
+ 
+ RUN+="/bin/ln -s /sbin/md_finished.sh /initqueue-finished/md_finished.sh"
+ 
+-- 
+1.7.3
+

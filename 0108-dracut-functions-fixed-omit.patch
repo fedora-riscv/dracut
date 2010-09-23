@@ -1,0 +1,24 @@
+From 7471d0664b5c8fa2ec1bb47e8bccf9fd4138c69f Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 4 Aug 2010 17:46:54 +0200
+Subject: [PATCH 108/133] dracut-functions: fixed --omit
+
+---
+ dracut-functions |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/dracut-functions b/dracut-functions
+index 978e4f0..9985078 100755
+--- a/dracut-functions
++++ b/dracut-functions
+@@ -403,6 +403,7 @@ check_modules() {
+ 	strstr " $mods_to_load " " $mod " && continue
+ 	# This should never happen, but...
+ 	[[ -d $moddir ]] || continue
++        strstr " $omit_dracutmodules " " $mod " && continue
+ 
+         if ! strstr " $dracutmodules $add_dracutmodules " " $mod "; then
+             # module not in our list
+-- 
+1.7.3
+

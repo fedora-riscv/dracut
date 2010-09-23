@@ -1,0 +1,26 @@
+From fa3b6765467bd8bc396b03e36958cfd69c8232ed Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 19 May 2010 09:35:01 +0200
+Subject: [PATCH 059/133] TEST-50-MULTINIC: do not provide a cdrom in the testcase
+
+---
+ test/TEST-50-MULTINIC/test.sh |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/test/TEST-50-MULTINIC/test.sh b/test/TEST-50-MULTINIC/test.sh
+index 083cf60..9a3f619 100755
+--- a/test/TEST-50-MULTINIC/test.sh
++++ b/test/TEST-50-MULTINIC/test.sh
+@@ -47,6 +47,9 @@ client_test() {
+   	-net nic,macaddr=52:54:00:12:34:$mac2,model=e1000 \
+   	-net nic,macaddr=52:54:00:12:34:$mac3,model=e1000 \
+ 	-net socket,connect=127.0.0.1:12345 \
++        -drive if=ide,index=1,media=disk \
++        -drive if=ide,index=2,media=disk \
++        -drive if=ide,index=3,media=disk \
+   	-kernel /boot/vmlinuz-$KVERSION \
+   	-append "$cmdline $DEBUGFAIL rd_retry=5 rdinitdebug rdinfo rdnetdebug ro quiet console=ttyS0,115200n81 selinux=0 rdcopystate" \
+   	-initrd initramfs.testing
+-- 
+1.7.3
+

@@ -1,0 +1,25 @@
+From 4c6bc82d747276f1875f5c4313ed457b0979d45a Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 5 Aug 2010 18:12:08 +0200
+Subject: [PATCH 111/133] dracut: let --fwdir be specified multiple times
+
+---
+ dracut |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/dracut b/dracut
+index 36509ac..33a116c 100755
+--- a/dracut
++++ b/dracut
+@@ -81,7 +81,7 @@ while (($# > 0)); do
+ 	--add-drivers) add_drivers_l="$2"; shift;;
+ 	--filesystems) filesystems_l="$2"; shift;;
+ 	-k|--kmoddir) drivers_dir_l="$2"; shift;;
+-	--fwdir) fw_dir_l="$2"; shift;;
++	--fwdir) fw_dir_l="$fw_dir_l:$2"; shift;;
+ 	--kernel-only) kernel_only="yes"; no_kernel="no";;
+ 	--no-kernel) kernel_only="no"; no_kernel="yes";;
+ 	--strip) do_strip_l="yes";;
+-- 
+1.7.3
+

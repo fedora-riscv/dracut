@@ -1,0 +1,194 @@
+From d99f5d547a70af450bed9f44884af2141bd499c1 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 9 Jun 2010 11:22:22 +0200
+Subject: [PATCH 069/133] selinux: move selinux to a separate module
+
+---
+ modules.d/98selinux/check                 |    8 ++++
+ modules.d/98selinux/install               |    2 +
+ modules.d/98selinux/selinux-loadpolicy.sh |   64 +++++++++++++++++++++++++++++
+ modules.d/99base/install                  |    3 -
+ modules.d/99base/selinux-loadpolicy.sh    |   64 -----------------------------
+ 5 files changed, 74 insertions(+), 67 deletions(-)
+ create mode 100755 modules.d/98selinux/check
+ create mode 100755 modules.d/98selinux/install
+ create mode 100755 modules.d/98selinux/selinux-loadpolicy.sh
+ delete mode 100755 modules.d/99base/selinux-loadpolicy.sh
+
+diff --git a/modules.d/98selinux/check b/modules.d/98selinux/check
+new file mode 100755
+index 0000000..751b002
+--- /dev/null
++++ b/modules.d/98selinux/check
+@@ -0,0 +1,8 @@
++#!/bin/bash
++[[ $1 = '-h' ]] && {
++    [ -x "/usr/sbin/load_policy" -o -x "/sbin/load_policy" ] || exit 1
++    exit 0
++}
++
++exit 0
++
+diff --git a/modules.d/98selinux/install b/modules.d/98selinux/install
+new file mode 100755
+index 0000000..4216c77
+--- /dev/null
++++ b/modules.d/98selinux/install
+@@ -0,0 +1,2 @@
++#!/bin/bash
++inst_hook pre-pivot 50 "$moddir/selinux-loadpolicy.sh"
+diff --git a/modules.d/98selinux/selinux-loadpolicy.sh b/modules.d/98selinux/selinux-loadpolicy.sh
+new file mode 100755
+index 0000000..7db9f8c
+--- /dev/null
++++ b/modules.d/98selinux/selinux-loadpolicy.sh
+@@ -0,0 +1,64 @@
++#!/bin/sh
++# FIXME: load selinux policy.  this should really be done after we switchroot 
++
++rd_load_policy()
++{
++    # If SELinux is disabled exit now 
++    getarg "selinux=0" > /dev/null && return 0
++
++    SELINUX="enforcing"
++    [ -e "$NEWROOT/etc/selinux/config" ] && . "$NEWROOT/etc/selinux/config"
++
++    # Check whether SELinux is in permissive mode
++    permissive=0
++    getarg "enforcing=0" > /dev/null 
++    if [ $? -eq 0 -o "$SELINUX" = "permissive" ]; then
++	permissive=1
++    fi
++
++    # Attempt to load SELinux Policy
++    if [ -x "$NEWROOT/usr/sbin/load_policy" -o -x "$NEWROOT/sbin/load_policy" ]; then
++	ret=0
++	info "Loading SELinux policy"
++	{
++            # load_policy does mount /proc and /selinux in 
++            # libselinux,selinux_init_load_policy()
++            if [ -x "$NEWROOT/sbin/load_policy" ]; then
++		chroot "$NEWROOT" /sbin/load_policy -i
++		ret=$?
++            else
++		chroot "$NEWROOT" /usr/sbin/load_policy -i
++		ret=$?
++            fi
++	} 2>&1 | vinfo
++
++	if [ "$SELINUX" = "disabled" ]; then
++	    return 0;
++	fi
++
++	if [ $ret -eq 0 -o $ret -eq 2 ]; then
++	    # If machine requires a relabel, force to permissive mode
++	    [ -e "$NEWROOT"/.autorelabel ] && ( echo 0 > "$NEWROOT"/selinux/enforce )
++            mount --bind /dev "$NEWROOT/dev"
++            chroot "$NEWROOT" /sbin/restorecon -R /dev
++	    return 0
++	fi
++
++	warn "Initial SELinux policy load failed."
++	if [ $ret -eq 3 -o $permissive -eq 0 ]; then
++	    warn "Machine in enforcing mode."
++	    warn "Not continuing"
++	    sleep 100d
++	    exit 1
++	fi
++	return 0
++    elif [ $permissive -eq 0 -a "$SELINUX" != "disabled" ]; then
++	warn "Machine in enforcing mode and cannot execute load_policy."
++	warn "To disable selinux, add selinux=0 to the kernel command line."
++	warn "Not continuing"
++	sleep 100d
++	exit 1
++    fi
++}
++
++rd_load_policy
+diff --git a/modules.d/99base/install b/modules.d/99base/install
+index c0dff8c..6ba9e7e 100755
+--- a/modules.d/99base/install
++++ b/modules.d/99base/install
+@@ -23,7 +23,4 @@ fi
+ inst "$moddir/dracut-lib.sh" "/lib/dracut-lib.sh"
+ inst_hook cmdline 10 "$moddir/parse-root-opts.sh"
+ inst_hook cmdline 20 "$moddir/parse-blacklist.sh"
+-if [ -x "/usr/sbin/load_policy" -o -x "/sbin/load_policy" ]; then
+-	inst_hook pre-pivot 50 "$moddir/selinux-loadpolicy.sh"
+-fi
+ mkdir -p "${initdir}/var/run"
+diff --git a/modules.d/99base/selinux-loadpolicy.sh b/modules.d/99base/selinux-loadpolicy.sh
+deleted file mode 100755
+index 7db9f8c..0000000
+--- a/modules.d/99base/selinux-loadpolicy.sh
++++ /dev/null
+@@ -1,64 +0,0 @@
+-#!/bin/sh
+-# FIXME: load selinux policy.  this should really be done after we switchroot 
+-
+-rd_load_policy()
+-{
+-    # If SELinux is disabled exit now 
+-    getarg "selinux=0" > /dev/null && return 0
+-
+-    SELINUX="enforcing"
+-    [ -e "$NEWROOT/etc/selinux/config" ] && . "$NEWROOT/etc/selinux/config"
+-
+-    # Check whether SELinux is in permissive mode
+-    permissive=0
+-    getarg "enforcing=0" > /dev/null 
+-    if [ $? -eq 0 -o "$SELINUX" = "permissive" ]; then
+-	permissive=1
+-    fi
+-
+-    # Attempt to load SELinux Policy
+-    if [ -x "$NEWROOT/usr/sbin/load_policy" -o -x "$NEWROOT/sbin/load_policy" ]; then
+-	ret=0
+-	info "Loading SELinux policy"
+-	{
+-            # load_policy does mount /proc and /selinux in 
+-            # libselinux,selinux_init_load_policy()
+-            if [ -x "$NEWROOT/sbin/load_policy" ]; then
+-		chroot "$NEWROOT" /sbin/load_policy -i
+-		ret=$?
+-            else
+-		chroot "$NEWROOT" /usr/sbin/load_policy -i
+-		ret=$?
+-            fi
+-	} 2>&1 | vinfo
+-
+-	if [ "$SELINUX" = "disabled" ]; then
+-	    return 0;
+-	fi
+-
+-	if [ $ret -eq 0 -o $ret -eq 2 ]; then
+-	    # If machine requires a relabel, force to permissive mode
+-	    [ -e "$NEWROOT"/.autorelabel ] && ( echo 0 > "$NEWROOT"/selinux/enforce )
+-            mount --bind /dev "$NEWROOT/dev"
+-            chroot "$NEWROOT" /sbin/restorecon -R /dev
+-	    return 0
+-	fi
+-
+-	warn "Initial SELinux policy load failed."
+-	if [ $ret -eq 3 -o $permissive -eq 0 ]; then
+-	    warn "Machine in enforcing mode."
+-	    warn "Not continuing"
+-	    sleep 100d
+-	    exit 1
+-	fi
+-	return 0
+-    elif [ $permissive -eq 0 -a "$SELINUX" != "disabled" ]; then
+-	warn "Machine in enforcing mode and cannot execute load_policy."
+-	warn "To disable selinux, add selinux=0 to the kernel command line."
+-	warn "Not continuing"
+-	sleep 100d
+-	exit 1
+-    fi
+-}
+-
+-rd_load_policy
+-- 
+1.7.3
+

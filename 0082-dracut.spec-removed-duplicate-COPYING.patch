@@ -1,0 +1,48 @@
+From d9c651ae0b536e33af52991c202fc9f6af813dc7 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Fri, 9 Jul 2010 11:19:57 +0200
+Subject: [PATCH 082/133] dracut.spec: removed duplicate COPYING
+
+---
+ dracut.spec |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
+
+diff --git a/dracut.spec b/dracut.spec
+index b47d6d2..04a699b 100644
+--- a/dracut.spec
++++ b/dracut.spec
+@@ -118,6 +118,7 @@ Requires: coreutils cryptsetup-luks device-mapper
+ Requires: diffutils dmraid findutils grep lvm2 gawk
+ Requires: module-init-tools sed
+ Requires: cpio gzip
++Requires: %{name} = %{version}-%{release}
+ 
+ %description tools
+ This package contains tools to assemble the local initrd and host configuration.
+@@ -197,7 +198,6 @@ rm -rf $RPM_BUILD_ROOT
+ 
+ %files network
+ %defattr(-,root,root,0755)
+-%doc README HACKING TODO COPYING AUTHORS NEWS
+ %{_datadir}/dracut/modules.d/40network
+ %{_datadir}/dracut/modules.d/95fcoe
+ %{_datadir}/dracut/modules.d/95iscsi
+@@ -208,7 +208,6 @@ rm -rf $RPM_BUILD_ROOT
+ 
+ %files fips
+ %defattr(-,root,root,0755)
+-%doc COPYING
+ %{_datadir}/dracut/modules.d/01fips
+ 
+ %files generic
+@@ -217,7 +216,6 @@ rm -rf $RPM_BUILD_ROOT
+ 
+ %files tools 
+ %defattr(-,root,root,0755)
+-%doc COPYING NEWS
+ %{_mandir}/man8/dracut-gencmdline.8*
+ %{_mandir}/man8/dracut-catimages.8*
+ /sbin/dracut-gencmdline
+-- 
+1.7.3
+
