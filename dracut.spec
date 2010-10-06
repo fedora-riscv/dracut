@@ -20,7 +20,7 @@
 
 Name: dracut
 Version: 005
-Release: 4%{?rdist}
+Release: 5%{?rdist}
 Summary: Initramfs generator using udev
 Group: System Environment/Base          
 License: GPLv2+ 
@@ -420,6 +420,10 @@ mkdir -p $RPM_BUILD_ROOT/boot/dracut
 mkdir -p $RPM_BUILD_ROOT/var/lib/dracut/overlay
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log
 touch $RPM_BUILD_ROOT%{_localstatedir}/log/dracut.log
+chmod 0755 \
+ $RPM_BUILD_ROOT/%{_datadir}/dracut/modules.d/*/check \
+ $RPM_BUILD_ROOT/%{_datadir}/dracut/modules.d/*/install \
+ $RPM_BUILD_ROOT/%{_datadir}/dracut/modules.d/*/*.sh
 
 %if 0%{?fedora} <= 12 && 0%{?rhel} < 6
 rm $RPM_BUILD_ROOT/sbin/mkinitrd
@@ -507,6 +511,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Wed Oct 06 2010 Harald Hoyer <harald@redhat.com> 005-5
+- fixed file permissions for the selinux module
+- fixed file permissions for all *.sh, check and install scripts
+  which got lost in the patches
+
 * Wed Sep 22 2010 Harald Hoyer <harald@redhat.com> 005-4
 - backported a lot of bugfixes from git 
 
