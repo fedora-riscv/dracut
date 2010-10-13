@@ -20,7 +20,7 @@
 
 Name: dracut
 Version: 006
-Release: 2%{?rdist}
+Release: 3%{?rdist}
 Summary: Initramfs generator using udev
 Group: System Environment/Base          
 License: GPLv2+ 
@@ -37,6 +37,7 @@ Patch5: 0005-crypt-add-fpu-kernel-module.patch
 Patch6: 0006-Write-rules-for-symlinks-to-dev-.udev-rules.d-for-la.patch
 Patch7: 0007-dracut-functions-set-LANG-C-for-ldd-output-parsing.patch
 Patch8: 0008-dracut-functions-use-LC_ALL-C-rather-than-LANG-C.patch
+Patch100: 0100-plymouth-depend-on-crypt-if-cryptsetup-exists.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -144,7 +145,7 @@ This package contains tools to assemble the local initrd and host configuration.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-
+%patch100 -p1
 
 %build
 make WITH_SWITCH_ROOT=0%{?with_switch_root}
@@ -249,6 +250,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Wed Oct 13 2010 Harald Hoyer <harald@redhat.com> 006-3
+- plymouth dracut module should only depend on crypt module,
+  if cryptsetup exists
+Resolves: rhbz#642617
+
 * Wed Jun 23 2010 Harald Hoyer <harald@redhat.com> 006-2
 - bugfixes
 - preserve /dev/live symlink for real root
