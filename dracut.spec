@@ -20,7 +20,7 @@
 
 Name: dracut
 Version: 006
-Release: 3%{?rdist}
+Release: 4%{?rdist}
 Summary: Initramfs generator using udev
 Group: System Environment/Base          
 License: GPLv2+ 
@@ -29,15 +29,16 @@ URL: http://apps.sourceforge.net/trac/dracut/wiki
 # http://dracut.git.sourceforge.net/git/gitweb.cgi?p=dracut/dracut;a=snapshot;h=%{?dashgittag};sf=tgz
 Source0: dracut-%{version}%{?dashgittag}.tar.bz2
 
-Patch1: 0001-fixed-ip-dhcp6.patch
-Patch2: 0002-dracut.8-add-note-about-putting-IPv6-addresses-in-br.patch
-Patch3: 0003-dracut.8-changed-IPv6-addresses-to-the-documentation.patch
-Patch4: 0004-fips-fixes-copy-paste-error-for-check.patch
-Patch5: 0005-crypt-add-fpu-kernel-module.patch
-Patch6: 0006-Write-rules-for-symlinks-to-dev-.udev-rules.d-for-la.patch
-Patch7: 0007-dracut-functions-set-LANG-C-for-ldd-output-parsing.patch
-Patch8: 0008-dracut-functions-use-LC_ALL-C-rather-than-LANG-C.patch
-Patch100: 0100-plymouth-depend-on-crypt-if-cryptsetup-exists.patch
+Patch1: 0001-Fix-ahci-detection-in-kernel-2.6.35.patch
+Patch2: 0002-fixed-ip-dhcp6.patch
+Patch3: 0003-dracut.8-add-note-about-putting-IPv6-addresses-in-br.patch
+Patch4: 0004-dracut.8-changed-IPv6-addresses-to-the-documentation.patch
+Patch5: 0005-fips-fixes-copy-paste-error-for-check.patch
+Patch6: 0006-crypt-add-fpu-kernel-module.patch
+Patch7: 0007-Write-rules-for-symlinks-to-dev-.udev-rules.d-for-la.patch
+Patch8: 0008-dracut-functions-set-LANG-C-for-ldd-output-parsing.patch
+Patch9: 0009-dracut-functions-use-LC_ALL-C-rather-than-LANG-C.patch
+Patch10: 0010-mknod-with-mode-and-set-umask-for-the-rest.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -137,15 +138,16 @@ This package contains tools to assemble the local initrd and host configuration.
 
 %prep
 %setup -q -n %{name}-%{version}%{?dashgittag}
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch100 -p1
+%patch1 -p1 -b .git1
+%patch2 -p1 -b .git2
+%patch3 -p1 -b .git3
+%patch4 -p1 -b .git4
+%patch5 -p1 -b .git5
+%patch6 -p1 -b .git6
+%patch7 -p1 -b .git7
+%patch8 -p1 -b .git8
+%patch9 -p1 -b .git9
+%patch10 -p1 -b .git10
 
 %build
 make WITH_SWITCH_ROOT=0%{?with_switch_root}
@@ -250,6 +252,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Thu Nov 18 2010 Harald Hoyer <harald@redhat.com> 006-4
+- fix /dev/systty
+Resolves: rhbz#654935
+
 * Wed Oct 13 2010 Harald Hoyer <harald@redhat.com> 006-3
 - plymouth dracut module should only depend on crypt module,
   if cryptsetup exists

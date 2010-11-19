@@ -1,7 +1,7 @@
-From e8e4b28dfa1790070c912b31416a7444a4683437 Mon Sep 17 00:00:00 2001
+From 7b09a1b9ee02f4f7be623bed288ee03b4c60300a Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 17 Jun 2010 17:03:38 +0200
-Subject: [PATCH 2/8] dracut.8: add note about putting IPv6 addresses in brackets
+Subject: [PATCH 03/10] dracut.8: add note about putting IPv6 addresses in brackets
 
 ---
  dracut.8 |   11 ++++++++++-
@@ -44,5 +44,5 @@ index 4050541..1417c36 100644
  .ad l
  .BR \%root= \%??? " \%iscsi_initiator=" \%<initiator> " \%iscsi_target_name=" "<target name>" " \%iscsi_target_ip=" "<target ip>" " \%iscsi_target_port=" "<target port>" " \%iscsi_target_group=" "<target group>" " \%iscsi_username=" "<username>" " \%iscsi_password=" <password> " \%iscsi_in_username=" "<in username>" " \%iscsi_in_password=" "<in password>"
 -- 
-1.7.0.1
+1.7.3.1
 
