@@ -20,7 +20,7 @@
 
 Name: dracut
 Version: 006
-Release: 4%{?rdist}
+Release: 5%{?rdist}
 Summary: Initramfs generator using udev
 Group: System Environment/Base          
 License: GPLv2+ 
@@ -39,6 +39,7 @@ Patch7: 0007-Write-rules-for-symlinks-to-dev-.udev-rules.d-for-la.patch
 Patch8: 0008-dracut-functions-set-LANG-C-for-ldd-output-parsing.patch
 Patch9: 0009-dracut-functions-use-LC_ALL-C-rather-than-LANG-C.patch
 Patch10: 0010-mknod-with-mode-and-set-umask-for-the-rest.patch
+Patch11: 0011-base-init-do-not-set-umask.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -148,6 +149,7 @@ This package contains tools to assemble the local initrd and host configuration.
 %patch8 -p1 -b .git8
 %patch9 -p1 -b .git9
 %patch10 -p1 -b .git10
+%patch11 -p1 -b .git11
 
 %build
 make WITH_SWITCH_ROOT=0%{?with_switch_root}
@@ -252,6 +254,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Mon Nov 22 2010 Harald Hoyer <harald@redhat.com> 006-5
+- removed umask
+Resolves: rhbz#655345 rhbz#655472 rhbz#654935
+
 * Thu Nov 18 2010 Harald Hoyer <harald@redhat.com> 006-4
 - fix /dev/systty
 Resolves: rhbz#654935
