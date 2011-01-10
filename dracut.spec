@@ -139,17 +139,17 @@ This package contains tools to assemble the local initrd and host configuration.
 
 %prep
 %setup -q -n %{name}-%{version}%{?dashgittag}
-%patch1 -p1 -b .git1
-%patch2 -p1 -b .git2
-%patch3 -p1 -b .git3
-%patch4 -p1 -b .git4
-%patch5 -p1 -b .git5
-%patch6 -p1 -b .git6
-%patch7 -p1 -b .git7
-%patch8 -p1 -b .git8
-%patch9 -p1 -b .git9
-%patch10 -p1 -b .git10
-%patch11 -p1 -b .git11
+%patch1 -p1 
+%patch2 -p1 
+%patch3 -p1 
+%patch4 -p1 
+%patch5 -p1 
+%patch6 -p1 
+%patch7 -p1 
+%patch8 -p1 
+%patch9 -p1 
+%patch10 -p1 
+%patch11 -p1 
 
 %build
 make WITH_SWITCH_ROOT=0%{?with_switch_root}
