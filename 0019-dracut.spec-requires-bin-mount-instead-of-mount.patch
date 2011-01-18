@@ -1,0 +1,22 @@
+From ace2cd892d0457256f688c1ee72ff3fe43b859e5 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 17 Jan 2011 11:13:39 +0100
+Subject: [PATCH] dracut.spec: requires "/bin/mount" instead of "mount"
+
+---
+ dracut.spec |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/dracut.spec b/dracut.spec
+index e1b87fa..1a82765 100644
+--- a/dracut.spec
++++ b/dracut.spec
+@@ -54,7 +54,7 @@ Requires: initscripts >= 8.63-1
+ Requires: kbd
+ Requires: mktemp >= 1.5-5
+ Requires: module-init-tools >= 3.7-9
+-Requires: mount
++Requires: /bin/mount
+ Requires: plymouth >= 0.8.0-0.2009.29.09.19.1
+ Requires: sed
+ Requires: tar

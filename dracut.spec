@@ -20,7 +20,7 @@
 
 Name: dracut
 Version: 006
-Release: 5%{?rdist}
+Release: 6%{?rdist}
 Summary: Initramfs generator using udev
 Group: System Environment/Base          
 License: GPLv2+ 
@@ -40,6 +40,14 @@ Patch8: 0008-dracut-functions-set-LANG-C-for-ldd-output-parsing.patch
 Patch9: 0009-dracut-functions-use-LC_ALL-C-rather-than-LANG-C.patch
 Patch10: 0010-mknod-with-mode-and-set-umask-for-the-rest.patch
 Patch11: 0011-base-init-do-not-set-umask.patch
+Patch12: 0012-plymouth-depend-on-crypt-if-cryptsetup-exists.patch
+Patch13: 0013-crypt-depend-on-dm.patch
+Patch14: 0014-dmsquash-live-depend-on-dm-module.patch
+Patch15: 0015-dm-install-install-dmeventd-only-if-present.patch
+Patch16: 0016-suppress-modprobe-errors-on-builtins-credits-to-Kay-.patch
+Patch17: 0017-dracut-functions-filter_kernel_modules-search-in-ext.patch
+Patch18: 0018-dracut-functions-suppress-modinfo-errors-for-hostonl.patch
+Patch19: 0019-dracut.spec-requires-bin-mount-instead-of-mount.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -67,7 +75,6 @@ Requires: initscripts >= 8.63-1
 Requires: kbd
 Requires: mktemp >= 1.5-5
 Requires: module-init-tools >= 3.7-9
-Requires: mount
 Requires: plymouth >= 0.8.0-0.2009.29.09.19.1
 Requires: sed
 Requires: tar
@@ -139,17 +146,25 @@ This package contains tools to assemble the local initrd and host configuration.
 
 %prep
 %setup -q -n %{name}-%{version}%{?dashgittag}
-%patch1 -p1 
-%patch2 -p1 
-%patch3 -p1 
-%patch4 -p1 
-%patch5 -p1 
-%patch6 -p1 
-%patch7 -p1 
-%patch8 -p1 
-%patch9 -p1 
-%patch10 -p1 
-%patch11 -p1 
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
 
 %build
 make WITH_SWITCH_ROOT=0%{?with_switch_root}
@@ -254,6 +269,19 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Tue Jan 18 2011 Harald Hoyer <harald@redhat.com> 006-6
+- removed patch backup files
+- removed mount requirement, because mount is part of 
+  util-linux-ng
+- patch for 642617 got lost
+Resolves: rhbz#642617 rhbz#665359
+- fixed minimal install + dm-crypt - LVM
+Resolves: rhbz#649743
+- supress warnings about nonexistant modules for custom kernels
+Resolves: rhbz#645551
+- search also in "extra" and "weak-updates" for kernel modules
+Resolves: rhbz#622888
+
 * Mon Nov 22 2010 Harald Hoyer <harald@redhat.com> 006-5
 - removed umask
 Resolves: rhbz#655345 rhbz#655472 rhbz#654935

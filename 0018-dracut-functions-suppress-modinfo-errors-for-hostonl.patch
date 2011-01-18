@@ -1,0 +1,22 @@
+From 561c2346e8d376d8deaf8e35b4250c5a5b88d61b Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 27 Oct 2010 11:19:27 +0200
+Subject: [PATCH] dracut-functions: suppress modinfo errors for hostonly mode
+
+---
+ dracut-functions |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/dracut-functions b/dracut-functions
+index 33cb483..12e78af 100755
+--- a/dracut-functions
++++ b/dracut-functions
+@@ -495,7 +495,7 @@ filter_kernel_modules () (
+     if ! [[ $hostonly ]]; then
+         filtercmd='find "$srcmods/kernel/drivers" "$srcmods/extra" "$srcmods/weak-updates" -name "*.ko" -o -name "*.ko.gz" 2>/dev/null'
+     else
+-	filtercmd='cut -d " " -f 1 </proc/modules|xargs modinfo -F filename -k $kernel'
++        filtercmd='cut -d " " -f 1 </proc/modules|xargs modinfo -F filename -k $kernel 2>/dev/null'
+     fi
+     for modname in $(eval $filtercmd); do
+         case $modname in

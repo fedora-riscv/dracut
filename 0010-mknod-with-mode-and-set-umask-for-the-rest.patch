@@ -1,7 +1,7 @@
 From 581dd3a7a396eeef865cac3b6924df31a1acd62d Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 23 Jul 2010 11:17:19 +0200
-Subject: [PATCH 10/10] mknod with mode and set umask for the rest
+Subject: [PATCH] mknod with mode and set umask for the rest
 
 ---
  modules.d/50plymouth/plymouth-pretrigger.sh |   12 +++++++-----
@@ -71,6 +71,3 @@ index 45033af..8938dfb 100755
      fi
  fi
  
--- 
-1.7.3.1
-

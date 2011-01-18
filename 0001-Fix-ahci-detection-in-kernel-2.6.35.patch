@@ -1,7 +1,7 @@
 From ef9aefa776a15fc5b3bb480e2f292f821f555bc8 Mon Sep 17 00:00:00 2001
 From: Andrey Borzenkov <arvidjaar@mail.ru>
 Date: Thu, 5 Aug 2010 20:06:57 +0400
-Subject: [PATCH 01/10] Fix ahci detection in kernel 2.6.35
+Subject: [PATCH] Fix ahci detection in kernel 2.6.35
 
 Kernel 2.6.35 (may be, earlier) split ahci into libahci.ko and ahci.ko
 and added ahci_platform.ko. As a result, drivers ahci and ahci_platform
@@ -28,6 +28,3 @@ index 2171e5a..e679b10 100755
  
  	egrep -q "$blockfuncs" "$1"
      }
--- 
-1.7.3.1
-

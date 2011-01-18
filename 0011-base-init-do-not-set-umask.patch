@@ -1,7 +1,7 @@
 From c9fc9b8290e66435b2721d33146583f35db6bfca Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 17 Nov 2010 17:37:22 +0100
-Subject: [PATCH 11/11] base/init: do not set umask
+Subject: [PATCH] base/init: do not set umask
 
 somehow /dev/dri gets created with the wrong permissions
 https://bugzilla.redhat.com/show_bug.cgi?id=626559
@@ -22,6 +22,3 @@ index 8938dfb..2f884c3 100755
  
  RDDEBUG=""
  . /lib/dracut-lib.sh
--- 
-1.7.3.1
-

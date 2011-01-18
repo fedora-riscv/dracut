@@ -1,7 +1,7 @@
 From b32c7fc8a470687262e6c5ed379aa8895a29e02b Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 21 Jun 2010 20:47:01 +0200
-Subject: [PATCH 06/10] crypt: add fpu kernel module
+Subject: [PATCH] crypt: add fpu kernel module
 
 ---
  modules.d/90crypt/installkernel |    2 +-
@@ -16,6 +16,3 @@ index f61f501..de154a5 100755
 -instmods dm_crypt cbc sha256 xts aes aes_generic aesni-intel aes-x86_64
 +instmods dm_crypt cbc sha256 xts aes aes_generic aesni-intel aes-x86_64 fpu
  
--- 
-1.7.3.1
-

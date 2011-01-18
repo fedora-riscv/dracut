@@ -1,7 +1,7 @@
 From 6532fb25b7b145a5abd13ef724118b672d10482d Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 18 Jun 2010 12:52:52 +0200
-Subject: [PATCH 05/10] fips: fixes copy&paste error for "check"
+Subject: [PATCH] fips: fixes copy&paste error for "check"
 
 ---
  modules.d/01fips/check |   16 +---------------
@@ -32,6 +32,3 @@ index e5cd87e..9d8d2e6 100755
 +[[ $1 = -d ]] && exit 0
  exit 255
  
--- 
-1.7.3.1
-

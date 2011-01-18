@@ -1,7 +1,7 @@
 From d393f8c8d8e132d4a09e0d28b2882cd321a75798 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 22 Jun 2010 11:59:49 +0200
-Subject: [PATCH 09/10] dracut-functions: use LC_ALL=C rather than LANG=C
+Subject: [PATCH] dracut-functions: use LC_ALL=C rather than LANG=C
 
 ---
  dracut-functions |    2 +-
@@ -20,6 +20,3 @@ index 57dd702..2cd573a 100755
  	[[ $line = 'not a dynamic executable' ]] && return 1
  	if [[ $line =~ not\ found ]]; then
  	    derror "Missing a shared library required by $bin."
--- 
-1.7.3.1
-

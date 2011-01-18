@@ -1,7 +1,7 @@
 From 840a9e7a21ea56692a2e69f049daf354d9ecd9a2 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 22 Jun 2010 10:30:39 +0200
-Subject: [PATCH 07/10] Write rules for symlinks to /dev/.udev/rules.d for later usage
+Subject: [PATCH] Write rules for symlinks to /dev/.udev/rules.d for later usage
 
 We want some symlinks to persist in the real root, so we write them to
 /dev/.udev/rules.d, that they survive a retrigger.
@@ -94,6 +94,3 @@ index 1b650f8..80e0c4c 100755
      
      printf '[ -e "%s" ] && { ln -s "%s" /dev/root 2>/dev/null; rm "$job"; }\n' \
  	"${root#block:}" "${root#block:}" >> /initqueue-settled/blocksymlink.sh
--- 
-1.7.3.1
-

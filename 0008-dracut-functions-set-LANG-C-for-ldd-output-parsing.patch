@@ -1,7 +1,7 @@
 From a3f3f9e0553d48013b1c88c594678be412763c48 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 22 Jun 2010 10:32:25 +0200
-Subject: [PATCH 08/10] dracut-functions: set LANG=C for ldd output parsing
+Subject: [PATCH] dracut-functions: set LANG=C for ldd output parsing
 
 ---
  dracut-functions |    2 +-
@@ -20,6 +20,3 @@ index 58f119f..57dd702 100755
  	[[ $line = 'not a dynamic executable' ]] && return 1
  	if [[ $line =~ not\ found ]]; then
  	    derror "Missing a shared library required by $bin."
--- 
-1.7.3.1
-
