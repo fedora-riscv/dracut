@@ -1,0 +1,38 @@
+From 27d174fa58e5f7b2e2bbc7a7c6c64f39653e0886 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Tue, 3 May 2011 10:34:06 +0200
+Subject: [PATCH] 10i18n: s/systemd-vconsole/systemd-vconsole-setup/g
+
+---
+ modules.d/10i18n/console_init    |    4 ++--
+ modules.d/10i18n/module-setup.sh |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/modules.d/10i18n/console_init b/modules.d/10i18n/console_init
+index 30b2582..c88053a 100755
+--- a/modules.d/10i18n/console_init
++++ b/modules.d/10i18n/console_init
+@@ -72,8 +72,8 @@ devname=${dev#/dev/}
+ 
+ [ -e /tmp/console_init.${devname} ] && exit 0
+ 
+-if [ -x /lib/systemd/systemd-vconsole ]; then
+-    /lib/systemd/systemd-vconsole
++if [ -x /lib/systemd/systemd-vconsole-setup ]; then
++    /lib/systemd/systemd-vconsole-setup
+ else
+     dev_open ${dev}
+ 
+diff --git a/modules.d/10i18n/module-setup.sh b/modules.d/10i18n/module-setup.sh
+index a374c33..f2320c3 100755
+--- a/modules.d/10i18n/module-setup.sh
++++ b/modules.d/10i18n/module-setup.sh
+@@ -11,7 +11,7 @@ depends() {
+ }
+ 
+ install() {
+-    [ -x /lib/systemd/systemd-vconsole ] && dracut_install /lib/systemd/systemd-vconsole
++    [ -x /lib/systemd/systemd-vconsole-setup ] && dracut_install /lib/systemd/systemd-vconsole-setup
+     KBDSUBDIRS=consolefonts,consoletrans,keymaps,unimaps
+     DEFAULT_FONT=LatArCyrHeb-16
+     I18N_CONF="/etc/locale.conf"

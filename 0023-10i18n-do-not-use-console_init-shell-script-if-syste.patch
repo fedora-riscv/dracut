@@ -1,0 +1,92 @@
+From 065a609633bda845b4ac821a139a1deab397c1f8 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Tue, 3 May 2011 14:48:05 +0200
+Subject: [PATCH] 10i18n: do not use console_init shell script, if systemd-vconsole-setup
+
+do not use console_init shell script, if systemd-vconsole-setup is
+available
+---
+ modules.d/10i18n/console_init  |   34 +++++++++++++---------------------
+ modules.d/10i18n/parse-i18n.sh |   12 +++++++++---
+ 2 files changed, 22 insertions(+), 24 deletions(-)
+
+diff --git a/modules.d/10i18n/console_init b/modules.d/10i18n/console_init
+index c88053a..110cb0a 100755
+--- a/modules.d/10i18n/console_init
++++ b/modules.d/10i18n/console_init
+@@ -61,7 +61,6 @@ dev_open() {
+         exec 7>>${dev}
+ }
+ 
+-
+ dev=/dev/${1#/dev/}
+ devname=${dev#/dev/}
+ 
+@@ -70,27 +69,20 @@ devname=${dev#/dev/}
+     exit 1
+ }
+ 
+-[ -e /tmp/console_init.${devname} ] && exit 0
+-
+-if [ -x /lib/systemd/systemd-vconsole-setup ]; then
+-    /lib/systemd/systemd-vconsole-setup
+-else
+-    dev_open ${dev}
++dev_open ${dev}
+ 
+-    for fd in 6 7; do
+-        if ! [ -t ${fd} ]; then
+-            echo "ERROR: File descriptor not opened: ${fd}" >&2
+-            dev_close
+-            exit 1
+-        fi
+-    done
++for fd in 6 7; do
++    if ! [ -t ${fd} ]; then
++        echo "ERROR: File descriptor not opened: ${fd}" >&2
++        dev_close
++        exit 1
++    fi
++done
+ 
+-    set_keyboard
+-    set_terminal ${dev}
+-    set_font ${dev}
+-    set_keymap
++set_keyboard
++set_terminal ${dev}
++set_font ${dev}
++set_keymap
+ 
+-    dev_close
+-fi
++dev_close
+ 
+->/tmp/console_init.${devname}
+diff --git a/modules.d/10i18n/parse-i18n.sh b/modules.d/10i18n/parse-i18n.sh
+index 9f47326..6b7e569 100755
+--- a/modules.d/10i18n/parse-i18n.sh
++++ b/modules.d/10i18n/parse-i18n.sh
+@@ -20,9 +20,9 @@ inst_key_val() {
+ }
+ 
+ inst_key_val '' /etc/vconsole.conf KEYMAP      vconsole.keymap      KEYTABLE
+-inst_key_val '' /etc/vconsole.conf FONT        vconsole.font        SYSFONT 
+-inst_key_val '' /etc/vconsole.conf FONT_MAP    vconsole.font.map    CONTRANS 
+-inst_key_val '' /etc/vconsole.conf FONT_UNIMAP vconsole.font.unimap UNIMAP 
++inst_key_val '' /etc/vconsole.conf FONT        vconsole.font        SYSFONT
++inst_key_val '' /etc/vconsole.conf FONT_MAP    vconsole.font.map    CONTRANS
++inst_key_val '' /etc/vconsole.conf FONT_UNIMAP vconsole.font.unimap UNIMAP
+ inst_key_val 1  /etc/vconsole.conf UNICODE     vconsole.unicode vconsole.font.unicode
+ inst_key_val '' /etc/vconsole.conf EXT_KEYMAP  vconsole.keymap.ext
+ 
+@@ -35,3 +35,9 @@ if [ -f /etc/locale.conf ]; then
+     export LC_ALL
+ fi
+ 
++if [ -x /lib/systemd/systemd-vconsole-setup ]; then
++    /lib/systemd/systemd-vconsole-setup
++    rm -f /{etc,lib}/udev/rules.d/10-console.rules
++    rm -f /lib/udev/console_init
++    ln -s /lib/systemd/systemd-vconsole-setup /lib/udev/console_init
++fi

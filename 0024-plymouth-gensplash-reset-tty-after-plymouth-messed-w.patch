@@ -1,0 +1,40 @@
+From 09c6d6511019591b2f153bcb96bb2262900e9304 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Tue, 3 May 2011 14:47:45 +0200
+Subject: [PATCH] plymouth/gensplash: reset tty after plymouth messed with it
+
+---
+ modules.d/50gensplash/gensplash-pretrigger.sh |    3 ++-
+ modules.d/50plymouth/plymouth-pretrigger.sh   |    4 +++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/modules.d/50gensplash/gensplash-pretrigger.sh b/modules.d/50gensplash/gensplash-pretrigger.sh
+index b0330a4..074aa78 100755
+--- a/modules.d/50gensplash/gensplash-pretrigger.sh
++++ b/modules.d/50gensplash/gensplash-pretrigger.sh
+@@ -9,8 +9,9 @@ if getargbool 1 rd.splash -n rd_NO_SPLASH; then
+ 
+     info "Starting Gentoo Splash"
+ 
+-    [ -x /lib/udev/console_init ] && /lib/udev/console_init tty0
++    [ -x /lib/udev/console_init ] && /lib/udev/console_init /dev/tty0
+     CDROOT=0
+     . /lib/gensplash-lib.sh
+     splash init
++    [ -x /lib/udev/console_init ] && /lib/udev/console_init /dev/tty0
+ fi
+diff --git a/modules.d/50plymouth/plymouth-pretrigger.sh b/modules.d/50plymouth/plymouth-pretrigger.sh
+index 222dc20..25ed06f 100755
+--- a/modules.d/50plymouth/plymouth-pretrigger.sh
++++ b/modules.d/50plymouth/plymouth-pretrigger.sh
+@@ -18,7 +18,9 @@ if getargbool 1 rd.plymouth -n rd_NO_PLYMOUTH; then
+ 
+     info "Starting plymouth daemon"
+     mkdir -m 0755 /run/plymouth
+-    [ -x /lib/udev/console_init ] && /lib/udev/console_init tty0
++    [ -x /lib/udev/console_init ] && /lib/udev/console_init /dev/tty0
+     [ -x /bin/plymouthd ] && /bin/plymouthd --attach-to-session --pid-file /run/plymouth/pid
+     /bin/plymouth --show-splash 2>&1 | vinfo
++    # reset tty after plymouth messed with it
++    [ -x /lib/udev/console_init ] && /lib/udev/console_init /dev/tty0
+ fi

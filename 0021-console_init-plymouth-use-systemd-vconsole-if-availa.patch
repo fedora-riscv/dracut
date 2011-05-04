@@ -1,0 +1,82 @@
+From cbb6006241577d443b0a68b10ecd733c523c5ff5 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 28 Apr 2011 17:33:26 +0200
+Subject: [PATCH] console_init/plymouth: use systemd-vconsole, if available
+
+also init the console before starting the plymouth daemon
+---
+ modules.d/10i18n/console_init               |   35 +++++++++++++++-----------
+ modules.d/10i18n/module-setup.sh            |    1 +
+ modules.d/50plymouth/plymouth-pretrigger.sh |    2 +-
+ 3 files changed, 22 insertions(+), 16 deletions(-)
+
+diff --git a/modules.d/10i18n/console_init b/modules.d/10i18n/console_init
+index bdd39b0..30b2582 100755
+--- a/modules.d/10i18n/console_init
++++ b/modules.d/10i18n/console_init
+@@ -72,20 +72,25 @@ devname=${dev#/dev/}
+ 
+ [ -e /tmp/console_init.${devname} ] && exit 0
+ 
+-dev_open ${dev}
++if [ -x /lib/systemd/systemd-vconsole ]; then
++    /lib/systemd/systemd-vconsole
++else
++    dev_open ${dev}
++
++    for fd in 6 7; do
++        if ! [ -t ${fd} ]; then
++            echo "ERROR: File descriptor not opened: ${fd}" >&2
++            dev_close
++            exit 1
++        fi
++    done
++
++    set_keyboard
++    set_terminal ${dev}
++    set_font ${dev}
++    set_keymap
++
++    dev_close
++fi
+ 
+-for fd in 6 7; do
+-    if ! [ -t ${fd} ]; then
+-        echo "ERROR: File descriptor not opened: ${fd}" >&2
+-        dev_close
+-        exit 1
+-    fi
+-done
+-
+-set_keyboard
+-set_terminal ${dev}
+-set_font ${dev}
+-set_keymap
+-
+-dev_close
+ >/tmp/console_init.${devname}
+diff --git a/modules.d/10i18n/module-setup.sh b/modules.d/10i18n/module-setup.sh
+index f764c8e..a374c33 100755
+--- a/modules.d/10i18n/module-setup.sh
++++ b/modules.d/10i18n/module-setup.sh
+@@ -11,6 +11,7 @@ depends() {
+ }
+ 
+ install() {
++    [ -x /lib/systemd/systemd-vconsole ] && dracut_install /lib/systemd/systemd-vconsole
+     KBDSUBDIRS=consolefonts,consoletrans,keymaps,unimaps
+     DEFAULT_FONT=LatArCyrHeb-16
+     I18N_CONF="/etc/locale.conf"
+diff --git a/modules.d/50plymouth/plymouth-pretrigger.sh b/modules.d/50plymouth/plymouth-pretrigger.sh
+index 6f8628d..222dc20 100755
+--- a/modules.d/50plymouth/plymouth-pretrigger.sh
++++ b/modules.d/50plymouth/plymouth-pretrigger.sh
+@@ -18,7 +18,7 @@ if getargbool 1 rd.plymouth -n rd_NO_PLYMOUTH; then
+ 
+     info "Starting plymouth daemon"
+     mkdir -m 0755 /run/plymouth
+-    [ -x /bin/plymouthd ] && /bin/plymouthd --attach-to-session --pid-file /run/plymouth/pid
+     [ -x /lib/udev/console_init ] && /lib/udev/console_init tty0
++    [ -x /bin/plymouthd ] && /bin/plymouthd --attach-to-session --pid-file /run/plymouth/pid
+     /bin/plymouth --show-splash 2>&1 | vinfo
+ fi
