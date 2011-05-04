@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 009
-Release: 7%{?dist}
+Release: 8%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora}
@@ -44,6 +44,7 @@ Patch21: 0021-console_init-plymouth-use-systemd-vconsole-if-availa.patch
 Patch22: 0022-10i18n-s-systemd-vconsole-systemd-vconsole-setup-g.patch
 Patch23: 0023-10i18n-do-not-use-console_init-shell-script-if-syste.patch
 Patch24: 0024-plymouth-gensplash-reset-tty-after-plymouth-messed-w.patch
+Patch25: 0025-init-create-run-with-p.patch
 
 BuildArch: noarch
 
@@ -201,6 +202,7 @@ This package contains tools to assemble the local initrd and host configuration.
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
+%patch25 -p1
 
 %build
 make WITH_SWITCH_ROOT=0%{?with_switch_root}
@@ -337,9 +339,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
-* Wed May 04 2011 Harald Hoyer <harald@redhat.com> 009-7
+* Wed May 04 2011 Harald Hoyer <harald@redhat.com> 009-8
 - fixed mkdir for /run
 Resolves: rhbz#699113
+
+* Wed May 04 2011 Harald Hoyer <harald@redhat.com> 009-7
 - fixed console reset after plymouth started
 Resolves: rhbz#700971
 
