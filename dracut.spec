@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 009
-Release: 8%{?dist}
+Release: 9%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora}
@@ -40,10 +40,10 @@ Patch17: 0017-base-dracut-lib.sh-changed-kmgs-log-levels.patch
 Patch18: 0018-base-init-reset-PATH-after-the-run-move.patch
 Patch19: 0019-dracut-don-t-fail-on-empty-etc-ld.so.conf.d.patch
 Patch20: 0020-mkdir-always-with-m-0755.patch
-Patch21: 0021-console_init-plymouth-use-systemd-vconsole-if-availa.patch
-Patch22: 0022-10i18n-s-systemd-vconsole-systemd-vconsole-setup-g.patch
-Patch23: 0023-10i18n-do-not-use-console_init-shell-script-if-syste.patch
-Patch24: 0024-plymouth-gensplash-reset-tty-after-plymouth-messed-w.patch
+#Patch21: 0021-console_init-plymouth-use-systemd-vconsole-if-availa.patch
+#Patch22: 0022-10i18n-s-systemd-vconsole-systemd-vconsole-setup-g.patch
+#Patch23: 0023-10i18n-do-not-use-console_init-shell-script-if-syste.patch
+#Patch24: 0024-plymouth-gensplash-reset-tty-after-plymouth-messed-w.patch
 Patch25: 0025-init-create-run-with-p.patch
 
 BuildArch: noarch
@@ -198,10 +198,10 @@ This package contains tools to assemble the local initrd and host configuration.
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
+#%patch21 -p1
+#%patch22 -p1
+#%patch23 -p1
+#%patch24 -p1
 %patch25 -p1
 
 %build
@@ -339,6 +339,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Thu May 05 2011 Harald Hoyer <harald@redhat.com> 009-9
+- removed fix for rhbz#700971 until resolved
+
 * Wed May 04 2011 Harald Hoyer <harald@redhat.com> 009-8
 - fixed mkdir for /run
 Resolves: rhbz#699113
