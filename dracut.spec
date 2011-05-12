@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 009
-Release: 9%{?dist}
+Release: 10%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora}
@@ -45,6 +45,7 @@ Patch20: 0020-mkdir-always-with-m-0755.patch
 #Patch23: 0023-10i18n-do-not-use-console_init-shell-script-if-syste.patch
 #Patch24: 0024-plymouth-gensplash-reset-tty-after-plymouth-messed-w.patch
 Patch25: 0025-init-create-run-with-p.patch
+Patch26: 0026-dmsquash-live-dmsquash-live-root-add-missing-changes.patch
 
 BuildArch: noarch
 
@@ -203,6 +204,7 @@ This package contains tools to assemble the local initrd and host configuration.
 #%patch23 -p1
 #%patch24 -p1
 %patch25 -p1
+%patch26 -p1
 
 %build
 make WITH_SWITCH_ROOT=0%{?with_switch_root}
@@ -339,6 +341,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Thu May 12 2011 Harald Hoyer <harald@redhat.com> 009-10
+- resolved incomplete /run change for squashfs
+Resolves: rhbz#699113
+
 * Thu May 05 2011 Harald Hoyer <harald@redhat.com> 009-9
 - removed fix for rhbz#700971 until resolved
 
