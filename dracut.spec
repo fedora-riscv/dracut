@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 009
-Release: 11%{?dist}
+Release: 12%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora}
@@ -263,8 +263,8 @@ rm $RPM_BUILD_ROOT/sbin/mkinitrd
 rm $RPM_BUILD_ROOT/sbin/lsinitrd
 %endif
 
-mkdir -p $RPM_BUILD_ROOT/etc/logrotate.d/dracut
-install -m 0644 dracut.logrotate $RPM_BUILD_ROOT/etc/logrotate.d/dracut
+mkdir -p $RPM_BUILD_ROOT/etc/logrotate.d
+install -m 0644 dracut.logrotate $RPM_BUILD_ROOT/etc/logrotate.d/dracut_log
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -289,7 +289,6 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/dracut.conf.d/01-dist.conf
 %endif
 %dir /etc/dracut.conf.d
-%config(noreplace) /etc/logrotate.d/dracut
 %{_mandir}/man8/dracut.8*
 %{_mandir}/man7/dracut.kernel.7*
 %{_mandir}/man5/dracut.conf.5*
@@ -322,8 +321,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dracut/modules.d/98selinux
 %{_datadir}/dracut/modules.d/98syslog
 %{_datadir}/dracut/modules.d/99base
-# logfile needs no logrotate, because it gets overwritten
-# for every dracut run
+%config(noreplace) /etc/logrotate.d/dracut_log
 %attr(0644,root,root) %ghost %config(missingok,noreplace) %{_localstatedir}/log/dracut.log
 %dir %{_sharedstatedir}/initramfs
 
@@ -359,6 +357,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Mon Jul 18 2011 Harald Hoyer <harald@redhat.com> 009-12
+- fixed logrotate
+Resolves: rhbz#722794
+
 * Fri May 20 2011 Harald Hoyer <harald@redhat.com> 009-11
 - fixed dmsquash with overlay 
 Resolves: rhbz#706122
