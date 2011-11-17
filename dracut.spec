@@ -377,6 +377,8 @@ Resolves: rhbz#751667
 - support opening crypto devs with file
   support install_items in dracut.conf
 Resolves: rhbz#751640
+- include usb storage drivers
+Resolves: rhbz#716799
 
 * Tue Nov 01 2011 Tom Callaway <spot@fedoraproject.org> 013-18
 - do not try to run inst_binary on a shell script if we know 
