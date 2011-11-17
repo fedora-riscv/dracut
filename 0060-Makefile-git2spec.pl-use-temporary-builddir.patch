@@ -1,0 +1,61 @@
+From 7705aee27a8303d93ee5122f424289769a7a7ad0 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 9 Nov 2011 09:51:15 +0100
+Subject: [PATCH] Makefile, git2spec.pl: use temporary builddir
+
+to build the dracut rpm, use a temporary builddir
+---
+ Makefile    |   12 ++++++------
+ git2spec.pl |    6 ++++--
+ 2 files changed, 10 insertions(+), 8 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 991058f..80173a3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -66,13 +66,13 @@ dracut-$(VERSION).tar.gz:
+ 	git archive --format=tar $(VERSION) --prefix=dracut-$(VERSION)/ |gzip > dracut-$(VERSION).tar.gz
+ 
+ rpm: dracut-$(VERSION).tar.bz2
+-	mkdir -p rpmbuild
+-	cp dracut-$(VERSION).tar.bz2 rpmbuild
+-	cd rpmbuild; ../git2spec.pl $(VERSION) < ../dracut.spec > dracut.spec; \
+-	rpmbuild --define "_topdir $$PWD" --define "_sourcedir $$PWD" \
++	rpmbuild=$$(mktemp -d -t rpmbuild-dracut.XXXXXX); src=$$(pwd); \
++	cp dracut-$(VERSION).tar.bz2 "$$rpmbuild"; \
++	$$src/git2spec.pl $(VERSION) "$$rpmbuild" < dracut.spec > $$rpmbuild/dracut.spec; \
++	(cd "$$rpmbuild"; rpmbuild --define "_topdir $$PWD" --define "_sourcedir $$PWD" \
+ 	        --define "_specdir $$PWD" --define "_srcrpmdir $$PWD" \
+-		--define "_rpmdir $$PWD" -ba dracut.spec && \
+-	( cd ..; mv rpmbuild/noarch/*.rpm .; mv rpmbuild/*.src.rpm .;rm -fr rpmbuild; ls *.rpm )
++		--define "_rpmdir $$PWD" -ba dracut.spec; ) && \
++	( mv "$$rpmbuild"/noarch/*.rpm .; mv "$$rpmbuild"/*.src.rpm .;rm -fr "$$rpmbuild"; ls *.rpm )
+ 
+ syncheck:
+ 	@ret=0;for i in dracut-logger modules.d/99base/init modules.d/*/*.sh; do \
+diff --git a/git2spec.pl b/git2spec.pl
+index 9db42aa..27e5889 100755
+--- a/git2spec.pl
++++ b/git2spec.pl
+@@ -18,8 +18,9 @@ sub last_tag {
+ 
+ sub create_patches {
+     my $tag=shift;
++    my $pdir=shift;
+     my $num=0;
+-    open( GIT, 'git format-patch -N --no-signature '.$tag.' |');
++    open( GIT, 'git format-patch -N --no-signature -o "'.$pdir.'" '.$tag.' |');
+     @lines=<GIT>;
+     close GIT;         # be done
+     return @lines;
+@@ -29,8 +30,9 @@ use POSIX qw(strftime);
+ my $datestr = strftime "%Y%m%d", gmtime;
+ 
+ my $tag=shift;
++my $pdir=shift;
+ $tag=&last_tag if not defined $tag;
+-my @patches=&create_patches($tag);
++my @patches=&create_patches($tag, $pdir);
+ my $num=$#patches + 2;
+ $tag=~s/[^0-9]+?([0-9]+)/$1/;
+ my $release="$num.git$datestr";

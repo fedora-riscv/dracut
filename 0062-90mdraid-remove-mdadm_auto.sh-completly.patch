@@ -1,0 +1,46 @@
+From a5abf964bc93beb676f0da63cc1bf620a1f43f0e Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 16 Nov 2011 10:50:21 +0100
+Subject: [PATCH] 90mdraid: remove mdadm_auto.sh completly
+
+remove mdadm_auto.sh completly, because "mdadm -As --auto=yes" does not
+add new appearing devices.
+---
+ modules.d/90mdraid/65-md-incremental-imsm.rules |    9 ---------
+ modules.d/90mdraid/mdadm_auto.sh                |    7 -------
+ 2 files changed, 0 insertions(+), 16 deletions(-)
+ delete mode 100755 modules.d/90mdraid/mdadm_auto.sh
+
+diff --git a/modules.d/90mdraid/65-md-incremental-imsm.rules b/modules.d/90mdraid/65-md-incremental-imsm.rules
+index 139a599..80e6aab 100644
+--- a/modules.d/90mdraid/65-md-incremental-imsm.rules
++++ b/modules.d/90mdraid/65-md-incremental-imsm.rules
+@@ -29,15 +29,6 @@ ENV{DEVTYPE}!="partition", \
+ 
+ RUN+="/sbin/initqueue --timeout --name 50-mdraid_start --onetime --unique /sbin/mdraid_start"
+ 
+-# if rd_MDADMCONF is set, do not assemble incrementally;
+-# defer conf-based assembly until the udev queue is settled
+-#
+-ENV{rd_MDADMCONF}!="?*", GOTO="md_incremental"
+-
+-RUN+="/sbin/initqueue --settled --onetime --unique /sbin/mdadm_auto"
+-
+-GOTO="md_end"
+-
+ #
+ # Incrementally build the md array; this will automatically assemble
+ # any eventual containers as well (imsm, ddf)
+diff --git a/modules.d/90mdraid/mdadm_auto.sh b/modules.d/90mdraid/mdadm_auto.sh
+deleted file mode 100755
+index 9b61bf5..0000000
+--- a/modules.d/90mdraid/mdadm_auto.sh
++++ /dev/null
+@@ -1,7 +0,0 @@
+-#!/bin/sh
+-# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
+-# ex: ts=8 sw=4 sts=4 et filetype=sh
+-type getarg >/dev/null 2>&1 || . /lib/dracut-lib.sh
+-
+-info "Autoassembling MD Raid"
+-mdadm -As --auto=yes 2>&1 | vinfo

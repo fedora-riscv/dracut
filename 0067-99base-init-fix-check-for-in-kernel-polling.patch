@@ -1,0 +1,22 @@
+From 7652817a404ffedb36bef56a5c6a08cf8c341fb3 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 20 Oct 2011 11:13:34 +0200
+Subject: [PATCH] 99base/init: fix check for in kernel polling
+
+---
+ modules.d/99base/init |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/modules.d/99base/init b/modules.d/99base/init
+index 1f0e342..acdda43 100755
+--- a/modules.d/99base/init
++++ b/modules.d/99base/init
+@@ -243,7 +243,7 @@ while :; do
+     # no more udev jobs and queues empty.
+     sleep 0.5
+ 
+-    if [ ! -e /sys/module/block/parameters/uevent ]; then
++    if [ ! -e /sys/module/block/parameters/events_dfl_poll_msecs ]; then
+         # if the kernel does not support autopolling
+         # then we have to do a
+         # dirty hack for some cdrom drives,

@@ -1,0 +1,56 @@
+From e8afcd2b866da7f1af56d5ccaa395eec6500f135 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 17 Nov 2011 10:14:23 +0100
+Subject: [PATCH] 90mdraid: wait for md devices to become clean
+
+After assembling all devices, just wait for the raid devices to become
+clean, before booting further.
+---
+ modules.d/90mdraid/mdraid-waitclean.sh |   25 +++++++++++++++++++++++++
+ modules.d/90mdraid/module-setup.sh     |    1 +
+ 2 files changed, 26 insertions(+), 0 deletions(-)
+ create mode 100755 modules.d/90mdraid/mdraid-waitclean.sh
+
+diff --git a/modules.d/90mdraid/mdraid-waitclean.sh b/modules.d/90mdraid/mdraid-waitclean.sh
+new file mode 100755
+index 0000000..c062fc7
+--- /dev/null
++++ b/modules.d/90mdraid/mdraid-waitclean.sh
+@@ -0,0 +1,25 @@
++#!/bin/sh
++# -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
++# ex: ts=8 sw=4 sts=4 et filetype=sh
++
++type getarg >/dev/null 2>&1 || . /lib/dracut-lib.sh
++
++containers=""
++for md in /dev/md[0-9_]*; do
++    [ -b "$md" ] || continue
++    udevinfo="$(udevadm info --query=env --name=$md)"
++    strstr "$udevinfo" "DEVTYPE=partition" && continue
++    if strstr "$udevinfo" "MD_LEVEL=container"; then
++        containers="$containers $md"
++        continue
++    fi
++    info "Waiting for $md to become clean"
++    mdadm -W "$md" >/dev/null 2>&1
++done
++
++for md in $containers; do
++    info "Waiting for $md to become clean"
++    mdadm -W "$md" >/dev/null 2>&1
++done
++
++unset containers udevinfo
+diff --git a/modules.d/90mdraid/module-setup.sh b/modules.d/90mdraid/module-setup.sh
+index fe793bb..029d667 100755
+--- a/modules.d/90mdraid/module-setup.sh
++++ b/modules.d/90mdraid/module-setup.sh
+@@ -83,6 +83,7 @@ install() {
+     inst "$moddir/mdraid_start.sh" /sbin/mdraid_start
+     inst "$moddir/mdadm_auto.sh" /sbin/mdadm_auto
+     inst_hook pre-trigger 30 "$moddir/parse-md.sh"
++    inst_hook pre-mount 10 "$moddir/mdraid-waitclean.sh"
+     inst "$moddir/mdraid-cleanup.sh" /sbin/mdraid-cleanup
+     inst_hook shutdown 30 "$moddir/md-shutdown.sh"
+ }

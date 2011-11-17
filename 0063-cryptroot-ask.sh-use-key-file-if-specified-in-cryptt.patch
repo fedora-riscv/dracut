@@ -1,0 +1,70 @@
+From baa2ead155b4e6a40f88e893d29e4cb316ae7965 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 16 Nov 2011 11:36:46 +0100
+Subject: [PATCH] cryptroot-ask.sh: use key file, if specified in crypttab and
+ present
+
+if a key file is specified in crypttab and present in the initramfs use
+it to open the device.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=751640
+
+backport of commit 4e05cb4023966a828ad90432816467a1da540120
+---
+ modules.d/90crypt/cryptroot-ask.sh |   21 ++++++++++++++++-----
+ 1 files changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/modules.d/90crypt/cryptroot-ask.sh b/modules.d/90crypt/cryptroot-ask.sh
+index f8e1bd8..88938d7 100755
+--- a/modules.d/90crypt/cryptroot-ask.sh
++++ b/modules.d/90crypt/cryptroot-ask.sh
+@@ -31,7 +31,7 @@ fi
+ 
+ # TODO: improve to support what cmdline does
+ if [ -f /etc/crypttab ] && getargbool 1 rd.luks.crypttab -n rd_NO_CRYPTTAB; then
+-    while read name dev rest; do
++    while read name dev luksfile rest; do
+         # ignore blank lines and comments
+         if [ -z "$name" -o "${name#\#}" != "$name" ]; then
+             continue
+@@ -61,7 +61,14 @@ fi
+ # Open LUKS device
+ #
+ 
+-info "luksOpen $device $luksname"
++info "luksOpen $device $luksname $luksfile"
++ask_passphrase=1
++
++if [ -n "$luksfile" -a "$luksfile" != "none" -a -e "$luksfile" ]; then
++    if cryptsetup --key-file "$luksfile" luksOpen "$device" "$luksname"; then
++        ask_passphrase=0
++    fi
++fi
+ 
+ if [ -n "$(getarg rd.luks.key)" ]; then
+     if tmp=$(getkey /tmp/luks.keys $device); then
+@@ -78,9 +85,13 @@ if [ -n "$(getarg rd.luks.key)" ]; then
+ 
+     info "Using '$keypath' on '$keydev'"
+     readkey "$keypath" "$keydev" "$device" \
+-        | cryptsetup -d - luksOpen "$device" "$luksname"
++        | cryptsetup -d - luksOpen "$device" "$luksname" \
++        && ask_passphrase=0
++
+     unset keypath keydev
+-else
++fi
++
++if [ $ask_passphrase -ne 0 ]; then
+     luks_open="$(command -v cryptsetup) luksOpen"
+     ask_for_password --ply-tries 5 \
+         --ply-cmd "$luks_open -T1 $device $luksname" \
+@@ -90,7 +101,7 @@ else
+     unset luks_open
+ fi
+ 
+-unset device luksname
++unset device luksname luksfile
+ 
+ # mark device as asked
+ >> /tmp/cryptroot-asked-$2

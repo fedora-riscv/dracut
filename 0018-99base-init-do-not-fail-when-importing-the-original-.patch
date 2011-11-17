@@ -1,0 +1,23 @@
+From a465046b3d6a6073eff2d6516608635f70d59f68 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 1 Sep 2011 16:01:21 +0200
+Subject: [PATCH] 99base/init: do not fail, when importing the original kernel
+ environment
+
+---
+ modules.d/99base/init |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/modules.d/99base/init b/modules.d/99base/init
+index 4a91e53..30a5cf9 100755
+--- a/modules.d/99base/init
++++ b/modules.d/99base/init
+@@ -397,7 +397,7 @@ for i in $(export -p); do
+             unset "$i";;
+     esac
+ done
+-. /tmp/export.orig
++. /tmp/export.orig 2>/dev/null || :
+ rm -f /tmp/export.orig
+ 
+ initargs=""
