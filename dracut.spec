@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 013
-Release: 19%{?dist}
+Release: 20%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel} > 6
@@ -85,7 +85,7 @@ Patch60: 0060-Makefile-git2spec.pl-use-temporary-builddir.patch
 Patch61: 0061-90kernel-modules-module-setup.sh-include-usb-mass-st.patch
 Patch62: 0062-90mdraid-remove-mdadm_auto.sh-completly.patch
 Patch63: 0063-cryptroot-ask.sh-use-key-file-if-specified-in-cryptt.patch
-Patch64: 0064-90mdraid-wait-for-md-devices-to-become-clean.patch
+#Patch64: 0064-90mdraid-wait-for-md-devices-to-become-clean.patch
 Patch65: 0065-99base-init-only-poll-cdroms-if-the-kernel-does-supp.patch
 Patch66: 0066-99base-init-removed-cdrom-polling-reset-code.patch
 Patch67: 0067-99base-init-fix-check-for-in-kernel-polling.patch
@@ -370,6 +370,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Tue Dec 13 2011 Harald Hoyer <harald@redhat.com> 013-20
+- do not wait for raid to be synced
+Resolves: rhbz#757361
+
 * Thu Nov 17 2011 Harald Hoyer <harald@redhat.com> 013-19
 - fixed mdraid handling
 Resolves: rhbz#751667
