@@ -30,12 +30,12 @@ the following:
 
 Signed-off-by: Michal Soltys <soltys@ziu.info>
 ---
- modules.d/90mdraid/65-md-incremental-imsm.rules |   73 ++++++++---------------
+ modules.d/90mdraid/65-md-incremental-imsm.rules |   79 ++++++++---------------
  modules.d/90mdraid/md_finished.sh               |    9 ---
  modules.d/90mdraid/mdadm_auto.sh                |    2 +-
  modules.d/90mdraid/module-setup.sh              |    1 -
  modules.d/90mdraid/parse-md.sh                  |    8 ++-
- 5 files changed, 31 insertions(+), 62 deletions(-)
+ 5 files changed, 34 insertions(+), 65 deletions(-)
  delete mode 100755 modules.d/90mdraid/md_finished.sh
 
 diff --git a/modules.d/90mdraid/65-md-incremental-imsm.rules b/modules.d/90mdraid/65-md-incremental-imsm.rules
@@ -49,24 +49,27 @@ index bb030cf..209b17b 100644
 -ACTION!="add|change", GOTO="md_inc_end"
 -SUBSYSTEM!="block", GOTO="md_inc_end"
 -ENV{ID_FS_TYPE}!="*_raid_member", GOTO="md_inc_end"
+-
+-ENV{ID_FS_TYPE}=="isw_raid_member", ENV{rd_NO_MDIMSM}=="?*", GOTO="md_inc_end"
+-ENV{ID_FS_TYPE}=="ddf_raid_member", ENV{rd_NO_MDDDF}=="?*", GOTO="md_inc_end"
+-
+-ENV{rd_NO_MD}=="?*", GOTO="md_inc_end"
+-
+-PROGRAM=="/bin/sh -c 'for i in $sys/$devpath/holders/md[0-9]*; do [ -e $$i ] && exit 0; done; exit 1;' ", \
+-    GOTO="md_inc_end"
 +ACTION!="add|change", GOTO="md_end"
 +SUBSYSTEM!="block", GOTO="md_end"
 +ENV{rd_NO_MD}=="?*", GOTO="md_end"
 +KERNEL=="md*", GOTO="md_end"
- 
--ENV{ID_FS_TYPE}=="isw_raid_member", ENV{rd_NO_MDIMSM}=="?*", GOTO="md_inc_end"
--ENV{ID_FS_TYPE}=="ddf_raid_member", ENV{rd_NO_MDDDF}=="?*", GOTO="md_inc_end"
++
 +ENV{ID_FS_TYPE}!="*_raid_member", GOTO="md_end"
 +ENV{ID_FS_TYPE}=="isw_raid_member", ENV{rd_NO_MDIMSM}=="?*", GOTO="md_end"
 +ENV{ID_FS_TYPE}=="ddf_raid_member", ENV{rd_NO_MDDDF}=="?*", GOTO="md_end"
- 
--ENV{rd_NO_MD}=="?*", GOTO="md_inc_end"
++
 +# already done ?
 +PROGRAM="/bin/sh -c 'for i in $sys/$devpath/holders/md[0-9]*; do [ -e $$i ] && exit 0; done; exit 1;' ", \
 +    GOTO="md_end"
- 
--PROGRAM=="/bin/sh -c 'for i in $sys/$devpath/holders/md[0-9]*; do [ -e $$i ] && exit 0; done; exit 1;' ", \
--    GOTO="md_inc_end"
++
 +# for native arrays - array's uuid has to be specified
 +# for containers - container's uuid has to be specified
 +# TODO : how to get embedded array's uuid having container's component ?
@@ -108,8 +111,7 @@ index bb030cf..209b17b 100644
 -RUN+="/sbin/mdadm -I $env{DEVNAME}"
 -
 -RUN+="/sbin/initqueue --finished --unique --name md_finished /sbin/md_finished.sh"
-+LABEL="md_incremental"
- 
+-
 -LABEL="md_inc_end"
 -
 -#
@@ -122,7 +124,8 @@ index bb030cf..209b17b 100644
 -        ENV{rd_MDADMCONF}!="?*", \
 -        ENV{rd_NO_MD}!="?*", \
 -	GOTO="do_raidstart"
--
++LABEL="md_incremental"
+ 
 -GOTO="end_raidstart"
 -
 -LABEL="do_raidstart"

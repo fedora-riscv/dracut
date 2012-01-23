@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 013
-Release: 20%{?dist}
+Release: 72.git20120123%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel} > 6
@@ -85,10 +85,14 @@ Patch60: 0060-Makefile-git2spec.pl-use-temporary-builddir.patch
 Patch61: 0061-90kernel-modules-module-setup.sh-include-usb-mass-st.patch
 Patch62: 0062-90mdraid-remove-mdadm_auto.sh-completly.patch
 Patch63: 0063-cryptroot-ask.sh-use-key-file-if-specified-in-cryptt.patch
-#Patch64: 0064-90mdraid-wait-for-md-devices-to-become-clean.patch
+Patch64: 0064-90mdraid-wait-for-md-devices-to-become-clean.patch
 Patch65: 0065-99base-init-only-poll-cdroms-if-the-kernel-does-supp.patch
 Patch66: 0066-99base-init-removed-cdrom-polling-reset-code.patch
 Patch67: 0067-99base-init-fix-check-for-in-kernel-polling.patch
+Patch68: 0068-dracut-add-install_items-to-dracut.conf.patch
+Patch69: 0069-git2spec.pl-strip-path-from-patches.patch
+Patch70: 0070-90kernel-modules-module-setup.sh-install-modules.ord.patch
+Patch71: 0071-Revert-90mdraid-wait-for-md-devices-to-become-clean.patch
 
 
 BuildArch: noarch

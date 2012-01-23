@@ -1,0 +1,42 @@
+From 9fd1f412ed95b0cf1a798e73680c2bf1333ac293 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Fri, 20 Jan 2012 12:06:41 +0100
+Subject: [PATCH] 90kernel-modules/module-setup.sh: install modules.order
+
+Also install modules.order and all modules.builtin*
+---
+ modules.d/90kernel-modules/module-setup.sh |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh
+index 0252502..f575e85 100755
+--- a/modules.d/90kernel-modules/module-setup.sh
++++ b/modules.d/90kernel-modules/module-setup.sh
+@@ -47,7 +47,7 @@ installkernel() {
+ }
+ 
+ install() {
+-    local _f
++    local _f i
+     [ -f /etc/modprobe.conf ] && dracut_install /etc/modprobe.conf
+     for i in $(find /etc/modprobe.d/ -type f -name '*.conf'); do
+         inst_simple "$i"
+@@ -55,13 +55,14 @@ install() {
+     inst_hook cmdline 01 "$moddir/parse-kernel.sh"
+     inst_simple "$moddir/insmodpost.sh" /sbin/insmodpost.sh
+ 
+-    local f
+-
+     for _f in modules.builtin.bin modules.builtin; do
+-        [[ $srcmods/$_f ]] && inst_simple "$srcmods/$_f" "/lib/modules/$kernel/$_f" \
+-            && break
++        [[ $srcmods/$_f ]] && break
+     done || {
+         dfatal "No modules.builtin.bin and modules.builtin found!"
+         return 1
+     }
++
++    for _f in modules.builtin.bin modules.builtin modules.order; do
++        [[ $srcmods/$_f ]] && inst_simple "$srcmods/$_f" "/lib/modules/$kernel/$_f"
++    done
+ }
