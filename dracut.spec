@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 013
-Release: 72.git20120123%{?dist}
+Release: 21%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel} > 6
@@ -374,6 +374,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Mon Jan 23 2012 Harald Hoyer <harald@redhat.com> 013-21
+- include /lib/modules/$(uname -r)/modules.order
+
 * Tue Dec 13 2011 Harald Hoyer <harald@redhat.com> 013-20
 - do not wait for raid to be synced
 Resolves: rhbz#757361
