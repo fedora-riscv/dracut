@@ -1,0 +1,26 @@
+From b325af9c601e62da4acaadba47f7d4b574fe42a0 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 19 May 2011 23:20:00 +0200
+Subject: [PATCH] lsinitrd: handle new output of "file" for XZ compressed
+ images
+
+---
+ lsinitrd |    2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/lsinitrd b/lsinitrd
+index 0d92bcc..ee1d348 100755
+--- a/lsinitrd
++++ b/lsinitrd
+@@ -30,6 +30,8 @@ if [[ "$FILE_T" =~ ": gzip compressed data" ]]; then
+     CAT=zcat
+ elif [[ "$FILE_T" =~ ": xz compressed data" ]]; then
+     CAT=xzcat
++elif [[ "$FILE_T" =~ ": XZ compressed data" ]]; then
++    CAT=xzcat
+ elif [[ "$FILE_T" =~ ": data" ]]; then
+     CAT=lzcat
+ fi
+-- 
+1.7.9.3
+

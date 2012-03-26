@@ -5,7 +5,7 @@ Subject: [PATCH] network/parse-ip-opts.sh: fix ifname for ibft with all args
 
 ---
  modules.d/40network/parse-ip-opts.sh |   15 +++++++++------
- 1 files changed, 9 insertions(+), 6 deletions(-)
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/modules.d/40network/parse-ip-opts.sh b/modules.d/40network/parse-ip-opts.sh
 index 4c3d0c2..608fc88 100755
@@ -37,3 +37,6 @@ index 4c3d0c2..608fc88 100755
  
  	    dhcp=$(read a < ${iface}/dhcp; echo $a)
  	    if [ -n "$dhcp" ]; then
+-- 
+1.7.9.3
+

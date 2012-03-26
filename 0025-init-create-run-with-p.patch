@@ -5,7 +5,7 @@ Subject: [PATCH] init: create /run with "-p"
 
 ---
  modules.d/99base/init |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/99base/init b/modules.d/99base/init
 index 0f18b44..ceb3619 100755
@@ -20,3 +20,6 @@ index 0f18b44..ceb3619 100755
  mount -t devpts -o gid=5,mode=620,noexec,nosuid devpts /dev/pts >/dev/null 2>&1
  mount -t tmpfs -o mode=1777,nosuid,nodev  tmpfs /dev/shm >/dev/null 2>&1
  # create /run which will obsolete /var/run
+-- 
+1.7.9.3
+

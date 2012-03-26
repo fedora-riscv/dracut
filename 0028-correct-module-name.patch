@@ -5,7 +5,7 @@ Subject: [PATCH] correct module name
 
 ---
  modules.d/40network/parse-ip-opts.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/40network/parse-ip-opts.sh b/modules.d/40network/parse-ip-opts.sh
 index b6021c6..c3fc001 100755
@@ -20,3 +20,6 @@ index b6021c6..c3fc001 100755
      num=0
      (   
  	for iface in /sys/firmware/ibft/ethernet*; do
+-- 
+1.7.9.3
+

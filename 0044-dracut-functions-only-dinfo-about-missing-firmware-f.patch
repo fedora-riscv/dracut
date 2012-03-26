@@ -1,0 +1,34 @@
+From a8d8a5bfb4e91e50647b5e5bceaefd23497d4ced Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Tue, 10 May 2011 11:18:58 +0200
+Subject: [PATCH] dracut-functions: only dinfo() about missing firmware files
+
+People are scared about those messages, so only dwarn() if the module
+is actually loaded on the system.
+---
+ dracut-functions |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/dracut-functions b/dracut-functions
+index 2fc2471..af82f8a 100755
+--- a/dracut-functions
++++ b/dracut-functions
+@@ -685,8 +685,13 @@ install_kmod_with_fw() {
+             fi
+         done
+         if [[ $found != yes ]]; then
+-            dwarn "Possible missing firmware \"${fw}\" for kernel module" \
+-                "\"${mod}.ko\""
++            if ! grep -qe "\<${modname//-/_}\>" /proc/modules; then
++                dinfo "Possible missing firmware \"${fw}\" for kernel module" \
++                    "\"${modname}.ko\""
++            else
++                dwarn "Possible missing firmware \"${fw}\" for kernel module" \
++                    "\"${modname}.ko\""
++            fi
+         fi
+     done
+     return 0
+-- 
+1.7.9.3
+

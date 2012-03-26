@@ -5,7 +5,7 @@ Subject: [PATCH] fips: fixed "boot=<dev>" handling
 
 ---
  modules.d/01fips/fips.sh |   16 +++++++---------
- 1 files changed, 7 insertions(+), 9 deletions(-)
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
 diff --git a/modules.d/01fips/fips.sh b/modules.d/01fips/fips.sh
 index febe23e..857c355 100755
@@ -39,3 +39,6 @@ index febe23e..857c355 100755
          *)
              die "You have to specify boot=<boot device> as a boot option for fips=1" ;;
      esac
+-- 
+1.7.9.3
+

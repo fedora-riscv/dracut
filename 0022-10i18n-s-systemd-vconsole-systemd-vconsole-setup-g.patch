@@ -36,3 +36,6 @@ index a374c33..f2320c3 100755
      KBDSUBDIRS=consolefonts,consoletrans,keymaps,unimaps
      DEFAULT_FONT=LatArCyrHeb-16
      I18N_CONF="/etc/locale.conf"
+-- 
+1.7.9.3
+

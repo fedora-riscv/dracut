@@ -1,0 +1,28 @@
+From e286d68d033161a34ec0bc5febf3736afd37cda9 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Fri, 17 Jun 2011 13:49:57 +0200
+Subject: [PATCH] base/init: do not mount devtmpfs with "noexec"
+
+https://bugzilla.redhat.com/show_bug.cgi?id=710711
+
+mmap /dev/zero: Operation not permitted
+---
+ modules.d/99base/init |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules.d/99base/init b/modules.d/99base/init
+index d306fda..b2257b8 100755
+--- a/modules.d/99base/init
++++ b/modules.d/99base/init
+@@ -93,7 +93,7 @@ fi
+ 
+ if [ ! -c /dev/ptmx ]; then
+     # try to mount devtmpfs
+-    if ! mount -t devtmpfs -o mode=0755,nosuid,noexec devtmpfs /dev >/dev/null 2>&1; then
++    if ! mount -t devtmpfs -o mode=0755,nosuid devtmpfs /dev >/dev/null 2>&1; then
+         # if it failed fall back to normal tmpfs
+         mount -t tmpfs -o mode=0755,nosuid tmpfs /dev >/dev/null 2>&1
+         # Make some basic devices first, let udev handle the rest
+-- 
+1.7.9.3
+

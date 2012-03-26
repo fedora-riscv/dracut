@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 009
-Release: 13%{?dist}
+Release: 14%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel} > 6
@@ -55,6 +55,28 @@ Patch32: 0032-network-parse-ip-opts.sh-fix-ifname-for-ibft-with-al.patch
 Patch33: 0033-iscsi-add-additional-hardcoded-modules.patch
 Patch34: 0034-iscsi-mount-lun.sh-use-NEWROOT.patch
 Patch35: 0035-iscsi-find-iscsi-kernel-modules-by-symbol-names.patch
+Patch36: 0036-crypt-cryptroot-ask.sh-s-.console.lock-.console_lock.patch
+Patch37: 0037-kernel-modules-insmodpost.sh-fixed-handling-rd.drive.patch
+Patch38: 0038-parse-kernel.sh-wrong-index-was-used-in-for-loop.patch
+Patch39: 0039-lsinitrd-default-to-boot-initramfs-uname-r-.img.patch
+Patch40: 0040-fcoe-parse-fcoe.sh-s-source-.-g.patch
+Patch41: 0041-base-crypt-install-umount-because-it-is-used.patch
+Patch42: 0042-kernel-modules-inst-modules.builtin-if-there-s-no-mo.patch
+Patch43: 0043-dracut-use-var-tmp-rather-than-tmp-for-the-initramfs.patch
+Patch44: 0044-dracut-functions-only-dinfo-about-missing-firmware-f.patch
+Patch45: 0045-dracut-set-TMPDIR-to-var-tmp.patch
+Patch46: 0046-lvm-lvm_scan.sh-remove-references-to-lvm-cleanup.patch
+Patch47: 0047-lsinitrd-handle-new-output-of-file-for-XZ-compressed.patch
+Patch48: 0048-base-init-mount-virtual-filesystems-with-the-filesys.patch
+Patch49: 0049-base-init-do-not-mount-devtmpfs-with-noexec.patch
+Patch50: 0050-selinux-selinux-loadpolicy.sh-set-LANG-C-for-load_po.patch
+Patch51: 0051-dracut.spec-fixed-logrotate.patch
+Patch52: 0052-dracut.spec-remove-noreplace-for-01-dist.conf.patch
+Patch53: 0053-add-convertfs-module.patch
+Patch54: 0054-90mdraid-add-offroot-support.patch
+Patch55: 0055-dracut-remove-duplicate-options.patch
+Patch56: 0056-dracut-dracut-functions-fix-PATH.patch
+Patch57: 0057-dracut.spec-add-30convertfs.patch
 
 BuildArch: noarch
 
@@ -223,6 +245,28 @@ This package contains tools to assemble the local initrd and host configuration.
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
+%patch39 -p1
+%patch40 -p1
+%patch41 -p1
+%patch42 -p1
+%patch43 -p1
+%patch44 -p1
+%patch45 -p1
+%patch46 -p1
+%patch47 -p1
+%patch48 -p1
+%patch49 -p1
+%patch50 -p1
+%patch51 -p1
+%patch52 -p1
+%patch53 -p1
+%patch54 -p1
+%patch55 -p1
+%patch56 -p1
+%patch57 -p1
 
 %build
 make WITH_SWITCH_ROOT=0%{?with_switch_root}
@@ -297,6 +341,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dracut/modules.d/05busybox
 %{_datadir}/dracut/modules.d/10i18n
 %{_datadir}/dracut/modules.d/10rpmversion
+%{_datadir}/dracut/modules.d/30convertfs
 %{_datadir}/dracut/modules.d/50plymouth
 %{_datadir}/dracut/modules.d/60xen
 %{_datadir}/dracut/modules.d/90btrfs
@@ -357,6 +402,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Mon Mar 26 2012 Harald Hoyer <harald@redhat.com> 009-14
+- add convertfs module
+- add support for mdraid --offroot
+
 * Mon Aug 29 2011 Harald Hoyer <harald@redhat.com> 009-13
 - fixed rhel/fedora version checks
 

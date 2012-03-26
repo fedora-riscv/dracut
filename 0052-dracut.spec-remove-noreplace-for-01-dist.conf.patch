@@ -1,0 +1,25 @@
+From 2cc8422496df3b20a4dadd67066adf653bd56d03 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 20 Jul 2011 12:39:58 +0200
+Subject: [PATCH] dracut.spec: remove noreplace for 01-dist.conf
+
+---
+ dracut.spec |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dracut.spec b/dracut.spec
+index f556c27..5d83bc5 100644
+--- a/dracut.spec
++++ b/dracut.spec
+@@ -225,7 +225,7 @@ rm -rf $RPM_BUILD_ROOT
+ %{_datadir}/dracut/dracut-logger
+ %config(noreplace) /etc/dracut.conf
+ %if 0%{?fedora} || 0%{?suse_version}
+-%config(noreplace) /etc/dracut.conf.d/01-dist.conf
++%config /etc/dracut.conf.d/01-dist.conf
+ %endif
+ %dir /etc/dracut.conf.d
+ %{_mandir}/man8/dracut.8*
+-- 
+1.7.9.3
+

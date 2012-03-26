@@ -1,0 +1,25 @@
+From d7d43749cd53e68783cb4cebbf74dc0732fc4f10 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Fri, 1 Jul 2011 10:30:02 +0200
+Subject: [PATCH] kernel-modules/insmodpost.sh: fixed handling rd.driver.post=
+
+---
+ modules.d/90kernel-modules/insmodpost.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules.d/90kernel-modules/insmodpost.sh b/modules.d/90kernel-modules/insmodpost.sh
+index c3d7714..fafa7ff 100755
+--- a/modules.d/90kernel-modules/insmodpost.sh
++++ b/modules.d/90kernel-modules/insmodpost.sh
+@@ -2,7 +2,7 @@
+ # -*- mode: shell-script; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
+ # ex: ts=8 sw=4 sts=4 et filetype=sh
+ 
+-for p in $(getargs rd.driver.post rdinsmodpost=); do 
++for i in $(getargs rd.driver.post rdinsmodpost=); do 
+     (
+         IFS=,
+         for p in $i; do 
+-- 
+1.7.9.3
+

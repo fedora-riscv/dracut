@@ -5,7 +5,7 @@ Subject: [PATCH] dracut: add "/lib/firmware/updates" to default firmware path
 
 ---
  dracut |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dracut b/dracut
 index 404b9db..c6605bb 100755
@@ -20,3 +20,6 @@ index 404b9db..c6605bb 100755
  [[ $do_strip ]] || do_strip=no
  [[ $compress_l ]] && compress=$compress_l
  [[ $show_modules_l ]] && show_modules=$show_modules_l
+-- 
+1.7.9.3
+

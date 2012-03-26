@@ -1,12 +1,13 @@
 From 1043433a0e1fde9e777c11af09e4c7ed70e180e0 Mon Sep 17 00:00:00 2001
 From: Alan Pevec <apevec@redhat.com>
 Date: Thu, 12 May 2011 14:16:07 +0200
-Subject: [PATCH] dmsquash-live/dmsquash-live-root: add missing changes for /run
+Subject: [PATCH] dmsquash-live/dmsquash-live-root: add missing changes for
+ /run
 
 Change to /run/initramfs/squashfs/ was not complete.
 ---
  modules.d/90dmsquash-live/dmsquash-live-root |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/modules.d/90dmsquash-live/dmsquash-live-root b/modules.d/90dmsquash-live/dmsquash-live-root
 index 928aff9..82a4bc1 100755
@@ -31,3 +32,6 @@ index 928aff9..82a4bc1 100755
  
      do_live_from_base_loop
  fi
+-- 
+1.7.9.3
+

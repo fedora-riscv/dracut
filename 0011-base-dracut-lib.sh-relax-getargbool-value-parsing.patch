@@ -7,7 +7,7 @@ if a non-boolean value was specified, like "yes" or "no",
 getargbool() would error, because we check for "$val -eq 0"
 ---
  modules.d/99base/dracut-lib.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/99base/dracut-lib.sh b/modules.d/99base/dracut-lib.sh
 index a5406ab..37b3e76 100755
@@ -22,3 +22,6 @@ index a5406ab..37b3e76 100755
          [ $_b = "no" ] && return 1
      fi
      return 0
+-- 
+1.7.9.3
+

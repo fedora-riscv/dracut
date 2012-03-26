@@ -5,7 +5,7 @@ Subject: [PATCH] iscsi/mount-lun.sh: use NEWROOT
 
 ---
  modules.d/95iscsi/mount-lun.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/95iscsi/mount-lun.sh b/modules.d/95iscsi/mount-lun.sh
 index 0eadfd2..b11dd0a 100755
@@ -20,3 +20,6 @@ index 0eadfd2..b11dd0a 100755
              umount $disk
              continue
          fi
+-- 
+1.7.9.3
+

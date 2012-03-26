@@ -277,3 +277,6 @@ index 930138a..a5a3f59 100755
          retdir_new=$(funiq "${dir}" "${prefix}") || return 1
          [ "$retdir_new" = "$retdir" ] && return 1
          retdir="$retdir_new"
+-- 
+1.7.9.3
+

@@ -1,11 +1,12 @@
 From 149037e0252d4c9f5d10c07a48aa62860de6ceea Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 30 Mar 2011 16:24:57 +0200
-Subject: [PATCH] plymouth: use /run/plymouth/pid instead of /run/initramfs/plymouth
+Subject: [PATCH] plymouth: use /run/plymouth/pid instead of
+ /run/initramfs/plymouth
 
 ---
  modules.d/50plymouth/plymouth-pretrigger.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/modules.d/50plymouth/plymouth-pretrigger.sh b/modules.d/50plymouth/plymouth-pretrigger.sh
 index d560d6f..477975f 100755
@@ -22,3 +23,6 @@ index d560d6f..477975f 100755
      [ -x /lib/udev/console_init ] && /lib/udev/console_init tty0
      /bin/plymouth --show-splash 2>&1 | vinfo
  fi
+-- 
+1.7.9.3
+

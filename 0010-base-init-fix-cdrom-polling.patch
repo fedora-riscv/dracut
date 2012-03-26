@@ -5,7 +5,7 @@ Subject: [PATCH] base/init: fix cdrom polling
 
 ---
  modules.d/99base/init |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/99base/init b/modules.d/99base/init
 index b6f4e92..a30706b 100755
@@ -20,3 +20,6 @@ index b6f4e92..a30706b 100755
              msecs=$(while read a; do echo $a;done < "$cdrom"/events_poll_msecs)
              if [ "$msecs" = "-1" ]; then
                  echo 250 > "$cdrom"/events_poll_msecs
+-- 
+1.7.9.3
+

@@ -5,7 +5,7 @@ Subject: [PATCH] dracut: simplify $kernel version argument setting
 
 ---
  dracut |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/dracut b/dracut
 index c16b222..0a96c66 100755
@@ -37,3 +37,6 @@ index c16b222..0a96c66 100755
      kernel=$(uname -r)
  fi
  [[ $outfile ]] || outfile="/boot/initramfs-$kernel.img"
+-- 
+1.7.9.3
+

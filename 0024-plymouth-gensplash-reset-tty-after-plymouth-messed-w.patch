@@ -38,3 +38,6 @@ index 222dc20..25ed06f 100755
 +    # reset tty after plymouth messed with it
 +    [ -x /lib/udev/console_init ] && /lib/udev/console_init /dev/tty0
  fi
+-- 
+1.7.9.3
+

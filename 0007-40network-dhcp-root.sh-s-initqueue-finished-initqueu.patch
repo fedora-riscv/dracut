@@ -1,11 +1,12 @@
 From e77e82e12ebc5d33a6be8bdf8b35df6ad11e38c7 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 29 Mar 2011 15:46:53 +0200
-Subject: [PATCH] 40network/dhcp-root.sh: s#initqueue-finished#initqueue/finished#g
+Subject: [PATCH] 40network/dhcp-root.sh:
+ s#initqueue-finished#initqueue/finished#g
 
 ---
  modules.d/40network/dhcp-root.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/40network/dhcp-root.sh b/modules.d/40network/dhcp-root.sh
 index 8c5d723..85c7f08 100755
@@ -18,3 +19,6 @@ index 8c5d723..85c7f08 100755
 -    echo '[ -d $NEWROOT/proc -o -e /dev/root ]' > $hookdir/initqueue-finished/dhcp.sh
 +    echo '[ -d $NEWROOT/proc -o -e /dev/root ]' > $hookdir/initqueue/finished/dhcp.sh
  fi
+-- 
+1.7.9.3
+

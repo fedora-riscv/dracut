@@ -5,7 +5,7 @@ Subject: [PATCH] iscsi: find iscsi kernel modules by symbol names
 
 ---
  modules.d/95iscsi/module-setup.sh |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/modules.d/95iscsi/module-setup.sh b/modules.d/95iscsi/module-setup.sh
 index cddd4f3..793a243 100755
@@ -49,3 +49,6 @@ index cddd4f3..793a243 100755
      inst hostname
      inst iscsi-iname
      inst_hook cmdline 90 "$moddir/parse-iscsiroot.sh"
+-- 
+1.7.9.3
+

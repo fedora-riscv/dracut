@@ -7,7 +7,7 @@ New kernel/dmesg understands syslog levels, so we log with "+24" to indicate
 that dracut is a daemon (current init).
 ---
  modules.d/99base/dracut-lib.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/modules.d/99base/dracut-lib.sh b/modules.d/99base/dracut-lib.sh
 index 37b3e76..930138a 100755
@@ -41,3 +41,6 @@ index 37b3e76..930138a 100755
      [ "$DRACUT_QUIET" != "yes" ] && \
          echo "dracut: $@" 
  }
+-- 
+1.7.9.3
+

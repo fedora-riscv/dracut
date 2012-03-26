@@ -1,0 +1,39 @@
+From 147ce7ccbb923a96d406be22d8ed325df965569d Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 26 Mar 2012 09:29:06 +0200
+Subject: [PATCH] dracut, dracut-functions: fix PATH
+
+---
+ dracut           |    2 +-
+ dracut-functions |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dracut b/dracut
+index 02cf07d..7ea9419 100755
+--- a/dracut
++++ b/dracut
+@@ -252,7 +252,7 @@ if ! [[ $kernel ]]; then
+ fi
+ [[ $outfile ]] || outfile="/boot/initramfs-$kernel.img"
+ 
+-PATH=/sbin:/bin:/usr/sbin:/usr/bin
++PATH=/usr/sbin:/sbin:/usr/bin:/bin
+ export PATH
+ 
+ [[ $debug ]] && { 
+diff --git a/dracut-functions b/dracut-functions
+index af82f8a..571a4f3 100755
+--- a/dracut-functions
++++ b/dracut-functions
+@@ -314,7 +314,7 @@ inst_library() {
+ # find a binary.  If we were not passed the full path directly,
+ # search in the usual places to find the binary.
+ find_binary() {
+-    local binpath="/bin /sbin /usr/bin /usr/sbin" p
++    local binpath="/usr/sbin /sbin /usr/bin /bin" p
+     if [[ -z ${1##/*} ]]; then
+         if [[ -x $1 ]] || ldd $1 &>/dev/null; then
+             echo $1
+-- 
+1.7.9.3
+

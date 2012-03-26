@@ -1,0 +1,29 @@
+From 20a2b4dd7a5012f991aa3a1f432215e7de25b6f3 Mon Sep 17 00:00:00 2001
+From: Michal Soltys <soltys@ziu.info>
+Date: Mon, 17 Oct 2011 23:01:49 +0200
+Subject: [PATCH] dracut: remove duplicate options
+
+'-I' and '--fwdir' were both read_arg and push_arg, and the latter has
+priority.
+
+Signed-off-by: Michal Soltys <soltys@ziu.info>
+---
+ dracut |    2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/dracut b/dracut
+index 9ef01e9..02cf07d 100755
+--- a/dracut
++++ b/dracut
+@@ -203,8 +203,6 @@ while (($# > 0)); do
+         -c|--conf)     read_arg conffile             "$@" || shift;;
+         --confdir)     read_arg confdir              "$@" || shift;;
+         -L|--stdlog)   read_arg stdloglvl_l          "$@" || shift;;
+-        -I|--install)  read_arg install_items        "$@" || shift;;
+-        --fwdir)       read_arg fw_dir_l             "$@" || shift;;
+         --compress)    read_arg compress_l           "$@" || shift;;
+         -f|--force)    force=yes;;
+         --kernel-only) kernel_only="yes"; no_kernel="no";;
+-- 
+1.7.9.3
+

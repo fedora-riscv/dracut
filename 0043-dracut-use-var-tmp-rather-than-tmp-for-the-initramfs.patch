@@ -1,0 +1,27 @@
+From 918086bf190cc5e4ff7093dc1018d78216a0e58e Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Tue, 10 May 2011 10:59:18 +0200
+Subject: [PATCH] dracut: use /var/tmp rather than /tmp for the initramfs
+ creation
+
+/tmp might be to small to hold the initramfs image
+---
+ dracut |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dracut b/dracut
+index 15a5ee5..55ec818 100755
+--- a/dracut
++++ b/dracut
+@@ -446,7 +446,7 @@ elif [[ -f "$outfile" && ! -w "$outfile" ]]; then
+ fi
+ 
+ [[ $TMPDIR && ! -w $TMPDIR ]] && unset TMPDIR
+-readonly initdir=$(mktemp -d -t initramfs.XXXXXX)
++readonly initdir=$(mktemp --tmpdir=/var/tmp/ -d -t initramfs.XXXXXX)
+ 
+ # clean up after ourselves no matter how we die.
+ trap 'ret=$?;rm -rf "$initdir";exit $ret;' EXIT 
+-- 
+1.7.9.3
+

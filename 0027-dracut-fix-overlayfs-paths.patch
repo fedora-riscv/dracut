@@ -5,7 +5,7 @@ Subject: [PATCH] dracut: fix overlayfs paths
 
 ---
  modules.d/90dmsquash-live/dmsquash-live-root |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/modules.d/90dmsquash-live/dmsquash-live-root b/modules.d/90dmsquash-live/dmsquash-live-root
 index 82a4bc1..abd6644 100755
@@ -24,3 +24,6 @@ index 82a4bc1..abd6644 100755
              if [ -n "$reset_overlay" ]; then
                  dd if=/dev/zero of=$OVERLAY_LOOPDEV bs=64k count=1 2>/dev/null
              fi
+-- 
+1.7.9.3
+

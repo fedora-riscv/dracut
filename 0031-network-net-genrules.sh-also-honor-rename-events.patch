@@ -5,7 +5,7 @@ Subject: [PATCH] network/net-genrules.sh: also honor rename events
 
 ---
  modules.d/40network/net-genrules.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/modules.d/40network/net-genrules.sh b/modules.d/40network/net-genrules.sh
 index d24a865..1783909 100755
@@ -26,3 +26,6 @@ index d24a865..1783909 100755
      fi
  
  } > /etc/udev/rules.d/60-net.rules
+-- 
+1.7.9.3
+

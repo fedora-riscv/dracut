@@ -8,7 +8,7 @@ automatically when sunrpc module is loaded, on Debian based systems it
 needs to be mounted manually.
 ---
  modules.d/95nfs/nfsroot |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 diff --git a/modules.d/95nfs/nfsroot b/modules.d/95nfs/nfsroot
 index 486c0e1..f4c5051 100755
@@ -24,3 +24,6 @@ index 486c0e1..f4c5051 100755
      # Start rpc.statd as mount won't let us use locks on a NFSv4
      # filesystem without talking to it. NFSv4 does locks internally,
      # rpc.lockd isn't needed
+-- 
+1.7.9.3
+

@@ -1,0 +1,27 @@
+From 493d84af5a92a75d2e1b6176ad3e38b384381edd Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 16 May 2011 18:10:27 +0200
+Subject: [PATCH] dracut: set TMPDIR to /var/tmp
+
+we really don't want anything else than /var/tmp for our operations.
+/tmp might be too small and any other location might not fit our needs.
+---
+ dracut |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dracut b/dracut
+index 55ec818..9ef01e9 100755
+--- a/dracut
++++ b/dracut
+@@ -445,7 +445,7 @@ elif [[ -f "$outfile" && ! -w "$outfile" ]]; then
+     exit 1
+ fi
+ 
+-[[ $TMPDIR && ! -w $TMPDIR ]] && unset TMPDIR
++readonly TMPDIR=/var/tmp
+ readonly initdir=$(mktemp --tmpdir=/var/tmp/ -d -t initramfs.XXXXXX)
+ 
+ # clean up after ourselves no matter how we die.
+-- 
+1.7.9.3
+

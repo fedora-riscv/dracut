@@ -7,7 +7,7 @@ https://bugzilla.redhat.com/show_bug.cgi?id=692781
 https://bugzilla.redhat.com/show_bug.cgi?id=689694
 ---
  modules.d/95iscsi/module-setup.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/95iscsi/module-setup.sh b/modules.d/95iscsi/module-setup.sh
 index 23c612a..cddd4f3 100755
@@ -22,3 +22,6 @@ index 23c612a..cddd4f3 100755
  }
  
  install() {
+-- 
+1.7.9.3
+

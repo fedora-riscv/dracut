@@ -5,7 +5,7 @@ Subject: [PATCH] base/init: fixed compat /dev/.initramfs copy
 
 ---
  modules.d/99base/init |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/modules.d/99base/init b/modules.d/99base/init
 index a30706b..83d9568 100755
@@ -31,3 +31,6 @@ index a30706b..83d9568 100755
  fi
  
  if [ -f /etc/capsdrop ]; then
+-- 
+1.7.9.3
+

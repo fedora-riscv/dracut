@@ -5,7 +5,7 @@ Subject: [PATCH] dracut: source reformat with line breaks
 
 ---
  dracut |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/dracut b/dracut
 index 0a96c66..c156cdb 100755
@@ -22,3 +22,6 @@ index 0a96c66..c156cdb 100755
          --bzip2)       compress_l="bzip2";;
          --lzma)        compress_l="lzma";;
          --xz)          compress_l="xz";;
+-- 
+1.7.9.3
+

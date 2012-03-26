@@ -5,7 +5,7 @@ Subject: [PATCH] skip condition fixed
 
 ---
  modules.d/40network/parse-ip-opts.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/40network/parse-ip-opts.sh b/modules.d/40network/parse-ip-opts.sh
 index c3fc001..d7b7f37 100755
@@ -20,3 +20,6 @@ index c3fc001..d7b7f37 100755
              ifname_if=ibft$num
  	    num=$(( $num + 1 ))
  	    echo "ifname=$ifname_if:$ifname_mac"
+-- 
+1.7.9.3
+

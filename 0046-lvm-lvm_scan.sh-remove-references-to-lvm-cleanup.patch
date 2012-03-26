@@ -1,0 +1,29 @@
+From ccc5ad42a4baf9f990981acc2b04944d9603ad77 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Tue, 17 May 2011 12:29:47 +0200
+Subject: [PATCH] lvm/lvm_scan.sh: remove references to lvm-cleanup
+
+lvm-cleanup was removed long time ago
+
+Conflicts:
+
+	modules.d/90lvm/lvm_scan.sh
+---
+ modules.d/90lvm/lvm_scan.sh |    2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/modules.d/90lvm/lvm_scan.sh b/modules.d/90lvm/lvm_scan.sh
+index 3f2a923..41325b2 100755
+--- a/modules.d/90lvm/lvm_scan.sh
++++ b/modules.d/90lvm/lvm_scan.sh
+@@ -120,7 +120,5 @@ fi
+ 
+ if [ "$lvmwritten" ]; then
+     rm -f /etc/lvm/lvm.conf
+-    ln -s /sbin/lvm-cleanup $hookdir/pre-pivot/30-lvm-cleanup.sh 2>/dev/null
+-    ln -s /sbin/lvm-cleanup $hookdir/pre-pivot/31-lvm-cleanup.sh 2>/dev/null
+ fi
+ unset lvmwritten
+-- 
+1.7.9.3
+

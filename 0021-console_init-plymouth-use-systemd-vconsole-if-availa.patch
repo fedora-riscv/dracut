@@ -5,7 +5,7 @@ Subject: [PATCH] console_init/plymouth: use systemd-vconsole, if available
 
 also init the console before starting the plymouth daemon
 ---
- modules.d/10i18n/console_init               |   35 +++++++++++++++-----------
+ modules.d/10i18n/console_init               |   35 +++++++++++++++------------
  modules.d/10i18n/module-setup.sh            |    1 +
  modules.d/50plymouth/plymouth-pretrigger.sh |    2 +-
  3 files changed, 22 insertions(+), 16 deletions(-)
@@ -80,3 +80,6 @@ index 6f8628d..222dc20 100755
 +    [ -x /bin/plymouthd ] && /bin/plymouthd --attach-to-session --pid-file /run/plymouth/pid
      /bin/plymouth --show-splash 2>&1 | vinfo
  fi
+-- 
+1.7.9.3
+

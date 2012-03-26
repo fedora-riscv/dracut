@@ -34,3 +34,6 @@ index eae0be2..d560d6f 100755
 +    [ -x /lib/udev/console_init ] && /lib/udev/console_init tty0
      /bin/plymouth --show-splash 2>&1 | vinfo
  fi
+-- 
+1.7.9.3
+

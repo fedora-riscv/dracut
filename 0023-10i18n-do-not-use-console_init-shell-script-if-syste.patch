@@ -1,7 +1,8 @@
 From 065a609633bda845b4ac821a139a1deab397c1f8 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 3 May 2011 14:48:05 +0200
-Subject: [PATCH] 10i18n: do not use console_init shell script, if systemd-vconsole-setup
+Subject: [PATCH] 10i18n: do not use console_init shell script, if
+ systemd-vconsole-setup
 
 do not use console_init shell script, if systemd-vconsole-setup is
 available
@@ -90,3 +91,6 @@ index 9f47326..6b7e569 100755
 +    rm -f /lib/udev/console_init
 +    ln -s /lib/systemd/systemd-vconsole-setup /lib/udev/console_init
 +fi
+-- 
+1.7.9.3
+

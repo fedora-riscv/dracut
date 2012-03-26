@@ -5,7 +5,7 @@ Subject: [PATCH] base/init: reset PATH after the /run move
 
 ---
  modules.d/99base/init |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/99base/init b/modules.d/99base/init
 index 83d9568..0f18b44 100755
@@ -28,3 +28,6 @@ index 83d9568..0f18b44 100755
  if [ -f /etc/capsdrop ]; then
      . /etc/capsdrop
      info "Calling $INIT with capabilities $CAPS_INIT_DROP dropped."
+-- 
+1.7.9.3
+

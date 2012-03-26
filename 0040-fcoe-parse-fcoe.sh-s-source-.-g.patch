@@ -1,0 +1,36 @@
+From 4af1a915ad9e2017afbb74900b97023db4a5c5e9 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Fri, 8 Apr 2011 10:21:14 +0200
+Subject: [PATCH] fcoe/parse-fcoe.sh: s#source#.#g
+
+dash does not understand "source"
+---
+ modules.d/95fcoe/parse-fcoe.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/modules.d/95fcoe/parse-fcoe.sh b/modules.d/95fcoe/parse-fcoe.sh
+index 4576d68..e42cf2a 100755
+--- a/modules.d/95fcoe/parse-fcoe.sh
++++ b/modules.d/95fcoe/parse-fcoe.sh
+@@ -61,7 +61,7 @@ if [ "$fcoe_interface" = "edd" ]; then
+                 unset fcoe_mac
+                 unset fcoe_interface
+                 fcoe_mac=$(cat ${nic}/address)
+-                [ -n "$fcoe_mac" ] && source /sbin/fcoe-genrules.sh
++                [ -n "$fcoe_mac" ] && . /sbin/fcoe-genrules.sh
+             fi
+         done
+     done
+@@ -73,6 +73,6 @@ else
+         if [ "$fcoe_dcb" != "nodcb" -a "$fcoe_dcb" != "dcb" ] ; then
+             warn "Invalid FCoE DCB option: $fcoe_dcb"
+         fi
+-        source /sbin/fcoe-genrules.sh
++        . /sbin/fcoe-genrules.sh
+     done
+-fi
+\ No newline at end of file
++fi
+-- 
+1.7.9.3
+
