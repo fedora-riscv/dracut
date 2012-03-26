@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 013
-Release: 21%{?dist}
+Release: 22%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel} > 6
@@ -93,6 +93,8 @@ Patch68: 0068-dracut-add-install_items-to-dracut.conf.patch
 Patch69: 0069-git2spec.pl-strip-path-from-patches.patch
 Patch70: 0070-90kernel-modules-module-setup.sh-install-modules.ord.patch
 Patch71: 0071-Revert-90mdraid-wait-for-md-devices-to-become-clean.patch
+Patch72: 0072-add-30convertfs.patch
+Patch73: 0073-90mdraid-add-offroot-support.patch
 
 
 BuildArch: noarch
@@ -306,6 +308,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dracut/modules.d/05busybox
 %{_datadir}/dracut/modules.d/10i18n
 %{_datadir}/dracut/modules.d/10rpmversion
+%{_datadir}/dracut/modules.d/30convertfs
 %{_datadir}/dracut/modules.d/50plymouth
 %{_datadir}/dracut/modules.d/60xen
 %{_datadir}/dracut/modules.d/90btrfs
@@ -374,6 +377,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Mon Mar 26 2012 Harald Hoyer <harald@redhat.com> 013-22
+- added convertfs dracut module
+- added mdraid --offroot support
+
 * Mon Jan 23 2012 Harald Hoyer <harald@redhat.com> 013-21
 - include /lib/modules/$(uname -r)/modules.order
 
