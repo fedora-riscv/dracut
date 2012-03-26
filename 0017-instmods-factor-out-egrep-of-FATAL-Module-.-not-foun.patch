@@ -5,7 +5,7 @@ Subject: [PATCH] instmods: factor out egrep of "FATAL: Module .* not found"
 
 ---
  dracut-functions |   34 +++++++++++++++++++---------------
- 1 files changed, 19 insertions(+), 15 deletions(-)
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index 6c16cae..507f0c3 100755

@@ -17,7 +17,7 @@ This patch adjusts the behaviour.
 Signed-off-by: Michal Soltys <soltys@ziu.info>
 ---
  modules.d/90mdraid/module-setup.sh |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+ 1 file changed, 5 insertions(+)
 
 diff --git a/modules.d/90mdraid/module-setup.sh b/modules.d/90mdraid/module-setup.sh
 index de7785d..91a0769 100755

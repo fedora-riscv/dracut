@@ -7,7 +7,7 @@ Subject: [PATCH] 90kernel-modules/module-setup.sh: include usb mass storage
 backport of commit e696ade15d9284fc6e3499a69a9b389587430a34
 ---
  modules.d/90kernel-modules/module-setup.sh |    7 +------
- 1 files changed, 1 insertions(+), 6 deletions(-)
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh
 index 9fc4248..0252502 100755

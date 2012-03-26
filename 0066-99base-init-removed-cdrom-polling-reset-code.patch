@@ -6,7 +6,7 @@ Subject: [PATCH] 99base/init: removed cdrom polling reset code
 This is done globally now.
 ---
  modules.d/99base/init |    8 --------
- 1 files changed, 0 insertions(+), 8 deletions(-)
+ 1 file changed, 8 deletions(-)
 
 diff --git a/modules.d/99base/init b/modules.d/99base/init
 index dc2cdfa..1f0e342 100755

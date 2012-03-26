@@ -5,7 +5,7 @@ Subject: [PATCH] dracut-functions: speed up inst_dir()
 
 ---
  dracut-functions |   18 +++++++++---------
- 1 files changed, 9 insertions(+), 9 deletions(-)
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index 241d89a..d7f2e5f 100755

@@ -7,7 +7,7 @@ How it worked without it?  The issue only manifests itself with
 initramfs integrated into kernel.
 ---
  dracut |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dracut b/dracut
 index 6ecb19a..ddafdef 100755

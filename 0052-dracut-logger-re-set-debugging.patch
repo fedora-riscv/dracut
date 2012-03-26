@@ -5,7 +5,7 @@ Subject: [PATCH] dracut-logger: re-set debugging
 
 ---
  dracut-logger |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/dracut-logger b/dracut-logger
 index ce28208..f1b3a7e 100755

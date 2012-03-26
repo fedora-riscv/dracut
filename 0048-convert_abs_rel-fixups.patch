@@ -14,7 +14,7 @@ Subject: [PATCH] convert_abs_rel() fixups
 Signed-off-by: Michal Soltys <soltys@ziu.info>
 ---
  dracut-functions |   18 +++++++++++-------
- 1 files changed, 11 insertions(+), 7 deletions(-)
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index c4f7f61..12dfa70 100755

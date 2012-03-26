@@ -16,7 +16,7 @@ would return 'aayaayaa' instead of ' aay aayaa'.
 Signed-off-by: Michal Soltys <soltys@ziu.info>
 ---
  modules.d/99base/dracut-lib.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/99base/dracut-lib.sh b/modules.d/99base/dracut-lib.sh
 index 50b1ed2..62c3bf5 100755

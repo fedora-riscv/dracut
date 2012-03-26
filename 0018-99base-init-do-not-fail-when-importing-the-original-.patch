@@ -6,7 +6,7 @@ Subject: [PATCH] 99base/init: do not fail, when importing the original kernel
 
 ---
  modules.d/99base/init |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/99base/init b/modules.d/99base/init
 index 4a91e53..30a5cf9 100755

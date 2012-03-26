@@ -7,7 +7,7 @@ This small stuff saves 1.7% per dropped statement during "dracut --profile".
 Fixing the comment about /lib -> lib64 is REQUIRED!
 ---
  dracut-functions |   16 +++++-----------
- 1 files changed, 5 insertions(+), 11 deletions(-)
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index 3edd4c7..f41fc7d 100755

@@ -18,7 +18,7 @@ It seems to me that a leading "--" should inhibit modification.
 Here's the corresponding patch to current HEAD (from dracut-013.)
 ---
  dracut-functions |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index a3340e4..c28766e 100755

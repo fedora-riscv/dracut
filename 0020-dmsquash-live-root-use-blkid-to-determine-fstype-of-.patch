@@ -8,7 +8,7 @@ dracut: FATAL: cannot mount live image (unknown filesystem type)
 https://bugzilla.redhat.com/show_bug.cgi?id=735199
 ---
  modules.d/90dmsquash-live/dmsquash-live-root |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/modules.d/90dmsquash-live/dmsquash-live-root b/modules.d/90dmsquash-live/dmsquash-live-root
 index 90e633c..9bf4f09 100755

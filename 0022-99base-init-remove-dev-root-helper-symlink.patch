@@ -6,7 +6,7 @@ Subject: [PATCH] 99base/init: remove /dev/root helper symlink
 Any tool relying on /dev/root has to be fixed.
 ---
  modules.d/99base/init |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+ 1 file changed, 3 insertions(+)
 
 diff --git a/modules.d/99base/init b/modules.d/99base/init
 index 30a5cf9..a759c44 100755

@@ -5,7 +5,7 @@ Subject: [PATCH] dracut.spec: fixed rhel/fedora version checks
 
 ---
  dracut.spec |   22 +++++++++++-----------
- 1 files changed, 11 insertions(+), 11 deletions(-)
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/dracut.spec b/dracut.spec
 index ff004c3..f9848ed 100644

@@ -8,7 +8,7 @@ If it does it should not be calling inst_binary, it should call
 inst_simple like it used to.
 ---
  dracut-functions |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index 23aa14f..5e2acd3 100755

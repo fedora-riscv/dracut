@@ -9,7 +9,7 @@ your root device is something like "LABEL=Fedora\x2016".
 Using "read -r" tells the shell to leave backslashes alone.
 ---
  modules.d/99base/dracut-lib.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/modules.d/99base/dracut-lib.sh b/modules.d/99base/dracut-lib.sh
 index 62c3bf5..bc4d7c9 100755

@@ -6,7 +6,7 @@ Subject: [PATCH] 99base/init: only poll cdroms, if the kernel does support
 
 ---
  modules.d/99base/init |   34 +++++++++++++++-------------------
- 1 files changed, 15 insertions(+), 19 deletions(-)
+ 1 file changed, 15 insertions(+), 19 deletions(-)
 
 diff --git a/modules.d/99base/init b/modules.d/99base/init
 index b61680a..dc2cdfa 100755

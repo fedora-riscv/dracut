@@ -6,7 +6,7 @@ Subject: [PATCH] 99fs-lib/fs-lib.sh: fsck btrfs via mounting like xfs
 btrfsck is only for manual repairing your filesystem
 ---
  modules.d/99fs-lib/fs-lib.sh |   33 ++++++++++++++++++++++++++++++++-
- 1 files changed, 32 insertions(+), 1 deletions(-)
+ 1 file changed, 32 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/99fs-lib/fs-lib.sh b/modules.d/99fs-lib/fs-lib.sh
 index f7b20dd..edb5852 100755

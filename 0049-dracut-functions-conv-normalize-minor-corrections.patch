@@ -13,7 +13,7 @@ mostly with reference to earlier commit:
 Signed-off-by: Michal Soltys <soltys@ziu.info>
 ---
  dracut-functions |   22 ++++++++++------------
- 1 files changed, 10 insertions(+), 12 deletions(-)
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index 12dfa70..ce593c9 100755

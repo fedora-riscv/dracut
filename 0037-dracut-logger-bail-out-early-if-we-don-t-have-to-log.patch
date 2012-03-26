@@ -6,7 +6,7 @@ Subject: [PATCH] dracut-logger: bail out early, if we don't have to log
 
 ---
  dracut-logger |    7 +++----
- 1 files changed, 3 insertions(+), 4 deletions(-)
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/dracut-logger b/dracut-logger
 index d85cbaf..ce28208 100755

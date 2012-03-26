@@ -6,7 +6,7 @@ Subject: [PATCH] filter_kernel_modules is a specialized
 
 ---
  dracut-functions |   31 +++----------------------------
- 1 files changed, 3 insertions(+), 28 deletions(-)
+ 1 file changed, 3 insertions(+), 28 deletions(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index f41fc7d..a72aa53 100755

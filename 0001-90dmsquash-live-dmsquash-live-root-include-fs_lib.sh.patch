@@ -7,7 +7,7 @@ Subject: [PATCH] 90dmsquash-live/dmsquash-live-root: include fs_lib.sh for
 https://bugzilla.redhat.com/show_bug.cgi?id=730579
 ---
  modules.d/90dmsquash-live/dmsquash-live-root |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ 1 file changed, 2 insertions(+)
 
 diff --git a/modules.d/90dmsquash-live/dmsquash-live-root b/modules.d/90dmsquash-live/dmsquash-live-root
 index 265de19..90e633c 100755

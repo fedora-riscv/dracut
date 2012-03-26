@@ -6,7 +6,7 @@ Subject: [PATCH] 99base/init: save and restore environment given from the
 
 ---
  modules.d/99base/init |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+ 1 file changed, 4 insertions(+)
 
 diff --git a/modules.d/99base/init b/modules.d/99base/init
 index 90128c7..4a91e53 100755

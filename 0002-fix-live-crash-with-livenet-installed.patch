@@ -6,7 +6,7 @@ Subject: [PATCH] fix live crash with livenet installed
 parse-livenet.sh shouldn't mess with $root unless it finds a valid URL.
 ---
  modules.d/90livenet/parse-livenet.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/90livenet/parse-livenet.sh b/modules.d/90livenet/parse-livenet.sh
 index 78fc906..323fd4a 100755

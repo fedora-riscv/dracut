@@ -5,7 +5,7 @@ Subject: [PATCH] 90mdraid/mdraid_start.sh: fix path to md sysfs
 
 ---
  modules.d/90mdraid/mdraid_start.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/90mdraid/mdraid_start.sh b/modules.d/90mdraid/mdraid_start.sh
 index f79f16e..f4b7ad0 100755

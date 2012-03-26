@@ -5,7 +5,7 @@ Subject: [PATCH] dracut-functions: s/emergency-shutdown/shutdown-emergency/g
 
 ---
  dracut-functions |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index 936d3c3..241d89a 100755

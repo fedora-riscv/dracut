@@ -7,7 +7,7 @@ Subject: [PATCH] dmsquash-live-root: load filesystem modules before mounting
 might prevent https://bugzilla.redhat.com/show_bug.cgi?id=735199
 ---
  modules.d/90dmsquash-live/dmsquash-live-root |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/modules.d/90dmsquash-live/dmsquash-live-root b/modules.d/90dmsquash-live/dmsquash-live-root
 index 9bf4f09..77aae3f 100755

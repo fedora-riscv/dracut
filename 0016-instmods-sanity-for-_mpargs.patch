@@ -5,7 +5,7 @@ Subject: [PATCH] instmods: sanity for _mpargs
 
 ---
  dracut-functions |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index 556d309..6c16cae 100755

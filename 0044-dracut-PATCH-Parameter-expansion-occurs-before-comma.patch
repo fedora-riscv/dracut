@@ -21,7 +21,7 @@ ${parameter} on the right is expanded before evaluating "local var=value"
 on the left.
 ---
  dracut-functions |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index 5508809..c4f7f61 100755

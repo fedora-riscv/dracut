@@ -5,7 +5,7 @@ Subject: [PATCH] 99base/init: fix check for in kernel polling
 
 ---
  modules.d/99base/init |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/99base/init b/modules.d/99base/init
 index 1f0e342..acdda43 100755

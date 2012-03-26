@@ -5,7 +5,7 @@ Subject: [PATCH] git2spec.pl: strip path from patches
 
 ---
  git2spec.pl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 diff --git a/git2spec.pl b/git2spec.pl
 index 27e5889..38f899a 100755

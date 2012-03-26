@@ -6,7 +6,7 @@ Subject: [PATCH] 90kernel-modules/module-setup.sh: install modules.order
 Also install modules.order and all modules.builtin*
 ---
  modules.d/90kernel-modules/module-setup.sh |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh
 index 0252502..f575e85 100755

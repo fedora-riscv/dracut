@@ -6,7 +6,7 @@ Subject: [PATCH] dracut-functions: new function: inst_any [-d dest] f1 [f2
 
 ---
  dracut-functions |   28 ++++++++++++++++++++++++++++
- 1 files changed, 28 insertions(+), 0 deletions(-)
+ 1 file changed, 28 insertions(+)
 
 diff --git a/dracut-functions b/dracut-functions
 index d7f2e5f..43a6843 100755

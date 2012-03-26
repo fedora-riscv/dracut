@@ -5,7 +5,7 @@ Subject: [PATCH] 90livenet/module-setup.sh: silence check for wget
 
 ---
  modules.d/90livenet/module-setup.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/90livenet/module-setup.sh b/modules.d/90livenet/module-setup.sh
 index 2152123..883994b 100755

@@ -8,7 +8,7 @@ Catch more variations of incremental assembly.
 Signed-off-by: Michal Soltys <soltys@ziu.info>
 ---
  modules.d/90mdraid/module-setup.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/90mdraid/module-setup.sh b/modules.d/90mdraid/module-setup.sh
 index d4a9870..5e819b1 100755

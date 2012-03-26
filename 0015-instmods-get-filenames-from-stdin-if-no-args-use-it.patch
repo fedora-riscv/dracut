@@ -13,10 +13,10 @@ Together this is a large savings.
 [harald@redhat.com: fixed network kernel module filter]
 ---
  dracut-functions                           |   57 ++++++++++++++++++++--------
- modules.d/40network/module-setup.sh        |   19 +++++++--
+ modules.d/40network/module-setup.sh        |   19 +++++++---
  modules.d/90kernel-modules/module-setup.sh |   11 +++++-
- modules.d/90multipath/module-setup.sh      |   15 +++++--
- modules.d/95iscsi/module-setup.sh          |   12 ++++-
+ modules.d/90multipath/module-setup.sh      |   15 +++++---
+ modules.d/95iscsi/module-setup.sh          |   12 ++++--
  5 files changed, 84 insertions(+), 30 deletions(-)
 
 diff --git a/dracut-functions b/dracut-functions

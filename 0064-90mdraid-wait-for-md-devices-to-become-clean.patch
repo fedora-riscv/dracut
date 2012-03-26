@@ -8,7 +8,7 @@ clean, before booting further.
 ---
  modules.d/90mdraid/mdraid-waitclean.sh |   25 +++++++++++++++++++++++++
  modules.d/90mdraid/module-setup.sh     |    1 +
- 2 files changed, 26 insertions(+), 0 deletions(-)
+ 2 files changed, 26 insertions(+)
  create mode 100755 modules.d/90mdraid/mdraid-waitclean.sh
 
 diff --git a/modules.d/90mdraid/mdraid-waitclean.sh b/modules.d/90mdraid/mdraid-waitclean.sh

@@ -5,7 +5,7 @@ Subject: [PATCH] 90livenet: check() for wget
 
 ---
  modules.d/90livenet/module-setup.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ 1 file changed, 1 insertion(+)
 
 diff --git a/modules.d/90livenet/module-setup.sh b/modules.d/90livenet/module-setup.sh
 index 3ae72de..2152123 100755

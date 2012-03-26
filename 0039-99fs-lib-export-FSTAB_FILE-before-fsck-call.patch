@@ -6,7 +6,7 @@ Subject: [PATCH] 99fs-lib: export FSTAB_FILE before fsck call
 Signed-off-by: Michal Soltys <soltys@ziu.info>
 ---
  modules.d/99fs-lib/fs-lib.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/99fs-lib/fs-lib.sh b/modules.d/99fs-lib/fs-lib.sh
 index edb5852..f36299a 100755

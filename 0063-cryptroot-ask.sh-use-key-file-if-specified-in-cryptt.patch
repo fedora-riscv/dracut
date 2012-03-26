@@ -12,7 +12,7 @@ https://bugzilla.redhat.com/show_bug.cgi?id=751640
 backport of commit 4e05cb4023966a828ad90432816467a1da540120
 ---
  modules.d/90crypt/cryptroot-ask.sh |   21 ++++++++++++++++-----
- 1 files changed, 16 insertions(+), 5 deletions(-)
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
 diff --git a/modules.d/90crypt/cryptroot-ask.sh b/modules.d/90crypt/cryptroot-ask.sh
 index f8e1bd8..88938d7 100755

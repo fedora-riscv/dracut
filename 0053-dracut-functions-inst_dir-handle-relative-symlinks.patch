@@ -5,7 +5,7 @@ Subject: [PATCH] dracut-functions: inst_dir() handle relative symlinks
 
 ---
  dracut-functions |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/dracut-functions b/dracut-functions
 index ce593c9..6732804 100755

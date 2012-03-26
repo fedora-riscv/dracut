@@ -15,7 +15,7 @@ Signed-off-by: Michal Soltys <soltys@ziu.info>
  modules.d/90mdraid/md_finished.sh               |    2 +-
  modules.d/90mdraid/mdcontainer_start.sh         |   12 ------------
  modules.d/90mdraid/module-setup.sh              |    1 -
- 4 files changed, 1 insertions(+), 34 deletions(-)
+ 4 files changed, 1 insertion(+), 34 deletions(-)
  delete mode 100755 modules.d/90mdraid/mdcontainer_start.sh
 
 diff --git a/modules.d/90mdraid/65-md-incremental-imsm.rules b/modules.d/90mdraid/65-md-incremental-imsm.rules

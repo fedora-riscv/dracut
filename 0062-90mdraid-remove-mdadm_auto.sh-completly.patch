@@ -8,7 +8,7 @@ add new appearing devices.
 ---
  modules.d/90mdraid/65-md-incremental-imsm.rules |    9 ---------
  modules.d/90mdraid/mdadm_auto.sh                |    7 -------
- 2 files changed, 0 insertions(+), 16 deletions(-)
+ 2 files changed, 16 deletions(-)
  delete mode 100755 modules.d/90mdraid/mdadm_auto.sh
 
 diff --git a/modules.d/90mdraid/65-md-incremental-imsm.rules b/modules.d/90mdraid/65-md-incremental-imsm.rules
