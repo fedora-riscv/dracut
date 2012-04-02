@@ -88,11 +88,11 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-build
 %endif
 
 %if 0%{?fedora} || 0%{?rhel} > 6
-BuildRequires: docbook-style-xsl docbook-dtds libxslt
+BuildRequires: docbook-style-xsl docbook-dtds libxslt git
 %endif
 
 %if 0%{?suse_version}
-BuildRequires: docbook-xsl-stylesheets libxslt
+BuildRequires: docbook-xsl-stylesheets libxslt git
 %endif
 
 %if 0%{?fedora} > 12 || 0%{?rhel} >= 6
