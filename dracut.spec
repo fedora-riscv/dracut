@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 009
-Release: 14%{?dist}
+Release: 15%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel} > 6
@@ -210,63 +210,17 @@ This package contains tools to assemble the local initrd and host configuration.
 
 %prep
 %setup -q -n %{name}-%{version}%{?dashgittag}
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-#%patch21 -p1
-#%patch22 -p1
-#%patch23 -p1
-#%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1
-%patch39 -p1
-%patch40 -p1
-%patch41 -p1
-%patch42 -p1
-%patch43 -p1
-%patch44 -p1
-%patch45 -p1
-%patch46 -p1
-%patch47 -p1
-%patch48 -p1
-%patch49 -p1
-%patch50 -p1
-%patch51 -p1
-%patch52 -p1
-%patch53 -p1
-%patch54 -p1
-%patch55 -p1
-%patch56 -p1
-%patch57 -p1
+
+%if %{defined PATCH1}
+git init
+git config user.email "dracut-maint@redhat.com"
+git config user.name "Fedora dracut team"
+git add .
+git commit -a -q -m "%{version} baseline."
+
+# Apply all the patches.
+git am -p1 %{patches}
+%endif
 
 %build
 make WITH_SWITCH_ROOT=0%{?with_switch_root}
@@ -402,6 +356,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Mon Apr 02 2012 Harald Hoyer <harald@redhat.com> 009-15
+- fix convertfs permissions
+
 * Mon Mar 26 2012 Harald Hoyer <harald@redhat.com> 009-14
 - add convertfs module
 - add support for mdraid --offroot
