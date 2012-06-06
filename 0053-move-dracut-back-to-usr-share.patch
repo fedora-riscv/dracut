@@ -1,0 +1,192 @@
+From a950b4f93b0eea7f19aea0141da76e233409a21b Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 6 Jun 2012 10:58:13 +0200
+Subject: [PATCH] move dracut back to /usr/share
+
+---
+ Makefile                |    2 +-
+ dracut-shutdown.service |    2 +-
+ dracut.8.asc            |    4 ++--
+ dracut.asc              |    4 ++--
+ dracut.conf.5.asc       |    2 +-
+ dracut.sh               |    8 ++++----
+ dracut.spec             |   18 ++++++------------
+ 7 files changed, 17 insertions(+), 23 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index bf51b51..c1c096d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -4,7 +4,7 @@ GITVERSION=$(shell [ -d .git ] && git rev-list  --abbrev-commit  -n 1 HEAD  |cut
+ prefix ?= /usr
+ libdir ?= ${prefix}/lib
+ datadir ?= ${prefix}/share
+-pkglibdir ?= ${libdir}/dracut
++pkglibdir ?= ${datadir}/dracut
+ sysconfdir ?= ${prefix}/etc
+ bindir ?= ${prefix}/bin
+ mandir ?= ${prefix}/share/man
+diff --git a/dracut-shutdown.service b/dracut-shutdown.service
+index 6756355..56e7b94 100644
+--- a/dracut-shutdown.service
++++ b/dracut-shutdown.service
+@@ -14,6 +14,6 @@ ConditionPathExists=/run/initramfs/.need_shutdown
+ ConditionPathExists=!/run/initramfs/bin/sh
+ 
+ [Service]
+-ExecStart=/usr/lib/dracut/dracut-initramfs-restore
++ExecStart=/usr/share/dracut/dracut-initramfs-restore
+ Type=oneshot
+ RemainAfterExit=yes
+diff --git a/dracut.8.asc b/dracut.8.asc
+index cadd740..d538a02 100644
+--- a/dracut.8.asc
++++ b/dracut.8.asc
+@@ -31,7 +31,7 @@ OPTIONS
+ 
+ **-m, --modules** _<list of dracut modules>_::
+     specify a space-separated list of dracut modules to call when building the
+-    initramfs. Modules are located in _/usr/lib/dracut/modules.d_. This
++    initramfs. Modules are located in _/usr/share/dracut/modules.d_. This
+     parameter can be specified multiple times.
+ +
+ [NOTE]
+@@ -228,7 +228,7 @@ Default:
+ **-l, --local**::
+     activates the local mode. dracut will use modules from the current working
+     directory instead of the system-wide installed modules in
+-    _/usr/lib/dracut/modules.d_.
++    _/usr/share/dracut/modules.d_.
+     This is useful when running dracut from a git checkout.
+ 
+ **-H, --hostonly**::
+diff --git a/dracut.asc b/dracut.asc
+index 9621db2..47493bc 100644
+--- a/dracut.asc
++++ b/dracut.asc
+@@ -196,7 +196,7 @@ To see a list of available dracut modules, use the --list-modules option:
+ 
+ or, if you have a dracut version earlier than +008+, issue the command:
+ ----
+-# for mod in /usr/lib/dracut/modules.d/*; do echo ${mod##*/??}; done
++# for mod in /usr/share/dracut/modules.d/*; do echo ${mod##*/??}; done
+ ----
+ 
+ === Omitting dracut Modules
+@@ -716,7 +716,7 @@ For more debugging options, see <<dracutkerneldebug>> in <<dracutcmdline7>>.
+ == dracut Components
+ 
+ dracut uses a modular system to build and extend the initramfs image. All
+-modules are located in _/usr/lib/dracut/modules.d_ or in _<git-src>/modules.d_.
++modules are located in _/usr/share/dracut/modules.d_ or in _<git-src>/modules.d_.
+ The most basic dracut module is _99base_. In _99base_ the initial shell script
+ init is defined, which gets run by the kernel after initramfs loading. Although
+ you can replace init with your own version of _99base_, this is not encouraged.
+diff --git a/dracut.conf.5.asc b/dracut.conf.5.asc
+index 017a221..bc1caa6 100644
+--- a/dracut.conf.5.asc
++++ b/dracut.conf.5.asc
+@@ -23,7 +23,7 @@ line are not interpreted.
+ 
+ *dracutmodules+=*" __<dracut modules>__ "::
+     Specify a space-separated list of dracut modules to call when building the
+-    initramfs. Modules are located in _/usr/lib/dracut/modules.d_.
++    initramfs. Modules are located in _/usr/share/dracut/modules.d_.
+ 
+ *omit_dracutmodules+=*" __<dracut modules>__ "::
+     Omit a space-separated list of dracut modules.
+diff --git a/dracut.sh b/dracut.sh
+index 44dcc94..03807b8 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -35,7 +35,7 @@ Creates initial ramdisk images for preloading modules
+   -f, --force           Overwrite existing initramfs file.
+   -m, --modules [LIST]  Specify a space-separated list of dracut modules to
+                          call when building the initramfs. Modules are located
+-                         in /usr/lib/dracut/modules.d.
++                         in /usr/share/dracut/modules.d.
+   -o, --omit [LIST]     Omit a space-separated list of dracut modules.
+   -a, --add [LIST]      Add a space-separated list of dracut modules.
+   -d, --drivers [LIST]  Specify a space-separated list of kernel modules to
+@@ -84,7 +84,7 @@ Creates initial ramdisk images for preloading modules
+                          /var/tmp.
+   -l, --local           Local mode. Use modules from the current working
+                          directory instead of the system-wide installed in
+-                         /usr/lib/dracut/modules.d.
++                         /usr/share/dracut/modules.d.
+                          Useful when running dracut from a git checkout.
+   -H, --hostonly        Host-Only mode: Install only what is needed for
+                          booting the local host instead of a generic host.
+@@ -309,7 +309,7 @@ unset GREP_OPTIONS
+     debug=yes
+ }
+ 
+-[[ $dracutbasedir ]] || dracutbasedir=/usr/lib/dracut
++[[ $dracutbasedir ]] || dracutbasedir=/usr/share/dracut
+ 
+ [[ $allowlocal && -f "$(readlink -f ${0%/*})/dracut-functions.sh" ]] && \
+     dracutbasedir="$(readlink -f ${0%/*})"
+@@ -422,7 +422,7 @@ stdloglvl=$((stdloglvl + verbosity_mod_l))
+ [[ $use_fstab_l ]] && use_fstab=$use_fstab_l
+ [[ $mdadmconf_l ]] && mdadmconf=$mdadmconf_l
+ [[ $lvmconf_l ]] && lvmconf=$lvmconf_l
+-[[ $dracutbasedir ]] || dracutbasedir=/usr/lib/dracut
++[[ $dracutbasedir ]] || dracutbasedir=/usr/share/dracut
+ [[ $fw_dir ]] || fw_dir="/lib/firmware/updates /lib/firmware"
+ [[ $tmpdir_l ]] && tmpdir="$tmpdir_l"
+ [[ $tmpdir ]] || tmpdir=/var/tmp
+diff --git a/dracut.spec b/dracut.spec
+index 38da76d..e762fdc 100644
+--- a/dracut.spec
++++ b/dracut.spec
+@@ -1,4 +1,4 @@
+-%define dracutlibdir %{_prefix}/lib/dracut
++%define dracutlibdir %{_datadir}/dracut
+ 
+ # Variables must be defined
+ %define with_nbd                1
+@@ -170,8 +170,8 @@ make all
+ rm -rf $RPM_BUILD_ROOT
+ %endif
+ make install DESTDIR=$RPM_BUILD_ROOT \
+-     libdir=%{_prefix}/lib \
+-     bindir=%{_bindir} \
++     libdir=%{_datadir} \
++     bindir=/sbin \
+ %if %{defined _unitdir}
+      systemdsystemunitdir=%{_unitdir} \
+ %endif
+@@ -218,22 +218,16 @@ rm $RPM_BUILD_ROOT%{_bindir}/lsinitrd
+ mkdir -p $RPM_BUILD_ROOT/etc/logrotate.d
+ install -m 0644 dracut.logrotate $RPM_BUILD_ROOT/etc/logrotate.d/dracut_log
+ 
+-# create compat symlink
+-mkdir -p $RPM_BUILD_ROOT/sbin
+-ln -s /usr/bin/dracut $RPM_BUILD_ROOT/sbin/dracut
+-
+ %clean
+ rm -rf $RPM_BUILD_ROOT
+ 
+ %files
+ %defattr(-,root,root,0755)
+ %doc README HACKING TODO COPYING AUTHORS NEWS dracut.html dracut.png dracut.svg
+-%{_bindir}/dracut
+-# compat symlink
+ /sbin/dracut
+ %if 0%{?fedora} > 12 || 0%{?rhel} >= 6 || 0%{?suse_version} > 9999
+-%{_bindir}/mkinitrd
+-%{_bindir}/lsinitrd
++/sbin/mkinitrd
++/sbin/lsinitrd
+ %endif
+ %dir %{dracutlibdir}
+ %dir %{dracutlibdir}/modules.d
+@@ -332,7 +326,7 @@ rm -rf $RPM_BUILD_ROOT
+ %files tools
+ %defattr(-,root,root,0755)
+ %{_mandir}/man8/dracut-catimages.8*
+-%{_bindir}/dracut-catimages
++/sbin/dracut-catimages
+ %dir /boot/dracut
+ %dir /var/lib/dracut
+ %dir /var/lib/dracut/overlay
