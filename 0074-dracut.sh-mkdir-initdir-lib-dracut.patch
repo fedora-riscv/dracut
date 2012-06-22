@@ -1,0 +1,25 @@
+From 9d6ccaad01b5e36255df9865609f99682f4cc6fc Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Tue, 12 Jun 2012 11:35:49 -0400
+Subject: [PATCH] dracut.sh: mkdir $initdir/lib/dracut
+
+---
+ dracut.sh |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/dracut.sh b/dracut.sh
+index 16ff0e5..6aaa295 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -701,7 +701,10 @@ if [[ $kernel_only != yes ]]; then
+         mkdir -m 0755 -p ${initdir}/lib/dracut/hooks/$_d
+     done
+     if [[ "$UID" = "0" ]]; then
+-        cp -a /dev/kmsg /dev/null /dev/console $initdir/dev
++        for i in /dev/kmsg /dev/null /dev/console; do
++            [ -e $i ] || continue
++            cp -a $i $initdir/dev
++        done
+     fi
+ fi
+ 

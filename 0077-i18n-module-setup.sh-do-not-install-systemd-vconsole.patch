@@ -1,0 +1,22 @@
+From 25f38349fb414fb3432752c4f83f0d30b801151d Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Fri, 22 Jun 2012 15:58:24 +0200
+Subject: [PATCH] i18n/module-setup.sh: do not install systemd-vconsole-setup
+
+---
+ modules.d/10i18n/module-setup.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules.d/10i18n/module-setup.sh b/modules.d/10i18n/module-setup.sh
+index 7c8cd66..5aa54d5 100755
+--- a/modules.d/10i18n/module-setup.sh
++++ b/modules.d/10i18n/module-setup.sh
+@@ -12,7 +12,7 @@ depends() {
+ }
+ 
+ install() {
+-    [ -x /lib/systemd/systemd-vconsole-setup ] && dracut_install /lib/systemd/systemd-vconsole-setup
++#    [ -x /lib/systemd/systemd-vconsole-setup ] && dracut_install /lib/systemd/systemd-vconsole-setup
+     KBDSUBDIRS=consolefonts,consoletrans,keymaps,unimaps
+     DEFAULT_FONT=LatArCyrHeb-16
+     I18N_CONF="/etc/locale.conf"

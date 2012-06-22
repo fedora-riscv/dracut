@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 018
-Release: 67.git20120622%{?dist}
+Release: 78.git20120622%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -90,6 +90,17 @@ Patch63: 0063-url-lib-url-lib.sh-use-silent-mode-for-curl-if-TERM-.patch
 Patch64: 0064-dracut-functions-fixed-return-status-of-instmods.patch
 Patch65: 0065-network-support-vlan-tagged-bonding.patch
 Patch66: 0066-dracut-shutdown.service-fixed-ordering-to-be-before-.patch
+Patch67: 0067-terminfo-module-setup.sh-speedup-install-of-all-term.patch
+Patch68: 0068-network-module-setup.sh-fixed-installkernel-return-c.patch
+Patch69: 0069-iscsi-module-setup.sh-speedup-installkernel.patch
+Patch70: 0070-fs-lib-fs-lib.sh-removed-test-mounting-of-btrfs-and-.patch
+Patch71: 0071-i18n-module-setup.sh-install_all_kbd-speedup-install.patch
+Patch72: 0072-no-more-mknod-in-the-initramfs.patch
+Patch73: 0073-dracut.sh-precopy-some-essential-device-nodes.patch
+Patch74: 0074-dracut.sh-mkdir-initdir-lib-dracut.patch
+Patch75: 0075-multipath-module-setup.sh-installkernel-fix-return-c.patch
+Patch76: 0076-dracut.sh-do-not-copy-devices-nodes-mknod-them.patch
+Patch77: 0077-i18n-module-setup.sh-do-not-install-systemd-vconsole.patch
 
 
 BuildArch: noarch
@@ -405,6 +416,13 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Fri Jun 22 2012 Harald Hoyer <harald@redhat.com> 018-78.git20120622
+- speedup install
+- fixed installkernel() return codes
+- removed test mounting of btrfs and xfs (was fsck replacement)
+- no more "mknod" in the initramfs, fixes plymouth on s390
+- no systemd-vconsole-setup installation (unused currently anyway)
+
 * Fri Jun 22 2012 Harald Hoyer <harald@redhat.com> 018-67.git20120622
 - add tagged bonding
 Resolves: rhbz#833057
