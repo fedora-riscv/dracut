@@ -1,4 +1,4 @@
-From 25f38349fb414fb3432752c4f83f0d30b801151d Mon Sep 17 00:00:00 2001
+From e03359e0d9787340fa850ce0862afe6d6c27f76b Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 22 Jun 2012 15:58:24 +0200
 Subject: [PATCH] i18n/module-setup.sh: do not install systemd-vconsole-setup
