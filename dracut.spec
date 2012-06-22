@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 018
-Release: 65.git20120612%{?dist}
+Release: 67.git20120622%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -88,6 +88,8 @@ Patch61: 0061-Add-doc-for-birdge-cmdline.patch
 Patch62: 0062-Handle-multiple-underlying-devices-of-a-bridge.patch
 Patch63: 0063-url-lib-url-lib.sh-use-silent-mode-for-curl-if-TERM-.patch
 Patch64: 0064-dracut-functions-fixed-return-status-of-instmods.patch
+Patch65: 0065-network-support-vlan-tagged-bonding.patch
+Patch66: 0066-dracut-shutdown.service-fixed-ordering-to-be-before-.patch
 
 
 BuildArch: noarch
@@ -403,6 +405,12 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Fri Jun 22 2012 Harald Hoyer <harald@redhat.com> 018-67.git20120622
+- add tagged bonding
+Resolves: rhbz#833057
+- fixed shutdown service
+Resolves: rhbz#831634
+
 * Tue Jun 12 2012 Harald Hoyer <harald@redhat.com> 018-65.git20120612
 - revert to "ip=dhcp" by default
 
