@@ -12,11 +12,11 @@ that means pre-pivot hook is splited to two hooks pre-pivot and pre-pivot-cleanu
 
 Signed-off-by: Dave Young <dyoung@redhat.com>
 ---
- README.modules           |    3 +++
- dracut-functions.sh      |    2 +-
- dracut.asc               |    7 ++++++-
- dracut.cmdline.7.asc     |    2 +-
- modules.d/99base/init.sh |    7 ++++++-
+ README.modules           | 3 +++
+ dracut-functions.sh      | 2 +-
+ dracut.asc               | 7 ++++++-
+ dracut.cmdline.7.asc     | 2 +-
+ modules.d/99base/init.sh | 7 ++++++-
  5 files changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/README.modules b/README.modules

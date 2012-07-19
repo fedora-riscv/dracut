@@ -5,7 +5,7 @@ Subject: [PATCH] network/module-setup.sh: include all kernel/drivers/net/phy
  drivers
 
 ---
- modules.d/40network/module-setup.sh |    1 +
+ modules.d/40network/module-setup.sh | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/modules.d/40network/module-setup.sh b/modules.d/40network/module-setup.sh

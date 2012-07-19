@@ -4,7 +4,7 @@ Date: Fri, 22 Jun 2012 15:29:04 +0200
 Subject: [PATCH] terminfo/module-setup.sh: speedup install() of all terminfo
 
 ---
- modules.d/95terminfo/module-setup.sh |    6 ++----
+ modules.d/95terminfo/module-setup.sh | 6 ++----
  1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/modules.d/95terminfo/module-setup.sh b/modules.d/95terminfo/module-setup.sh

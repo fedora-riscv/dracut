@@ -4,7 +4,7 @@ Date: Fri, 22 Jun 2012 15:33:15 +0200
 Subject: [PATCH] multipath/module-setup.sh:installkernel() fix return code
 
 ---
- modules.d/90multipath/module-setup.sh |   43 ++++++++++++++++++++++++---------
+ modules.d/90multipath/module-setup.sh | 43 +++++++++++++++++++++++++----------
  1 file changed, 31 insertions(+), 12 deletions(-)
 
 diff --git a/modules.d/90multipath/module-setup.sh b/modules.d/90multipath/module-setup.sh

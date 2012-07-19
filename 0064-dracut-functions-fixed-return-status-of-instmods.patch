@@ -4,8 +4,8 @@ Date: Tue, 12 Jun 2012 11:06:58 -0400
 Subject: [PATCH] dracut-functions: fixed return status of instmods()
 
 ---
- dracut-functions.sh |   24 ++++++++++++++++--------
- dracut.sh           |    4 ++++
+ dracut-functions.sh | 24 ++++++++++++++++--------
+ dracut.sh           |  4 ++++
  2 files changed, 20 insertions(+), 8 deletions(-)
 
 diff --git a/dracut-functions.sh b/dracut-functions.sh

@@ -10,7 +10,7 @@ Cc: Harald Hoyer <harald@redhat.com>
 Cc: Vivek Goyal <vgoyal@redhat.com>
 Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
 ---
- dracut.cmdline.7.asc |    5 +++++
+ dracut.cmdline.7.asc | 5 +++++
  1 file changed, 5 insertions(+)
 
 diff --git a/dracut.cmdline.7.asc b/dracut.cmdline.7.asc

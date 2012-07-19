@@ -1,0 +1,25 @@
+From 6a005b2603f410b394a34fc1e8a8f5d8d1060dd0 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 11 Jul 2012 08:42:21 +0200
+Subject: [PATCH] kernel-modules/module-setup.sh: also install
+ /lib/modprobe.d/*.conf
+
+In theory we should only install /lib/modprobe.d/*.conf and only for
+host-only the /etc/modprobe.d.
+---
+ modules.d/90kernel-modules/module-setup.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh
+index 501088e..2999388 100755
+--- a/modules.d/90kernel-modules/module-setup.sh
++++ b/modules.d/90kernel-modules/module-setup.sh
+@@ -83,7 +83,7 @@ installkernel() {
+ install() {
+     local _f i
+     [ -f /etc/modprobe.conf ] && dracut_install /etc/modprobe.conf
+-    for i in $(find -L /etc/modprobe.d/ -maxdepth 1 -type f -name '*.conf'); do
++    for i in $(find -L /{etc,lib}/modprobe.d/ -maxdepth 1 -type f -name '*.conf'); do
+         inst_simple "$i"
+     done
+     inst_hook cmdline 01 "$moddir/parse-kernel.sh"

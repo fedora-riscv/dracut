@@ -6,7 +6,7 @@ Subject: [PATCH] Revert "network/ifup.sh: do not default to dhcp, for
 
 This reverts commit 588f0347536f3668708131353b2cb01f21594b59.
 ---
- modules.d/40network/ifup.sh |   11 +++++++++++
+ modules.d/40network/ifup.sh | 11 +++++++++++
  1 file changed, 11 insertions(+)
 
 diff --git a/modules.d/40network/ifup.sh b/modules.d/40network/ifup.sh

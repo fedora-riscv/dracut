@@ -6,7 +6,7 @@ Subject: [PATCH] url-lib/url-lib.sh: disable curl progress bar
 https://bugzilla.redhat.com/show_bug.cgi?id=817301
 https://bugzilla.redhat.com/show_bug.cgi?id=824883
 ---
- modules.d/45url-lib/url-lib.sh |    4 ----
+ modules.d/45url-lib/url-lib.sh | 4 ----
  1 file changed, 4 deletions(-)
 
 diff --git a/modules.d/45url-lib/url-lib.sh b/modules.d/45url-lib/url-lib.sh

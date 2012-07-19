@@ -6,7 +6,7 @@ Subject: [PATCH] iscsi/module-setup.sh: speedup installkernel()
 Conflicts:
 	modules.d/95iscsi/module-setup.sh
 ---
- modules.d/95iscsi/module-setup.sh |   43 +++++++++++++++++++++++++++++--------
+ modules.d/95iscsi/module-setup.sh | 43 +++++++++++++++++++++++++++++++--------
  1 file changed, 34 insertions(+), 9 deletions(-)
 
 diff --git a/modules.d/95iscsi/module-setup.sh b/modules.d/95iscsi/module-setup.sh

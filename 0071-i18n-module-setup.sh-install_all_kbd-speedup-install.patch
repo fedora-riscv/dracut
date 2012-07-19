@@ -4,7 +4,7 @@ Date: Fri, 22 Jun 2012 15:21:11 +0200
 Subject: [PATCH] i18n/module-setup.sh:install_all_kbd(): speedup install
 
 ---
- modules.d/10i18n/module-setup.sh |    6 +++---
+ modules.d/10i18n/module-setup.sh | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/modules.d/10i18n/module-setup.sh b/modules.d/10i18n/module-setup.sh

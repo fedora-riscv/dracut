@@ -4,7 +4,7 @@ Date: Wed, 6 Jun 2012 10:24:07 +0200
 Subject: [PATCH] dracut.spec: remove typo from BuildRequires for suse
 
 ---
- dracut.spec |    2 +-
+ dracut.spec | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dracut.spec b/dracut.spec

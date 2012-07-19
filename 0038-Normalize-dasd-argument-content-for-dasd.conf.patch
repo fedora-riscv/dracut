@@ -6,8 +6,8 @@ Subject: [PATCH] Normalize dasd argument content for dasd.conf
 Also overwrite any existing files, contents from CMSCONFFILE override
 any boot arguments.
 ---
- modules.d/80cms/cmssetup.sh     |    4 ++--
- modules.d/80cms/module-setup.sh |    2 +-
+ modules.d/80cms/cmssetup.sh     | 4 ++--
+ modules.d/80cms/module-setup.sh | 2 +-
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/modules.d/80cms/cmssetup.sh b/modules.d/80cms/cmssetup.sh

@@ -5,7 +5,7 @@ Subject: [PATCH] dracut-shutdown.service: fixed ordering to be before
  shutdown.target
 
 ---
- dracut-shutdown.service |    2 +-
+ dracut-shutdown.service | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dracut-shutdown.service b/dracut-shutdown.service

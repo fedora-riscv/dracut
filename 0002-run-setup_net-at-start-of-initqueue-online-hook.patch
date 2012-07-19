@@ -9,8 +9,8 @@ initqueue/online hook.
 It also makes it so you can run setup_net repeatedly without causing
 error messages.
 ---
- modules.d/40network/net-genrules.sh |    3 +++
- modules.d/40network/net-lib.sh      |    3 +++
+ modules.d/40network/net-genrules.sh | 3 +++
+ modules.d/40network/net-lib.sh      | 3 +++
  2 files changed, 6 insertions(+)
 
 diff --git a/modules.d/40network/net-genrules.sh b/modules.d/40network/net-genrules.sh

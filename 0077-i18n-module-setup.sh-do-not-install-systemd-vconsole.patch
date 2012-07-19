@@ -4,7 +4,7 @@ Date: Fri, 22 Jun 2012 15:58:24 +0200
 Subject: [PATCH] i18n/module-setup.sh: do not install systemd-vconsole-setup
 
 ---
- modules.d/10i18n/module-setup.sh |    2 +-
+ modules.d/10i18n/module-setup.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/10i18n/module-setup.sh b/modules.d/10i18n/module-setup.sh

@@ -1,0 +1,23 @@
+From 1b26ac6a5f07be4304c6bf47ef3e61da2651891b Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Sat, 30 Jun 2012 11:27:36 +0200
+Subject: [PATCH] dracut-functions.sh: set LC_ALL=C to get correct parsing
+ information
+
+---
+ dracut-functions.sh | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/dracut-functions.sh b/dracut-functions.sh
+index 7b1c8dc..fc60f32 100755
+--- a/dracut-functions.sh
++++ b/dracut-functions.sh
+@@ -20,6 +20,8 @@
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ #
+ 
++export LC_ALL=C
++
+ if ! [[ $dracutbasedir ]]; then
+     dracutbasedir=${BASH_SOURCE[0]%/*}
+     [[ $dracutbasedir = "dracut-functions" ]] && dracutbasedir="."

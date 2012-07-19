@@ -4,8 +4,8 @@ Date: Fri, 1 Jun 2012 17:09:25 +0200
 Subject: [PATCH] fix return value of some installkernel() functions
 
 ---
- modules.d/40network/module-setup.sh   |    3 +++
- modules.d/90multipath/module-setup.sh |    3 +++
+ modules.d/40network/module-setup.sh   | 3 +++
+ modules.d/90multipath/module-setup.sh | 3 +++
  2 files changed, 6 insertions(+)
 
 diff --git a/modules.d/40network/module-setup.sh b/modules.d/40network/module-setup.sh

@@ -5,8 +5,8 @@ Subject: [PATCH] network: do not arping with qeth layer3 interfaces
 
 https://bugzilla.redhat.com/show_bug.cgi?id=825783
 ---
- modules.d/40network/dhclient-script.sh |   13 ++++++++++---
- modules.d/40network/net-lib.sh         |   10 +++++++++-
+ modules.d/40network/dhclient-script.sh | 13 ++++++++++---
+ modules.d/40network/net-lib.sh         | 10 +++++++++-
  2 files changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/modules.d/40network/dhclient-script.sh b/modules.d/40network/dhclient-script.sh

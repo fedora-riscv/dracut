@@ -12,8 +12,8 @@ Cc: Dave Young <dyoung@redhat.com>
 Cc: Vivek Goyal <vgoyal@redhat.com>
 Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
 ---
- modules.d/40network/ifup.sh         |    8 ++++++--
- modules.d/40network/net-genrules.sh |    6 +++---
+ modules.d/40network/ifup.sh         | 8 ++++++--
+ modules.d/40network/net-genrules.sh | 6 +++---
  2 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/modules.d/40network/ifup.sh b/modules.d/40network/ifup.sh

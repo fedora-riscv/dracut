@@ -4,9 +4,9 @@ Date: Fri, 22 Jun 2012 15:27:40 +0200
 Subject: [PATCH] no more "mknod" in the initramfs!!
 
 ---
- modules.d/50gensplash/gensplash-pretrigger.sh |    4 ----
- modules.d/50plymouth/plymouth-pretrigger.sh   |    6 ------
- modules.d/99base/init.sh                      |    2 --
+ modules.d/50gensplash/gensplash-pretrigger.sh | 4 ----
+ modules.d/50plymouth/plymouth-pretrigger.sh   | 6 ------
+ modules.d/99base/init.sh                      | 2 --
  3 files changed, 12 deletions(-)
 
 diff --git a/modules.d/50gensplash/gensplash-pretrigger.sh b/modules.d/50gensplash/gensplash-pretrigger.sh

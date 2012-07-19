@@ -8,7 +8,7 @@ already been marked as online or offline.  We need to make the sysecho
 sensitive to this and not fail if the attribute we're trying to set has
 already been set.
 ---
- modules.d/80cms/cmssetup.sh |    8 ++++++--
+ modules.d/80cms/cmssetup.sh | 8 ++++++--
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/modules.d/80cms/cmssetup.sh b/modules.d/80cms/cmssetup.sh

@@ -6,7 +6,7 @@ Subject: [PATCH] network/parse-ip-opts.sh: remove check for netroot
 with anaconda and all other kind of stuff, we might want network, even
 for root not on the network
 ---
- modules.d/40network/parse-ip-opts.sh |    8 --------
+ modules.d/40network/parse-ip-opts.sh | 8 --------
  1 file changed, 8 deletions(-)
 
 diff --git a/modules.d/40network/parse-ip-opts.sh b/modules.d/40network/parse-ip-opts.sh

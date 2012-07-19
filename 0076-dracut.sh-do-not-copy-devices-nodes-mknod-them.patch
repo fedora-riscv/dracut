@@ -4,7 +4,7 @@ Date: Fri, 22 Jun 2012 15:49:25 +0200
 Subject: [PATCH] dracut.sh: do not copy devices nodes, mknod them
 
 ---
- dracut.sh |    7 +++----
+ dracut.sh | 7 +++----
  1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/dracut.sh b/dracut.sh

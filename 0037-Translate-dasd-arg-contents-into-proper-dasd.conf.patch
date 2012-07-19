@@ -7,8 +7,8 @@ This uses a (new) s390utils utility to normalize the range we might get
 in a dasd argument and generates a properly formatted output for
 dasd.conf.
 ---
- modules.d/95dasd/module-setup.sh |    2 +-
- modules.d/95dasd/parse-dasd.sh   |    4 ++--
+ modules.d/95dasd/module-setup.sh | 2 +-
+ modules.d/95dasd/parse-dasd.sh   | 4 ++--
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/modules.d/95dasd/module-setup.sh b/modules.d/95dasd/module-setup.sh

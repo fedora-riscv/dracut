@@ -4,7 +4,7 @@ Date: Tue, 12 Jun 2012 11:35:49 -0400
 Subject: [PATCH] dracut.sh: mkdir $initdir/lib/dracut
 
 ---
- dracut.sh |    5 ++++-
+ dracut.sh | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/dracut.sh b/dracut.sh

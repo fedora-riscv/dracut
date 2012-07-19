@@ -6,7 +6,7 @@ Subject: [PATCH] ifcfg/write-ifcfg.sh: add s390 specific configuration
 
 https://bugzilla.redhat.com/show_bug.cgi?id=811521
 ---
- modules.d/45ifcfg/write-ifcfg.sh |   70 ++++++++++++++++++++++++++++++++++++--
+ modules.d/45ifcfg/write-ifcfg.sh | 70 ++++++++++++++++++++++++++++++++++++++--
  1 file changed, 68 insertions(+), 2 deletions(-)
 
 diff --git a/modules.d/45ifcfg/write-ifcfg.sh b/modules.d/45ifcfg/write-ifcfg.sh

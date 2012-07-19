@@ -5,7 +5,7 @@ Subject: [PATCH] Revert "network/ifup.sh: default to dhcp for BOOTIF"
 
 This reverts commit 4d0cefe6684c33a4d260ab58bf69cafa20e3778d.
 ---
- modules.d/40network/ifup.sh |    7 -------
+ modules.d/40network/ifup.sh | 7 -------
  1 file changed, 7 deletions(-)
 
 diff --git a/modules.d/40network/ifup.sh b/modules.d/40network/ifup.sh

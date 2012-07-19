@@ -26,10 +26,10 @@ Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
 Conflicts:
 	modules.d/40network/ifup.sh
 ---
- modules.d/40network/ifup.sh         |   29 ++++++++++++++++++++++
- modules.d/40network/module-setup.sh |    3 +++
- modules.d/40network/net-genrules.sh |    5 ++++
- modules.d/40network/parse-vlan.sh   |   45 +++++++++++++++++++++++++++++++++++
+ modules.d/40network/ifup.sh         | 29 ++++++++++++++++++++++++
+ modules.d/40network/module-setup.sh |  3 +++
+ modules.d/40network/net-genrules.sh |  5 +++++
+ modules.d/40network/parse-vlan.sh   | 45 +++++++++++++++++++++++++++++++++++++
  4 files changed, 82 insertions(+)
  create mode 100644 modules.d/40network/parse-vlan.sh
 

@@ -10,7 +10,7 @@ into the ifcfg file.
 Thanks to Mark Hamzy <hamzy@us.ibm.com>
 and Will Woods <wwoods@redhat.com> for the patch.
 ---
- modules.d/45ifcfg/write-ifcfg.sh |    5 +++++
+ modules.d/45ifcfg/write-ifcfg.sh | 5 +++++
  1 file changed, 5 insertions(+)
 
 diff --git a/modules.d/45ifcfg/write-ifcfg.sh b/modules.d/45ifcfg/write-ifcfg.sh

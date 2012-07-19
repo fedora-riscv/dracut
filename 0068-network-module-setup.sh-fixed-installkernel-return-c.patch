@@ -4,7 +4,7 @@ Date: Fri, 22 Jun 2012 15:24:28 +0200
 Subject: [PATCH] network/module-setup.sh: fixed installkernel() return code
 
 ---
- modules.d/40network/module-setup.sh |    6 +++---
+ modules.d/40network/module-setup.sh | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/modules.d/40network/module-setup.sh b/modules.d/40network/module-setup.sh

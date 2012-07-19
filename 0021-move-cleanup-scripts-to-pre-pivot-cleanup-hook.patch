@@ -12,11 +12,11 @@ below cleanup scripts is moved:
 
 Signed-off-by: Dave Young <dyoung@redhat.com>
 ---
- modules.d/40network/module-setup.sh   |    2 +-
- modules.d/90crypt/module-setup.sh     |    2 +-
- modules.d/90multipath/module-setup.sh |    2 +-
- modules.d/95iscsi/module-setup.sh     |    2 +-
- modules.d/95nfs/module-setup.sh       |    2 +-
+ modules.d/40network/module-setup.sh   | 2 +-
+ modules.d/90crypt/module-setup.sh     | 2 +-
+ modules.d/90multipath/module-setup.sh | 2 +-
+ modules.d/95iscsi/module-setup.sh     | 2 +-
+ modules.d/95nfs/module-setup.sh       | 2 +-
  5 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/modules.d/40network/module-setup.sh b/modules.d/40network/module-setup.sh

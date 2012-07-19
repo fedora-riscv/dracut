@@ -15,10 +15,10 @@ Cc: Dave Young <dyoung@redhat.com>
 Cc: Vivek Goyal <vgoyal@redhat.com>
 Signed-off-by: Cong Wang <xiyou.wangcong@gmail.com>
 ---
- dracut.cmdline.7.asc                |    5 +++--
- modules.d/40network/ifup.sh         |   38 ++++++++++++++++++++---------------
- modules.d/40network/net-genrules.sh |    2 +-
- modules.d/40network/parse-bridge.sh |   17 ++++++++--------
+ dracut.cmdline.7.asc                |  5 +++--
+ modules.d/40network/ifup.sh         | 38 +++++++++++++++++++++----------------
+ modules.d/40network/net-genrules.sh |  2 +-
+ modules.d/40network/parse-bridge.sh | 17 +++++++++--------
  4 files changed, 35 insertions(+), 27 deletions(-)
 
 diff --git a/dracut.cmdline.7.asc b/dracut.cmdline.7.asc

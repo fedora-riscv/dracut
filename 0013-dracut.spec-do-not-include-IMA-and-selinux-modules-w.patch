@@ -5,7 +5,7 @@ Subject: [PATCH] dracut.spec: do not include IMA and selinux modules with
  systemd
 
 ---
- dracut.spec |   16 +++++++++++++---
+ dracut.spec | 16 +++++++++++++---
  1 file changed, 13 insertions(+), 3 deletions(-)
 
 diff --git a/dracut.spec b/dracut.spec

@@ -8,7 +8,7 @@ Don't try to be smarter than the admin configuring the machine.
 Does also conflict with other methods trying to setup the interfaces,
 like cmsifup.sh from the cms module.
 ---
- modules.d/40network/ifup.sh |   11 -----------
+ modules.d/40network/ifup.sh | 11 -----------
  1 file changed, 11 deletions(-)
 
 diff --git a/modules.d/40network/ifup.sh b/modules.d/40network/ifup.sh

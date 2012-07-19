@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 018
-Release: 78.git20120622%{?dist}
+Release: 93.git20120719%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -101,6 +101,21 @@ Patch74: 0074-dracut.sh-mkdir-initdir-lib-dracut.patch
 Patch75: 0075-multipath-module-setup.sh-installkernel-fix-return-c.patch
 Patch76: 0076-dracut.sh-do-not-copy-devices-nodes-mknod-them.patch
 Patch77: 0077-i18n-module-setup.sh-do-not-install-systemd-vconsole.patch
+Patch78: 0078-network-ifname-genrules.sh-no-rule-to-rename-other-i.patch
+Patch79: 0079-mdraid-md-shutdown.sh-wait-until-md-devices-are-clea.patch
+Patch80: 0080-fips-module-setup.sh-s-aes-xts-xts.patch
+Patch81: 0081-fips-change-module-list.patch
+Patch82: 0082-fips-fixed-module-list.patch
+Patch83: 0083-Fix-fips-module-list.patch
+Patch84: 0084-98usrmount-depend-on-fs-lib.patch
+Patch85: 0085-man-pages-hostonly-mode-generates-host-specific-conf.patch
+Patch86: 0086-Fixed-BOOTIF-for-converting-mac-addr-to-lowercase.patch
+Patch87: 0087-modules.d-get-rid-of-tr.patch
+Patch88: 0088-dracut-functions.sh-set-LC_ALL-C-to-get-correct-pars.patch
+Patch89: 0089-resume-move-resume-process-to-initqueue.patch
+Patch90: 0090-kernel-modules-module-setup.sh-also-install-lib-modp.patch
+Patch91: 0091-nfs-install-modprobe-config-file.patch
+Patch92: 0092-udev-rules-module-setup.sh-cope-with-systemd-udevd.patch
 
 
 BuildArch: noarch
@@ -416,6 +431,14 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Thu Jul 19 2012 Harald Hoyer <harald@redhat.com> 018-93.git20120719
+- do not rename network interfaces
+- wait until md raids are clean on shutdown
+- fips module fixes
+- fixed BOOTIF case sensitive
+- fixed resume from hibernate
+- nfs module fixes
+
 * Fri Jun 22 2012 Harald Hoyer <harald@redhat.com> 018-78.git20120622
 - speedup install
 - fixed installkernel() return codes

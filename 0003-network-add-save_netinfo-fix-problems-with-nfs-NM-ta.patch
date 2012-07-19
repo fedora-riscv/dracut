@@ -11,8 +11,8 @@ lease. This lets the ifcfg module do its magic.
 save_netinfo should properly write out /tmp/net.ifaces when needed, and
 copies the dhclient files into place.
 ---
- modules.d/40network/net-lib.sh |   16 ++++++++++++++++
- modules.d/40network/netroot.sh |   10 ++--------
+ modules.d/40network/net-lib.sh | 16 ++++++++++++++++
+ modules.d/40network/netroot.sh | 10 ++--------
  2 files changed, 18 insertions(+), 8 deletions(-)
 
 diff --git a/modules.d/40network/net-lib.sh b/modules.d/40network/net-lib.sh

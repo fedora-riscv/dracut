@@ -4,8 +4,8 @@ Date: Tue, 12 Jun 2012 14:40:43 +0200
 Subject: [PATCH] resolve conflict between cms network rules and default rules
 
 ---
- modules.d/40network/net-genrules.sh |    2 +-
- modules.d/80cms/cmssetup.sh         |    2 ++
+ modules.d/40network/net-genrules.sh | 2 +-
+ modules.d/80cms/cmssetup.sh         | 2 ++
  2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/40network/net-genrules.sh b/modules.d/40network/net-genrules.sh

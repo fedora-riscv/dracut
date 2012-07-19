@@ -4,8 +4,8 @@ Date: Tue, 5 Jun 2012 20:23:35 +0200
 Subject: [PATCH] dasd_mod: change rd.dasd to dasd_mod kernel parameter
 
 ---
- dracut.cmdline.7.asc                   |    9 ++-------
- modules.d/95dasd_mod/parse-dasd-mod.sh |   34 --------------------------------
+ dracut.cmdline.7.asc                   |  9 ++-------
+ modules.d/95dasd_mod/parse-dasd-mod.sh | 34 ----------------------------------
  2 files changed, 2 insertions(+), 41 deletions(-)
 
 diff --git a/dracut.cmdline.7.asc b/dracut.cmdline.7.asc

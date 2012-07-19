@@ -4,7 +4,7 @@ Date: Wed, 18 Apr 2012 12:44:00 +0200
 Subject: [PATCH] base/init.sh: mount tmpfs with strictatime
 
 ---
- modules.d/99base/init.sh |    6 +++---
+ modules.d/99base/init.sh | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/modules.d/99base/init.sh b/modules.d/99base/init.sh

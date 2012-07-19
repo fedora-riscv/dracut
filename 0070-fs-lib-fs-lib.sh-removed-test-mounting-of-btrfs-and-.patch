@@ -7,7 +7,7 @@ mount/umount check only costs time and we fail later anyway.
 mount can take very long on large filesystems. Better fail on the real
 mount.
 ---
- modules.d/99fs-lib/fs-lib.sh |   58 +++---------------------------------------
+ modules.d/99fs-lib/fs-lib.sh | 58 +++-----------------------------------------
  1 file changed, 4 insertions(+), 54 deletions(-)
 
 diff --git a/modules.d/99fs-lib/fs-lib.sh b/modules.d/99fs-lib/fs-lib.sh
