@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 018
-Release: 93.git20120719%{?dist}
+Release: 95.git20120720%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -116,6 +116,8 @@ Patch89: 0089-resume-move-resume-process-to-initqueue.patch
 Patch90: 0090-kernel-modules-module-setup.sh-also-install-lib-modp.patch
 Patch91: 0091-nfs-install-modprobe-config-file.patch
 Patch92: 0092-udev-rules-module-setup.sh-cope-with-systemd-udevd.patch
+Patch93: 0093-Makefile-set-LC_MESSAGES-C-.-not-LANG.patch
+Patch94: 0094-resume-move-resume-in-the-initqueue-finished-hook.patch
 
 
 BuildArch: noarch
@@ -431,6 +433,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Fri Jul 20 2012 Harald Hoyer <harald@redhat.com> 018-95.git20120720
+- fixed some more race condition in resume
+
 * Thu Jul 19 2012 Harald Hoyer <harald@redhat.com> 018-93.git20120719
 - do not rename network interfaces
 - wait until md raids are clean on shutdown
