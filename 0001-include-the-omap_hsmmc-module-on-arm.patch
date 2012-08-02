@@ -8,10 +8,10 @@ Subject: [PATCH] include the omap_hsmmc module on arm
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh
-index 4e75ef8..e58b257 100755
+index 2999388..b053102 100755
 --- a/modules.d/90kernel-modules/module-setup.sh
 +++ b/modules.d/90kernel-modules/module-setup.sh
-@@ -40,7 +40,7 @@ installkernel() {
+@@ -36,7 +36,7 @@ installkernel() {
          hostonly='' instmods usb_storage sdhci sdhci-pci
  
          # arm specific modules
@@ -19,7 +19,6 @@ index 4e75ef8..e58b257 100755
 +        hostonly='' instmods sdhci_esdhc_imx mmci sdhci_tegra mvsdio omap omapdrm omap_hsmmc sdhci_dove ahci_platform pata_imx sata_mv
  
          # install keyboard support
-         hostonly='' instmods atkbd i8042 usbhid hid-apple hid-sunplus hid-cherry hid-logitech hid-logitech-dj hid-microsoft ehci-hcd ohci-hcd uhci-hcd xhci-hcd hid_generic
--- 
+         hostonly='' instmods atkbd i8042 usbhid hid-apple hid-sunplus hid-cherry hid-logitech hid-logitech-dj hid-microsoft ehci-hcd ohci-hcd uhci-hcd
+--- 
 1.7.11.2
-
