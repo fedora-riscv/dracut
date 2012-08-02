@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 018
-Release: 96.git20120724%{?dist}
+Release: 97.git20120724%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -119,6 +119,7 @@ Patch92: 0092-udev-rules-module-setup.sh-cope-with-systemd-udevd.patch
 Patch93: 0093-Makefile-set-LC_MESSAGES-C-.-not-LANG.patch
 Patch94: 0094-resume-move-resume-in-the-initqueue-finished-hook.patch
 Patch95: 0095-lvm-lvm_scan.sh-udevadm-settle-after-lvm-scan.patch
+Patch96: 0001-include-the-omap_hsmmc-module-on-arm.patch
 
 
 BuildArch: noarch
@@ -434,6 +435,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Wed Aug 01 2012 Dennis Gilmore <dennis@ausil.us> 018-97.git20120724
+- include omap_hsmmc on arm 
+
 * Tue Jul 24 2012 Harald Hoyer <harald@redhat.com> 018-96.git20120724
 - fixed some more race condition in resume
 
