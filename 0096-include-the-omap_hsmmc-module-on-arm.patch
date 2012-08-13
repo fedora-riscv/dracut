@@ -1,6 +1,6 @@
-From e0c1a5dc6b23b905590e4ba8876bf0b56709833f Mon Sep 17 00:00:00 2001
+From 0aa0745c796420405f5adb4454251f7f89b25f48 Mon Sep 17 00:00:00 2001
 From: Dennis Gilmore <dennis@ausil.us>
-Date: Thu, 2 Aug 2012 05:11:43 -0500
+Date: Thu, 2 Aug 2012 05:12:54 -0500
 Subject: [PATCH] include the omap_hsmmc module on arm
 
 ---
@@ -20,5 +20,3 @@ index 2999388..b053102 100755
  
          # install keyboard support
          hostonly='' instmods atkbd i8042 usbhid hid-apple hid-sunplus hid-cherry hid-logitech hid-logitech-dj hid-microsoft ehci-hcd ohci-hcd uhci-hcd
---- 
-1.7.11.2

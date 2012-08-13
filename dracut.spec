@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 018
-Release: 97.git20120724%{?dist}
+Release: 98.git20120813%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -119,7 +119,8 @@ Patch92: 0092-udev-rules-module-setup.sh-cope-with-systemd-udevd.patch
 Patch93: 0093-Makefile-set-LC_MESSAGES-C-.-not-LANG.patch
 Patch94: 0094-resume-move-resume-in-the-initqueue-finished-hook.patch
 Patch95: 0095-lvm-lvm_scan.sh-udevadm-settle-after-lvm-scan.patch
-Patch96: 0001-include-the-omap_hsmmc-module-on-arm.patch
+Patch96: 0096-include-the-omap_hsmmc-module-on-arm.patch
+Patch97: 0097-i18n-module-setup.sh-fixed-include-parsing.patch
 
 
 BuildArch: noarch
@@ -435,6 +436,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Mon Aug 13 2012 Harald Hoyer <harald@redhat.com> 018-98.git20120813
+- fixed keymap include issues
+Resolves: rhbz#845744
+
 * Wed Aug 01 2012 Dennis Gilmore <dennis@ausil.us> 018-97.git20120724
 - include omap_hsmmc on arm 
 
