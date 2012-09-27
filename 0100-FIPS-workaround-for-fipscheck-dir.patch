@@ -1,0 +1,63 @@
+From 0bb277e2d48e9a2279c5d70defa6a8fed616f063 Mon Sep 17 00:00:00 2001
+From: Milan Broz <mbroz@redhat.com>
+Date: Fri, 24 Aug 2012 13:31:57 +0200
+Subject: [PATCH] FIPS workaround for fipscheck dir
+
+Also patch old install path... (used in Fedora 17)
+
+Signed-off-by: Milan Broz <mbroz@redhat.com>
+---
+ dracut-functions.sh              | 12 ++++++++++++
+ modules.d/01fips/module-setup.sh |  3 ++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/dracut-functions.sh b/dracut-functions.sh
+index fc60f32..746b03e 100755
+--- a/dracut-functions.sh
++++ b/dracut-functions.sh
+@@ -406,6 +406,12 @@ inst_simple() {
+     if [[ -e "${_src%/*}/.${_src##*/}.hmac" ]]; then
+         inst "${_src%/*}/.${_src##*/}.hmac" "${target%/*}/.${target##*/}.hmac"
+     fi
++    if [[ -e "/lib/fipscheck/${_src##*/}.hmac" ]]; then
++        inst "/lib/fipscheck/${_src##*/}.hmac" "/lib/fipscheck/${target##*/}.hmac"
++    fi
++    if [[ -e "/lib64/fipscheck/${_src##*/}.hmac" ]]; then
++        inst "/lib64/fipscheck/${_src##*/}.hmac" "/lib64/fipscheck/${target##*/}.hmac"
++    fi
+     ddebug "Installing $_src"
+     cp --sparse=always -pfL "$_src" "${initdir}/$target"
+ }
+@@ -447,6 +453,12 @@ inst_library() {
+         if [[ -e "${_src%/*}/.${_src##*/}.hmac" ]]; then
+             inst "${_src%/*}/.${_src##*/}.hmac" "${_dest%/*}/.${_dest##*/}.hmac"
+         fi
++        if [[ -e "/lib/fipscheck/${_src##*/}.hmac" ]]; then
++            inst "/lib/fipscheck/${_src##*/}.hmac" "/lib/fipscheck/${_dest##*/}.hmac"
++        fi
++        if [[ -e "/lib64/fipscheck/${_src##*/}.hmac" ]]; then
++            inst "/lib64/fipscheck/${_src##*/}.hmac" "/lib64/fipscheck/${_dest##*/}.hmac"
++        fi
+         _reallib=$(readlink -f "$_src")
+         inst_simple "$_reallib" "$_reallib"
+         inst_dir "${_dest%/*}"
+diff --git a/modules.d/01fips/module-setup.sh b/modules.d/01fips/module-setup.sh
+index 3197611..2f107e6 100755
+--- a/modules.d/01fips/module-setup.sh
++++ b/modules.d/01fips/module-setup.sh
+@@ -32,13 +32,14 @@ install() {
+     inst_hook pre-pivot 01 "$moddir/fips-noboot.sh"
+     inst "$moddir/fips.sh" /sbin/fips.sh
+ 
+-    dracut_install sha512hmac rmmod insmod mount uname umount
++    dracut_install sha512hmac rmmod insmod mount uname umount fipscheck
+ 
+     inst_libdir_file libsoftokn3.so
+     inst_libdir_file libsoftokn3.so
+     inst_libdir_file libsoftokn3.chk
+     inst_libdir_file libfreebl3.so
+     inst_libdir_file libfreebl3.chk
++    inst_libdir_file libssl.so.10
+ 
+     dracut_install $usrlibdir/hmaccalc/sha512hmac.hmac
+     if command -v prelink >/dev/null; then

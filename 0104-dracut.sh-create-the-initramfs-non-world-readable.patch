@@ -1,0 +1,24 @@
+From d4d64e933224b79d80bc4ed671e6d159887e98c8 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 27 Sep 2012 10:18:29 +0200
+Subject: [PATCH] dracut.sh: create the initramfs non-world readable
+
+---
+ dracut.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/dracut.sh b/dracut.sh
+index ed90311..a95e603 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -848,7 +848,9 @@ if strstr "$modules_loaded" " fips " && command -v prelink >/dev/null; then
+     done
+ fi
+ 
+-if ! ( cd "$initdir"; find . |cpio -R 0:0 -H newc -o --quiet| \
++rm -f "$outfile"
++dinfo "*** Creating image file ***"
++if ! ( umask 077; cd "$initdir"; find . |cpio -R 0:0 -H newc -o --quiet| \
+     $compress > "$outfile"; ); then
+     dfatal "dracut: creation of $outfile failed"
+     exit 1

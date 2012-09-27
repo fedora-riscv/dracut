@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 018
-Release: 98.git20120813%{?dist}
+Release: 105.git20120927%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -121,6 +121,13 @@ Patch94: 0094-resume-move-resume-in-the-initqueue-finished-hook.patch
 Patch95: 0095-lvm-lvm_scan.sh-udevadm-settle-after-lvm-scan.patch
 Patch96: 0096-include-the-omap_hsmmc-module-on-arm.patch
 Patch97: 0097-i18n-module-setup.sh-fixed-include-parsing.patch
+Patch98: 0098-unquote-nbd-port.patch
+Patch99: 0099-dmsquash-live-dmsquash-live-root.sh-Physically-write.patch
+Patch100: 0100-FIPS-workaround-for-fipscheck-dir.patch
+Patch101: 0101-mdraid-catch-nested-md-raids.patch
+Patch102: 0102-fips-set-boot-as-symlink-to-sysroot-boot-if-no-boot-.patch
+Patch103: 0103-mdraid-always-create-need_shutdown-if-we-have-assemb.patch
+Patch104: 0104-dracut.sh-create-the-initramfs-non-world-readable.patch
 
 
 BuildArch: noarch
@@ -436,6 +443,13 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Thu Sep 27 2012 Harald Hoyer <harald@redhat.com> 018-105.git20120927
+- enable the use of the nbd port with e.g.  '-N ltsp'
+- actually make reset_overlay working for squash overlays
+- fixed FIPS
+- if any mdraid found, make dracut run on shutdown
+- make the initramfs non-world readable
+
 * Mon Aug 13 2012 Harald Hoyer <harald@redhat.com> 018-98.git20120813
 - fixed keymap include issues
 Resolves: rhbz#845744
