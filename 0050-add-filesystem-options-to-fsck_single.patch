@@ -6,11 +6,11 @@ Subject: [PATCH] add filesystem options to fsck_single()
 if we have e.g. special btrfs options for "/" and "/usr", we want to use
 those for the test mount to determine if the filesystem is corrupted.
 ---
- modules.d/95fstab-sys/mount-sys.sh     |    2 +-
- modules.d/95rootfs-block/mount-root.sh |    2 +-
- modules.d/98usrmount/mount-usr.sh      |    5 +++--
- modules.d/99base/mount-hook.sh         |    2 +-
- modules.d/99fs-lib/fs-lib.sh           |    9 +++++----
+ modules.d/95fstab-sys/mount-sys.sh     | 2 +-
+ modules.d/95rootfs-block/mount-root.sh | 2 +-
+ modules.d/98usrmount/mount-usr.sh      | 5 +++--
+ modules.d/99base/mount-hook.sh         | 2 +-
+ modules.d/99fs-lib/fs-lib.sh           | 9 +++++----
  5 files changed, 11 insertions(+), 9 deletions(-)
 
 diff --git a/modules.d/95fstab-sys/mount-sys.sh b/modules.d/95fstab-sys/mount-sys.sh

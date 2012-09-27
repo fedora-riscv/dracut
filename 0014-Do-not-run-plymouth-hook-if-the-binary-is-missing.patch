@@ -7,7 +7,7 @@ There is a remove-boot-splash script in Mageia that can
 strip plymouth from an initrd. Make this script a noop
 if that has happened.
 ---
- modules.d/50plymouth/plymouth-pretrigger.sh |   44 ++++++++++++++-------------
+ modules.d/50plymouth/plymouth-pretrigger.sh | 44 +++++++++++++++--------------
  1 file changed, 23 insertions(+), 21 deletions(-)
 
 diff --git a/modules.d/50plymouth/plymouth-pretrigger.sh b/modules.d/50plymouth/plymouth-pretrigger.sh

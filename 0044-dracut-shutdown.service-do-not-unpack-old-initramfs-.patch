@@ -6,7 +6,7 @@ Subject: [PATCH] dracut-shutdown.service: do not unpack old initramfs on
 
 Do not unpack the initramfs, if the old initramfs still exists.
 ---
- dracut-shutdown.service |    1 +
+ dracut-shutdown.service | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/dracut-shutdown.service b/dracut-shutdown.service

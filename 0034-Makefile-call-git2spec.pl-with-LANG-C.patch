@@ -4,7 +4,7 @@ Date: Thu, 10 May 2012 14:30:31 +0200
 Subject: [PATCH] Makefile: call git2spec.pl with LANG=C
 
 ---
- Makefile |    2 +-
+ Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile

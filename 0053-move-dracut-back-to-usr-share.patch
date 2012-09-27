@@ -4,13 +4,13 @@ Date: Wed, 6 Jun 2012 10:58:13 +0200
 Subject: [PATCH] move dracut back to /usr/share
 
 ---
- Makefile                |    2 +-
- dracut-shutdown.service |    2 +-
- dracut.8.asc            |    4 ++--
- dracut.asc              |    4 ++--
- dracut.conf.5.asc       |    2 +-
- dracut.sh               |    8 ++++----
- dracut.spec             |   18 ++++++------------
+ Makefile                |  2 +-
+ dracut-shutdown.service |  2 +-
+ dracut.8.asc            |  4 ++--
+ dracut.asc              |  4 ++--
+ dracut.conf.5.asc       |  2 +-
+ dracut.sh               |  8 ++++----
+ dracut.spec             | 18 ++++++------------
  7 files changed, 17 insertions(+), 23 deletions(-)
 
 diff --git a/Makefile b/Makefile

@@ -4,7 +4,7 @@ Date: Tue, 17 Apr 2012 12:06:51 +0200
 Subject: [PATCH] dracut.cmdline.7.asc: document "resume=" option
 
 ---
- dracut.cmdline.7.asc |   11 +++++++++++
+ dracut.cmdline.7.asc | 11 +++++++++++
  1 file changed, 11 insertions(+)
 
 diff --git a/dracut.cmdline.7.asc b/dracut.cmdline.7.asc

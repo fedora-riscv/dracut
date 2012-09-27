@@ -6,8 +6,8 @@ Subject: [PATCH] crypt: add rd.luks.allow-discards and honor options in
 
 also fixed the retry loop for rd.luks.key
 ---
- dracut.cmdline.7.asc               |   10 +++++
- modules.d/90crypt/cryptroot-ask.sh |   73 ++++++++++++++++++++++++++++--------
+ dracut.cmdline.7.asc               | 10 ++++++
+ modules.d/90crypt/cryptroot-ask.sh | 73 +++++++++++++++++++++++++++++---------
  2 files changed, 67 insertions(+), 16 deletions(-)
 
 diff --git a/dracut.cmdline.7.asc b/dracut.cmdline.7.asc

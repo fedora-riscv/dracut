@@ -7,7 +7,7 @@ The legacy argument is DASD=, and the new arguments should be the same
 as the arguments for populating dasd.conf.  If multiple arguments are
 passed we can stack them by inserting a ',' between them.
 ---
- modules.d/95dasd_mod/parse-dasd-mod.sh |   18 +++++++++++++-----
+ modules.d/95dasd_mod/parse-dasd-mod.sh | 18 +++++++++++++-----
  1 file changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/modules.d/95dasd_mod/parse-dasd-mod.sh b/modules.d/95dasd_mod/parse-dasd-mod.sh

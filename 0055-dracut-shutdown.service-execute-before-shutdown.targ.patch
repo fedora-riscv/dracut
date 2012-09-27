@@ -1,0 +1,23 @@
+From d8cfb55ed20c6658730fadeda9156121092747ef Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 27 Sep 2012 11:20:41 +0200
+Subject: [PATCH] dracut-shutdown.service: execute before shutdown.target
+
+https://bugzilla.redhat.com/show_bug.cgi?id=840120
+---
+ dracut-shutdown.service | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dracut-shutdown.service b/dracut-shutdown.service
+index 56e7b94..4a268ec 100644
+--- a/dracut-shutdown.service
++++ b/dracut-shutdown.service
+@@ -8,7 +8,7 @@
+ [Unit]
+ Description=Restore /run/initramfs
+ After=getty@tty1.service prefdm.service
+-Before=reboot.service
++Before=reboot.service shutdown.target
+ DefaultDependencies=no
+ ConditionPathExists=/run/initramfs/.need_shutdown
+ ConditionPathExists=!/run/initramfs/bin/sh

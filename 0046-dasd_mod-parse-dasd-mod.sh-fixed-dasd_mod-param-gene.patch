@@ -4,7 +4,7 @@ Date: Thu, 31 May 2012 09:12:51 +0200
 Subject: [PATCH] dasd_mod/parse-dasd-mod.sh: fixed dasd_mod param generation
 
 ---
- modules.d/95dasd_mod/parse-dasd-mod.sh |   44 +++++++++++++++++++++++++++-----
+ modules.d/95dasd_mod/parse-dasd-mod.sh | 44 +++++++++++++++++++++++++++++-----
  1 file changed, 38 insertions(+), 6 deletions(-)
 
 diff --git a/modules.d/95dasd_mod/parse-dasd-mod.sh b/modules.d/95dasd_mod/parse-dasd-mod.sh

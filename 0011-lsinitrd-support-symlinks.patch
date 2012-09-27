@@ -4,7 +4,7 @@ Date: Tue, 17 Apr 2012 11:31:27 +0200
 Subject: [PATCH] lsinitrd: support symlinks
 
 ---
- lsinitrd.sh |    2 +-
+ lsinitrd.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lsinitrd.sh b/lsinitrd.sh

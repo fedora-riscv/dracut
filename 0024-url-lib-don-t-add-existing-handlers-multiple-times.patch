@@ -10,7 +10,7 @@ that already exist.
 Note that this means you'll have to manipulate the handler list yourself
 if you want to change the position/priority of existing handlers.
 ---
- modules.d/45url-lib/url-lib.sh |    1 +
+ modules.d/45url-lib/url-lib.sh | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/modules.d/45url-lib/url-lib.sh b/modules.d/45url-lib/url-lib.sh

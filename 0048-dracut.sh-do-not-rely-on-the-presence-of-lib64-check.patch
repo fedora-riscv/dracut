@@ -5,7 +5,7 @@ Subject: [PATCH] dracut.sh: do not rely on the presence of lib64, check with
  ldd
 
 ---
- dracut.sh |   27 +++++++++++++++++----------
+ dracut.sh | 27 +++++++++++++++++----------
  1 file changed, 17 insertions(+), 10 deletions(-)
 
 diff --git a/dracut.sh b/dracut.sh

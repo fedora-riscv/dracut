@@ -11,18 +11,18 @@ directory:
 
     inst_libdir_file "libdevmapper-event-lvm*.so"
 ---
- dracut-functions.sh                    |   28 ++++++++++++++++++++++++++++
- dracut.sh                              |   12 ++++++++++--
- modules.d/01fips/module-setup.sh       |   11 +++++------
- modules.d/40network/module-setup.sh    |    9 ++-------
- modules.d/80cms/module-setup.sh        |    4 +---
- modules.d/90dm/module-setup.sh         |    4 +---
- modules.d/90dmraid/module-setup.sh     |    4 +---
- modules.d/90lvm/module-setup.sh        |    4 +---
- modules.d/90multipath/module-setup.sh  |    6 ++++--
- modules.d/95nfs/module-setup.sh        |    6 +-----
- modules.d/95udev-rules/module-setup.sh |    4 +---
- modules.d/98syslog/module-setup.sh     |    8 +++-----
+ dracut-functions.sh                    | 28 ++++++++++++++++++++++++++++
+ dracut.sh                              | 12 ++++++++++--
+ modules.d/01fips/module-setup.sh       | 11 +++++------
+ modules.d/40network/module-setup.sh    |  9 ++-------
+ modules.d/80cms/module-setup.sh        |  4 +---
+ modules.d/90dm/module-setup.sh         |  4 +---
+ modules.d/90dmraid/module-setup.sh     |  4 +---
+ modules.d/90lvm/module-setup.sh        |  4 +---
+ modules.d/90multipath/module-setup.sh  |  6 ++++--
+ modules.d/95nfs/module-setup.sh        |  6 +-----
+ modules.d/95udev-rules/module-setup.sh |  4 +---
+ modules.d/98syslog/module-setup.sh     |  8 +++-----
  12 files changed, 58 insertions(+), 42 deletions(-)
 
 diff --git a/dracut-functions.sh b/dracut-functions.sh

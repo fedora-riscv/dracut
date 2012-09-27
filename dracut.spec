@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 018
-Release: 55.git20120606%{?dist}
+Release: 60.git20120927%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -78,6 +78,11 @@ Patch51: 0051-dasd_mod-change-rd.dasd-to-dasd_mod-kernel-parameter.patch
 Patch52: 0052-dracut.spec-remove-typo-from-BuildRequires-for-suse.patch
 Patch53: 0053-move-dracut-back-to-usr-share.patch
 Patch54: 0054-removed-setsid-and-util-linux-2.21-requirement.patch
+Patch55: 0055-dracut-shutdown.service-execute-before-shutdown.targ.patch
+Patch56: 0056-dracut.sh-create-the-initramfs-non-world-readable.patch
+Patch57: 0057-mdraid-always-create-need_shutdown-if-we-have-assemb.patch
+Patch58: 0058-mdraid-catch-nested-md-raids.patch
+Patch59: 0059-mdraid-md-shutdown.sh-wait-until-md-devices-are-clea.patch
 
 
 BuildArch: noarch
@@ -387,6 +392,16 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Thu Sep 27 2012 Harald Hoyer <harald@redhat.com> 018-60.git20120927
+- run dracut-shutdown.service before shutdown.target
+Resolves: rhbz#840120
+- do not create the initramfs world readable
+Resolves: rhbz#859448
+- mdraid: do the dracut shutdown, if a md raid is found
+- mdraid: handle nested md raids
+- mdraid: wait until devices are clean on shutdown
+Resolves: rhbz#732297 rhbz#840562
+
 * Wed Jun 06 2012 Harald Hoyer <harald@redhat.com> 018-55.git20120606
 - update to F17 version
 - support for /usr mounting in the initramfs

@@ -4,7 +4,7 @@ Date: Wed, 25 Apr 2012 11:23:10 +0200
 Subject: [PATCH] iscsi/module-setup.sh: fix host-only/mount checks
 
 ---
- modules.d/95iscsi/module-setup.sh |   16 ++++++----------
+ modules.d/95iscsi/module-setup.sh | 16 ++++++----------
  1 file changed, 6 insertions(+), 10 deletions(-)
 
 diff --git a/modules.d/95iscsi/module-setup.sh b/modules.d/95iscsi/module-setup.sh

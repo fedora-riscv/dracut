@@ -4,9 +4,9 @@ Date: Wed, 6 Jun 2012 11:14:48 +0200
 Subject: [PATCH] removed setsid and util-linux >= 2.21 requirement
 
 ---
- dracut.spec                      |    4 ++--
- modules.d/99base/dracut-lib.sh   |    3 +--
- modules.d/99base/module-setup.sh |    2 +-
+ dracut.spec                      | 4 ++--
+ modules.d/99base/dracut-lib.sh   | 3 +--
+ modules.d/99base/module-setup.sh | 2 +-
  3 files changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/dracut.spec b/dracut.spec

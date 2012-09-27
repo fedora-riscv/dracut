@@ -12,7 +12,7 @@ This is a serious problem if you have (e.g.) "ip=eth0:dhcp" in
 "ip=eth0:dhcp ip=eth0:dhcp" and then parse-ip-opts.sh will die() because
 you have two configurations for eth0.
 ---
- modules.d/99base/dracut-lib.sh |    1 +
+ modules.d/99base/dracut-lib.sh | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/modules.d/99base/dracut-lib.sh b/modules.d/99base/dracut-lib.sh

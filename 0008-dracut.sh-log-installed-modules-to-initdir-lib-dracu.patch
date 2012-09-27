@@ -5,7 +5,7 @@ Subject: [PATCH] dracut.sh: log installed modules to
  $initdir/lib/dracut/modules.txt
 
 ---
- dracut.sh |    5 +++++
+ dracut.sh | 5 +++++
  1 file changed, 5 insertions(+)
 
 diff --git a/dracut.sh b/dracut.sh

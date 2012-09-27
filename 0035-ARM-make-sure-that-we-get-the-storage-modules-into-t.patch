@@ -5,7 +5,7 @@ Subject: [PATCH] ARM: make sure that we get the storage modules into the
  initramfs
 
 ---
- modules.d/90kernel-modules/module-setup.sh |    3 +++
+ modules.d/90kernel-modules/module-setup.sh | 3 +++
  1 file changed, 3 insertions(+)
 
 diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh

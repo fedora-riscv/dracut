@@ -6,8 +6,8 @@ Subject: [PATCH] Relax the rules for kdump, we don't specify netroot in
 
 https://bugzilla.redhat.com/show_bug.cgi?id=822750
 ---
- modules.d/40network/parse-bond.sh   |    5 +----
- modules.d/40network/parse-bridge.sh |    3 ---
+ modules.d/40network/parse-bond.sh   | 5 +----
+ modules.d/40network/parse-bridge.sh | 3 ---
  2 files changed, 1 insertion(+), 7 deletions(-)
 
 diff --git a/modules.d/40network/parse-bond.sh b/modules.d/40network/parse-bond.sh
