@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 029
-Release: 1%{?dist}
+Release: 1%{?dist}.2
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -227,6 +227,7 @@ mkdir -p $RPM_BUILD_ROOT%{_sharedstatedir}/initramfs
 install -m 0644 dracut.conf.d/fedora.conf.example $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/01-dist.conf
 
 sed -i -e 's#^hostonly=.*#hostonly=\"no\"#g;s#^dracut_rescue_image=.*#dracut_rescue_image=\"no\"#g' $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/01-dist.conf
+echo 'kernel_cmdline+=" rd.auto=1 "' >> $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/01-dist.conf
 
 install -m 0644 dracut.conf.d/fips.conf.example $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/40-fips.conf
 %endif
@@ -411,6 +412,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir /var/lib/dracut/overlay
 
 %changelog
+* Tue Jul 02 2013 Harald Hoyer <harald@redhat.com> 029-1.2
+- add rd.auto=1 to the default kernel cmdline
+
 * Tue Jul 02 2013 Harald Hoyer <harald@redhat.com> 029-1
 - backport 029 to F18
 
