@@ -64,32 +64,32 @@ Patch32: 0032-lvm-do-not-run-pvscan-for-lvmetad-update.patch
 Patch33: 0033-fips-fix-RHEV-vmlinuz-check.patch
 Patch34: 0034-dracut.cmdline.7.asc-document-server-ip-of-ip-parame.patch
 Patch35: 0035-dracut.sh-_get_fs_type-if-block-device-exists-return.patch
-Patch36: 0036-network-net-lib.sh-wait_for_if_up-wait-for-state-UP.patch
-Patch37: 0037-network-net-lib.sh-iface_has_link-fixup.patch
-Patch38: 0038-network-ifup.sh-before-doing-dhcp-check-if-the-link-.patch
+#Patch36: 0036-network-net-lib.sh-wait_for_if_up-wait-for-state-UP.patch
+#Patch37: 0037-network-net-lib.sh-iface_has_link-fixup.patch
+#Patch38: 0038-network-ifup.sh-before-doing-dhcp-check-if-the-link-.patch
 Patch39: 0039-base-dracut-lib.sh-wait_for_dev-relax-requirement.patch
 Patch40: 0040-resume-autoconf-resume.patch
 Patch41: 0041-resume-no-more-autoresume.patch
 Patch42: 0042-dracut.sh-skip-crypt-swaps-with-password-files.patch
 Patch43: 0043-dracut-functions.sh-do-not-force-require-modules.bui.patch
 Patch44: 0044-10i18n-parse-i18n.sh-fixed-vconsole.conf-locale.conf.patch
-Patch45: 0045-95dasd-Install-kernel-modules-only-once.patch
-Patch46: 0046-95dasd-Only-install-module-if-normalize_dasd_arg-is-.patch
-Patch47: 0047-95dasd_mod-make-dasd_cio_free-optional.patch
-Patch48: 0048-95zfcp-Make-installation-optional.patch
-Patch49: 0049-95znet-Make-installation-optional.patch
-Patch50: 0050-Add-DASD-configuration-for-SuSE.patch
-Patch51: 0051-Add-zfcp-scripts-for-SUSE.patch
-Patch52: 0052-Make-logfile-configurable.patch
-Patch53: 0053-mkinitrd-suse-Add-SUSE-compability-wrapper-for-dracu.patch
-Patch54: 0054-mkinitrd-suse.8.asc-Add-manpage-for-SUSE-compat-mkin.patch
+#Patch45: 0045-95dasd-Install-kernel-modules-only-once.patch
+#Patch46: 0046-95dasd-Only-install-module-if-normalize_dasd_arg-is-.patch
+#Patch47: 0047-95dasd_mod-make-dasd_cio_free-optional.patch
+#Patch48: 0048-95zfcp-Make-installation-optional.patch
+#Patch49: 0049-95znet-Make-installation-optional.patch
+#Patch50: 0050-Add-DASD-configuration-for-SuSE.patch
+#Patch51: 0051-Add-zfcp-scripts-for-SUSE.patch
+#Patch52: 0052-Make-logfile-configurable.patch
+#Patch53: 0053-mkinitrd-suse-Add-SUSE-compability-wrapper-for-dracu.patch
+#Patch54: 0054-mkinitrd-suse.8.asc-Add-manpage-for-SUSE-compat-mkin.patch
 Patch55: 0055-Fixup-keymap-setting-for-openSUSE.patch
 Patch56: 0056-Fixup-script-permissions.patch
 Patch57: 0057-Remove-shebang-from-shell-completion-files.patch
 Patch58: 0058-lvm-install-thin-tools-only-when-needed-in-hostonly.patch
 Patch59: 0059-i18n-introduce-i18n_install_all-to-install-everythin.patch
-Patch60: 0060-dracut.spec-add-new-modules.patch
-Patch61: 0061-dracut.spec-remove-suse-man-pages.patch
+#Patch60: 0060-dracut.spec-add-new-modules.patch
+#Patch61: 0061-dracut.spec-remove-suse-man-pages.patch
 
 
 BuildRequires: bash git
@@ -415,10 +415,8 @@ rm -rf -- $RPM_BUILD_ROOT
 %{dracutlibdir}/modules.d/95rootfs-block
 %{dracutlibdir}/modules.d/95dasd
 %{dracutlibdir}/modules.d/95dasd_mod
-%{dracutlibdir}/modules.d/95dasd_rules
 %{dracutlibdir}/modules.d/95fstab-sys
 %{dracutlibdir}/modules.d/95zfcp
-%{dracutlibdir}/modules.d/95zfcp_rules
 %{dracutlibdir}/modules.d/95terminfo
 %{dracutlibdir}/modules.d/95udev-rules
 %{dracutlibdir}/modules.d/95virtfs
@@ -521,7 +519,6 @@ rm -rf -- $RPM_BUILD_ROOT
 - nbd, do not fail in hostonly mode
 - add ohci-pci to the list of hardcoded modules
 - lvm: do not run pvscan for lvmetad
-- network fixes
 - skip crypt swaps with password files
 - fixed i18n
 
