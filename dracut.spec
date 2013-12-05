@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 034
-Release: 62.git20131205%{?dist}
+Release: 64.git20131205%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -90,6 +90,8 @@ Patch58: 0058-lvm-install-thin-tools-only-when-needed-in-hostonly.patch
 Patch59: 0059-i18n-introduce-i18n_install_all-to-install-everythin.patch
 #Patch60: 0060-dracut.spec-add-new-modules.patch
 #Patch61: 0061-dracut.spec-remove-suse-man-pages.patch
+#Patch62: 0062-TODO-update.patch
+Patch63: 0063-systemd-dracut-initqueue.sh-fixed-waiting-in-the-loo.patch
 
 
 BuildRequires: bash git
@@ -513,6 +515,9 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Dec 05 2013 Harald Hoyer <harald@redhat.com> 034-64.git20131205
+- fixed failing the boot while waiting for password input
+
 * Thu Dec 05 2013 Harald Hoyer <harald@redhat.com> 034-62.git20131205
 - fixed PATH shortener
 - also install /etc/system-fips in the initramfs
