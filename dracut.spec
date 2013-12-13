@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 034
-Release: 64.git20131205%{?dist}
+Release: 64.git20131205%{?dist}.1
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -92,7 +92,7 @@ Patch59: 0059-i18n-introduce-i18n_install_all-to-install-everythin.patch
 #Patch61: 0061-dracut.spec-remove-suse-man-pages.patch
 #Patch62: 0062-TODO-update.patch
 Patch63: 0063-systemd-dracut-initqueue.sh-fixed-waiting-in-the-loo.patch
-
+Patch64: lvm-fixed-lvm-thin-check.patch
 
 BuildRequires: bash git
 
@@ -515,6 +515,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Dec 13 2013 Harald Hoyer <harald@redhat.com> 034-64.git20131205.1
+- fixed lvm thin check
+Resolves: rhbz#1040669
+
 * Thu Dec 05 2013 Harald Hoyer <harald@redhat.com> 034-64.git20131205
 - fixed failing the boot while waiting for password input
 
