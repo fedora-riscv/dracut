@@ -10,7 +10,7 @@
 
 Name: dracut
 Version: 034
-Release: 64.git20131205%{?dist}.1
+Release: 80.git20140122%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -64,9 +64,9 @@ Patch32: 0032-lvm-do-not-run-pvscan-for-lvmetad-update.patch
 Patch33: 0033-fips-fix-RHEV-vmlinuz-check.patch
 Patch34: 0034-dracut.cmdline.7.asc-document-server-ip-of-ip-parame.patch
 Patch35: 0035-dracut.sh-_get_fs_type-if-block-device-exists-return.patch
-#Patch36: 0036-network-net-lib.sh-wait_for_if_up-wait-for-state-UP.patch
-#Patch37: 0037-network-net-lib.sh-iface_has_link-fixup.patch
-#Patch38: 0038-network-ifup.sh-before-doing-dhcp-check-if-the-link-.patch
+Patch36: 0036-network-net-lib.sh-wait_for_if_up-wait-for-state-UP.patch
+Patch37: 0037-network-net-lib.sh-iface_has_link-fixup.patch
+Patch38: 0038-network-ifup.sh-before-doing-dhcp-check-if-the-link-.patch
 Patch39: 0039-base-dracut-lib.sh-wait_for_dev-relax-requirement.patch
 Patch40: 0040-resume-autoconf-resume.patch
 Patch41: 0041-resume-no-more-autoresume.patch
@@ -92,7 +92,23 @@ Patch59: 0059-i18n-introduce-i18n_install_all-to-install-everythin.patch
 #Patch61: 0061-dracut.spec-remove-suse-man-pages.patch
 #Patch62: 0062-TODO-update.patch
 Patch63: 0063-systemd-dracut-initqueue.sh-fixed-waiting-in-the-loo.patch
-Patch64: lvm-fixed-lvm-thin-check.patch
+Patch64: 0064-base-rdsosreport.sh-add-ip-a-output.patch
+Patch65: 0065-usrmount-always-install.patch
+Patch66: 0066-fcoe-move-uefi-parsing-to-fcoe-uefi-module.patch
+Patch67: 0067-move-uefi-lib-to-a-seperate-module.patch
+Patch68: 0068-lvm-fixed-lvm-thin-check.patch
+Patch69: 0069-resume-fixed-udev-rule-for-dev-resume-instead-of-dev.patch
+Patch70: 0070-resume-parse-resume.sh-fixed-printf-formatting.patch
+Patch71: 0071-systemd-dracut-initqueue.sh-fstab-is-not-a-directory.patch
+Patch72: 0072-dracut.sh-add-missing-piece-for-option-add-device.patch
+Patch73: 0073-dracut.sh-add-boot-efi-to-device-paths.patch
+Patch74: 0074-kernel-modules-add-more-block-driver.patch
+Patch75: 0075-network-include-usbnet-drivers.patch
+Patch76: 0076-network-include-all-ethernet-drivers.patch
+Patch77: 0077-dracut-install-dracut-fix-ldd-output-parsing.patch
+Patch78: 0078-dracut.spec-add-95fcoe-uefi-and-99uefi-lib.patch
+Patch79: 0079-fcoe-uefi-do-not-include-if-fcoe-utils-not-installed.patch
+
 
 BuildRequires: bash git
 
@@ -476,6 +492,8 @@ rm -rf -- $RPM_BUILD_ROOT
 %{dracutlibdir}/modules.d/95ssh-client
 %{dracutlibdir}/modules.d/45ifcfg
 %{dracutlibdir}/modules.d/95znet
+%{dracutlibdir}/modules.d/95fcoe-uefi
+%{dracutlibdir}/modules.d/99uefi-lib
 
 %if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version}
 %files fips
@@ -515,6 +533,16 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Jan 22 2014 Harald Hoyer <harald@redhat.com> 034-80.git20140122
+- fixed /dev/dev/resume
+Resolves: rhbz#1045116
+- add more drivers
+Resolves: rhbz#1044779
+- fixed resume rules
+Resolves: rhbz#1045704
+- add /boot/efi to critical paths
+Resolves: rhbz#1046510
+
 * Fri Dec 13 2013 Harald Hoyer <harald@redhat.com> 034-64.git20131205.1
 - fixed lvm thin check
 Resolves: rhbz#1040669

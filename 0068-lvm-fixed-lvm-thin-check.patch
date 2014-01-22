@@ -29,6 +29,3 @@ index 1206310..a64e5d6 100755
 +        inst_multiple -o thin_dump thin_restore thin_check thin_repair
      fi
  }
--- 
-1.8.4.2
-

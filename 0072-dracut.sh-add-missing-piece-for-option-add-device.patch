@@ -1,0 +1,21 @@
+From b50449ad7baa2f748dcc647e9a84a66b621cc5af Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 8 Jan 2014 15:37:18 +0100
+Subject: [PATCH] dracut.sh: add missing piece for option --add-device
+
+---
+ dracut.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/dracut.sh b/dracut.sh
+index 11dcd0e..bae03d7 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -308,6 +308,7 @@ TEMP=$(unset POSIXLY_CORRECT; getopt \
+     --long add-fstab: \
+     --long mount: \
+     --long device: \
++    --long add-device: \
+     --long nofscks: \
+     --long ro-mnt \
+     --long kmoddir: \
