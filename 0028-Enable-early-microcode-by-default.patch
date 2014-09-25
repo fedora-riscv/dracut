@@ -1,0 +1,26 @@
+From c4b647b02a745d874cdf8c20652130d410c757fc Mon Sep 17 00:00:00 2001
+From: Fedora dracut team <dracut-maint@redhat.com>
+Date: Thu, 25 Sep 2014 11:28:53 -0400
+Subject: [PATCH] Enable early-microcode by default
+
+See bug 1083716
+---
+ dracut.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dracut.sh b/dracut.sh
+index d17d1d1..ebd09e1 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -799,7 +799,7 @@ stdloglvl=$((stdloglvl + verbosity_mod_l))
+ [[ $nofscks_l ]] && nofscks="yes"
+ [[ $ro_mnt_l ]] && ro_mnt="yes"
+ [[ $early_microcode_l ]] && early_microcode=$early_microcode_l
+-[[ $early_microcode ]] || early_microcode=no
++[[ $early_microcode ]] || early_microcode=yes
+ [[ $logfile_l ]] && logfile="$logfile_l"
+ # eliminate IFS hackery when messing with fw_dir
+ fw_dir=${fw_dir//:/ }
+-- 
+1.9.3
+
