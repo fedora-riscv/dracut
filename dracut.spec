@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 038
-Release: 29.git20140903%{?dist}
+Release: 30.git20140903%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -58,6 +58,7 @@ Patch25: 0025-dracut-lib.sh-cancel_wait_for_dev-fixed-double-escap.patch
 Patch26: 0026-dracut.spec-fixed-license-file-packaging.patch
 Patch27: 0027-Makefile-rpm-wget-the-lgpl-license-for-Source1.patch
 Patch28: 0028-Enable-early-microcode-by-default.patch
+Patch35: 0035-dmsquash-live-treat-cancelled-check-as-successfull.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -506,6 +507,9 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Sep 30 2014 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 038-30.git20140903
+- Allow media check to be cancelled (rhbz 1147941)
+
 * Thu Sep 25 2014 Josh Boyer <jwboyer@fedoraproject.org> 038-29.git20140903
 - Enable early-microcode by default (rhbz 1083716)
 
