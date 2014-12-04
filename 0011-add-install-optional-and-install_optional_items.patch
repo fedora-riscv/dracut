@@ -1,8 +1,9 @@
-From 54b68829b60bc3f4c28cfca1ab0336584fe1e74c Mon Sep 17 00:00:00 2001
+From 1b59bfd24181d7cbf1a2f84c6fc9e1033bac1265 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 22 Jul 2014 14:09:06 +0200
 Subject: [PATCH] add "--install-optional" and install_optional_items
 
+(cherry picked from commit 54b68829b60bc3f4c28cfca1ab0336584fe1e74c)
 ---
  dracut-bash-completion.sh         |  4 ++--
  dracut.8.asc                      |  3 +++

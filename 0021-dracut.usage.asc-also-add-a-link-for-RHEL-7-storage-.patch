@@ -1,10 +1,11 @@
-From 999249c60c8d762aac67e54b9b307b2b904896a1 Mon Sep 17 00:00:00 2001
+From 9df52b82848042b7d7b29472b7065945bbc03b45 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 15 Aug 2014 11:50:31 +0200
 Subject: [PATCH] dracut.usage.asc: also add a link for RHEL-7 storage admin
  guide
 
 (cherry picked from commit 11b5db88c2d9290fc438b12a79a50bdd1d327203)
+(cherry picked from commit 999249c60c8d762aac67e54b9b307b2b904896a1)
 ---
  dracut.usage.asc | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)

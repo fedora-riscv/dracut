@@ -1,9 +1,10 @@
-From 62d553ed02907942ebfec93796eea952da83366e Mon Sep 17 00:00:00 2001
+From d0ab3c66afb624d90780d016e97102e48d113d23 Mon Sep 17 00:00:00 2001
 From: Nicolas Chauvet <kwizart@gmail.com>
 Date: Mon, 4 Aug 2014 22:04:39 +0200
 Subject: [PATCH] Introduce ARM specific modules needed by drm
 
 (cherry picked from commit 49fe860b22afd355b67f5f3f2ee30d5a3f0d3f5f)
+(cherry picked from commit 62d553ed02907942ebfec93796eea952da83366e)
 ---
  modules.d/50drm/module-setup.sh | 11 +++++++++++
  1 file changed, 11 insertions(+)

@@ -1,8 +1,9 @@
-From 4adeefc4abb8fb1d83e483d12da6b337c486fded Mon Sep 17 00:00:00 2001
+From 60ba72a5efdcaad6d0bde9e3b82bc35aa2441629 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 8 Jul 2014 11:50:51 +0200
 Subject: [PATCH] plymouth: also find the pkglibdir on debian
 
+(cherry picked from commit 4adeefc4abb8fb1d83e483d12da6b337c486fded)
 ---
  modules.d/50plymouth/module-setup.sh | 12 +++++++++---
  1 file changed, 9 insertions(+), 3 deletions(-)

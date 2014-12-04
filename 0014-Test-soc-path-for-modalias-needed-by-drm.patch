@@ -1,4 +1,4 @@
-From a03ed61ef577f57e255c6f752eb9344b3d5dc9e9 Mon Sep 17 00:00:00 2001
+From 2b8143190e6e5e50d7fa54b38e6752aafb39ebbf Mon Sep 17 00:00:00 2001
 From: Nicolas Chauvet <kwizart@gmail.com>
 Date: Mon, 4 Aug 2014 22:04:37 +0200
 Subject: [PATCH] Test soc path for modalias needed by drm
@@ -11,6 +11,7 @@ http://patchwork.ozlabs.org/patch/361765/
 http://www.spinics.net/lists/linux-tegra/msg17948.html
 
 (cherry picked from commit 4a3f3ba68c73707231bba72cdf7ab01464456e5a)
+(cherry picked from commit a03ed61ef577f57e255c6f752eb9344b3d5dc9e9)
 ---
  modules.d/50drm/module-setup.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

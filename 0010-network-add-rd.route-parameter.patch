@@ -1,8 +1,9 @@
-From 7b46244bb94e3dfd635a8d222044ae7fc920240d Mon Sep 17 00:00:00 2001
+From 6bd6e92f0c54a8fd7e9b57aaf1dc343f1b845445 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 22 Jul 2014 11:03:56 +0200
 Subject: [PATCH] network: add rd.route parameter
 
+(cherry picked from commit 7b46244bb94e3dfd635a8d222044ae7fc920240d)
 ---
  dracut.cmdline.7.asc             | 15 +++++++++++++-
  modules.d/40network/net-lib.sh   | 42 ++++++++++++++++++++++++++++++++++++++++

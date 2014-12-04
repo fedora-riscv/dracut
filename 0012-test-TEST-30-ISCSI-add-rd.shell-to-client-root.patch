@@ -1,8 +1,9 @@
-From ece72160cedbe47b973a7925d5e2f5adc409a849 Mon Sep 17 00:00:00 2001
+From 4493d2b8ebd44c0319789e1e421e39499bcf27f6 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 22 Jul 2014 14:22:21 +0200
 Subject: [PATCH] test/TEST-30-ISCSI: add rd.shell to client root
 
+(cherry picked from commit ece72160cedbe47b973a7925d5e2f5adc409a849)
 ---
  test/TEST-30-ISCSI/client-init.sh | 6 ++++++
  1 file changed, 6 insertions(+)

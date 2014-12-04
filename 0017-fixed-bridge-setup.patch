@@ -1,4 +1,4 @@
-From 536cd78d8cb2d9e4e5080131d9632d6105caec77 Mon Sep 17 00:00:00 2001
+From 34eadc62cc8059f9a942f29c8d7e1575b4676f2f Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 1 Aug 2014 13:16:29 +0200
 Subject: [PATCH] fixed bridge setup
@@ -8,6 +8,7 @@ renamed "ethnames" in bridge.info to "bridgeslaves"
 fixed ifcfg generation
 
 (cherry picked from commit 2db6d7111870c5d16d812d9cddc23558f3f4a202)
+(cherry picked from commit 536cd78d8cb2d9e4e5080131d9632d6105caec77)
 ---
  modules.d/40network/ifup.sh         |  4 ++--
  modules.d/40network/net-genrules.sh |  2 +-

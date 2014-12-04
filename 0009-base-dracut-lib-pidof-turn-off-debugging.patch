@@ -1,8 +1,9 @@
-From ad8638e04e4ac3641afee0e273c91aa3fb6d4278 Mon Sep 17 00:00:00 2001
+From 9e67de971f004b962e8f19f08e19be2f82d53787 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 22 Jul 2014 11:51:08 +0200
 Subject: [PATCH] base/dracut-lib:pidof() turn off debugging
 
+(cherry picked from commit ad8638e04e4ac3641afee0e273c91aa3fb6d4278)
 ---
  modules.d/99base/dracut-lib.sh | 7 ++++++-
  1 file changed, 6 insertions(+), 1 deletion(-)

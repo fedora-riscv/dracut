@@ -1,4 +1,4 @@
-From a2ff6aafa19b8a6bcdaa8a26e97ea1ba17bcbab9 Mon Sep 17 00:00:00 2001
+From 7ad1f9e781a9729f7b27ba175466f1783c97482f Mon Sep 17 00:00:00 2001
 From: WANG Chao <chaowang@redhat.com>
 Date: Mon, 28 Jul 2014 22:26:28 +0800
 Subject: [PATCH] dracut-functions: get_persistent_dev() fall back to the
@@ -11,6 +11,7 @@ to check its return string every time.
 
 Signed-off-by: WANG Chao <chaowang@redhat.com>
 (cherry picked from commit a628b7caf52459a31c46463744fafc42bb8f3407)
+(cherry picked from commit a2ff6aafa19b8a6bcdaa8a26e97ea1ba17bcbab9)
 ---
  dracut-functions.sh | 1 +
  1 file changed, 1 insertion(+)

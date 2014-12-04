@@ -1,9 +1,10 @@
-From 1ddd3fd89a4dea2a247dc824ad4da09d2493a74d Mon Sep 17 00:00:00 2001
+From 7a27ce82a0199a9205471d380d48467adfdea731 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 24 Jul 2014 14:47:14 +0200
 Subject: [PATCH] dracut.spec: fixed license file packaging
 
 (cherry picked from commit caa72f829007a868bf47a9bb82a3e359acd6a420)
+(cherry picked from commit 1ddd3fd89a4dea2a247dc824ad4da09d2493a74d)
 ---
  dracut.spec | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)

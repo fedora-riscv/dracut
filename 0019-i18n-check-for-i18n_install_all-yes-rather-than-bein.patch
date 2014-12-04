@@ -1,4 +1,4 @@
-From c0698905b29f311898d8a9ff4bb4f3dbd5eb2408 Mon Sep 17 00:00:00 2001
+From 8ff6313ae8eb580ee6e10b0de7a42e4dccc1cc8b Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 14 Aug 2014 12:56:53 +0200
 Subject: [PATCH] i18n: check for $i18n_install_all == "yes" rather than being
@@ -8,6 +8,7 @@ i18n_install_all="no" does not have the expected effect without this
 patch
 
 (cherry picked from commit ae488efa5e6103ffc1be8b8782f8a1c7a5aa90b4)
+(cherry picked from commit c0698905b29f311898d8a9ff4bb4f3dbd5eb2408)
 ---
  modules.d/10i18n/module-setup.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

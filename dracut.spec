@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 038
-Release: 30.git20140903%{?dist}
+Release: 31.git20141204%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -57,8 +57,9 @@ Patch24: 0024-dracut.sh-source-dracut-version.sh-earlier-than-drac.patch
 Patch25: 0025-dracut-lib.sh-cancel_wait_for_dev-fixed-double-escap.patch
 Patch26: 0026-dracut.spec-fixed-license-file-packaging.patch
 Patch27: 0027-Makefile-rpm-wget-the-lgpl-license-for-Source1.patch
-Patch28: 0028-Enable-early-microcode-by-default.patch
-Patch35: 0035-dmsquash-live-treat-cancelled-check-as-successfull.patch
+Patch28: 0028-dmsquash-live-do-not-abort-if-user-pressed-ESC-on-ch.patch
+Patch29: 0029-dracut.conf.d-fedora.conf.example-turn-on-early_micr.patch
+Patch30: 0030-systemd-add-90-vconsole.rules.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -507,6 +508,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Dec 04 2014 Harald Hoyer <harald@redhat.com> 038-30.git20141204
+- add 90-vconsole.rules
+Resolves: rhbz#1150384
+
 * Tue Sep 30 2014 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 038-30.git20140903
 - Allow media check to be cancelled (rhbz 1147941)
 

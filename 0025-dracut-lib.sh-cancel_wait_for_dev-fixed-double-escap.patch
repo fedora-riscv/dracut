@@ -1,9 +1,10 @@
-From 7c12e7501feb99838df2167c5d9da2e1b2c24905 Mon Sep 17 00:00:00 2001
+From ea0a71658acd551fbed36cdd35bb543d7493a58a Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 21 Aug 2014 16:38:35 +0200
 Subject: [PATCH] dracut-lib.sh:cancel_wait_for_dev() fixed double escape
 
 (cherry picked from commit 7c752ffaef3426a4ddd2b86abbc02053aaf8c356)
+(cherry picked from commit 7c12e7501feb99838df2167c5d9da2e1b2c24905)
 ---
  modules.d/99base/dracut-lib.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

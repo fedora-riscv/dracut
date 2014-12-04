@@ -1,4 +1,4 @@
-From 8c1736e9b52953f633bb778297ca7db0d49bbf31 Mon Sep 17 00:00:00 2001
+From 69d3cf385c57710d395b61c1d912cf2a204faae6 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 20 Aug 2014 10:21:43 +0200
 Subject: [PATCH] dracut.sh: source dracut-version.sh earlier than
@@ -10,6 +10,7 @@ Aug 20 10:15:49 lenovo dracut[11144]: dracut-
 Aug 20 10:15:49 lenovo dracut[11148]: Executing: /sbin/dracut
 
 (cherry picked from commit e27ecc9ae8352c98c206ea5165ab6b85d3d6cd3a)
+(cherry picked from commit 8c1736e9b52953f633bb778297ca7db0d49bbf31)
 ---
  dracut.sh | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)

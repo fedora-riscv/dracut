@@ -1,4 +1,4 @@
-From 4ef45f13f4d11c86c4c8c3fd8d8a6be2c5b4deef Mon Sep 17 00:00:00 2001
+From 1bc8700c7d8a3a3caa3a5027a4d1f0f60b49ef41 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 21 Jul 2014 16:58:15 +0200
 Subject: [PATCH] dracut-functions.sh: fix inst*() functions for "-H" handling
@@ -6,6 +6,8 @@ Subject: [PATCH] dracut-functions.sh: fix inst*() functions for "-H" handling
 because some inst*() functions check the existance of the source files
 and do not know about the "-H" option, some failed to install the
 hostonly files.
+
+(cherry picked from commit 4ef45f13f4d11c86c4c8c3fd8d8a6be2c5b4deef)
 ---
  dracut-functions.sh | 46 ++++++++++++++++++++++++++++++++--------------
  1 file changed, 32 insertions(+), 14 deletions(-)

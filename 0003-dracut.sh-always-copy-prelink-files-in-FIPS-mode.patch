@@ -1,9 +1,11 @@
-From 6cd7001b35c66a12787bc0943b9a7e83a3d443c0 Mon Sep 17 00:00:00 2001
+From 4796fe1ffc9041687694c6c8707081e1f6956de9 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 8 Jul 2014 11:50:04 +0200
 Subject: [PATCH] dracut.sh: always copy prelink files in FIPS mode
 
 regardless of the the prelink={yes|no} switch
+
+(cherry picked from commit 6cd7001b35c66a12787bc0943b9a7e83a3d443c0)
 ---
  dracut.sh | 26 ++++++++++++--------------
  1 file changed, 12 insertions(+), 14 deletions(-)

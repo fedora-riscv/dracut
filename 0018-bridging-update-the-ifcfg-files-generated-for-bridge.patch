@@ -1,4 +1,4 @@
-From 209b04b3208dc448d63bee3255cccd30ea8f918e Mon Sep 17 00:00:00 2001
+From 75b42edffc013317e8fba4fc13a2044411df7a2c Mon Sep 17 00:00:00 2001
 From: Alex Harpin <development@landsofshadow.co.uk>
 Date: Sat, 2 Aug 2014 20:08:25 +0100
 Subject: [PATCH] bridging: update the ifcfg files generated for bridge slaves
@@ -10,6 +10,7 @@ fix for Bug #1123552.
 Bug #1123552 https://bugzilla.redhat.com/show_bug.cgi?id=1123552
 
 (cherry picked from commit 32125a976bb6ff67768ca813446743b781ba012f)
+(cherry picked from commit 209b04b3208dc448d63bee3255cccd30ea8f918e)
 ---
  modules.d/45ifcfg/write-ifcfg.sh | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)

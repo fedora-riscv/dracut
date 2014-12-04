@@ -1,8 +1,9 @@
-From 611c895772c73ebb5f769942bca5d5991adc169e Mon Sep 17 00:00:00 2001
+From d246d2dbfd24cd77ac24124ad06328a5bfcdd975 Mon Sep 17 00:00:00 2001
 From: Peter Robinson <pbrobinson@gmail.com>
 Date: Sun, 20 Jul 2014 22:20:04 +0100
 Subject: [PATCH] ARM: update modules for ARM host only options
 
+(cherry picked from commit 611c895772c73ebb5f769942bca5d5991adc169e)
 ---
  modules.d/90kernel-modules/module-setup.sh | 7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)

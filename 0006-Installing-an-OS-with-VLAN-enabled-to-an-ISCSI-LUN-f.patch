@@ -1,4 +1,4 @@
-From f4eb0d98048d51a0782d4a7137f699de174a65e4 Mon Sep 17 00:00:00 2001
+From 633a3f01e0046072aa67eeb072d38256e0be8abe Mon Sep 17 00:00:00 2001
 From: "Praveen_Paladugu@Dell.com" <Praveen_Paladugu@Dell.com>
 Date: Tue, 10 Jun 2014 10:35:16 -0500
 Subject: [PATCH] Installing an OS with VLAN enabled to an ISCSI LUN (from
@@ -9,6 +9,8 @@ When installing OS to a VLAN enabled iscsi LUN (extracted from iBFT), "/tmp/net.
 Then anaconda installer requires 'BOOTPROTO="ibft"' populated in ifcfg of the vlan interface (ex: ibft0.20), for it to properly populate the kernel parameters post installation. The setting 'BOOTPROTO="ibft"' is populated by write-ifcfg.sh script only if the corresponding interface has a file /tmp/net.{xyz}.has_inft_config
 
 To get around this issue, in ibft_to_cmdline() function in net-lib.sh file, I made the following changes to populate the has_ibft_config file for the vlan interface(ex: ibft0.20):
+
+(cherry picked from commit f4eb0d98048d51a0782d4a7137f699de174a65e4)
 ---
  modules.d/40network/net-lib.sh | 7 ++++++-
  1 file changed, 6 insertions(+), 1 deletion(-)

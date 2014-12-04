@@ -1,9 +1,10 @@
-From 8ca5e8c319c3e44bbd06d8c0da429d2df221707b Mon Sep 17 00:00:00 2001
+From 2bda2bed06fab49ef30feb1d042c1721dff5ad15 Mon Sep 17 00:00:00 2001
 From: Alexander Tsoy <alexander@tsoy.me>
 Date: Mon, 31 Mar 2014 17:56:13 +0400
 Subject: [PATCH] modsign: do not hardcode path to keyctl
 
 https://bugs.gentoo.org/show_bug.cgi?id=506094
+(cherry picked from commit 8ca5e8c319c3e44bbd06d8c0da429d2df221707b)
 ---
  modules.d/03modsign/module-setup.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

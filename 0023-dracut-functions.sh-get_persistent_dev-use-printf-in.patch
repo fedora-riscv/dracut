@@ -1,10 +1,11 @@
-From 1c4b50e8ced8fc851704f5666b33994c0f61b77a Mon Sep 17 00:00:00 2001
+From 3f1d55be20cfcdd4cad61dac4cb89f57381237e6 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 15 Aug 2014 12:36:04 +0200
 Subject: [PATCH] dracut-functions.sh:get_persistent_dev(): use printf, instead
  of echo
 
 (cherry picked from commit 9efb74a32d34533f7ccb201160ea0e40adc13987)
+(cherry picked from commit 1c4b50e8ced8fc851704f5666b33994c0f61b77a)
 ---
  dracut-functions.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

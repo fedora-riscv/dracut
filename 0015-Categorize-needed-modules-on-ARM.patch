@@ -1,9 +1,10 @@
-From 9ac6dab566b853cd94afc096567ff16c03962f19 Mon Sep 17 00:00:00 2001
+From ed1f00d9fc14b0898448509f536295fb9c5ca013 Mon Sep 17 00:00:00 2001
 From: Nicolas Chauvet <kwizart@gmail.com>
 Date: Mon, 4 Aug 2014 22:04:38 +0200
 Subject: [PATCH] Categorize needed modules on ARM
 
 (cherry picked from commit b96ea1e196ae5706a68644a3679ee8c432b0b8f1)
+(cherry picked from commit 9ac6dab566b853cd94afc096567ff16c03962f19)
 ---
  modules.d/90kernel-modules/module-setup.sh | 11 +++++++----
  1 file changed, 7 insertions(+), 4 deletions(-)

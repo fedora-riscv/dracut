@@ -1,10 +1,11 @@
-From 6c6b91737f35d02f82cc08a72736c7a841ef213a Mon Sep 17 00:00:00 2001
+From 8fb86c7c3095447dcb9dcb098d00479eafcaf62e Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 15 Aug 2014 11:44:26 +0200
 Subject: [PATCH] dracut.usage.asc: extend parameters for shutdown debug
  procedure
 
 (cherry picked from commit e02a29e7a2403dd1bb4f581b14ec4bf4ace6cba7)
+(cherry picked from commit 6c6b91737f35d02f82cc08a72736c7a841ef213a)
 ---
  dracut.usage.asc | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

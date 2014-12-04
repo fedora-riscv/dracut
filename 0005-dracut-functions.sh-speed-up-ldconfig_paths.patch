@@ -1,8 +1,9 @@
-From 5ea0be0a8c83969fd0041b3e647f82fcfb365e44 Mon Sep 17 00:00:00 2001
+From 5034a6411142e2eede3200acf0a50feb8248742f Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 8 Jul 2014 12:54:21 +0200
 Subject: [PATCH] dracut-functions.sh: speed up ldconfig_paths()
 
+(cherry picked from commit 5ea0be0a8c83969fd0041b3e647f82fcfb365e44)
 ---
  dracut-functions.sh | 7 +++----
  1 file changed, 3 insertions(+), 4 deletions(-)

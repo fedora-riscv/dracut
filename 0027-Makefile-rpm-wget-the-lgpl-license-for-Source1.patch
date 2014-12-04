@@ -1,9 +1,10 @@
-From 6d2b9b40d6abfb022a8af6787154b834b9d969da Mon Sep 17 00:00:00 2001
+From b21832a016ae359994a106c4697c80daa6bc74c9 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 15 Aug 2014 14:03:39 +0200
 Subject: [PATCH] Makefile:rpm: wget the lgpl license for Source1
 
 (cherry picked from commit 99128f2b64775313866b1d4edd3cd6220be937f8)
+(cherry picked from commit 6d2b9b40d6abfb022a8af6787154b834b9d969da)
 ---
  Makefile | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)

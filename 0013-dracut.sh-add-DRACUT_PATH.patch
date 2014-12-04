@@ -1,4 +1,4 @@
-From eab9b75c8a9b106d2f35faae0af51ab1c66e8da1 Mon Sep 17 00:00:00 2001
+From cf250699a9890399496276cbe81791932edfef8f Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 22 Jul 2014 14:43:33 +0200
 Subject: [PATCH] dracut.sh: add DRACUT_PATH
@@ -9,6 +9,8 @@ to search for binaries instead of the default
 
 This should be set in the distribution config file
 /usr/lib/dracut/dracut.conf.d/01-dist.conf
+
+(cherry picked from commit eab9b75c8a9b106d2f35faae0af51ab1c66e8da1)
 ---
  dracut.sh | 25 ++++++++++++++-----------
  1 file changed, 14 insertions(+), 11 deletions(-)
