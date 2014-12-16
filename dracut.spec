@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 038
-Release: 31.git20141204%{?dist}
+Release: 32.git20141216%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -60,6 +60,7 @@ Patch27: 0027-Makefile-rpm-wget-the-lgpl-license-for-Source1.patch
 Patch28: 0028-dmsquash-live-do-not-abort-if-user-pressed-ESC-on-ch.patch
 Patch29: 0029-dracut.conf.d-fedora.conf.example-turn-on-early_micr.patch
 Patch30: 0030-systemd-add-90-vconsole.rules.patch
+Patch31: 0031-do-not-symlink-var-log-to-run-log.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -508,6 +509,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Dec 16 2014 Harald Hoyer <harald@redhat.com> 038-32.git20141216
+- fixed systemd journal in the initramfs
+Resolves: rhbz#1174733
+
 * Thu Dec 04 2014 Harald Hoyer <harald@redhat.com> 038-30.git20141204
 - add 90-vconsole.rules
 Resolves: rhbz#1150384
