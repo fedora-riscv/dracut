@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 041
-Release: 10.git20150219%{?dist}
+Release: 1%{?dist}.10
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -487,7 +487,7 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
-* Thu Feb 19 2015 Harald Hoyer <harald@redhat.com> 041-10.git20150219
+* Thu Feb 19 2015 Harald Hoyer <harald@redhat.com> 041-1.10
 - don't store hostonly cmdline information in the initramfs
 - Include squashfs support for rd.live.fsimg
 Resolves: rhbz#1194284
