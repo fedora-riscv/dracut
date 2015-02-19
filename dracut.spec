@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 041
-Release: 1%{?dist}.10
+Release: 10%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -31,12 +31,12 @@ URL: https://dracut.wiki.kernel.org/
 # http://git.kernel.org/?p=boot/dracut/dracut.git;a=snapshot;h=%{version};sf=tgz
 Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar.xz
 Patch1: 0001-fedora.conf-do-not-store-cmdline-in-image-by-default.patch
-#Patch2: 0002-doc-fix-typo.patch
-#Patch3: 0003-dracut.sh-call-bash-with-norc.patch
-#Patch4: 0004-fips-add-drbg-kernel-module.patch
-#Patch5: 0005-Support-usr-lib-kernel-cmdline-fallback-path-for-etc.patch
-#Patch6: 0006-90dm-dm-shutdown.sh-dmsetup-remove_all-dmsetup-remov.patch
-#Patch7: 0007-99base-Properly-remove-files-with-rd.hostonly-0.patch
+Patch2: 0002-doc-fix-typo.patch
+Patch3: 0003-dracut.sh-call-bash-with-norc.patch
+Patch4: 0004-fips-add-drbg-kernel-module.patch
+Patch5: 0005-Support-usr-lib-kernel-cmdline-fallback-path-for-etc.patch
+Patch6: 0006-90dm-dm-shutdown.sh-dmsetup-remove_all-dmsetup-remov.patch
+Patch7: 0007-99base-Properly-remove-files-with-rd.hostonly-0.patch
 Patch8: 0008-dmsquash-Add-rd.live.overlay.thin.patch
 Patch9: 0009-dmsquash-Add-squashfs-support-to-rd.live.fsimg.patch
 
@@ -487,7 +487,11 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
-* Thu Feb 19 2015 Harald Hoyer <harald@redhat.com> 041-1.10
+* Thu Feb 19 2015 Harald Hoyer <harald@redhat.com> 041-10
+- fixed documentation
+- prevent .bashrc from influencing dracut runs
+- fixed shutdown routine for dm devices
+- remove symlinks for swap devices also for rd.hostonly=0
 - don't store hostonly cmdline information in the initramfs
 - Include squashfs support for rd.live.fsimg
 Resolves: rhbz#1194284
