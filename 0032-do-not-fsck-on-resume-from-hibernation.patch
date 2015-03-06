@@ -1,0 +1,32 @@
+From: Harald Hoyer <harald@redhat.com>
+Date: Wed, 17 Dec 2014 12:08:37 +0100
+Subject: resume: make use of systemd-hibernate-resume, if existant
+
+Source: https://bugzilla.redhat.com/attachment.cgi?id=990261&action=diff
+References: https://bugzilla.redhat.com/show_bug.cgi?id=1174945
+Based on dracut commit 733c71c:
+http://git.kernel.org/cgit/boot/dracut/dracut.git/patch/?id=733c71ce9e2d161c9e04772aeb1c5fb38e3fcb3a
+
+Note: e-mail header was used from original commit
+
+ modules.d/95resume/module-setup.sh | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+--- a/modules.d/95resume/module-setup.sh	
++++ a/modules.d/95resume/module-setup.sh	
+@@ -35,6 +35,15 @@ install() {
+         echo  >> "${initdir}/etc/cmdline.d/95resume.conf"
+     fi
+ 
++    # if systemd is included and has the hibernate-resume tool, use it and nothing else
++    if dracut_module_included "systemd" && [[ -x $systemdutildir/systemd-hibernate-resume ]]; then
++        inst_multiple -o \
++                      $systemdutildir/system-generators/systemd-hibernate-resume-generator \
++                      $systemdsystemunitdir/systemd-hibernate-resume@.service \
++                      $systemdutildir/systemd-hibernate-resume
++        return 0
++    fi
++
+     # Optional uswsusp support
+     for _bin in /usr/sbin/resume /usr/lib/suspend/resume /usr/lib/uswsusp/resume
+     do
+-- 

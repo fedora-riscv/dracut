@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 038
-Release: 32.git20141216%{?dist}
+Release: 33.git20141216%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -61,6 +61,7 @@ Patch28: 0028-dmsquash-live-do-not-abort-if-user-pressed-ESC-on-ch.patch
 Patch29: 0029-dracut.conf.d-fedora.conf.example-turn-on-early_micr.patch
 Patch30: 0030-systemd-add-90-vconsole.rules.patch
 Patch31: 0031-do-not-symlink-var-log-to-run-log.patch
+Patch32: 0032-do-not-fsck-on-resume-from-hibernation.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -509,6 +510,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Mar 06 2015 Till Maas <opensource@till.name> - 038-33.git20141216
+- Do not fsck on resum from hibernate
+Resolves: rhbz#1174945
+
 * Tue Dec 16 2014 Harald Hoyer <harald@redhat.com> 038-32.git20141216
 - fixed systemd journal in the initramfs
 Resolves: rhbz#1174733
