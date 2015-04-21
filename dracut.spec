@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 041
-Release: 10%{?dist}
+Release: 10%{?dist}.1
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -39,6 +39,7 @@ Patch6: 0006-90dm-dm-shutdown.sh-dmsetup-remove_all-dmsetup-remov.patch
 Patch7: 0007-99base-Properly-remove-files-with-rd.hostonly-0.patch
 Patch8: 0008-dmsquash-Add-rd.live.overlay.thin.patch
 Patch9: 0009-dmsquash-Add-squashfs-support-to-rd.live.fsimg.patch
+Patch10: 0010-ifcfg-write-ifcfg.sh-unset-vlan.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -487,6 +488,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Apr 21 2015 Harald Hoyer <harald@redhat.com> 041-10.1
+- fix ifcfg generation, if vlan was configured
+Resolves: rhbz#1212061
+
 * Thu Feb 19 2015 Harald Hoyer <harald@redhat.com> 041-10
 - fixed documentation
 - prevent .bashrc from influencing dracut runs
