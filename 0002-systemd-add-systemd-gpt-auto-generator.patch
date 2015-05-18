@@ -1,4 +1,4 @@
-From a9f4b9cdb015a06adc280dd51e5c3dda3e82f515 Mon Sep 17 00:00:00 2001
+From e5bb8e1b79419bfdd30dac77eea6dbe2a718d7e0 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 20 Mar 2014 13:42:08 +0100
 Subject: [PATCH] systemd: add systemd-gpt-auto-generator

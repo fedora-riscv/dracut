@@ -1,4 +1,4 @@
-From e920bfb1e8a5917e7b0f360d1c51d200db3acbfd Mon Sep 17 00:00:00 2001
+From d3a6c4286ae4d815f5dcf88133ff73017ad2d65b Mon Sep 17 00:00:00 2001
 From: WANG Chao <chaowang@redhat.com>
 Date: Tue, 1 Apr 2014 15:20:49 +0800
 Subject: [PATCH] fstab: do not mount and fsck from fstab if using systemd

@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 037
-Release: 11.git20140402%{?dist}
+Release: 13.git20150518%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -39,11 +39,10 @@ Patch6: 0006-network-DCHPv6-set-valid_lft-and-preferred_lft.patch
 Patch7: 0007-dm-add-dm-cache-modules.patch
 Patch8: 0008-fcoe-workaround-fcoe-timing-issues.patch
 Patch9: 0009-fstab-do-not-mount-and-fsck-from-fstab-if-using-syst.patch
+Patch10: 0010-Revert-Add-no-hostonly-cmdline-option-handling-for-g.patch
+Patch11: 0011-Revert-Add-flag-to-toggle-hostonly-cmdline-storing-i.patch
+Patch12: 0012-add-install-optional-and-install_optional_items.patch
 
-# Revert dangerous behaviour change which breaks boot for multiple reporters
-# https://bugzilla.redhat.com/show_bug.cgi?id=1084766
-Patch100: 0001-Revert-Add-no-hostonly-cmdline-option-handling-for-g.patch
-Patch101: 0002-Revert-Add-flag-to-toggle-hostonly-cmdline-storing-i.patch
 
 BuildRequires: bash git
 
@@ -491,6 +490,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon May 18 2015 Harald Hoyer <harald@redhat.com> 037-13.git20150518
+- do not hard require vim-minimal
+Resolves: rhbz#1118988
+
 * Thu Apr 17 2014 Adam Williamson <awilliam@redhat.com> - 037-11.git20140402
 - revert broken upstream change that causes RHBZ#1084766
 

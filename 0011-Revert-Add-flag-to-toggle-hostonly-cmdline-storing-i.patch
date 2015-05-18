@@ -1,8 +1,8 @@
-From dda971e5260bd2401e79461135e6c44af01da568 Mon Sep 17 00:00:00 2001
+From 16b6349ae643c06807541f3cfcf34864ae7ffb4f Mon Sep 17 00:00:00 2001
 From: Adam Williamson <awilliam@redhat.com>
 Date: Thu, 17 Apr 2014 18:55:31 -0700
-Subject: [PATCH 2/2] Revert "Add flag to toggle hostonly cmdline storing in
- the initramfs"
+Subject: [PATCH] Revert "Add flag to toggle hostonly cmdline storing in the
+ initramfs"
 
 This reverts commit ab9457efd78ff74c654b4123956cdbd131935066.
 ---
@@ -132,7 +132,7 @@ index aebb28d..d3888a4 100755
      inst_multiple dmraid
      inst_multiple -o kpartx
 diff --git a/modules.d/90lvm/module-setup.sh b/modules.d/90lvm/module-setup.sh
-index 5b810b9..781dfa4 100755
+index 93a452e..357797f 100755
 --- a/modules.d/90lvm/module-setup.sh
 +++ b/modules.d/90lvm/module-setup.sh
 @@ -50,10 +50,8 @@ install() {
@@ -224,6 +224,3 @@ index b209ab6..7bd0d2f 100755
          done
      fi
  
--- 
-1.9.0
-

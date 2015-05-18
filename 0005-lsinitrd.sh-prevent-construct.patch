@@ -1,4 +1,4 @@
-From fd9f902477a8d8df6ce0fa1b044484c435fff247 Mon Sep 17 00:00:00 2001
+From 7501f09c99a0f0252271234664f5a9c54ff43ad0 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 27 Mar 2014 09:27:53 +0100
 Subject: [PATCH] lsinitrd.sh: prevent < <$() construct

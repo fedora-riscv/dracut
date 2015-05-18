@@ -1,4 +1,4 @@
-From 37502d2733c8ba8bc0d93e6f126534f23111fc3e Mon Sep 17 00:00:00 2001
+From c8cb734e99e9d3e132a911c477f99b42a6629baa Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 27 Mar 2014 12:34:40 +0100
 Subject: [PATCH] dm: add dm-cache modules
