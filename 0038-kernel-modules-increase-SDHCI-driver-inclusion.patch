@@ -1,0 +1,33 @@
+From bf46a9105123ac9b36af1debb225bb8007d427c9 Mon Sep 17 00:00:00 2001
+From: Daniel Drake <drake@endlessm.com>
+Date: Thu, 15 Jan 2015 11:27:47 -0600
+Subject: [PATCH] kernel-modules: increase SDHCI driver inclusion
+
+The sdhci-pci module is currently not being included in the initramfs,
+even though other sdhci modules are. This breaks boot on systems that
+rely on this driver to access the root filesystem.
+
+Instead of looking for modules that use sdhci_pltfm_init, look for
+sdhci_add_host. I checked 3.18 kernel sources, and this change
+does not remove any of the previously-matched SDHCI drivers.
+It should result in the addition of sdhci-pci, sdhci-s3c, sdhci-spear
+and sdhci-acpi.
+
+(cherry picked from commit 6dcc5e1158bf502b431491a381a16ca894f99ae2)
+---
+ modules.d/90kernel-modules/module-setup.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh
+index 062aca4..9213cd4 100755
+--- a/modules.d/90kernel-modules/module-setup.sh
++++ b/modules.d/90kernel-modules/module-setup.sh
+@@ -6,7 +6,7 @@
+ installkernel() {
+     if [[ -z $drivers ]]; then
+         block_module_filter() {
+-            local _blockfuncs='ahci_platform_get_resources|ata_scsi_ioctl|scsi_add_host|blk_cleanup_queue|register_mtd_blktrans|scsi_esp_register|register_virtio_device|usb_stor_disconnect|mmc_add_host|sdhci_pltfm_init'
++            local _blockfuncs='ahci_platform_get_resources|ata_scsi_ioctl|scsi_add_host|blk_cleanup_queue|register_mtd_blktrans|scsi_esp_register|register_virtio_device|usb_stor_disconnect|mmc_add_host|sdhci_add_host'
+             # subfunctions inherit following FDs
+             local _merge=8 _side2=9
+             function bmf1() {

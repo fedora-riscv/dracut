@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 038
-Release: 33.git20141216%{?dist}
+Release: 39.git20150518%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -61,7 +61,13 @@ Patch28: 0028-dmsquash-live-do-not-abort-if-user-pressed-ESC-on-ch.patch
 Patch29: 0029-dracut.conf.d-fedora.conf.example-turn-on-early_micr.patch
 Patch30: 0030-systemd-add-90-vconsole.rules.patch
 Patch31: 0031-do-not-symlink-var-log-to-run-log.patch
-Patch32: 0032-do-not-fsck-on-resume-from-hibernation.patch
+Patch32: 0032-resume-make-use-of-systemd-hibernate-resume-if-exist.patch
+Patch33: 0033-kernel-modules-added-hid-lcpower.patch
+Patch34: 0034-lvm-add-cache-tools-for-dm-cache-usage.patch
+Patch35: 0035-kernel-modules-install-all-HID-drivers.patch
+Patch36: 0036-drm-module-setup.sh-radeon-needs-amdkfd.patch
+Patch37: 0037-50drm-add-hyperv_fb-kernel-module.patch
+Patch38: 0038-kernel-modules-increase-SDHCI-driver-inclusion.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -510,6 +516,18 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon May 18 2015 Harald Hoyer <harald@redhat.com> 038-39.git20150518
+- add more input drivers
+Resolves: rhbz#1135734 rhbz#1204392
+- lvm: add cache tools for dm-cache usage
+Resolves: rhbz#1184519
+- add hyperv framebuffer module
+Resolves: rhbz#1192035
+- add amdkfd kernel module
+Resolves: rhbz#1205222
+- add sdhci-pci kernel module
+Resolves: rhbz#1211480
+
 * Fri Mar 06 2015 Till Maas <opensource@till.name> - 038-33.git20141216
 - Do not fsck on resum from hibernate
 Resolves: rhbz#1174945
