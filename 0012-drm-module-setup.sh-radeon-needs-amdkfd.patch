@@ -1,0 +1,53 @@
+From 30764ad3b9de889e30baafb923c4249dd22005dd Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Thu, 23 Apr 2015 16:11:53 +0200
+Subject: [PATCH] drm/module-setup.sh: radeon needs amdkfd
+
+AMD's HSA Linux kernel driver (amdkfd) has been merged into the mainline
+kernel since kernel 3.19.
+
+However, for the driver to work, it needs to be included in the default
+initramfs image, together with the amd_iommu_v2 driver.
+
+The radeon driver (AMD's kernel graphic driver) calls amdkfd during its
+initialization and probing stages. Because radeon is included in the
+initramfs image, it tries to initialize amdkfd during the early boot
+stages. However, as amdkfd is not present there, it fails.
+
+That doesn't harm radeon operation. However, it disables the HSA
+abilities in the machine.
+
+Because of the current design, if you later try to "modprobe amdkfd",
+you won't be able to run HSA applications, even though the driver will
+be loaded.
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1205222
+(cherry picked from commit a3e464ca43618e362ad3c2e20573de23d725bee6)
+---
+ modules.d/50drm/module-setup.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/modules.d/50drm/module-setup.sh b/modules.d/50drm/module-setup.sh
+index 3063a61..95b23cf 100755
+--- a/modules.d/50drm/module-setup.sh
++++ b/modules.d/50drm/module-setup.sh
+@@ -60,6 +60,8 @@ installkernel() {
+             ${NULL}
+     fi
+ 
++    instmods amdkfd
++
+     for _modname in $(find_kernel_modules_by_path drivers/gpu/drm \
+         | drm_module_filter) ; do
+         # if the hardware is present, include module even if it is not currently loaded,
+@@ -68,6 +70,10 @@ installkernel() {
+         if [[ $hostonly ]] && modinfo -F alias $_modname | sed -e 's,\?,\.,g' -e 's,\*,\.\*,g' \
+             | grep -qxf - /sys/bus/{pci/devices,soc/devices/soc?}/*/modalias 2>/dev/null; then
+             hostonly='' instmods $_modname
++            # if radeon.ko is installed, we want amdkfd also
++            if strstr "$_modname" radeon.ko; then
++                hostonly='' instmods amdkfd
++            fi
+             continue
+         fi
+         instmods $_modname

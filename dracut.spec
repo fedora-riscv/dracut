@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 041
-Release: 10%{?dist}.1
+Release: 14%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -40,6 +40,9 @@ Patch7: 0007-99base-Properly-remove-files-with-rd.hostonly-0.patch
 Patch8: 0008-dmsquash-Add-rd.live.overlay.thin.patch
 Patch9: 0009-dmsquash-Add-squashfs-support-to-rd.live.fsimg.patch
 Patch10: 0010-ifcfg-write-ifcfg.sh-unset-vlan.patch
+Patch11: 0011-kernel-modules-install-all-HID-drivers.patch
+Patch12: 0012-drm-module-setup.sh-radeon-needs-amdkfd.patch
+Patch13: 0013-50drm-add-hyperv_fb-kernel-module.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -488,6 +491,14 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Jun 09 2015 Harald Hoyer <harald@redhat.com> 041-14
+- add more input drivers
+Resolves: rhbz#1229650
+- add hyperv framebuffer module
+Resolves: rhbz#1222512
+- add amdkfd kernel module
+Resolves: rhbz#1229651
+
 * Tue Apr 21 2015 Harald Hoyer <harald@redhat.com> 041-10.1
 - fix ifcfg generation, if vlan was configured
 Resolves: rhbz#1212061
