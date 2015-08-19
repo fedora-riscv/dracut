@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 038
-Release: 39.git20150518%{?dist}
+Release: 40.git20150819%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -68,6 +68,7 @@ Patch35: 0035-kernel-modules-install-all-HID-drivers.patch
 Patch36: 0036-drm-module-setup.sh-radeon-needs-amdkfd.patch
 Patch37: 0037-50drm-add-hyperv_fb-kernel-module.patch
 Patch38: 0038-kernel-modules-increase-SDHCI-driver-inclusion.patch
+Patch39: 0039-dracut-functions.sh-avoid-tokenizing-ldconfig-output.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -516,6 +517,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Aug 19 2015 Harald Hoyer <harald@redhat.com> 038-40.git20150819
+- fix ldconfig paths
+Resolves: rhbz#1253889
+
 * Mon May 18 2015 Harald Hoyer <harald@redhat.com> 038-39.git20150518
 - add more input drivers
 Resolves: rhbz#1135734 rhbz#1204392
