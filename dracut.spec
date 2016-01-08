@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 043
-Release: 61.git20151120%{?dist}
+Release: 63.git20151211%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -90,6 +90,8 @@ Patch57: 0057-Revert-securitfs-change.patch
 Patch58: 0058-base-dracut-lib.sh-Dup-stdout-and-stderr.patch
 Patch59: 0059-dracut.sh-remove-quotes-from-install_items-and-insta.patch
 Patch60: 0060-dracut.sh-remove-_EARLY-from-CONFIG_MICROCODE_-check.patch
+Patch61: 0061-dracut-initramfs-restore-make-mount-error-nonfatal.patch
+Patch62: 0062-shutdown-guard-against-read-only-run.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -549,6 +551,11 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Dec 11 2015 Harald Hoyer <harald@redhat.com> - 043-63.git20151211
+- initramfs-restore: don't fail, if /boot is mounted
+Resolves: rhbz#1288769
+- shutdown: remount /run rw
+
 * Fri Nov 20 2015 Harald Hoyer <harald@redhat.com> 043-61.git20151120
 - handle remove of CONFIG_MICROCODE_*_EARLY
 Resolves: rhbz#1283892
