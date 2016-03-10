@@ -492,7 +492,7 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
-* Do Mar 10 2016 Harald Hoyer <harald@redhat.com> - 041-15
+* Thu Mar 10 2016 Harald Hoyer <harald@redhat.com> - 041-15
 - handle remove of CONFIG_MICROCODE_*_EARLY
 Resolves: rhbz#1314501
 
