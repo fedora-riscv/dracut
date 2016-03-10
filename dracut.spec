@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 041
-Release: 14%{?dist}
+Release: 15%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -43,6 +43,7 @@ Patch10: 0010-ifcfg-write-ifcfg.sh-unset-vlan.patch
 Patch11: 0011-kernel-modules-install-all-HID-drivers.patch
 Patch12: 0012-drm-module-setup.sh-radeon-needs-amdkfd.patch
 Patch13: 0013-50drm-add-hyperv_fb-kernel-module.patch
+Patch14: 0014-dracut.sh-remove-_EARLY-from-CONFIG_MICROCODE_-check.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -491,6 +492,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Do Mar 10 2016 Harald Hoyer <harald@redhat.com> - 041-15
+- handle remove of CONFIG_MICROCODE_*_EARLY
+Resolves: rhbz#1314501
+
 * Tue Jun 09 2015 Harald Hoyer <harald@redhat.com> 041-14
 - add more input drivers
 Resolves: rhbz#1229650
