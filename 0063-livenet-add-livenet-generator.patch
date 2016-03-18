@@ -1,0 +1,94 @@
+From 532c2fefac28f85e2877427429f8368f646b893a Mon Sep 17 00:00:00 2001
+From: Antony Messerli <amesserl@rackspace.com>
+Date: Thu, 19 Nov 2015 08:10:03 -0600
+Subject: [PATCH] livenet: add livenet-generator
+
+Resolves issues where systemd attempts to boot a live URL as an NFS mount.
+
+This patch uses systemd's generator arg[2] to generate an early sysroot.mount
+that preempts systemd-fstab-generator.
+
+See https://bugzilla.redhat.com/show_bug.cgi?id=1280103
+
+(cherry picked from commit a455ad1c272170664022b4cc0a160fe9c737d993)
+---
+ modules.d/90livenet/livenet-generator.sh | 57 ++++++++++++++++++++++++++++++++
+ modules.d/90livenet/module-setup.sh      |  2 +-
+ 2 files changed, 58 insertions(+), 1 deletion(-)
+ create mode 100644 modules.d/90livenet/livenet-generator.sh
+
+diff --git a/modules.d/90livenet/livenet-generator.sh b/modules.d/90livenet/livenet-generator.sh
+new file mode 100644
+index 0000000..377d53b
+--- /dev/null
++++ b/modules.d/90livenet/livenet-generator.sh
+@@ -0,0 +1,57 @@
++#!/bin/sh
++
++type getarg >/dev/null 2>&1 || . /lib/dracut-lib.sh
++
++[ -z "$root" ] && root=$(getarg root=)
++
++# support legacy syntax of passing liveimg and then just the base root
++if getargbool 0 rd.live.image -d -y liveimg; then
++    liveroot="live:$root"
++fi
++
++if [ "${root%%:*}" = "live" ] ; then
++    liveroot=$root
++fi
++
++[ "${liveroot%%:*}" = "live" ] || exit 0
++
++case "$liveroot" in
++    live:http://*|http://*) \
++        root="${root#live:}"
++        rootok=1 ;;
++    live:https://*|https://*) \
++        root="${root#live:}"
++        rootok=1 ;;
++    live:ftp://*|ftp://*) \
++        root="${root#live:}"
++        rootok=1 ;;
++    live:torrent://*|torrent://*) \
++        root="${root#live:}"
++        rootok=1 ;;
++    live:tftp://*|tftp://*) \
++        root="${root#live:}"
++        rootok=1 ;;
++esac
++
++[ "$rootok" != "1" ] && exit 0
++
++GENERATOR_DIR="$2"
++[ -z "$GENERATOR_DIR" ] && exit 1
++
++[ -d "$GENERATOR_DIR" ] || mkdir "$GENERATOR_DIR"
++
++ROOTFLAGS="$(getarg rootflags)"
++{
++    echo "[Unit]"
++    echo "Before=initrd-root-fs.target"
++    echo "[Mount]"
++    echo "Where=/sysroot"
++    echo "What=/dev/mapper/live-rw"
++    [ -n "$ROOTFLAGS" ] && echo "Options=${ROOTFLAGS}"
++} > "$GENERATOR_DIR"/sysroot.mount
++
++mkdir -p "$GENERATOR_DIR/dev-mapper-live\x2drw.device.d"
++{
++    echo "[Unit]"
++    echo "JobTimeoutSec=3000"
++} > "$GENERATOR_DIR/dev-mapper-live\x2drw.device.d/timeout.conf"
+diff --git a/modules.d/90livenet/module-setup.sh b/modules.d/90livenet/module-setup.sh
+index f1e757e..3a8d4ba 100755
+--- a/modules.d/90livenet/module-setup.sh
++++ b/modules.d/90livenet/module-setup.sh
+@@ -17,6 +17,6 @@ install() {
+     inst_hook cmdline 29 "$moddir/parse-livenet.sh"
+     inst_hook initqueue/online 95 "$moddir/fetch-liveupdate.sh"
+     inst_script "$moddir/livenetroot.sh" "/sbin/livenetroot"
++    inst_script "$moddir/livenet-generator.sh" $systemdutildir/system-generators/dracut-livenet-generator
+     dracut_need_initqueue
+ }
+-

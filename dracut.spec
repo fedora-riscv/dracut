@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 043
-Release: 63.git20151211%{?dist}
+Release: 66%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -92,6 +92,9 @@ Patch59: 0059-dracut.sh-remove-quotes-from-install_items-and-insta.patch
 Patch60: 0060-dracut.sh-remove-_EARLY-from-CONFIG_MICROCODE_-check.patch
 Patch61: 0061-dracut-initramfs-restore-make-mount-error-nonfatal.patch
 Patch62: 0062-shutdown-guard-against-read-only-run.patch
+Patch63: 0063-livenet-add-livenet-generator.patch
+Patch64: 0064-livenet-livenet-generator.sh-mode-0755.patch
+Patch65: 0065-livenet-module-setup.sh-only-include-systemd-generat.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -551,6 +554,9 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fr Mär 18 2016 Harald Hoyer <harald@redhat.com> - 043-66
+- fixed livenet module with dracut-livenet-generator
+
 * Fri Dec 11 2015 Harald Hoyer <harald@redhat.com> - 043-63.git20151211
 - initramfs-restore: don't fail, if /boot is mounted
 Resolves: rhbz#1288769
