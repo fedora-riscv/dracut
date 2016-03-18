@@ -554,7 +554,7 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
-* Fr Mär 18 2016 Harald Hoyer <harald@redhat.com> - 043-66
+* Fri Mar 18 2016 Harald Hoyer <harald@redhat.com> - 043-66
 - fixed livenet module with dracut-livenet-generator
 
 * Fri Dec 11 2015 Harald Hoyer <harald@redhat.com> - 043-63.git20151211
