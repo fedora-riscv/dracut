@@ -16,7 +16,7 @@
 
 Name: dracut
 Version: 044
-Release: 18.git20160108%{?dist}
+Release: 19%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -51,6 +51,8 @@ Patch13: 0013-base-dracut-lib.sh-dev_unit_name-guard-against-dev-b.patch
 Patch14: 0014-nbd-add-missing-generator.patch
 Patch15: 0015-fcoe-no-need-to-copy-lldpad-state.patch
 Patch16: 0016-dracut.sh-restorecon-final-image-file.patch
+Patch17: 0017-add-support-to-F2FS-filesystem-fsck.patch
+Patch18: 0018-fs-lib-add-crc32c-kernel-module-for-f2fs.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -511,6 +513,9 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Jul 07 2016 Harald Hoyer <harald@redhat.com> - 044-19
+- add f2fs filesystem support
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 044-18.git20160108
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
