@@ -16,7 +16,7 @@
 
 Name: dracut
 Version: 044
-Release: 76%{?dist}
+Release: 77%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -109,9 +109,8 @@ Patch71: 0071-configure-don-t-hardcode-pkg-config.patch
 Patch72: 0072-dracut-systemd-dracut-cmdline.sh-Don-t-error-out-if-.patch
 Patch73: 0073-move-ln_r-to-dracut-init.sh.patch
 Patch74: 0074-systemd-initrd-add-initrd-root-device.target.patch
-
-# Backport from master to fix RHBZ #1358416
-Patch1000:  https://github.com/dracutdevs/dracut/commit/7e51abc81f53c08e464decd4103e8c4ec25fef87.patch
+Patch75: 0075-network-dhclient.conf-add-missing-commata.patch
+Patch76: 0076-systemd-dracut-cmdline.sh-unset-UNSET-root.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -575,6 +574,9 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Aug 25 2016 Harald Hoyer <harald@redhat.com> - 044-77
+- backport of fix for empty root=
+
 * Fri Aug 05 2016 Adam Williamson <awilliam@redhat.com> - 044-76
 - backport a single commit to fix RHBZ #1358416 (anaconda network init)
 

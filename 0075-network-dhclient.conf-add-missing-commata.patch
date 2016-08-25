@@ -1,9 +1,11 @@
-From 7e51abc81f53c08e464decd4103e8c4ec25fef87 Mon Sep 17 00:00:00 2001
+From 6b3e1b25216e2c67216f0663319d5d8dd07c127a Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 23 Jun 2016 14:24:40 +0200
 Subject: [PATCH] network/dhclient.conf: add missing commata
 
 options need to be seperated by ,
+
+(cherry picked from commit 7e51abc81f53c08e464decd4103e8c4ec25fef87)
 ---
  modules.d/40network/dhclient.conf | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
