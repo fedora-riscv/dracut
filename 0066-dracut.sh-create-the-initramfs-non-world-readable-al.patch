@@ -1,0 +1,27 @@
+From 74444705abcf03c001f3c107a5579eff2957f14a Mon Sep 17 00:00:00 2001
+From: Andreas Stieger <astieger@suse.com>
+Date: Mon, 7 Nov 2016 10:28:28 +0100
+Subject: [PATCH] dracut.sh: create the initramfs non-world readable also if
+ early cpio is used
+
+Fixes: 5f2c30d9bcd614d546d5c55c6897e33f88b9ab90
+Previously fixed CVE-2012-4453: e1b48995c26c4f06d1a718539cb1bd5b0179af91
+
+Signed-off-by: Andreas Stieger <astieger@suse.com>
+---
+ dracut.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dracut.sh b/dracut.sh
+index 03df202..fc43638 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -1678,7 +1678,7 @@ if [[ $create_early_cpio = yes ]]; then
+ 
+     # The microcode blob is _before_ the initramfs blob, not after
+     (
+-        cd "$early_cpio_dir/d"
++        umask 077; cd "$early_cpio_dir/d"
+         find . -print0 | sort -z \
+             | cpio ${CPIO_REPRODUCIBLE:+--reproducible} --null $cpio_owner_root -H newc -o --quiet > $outfile
+     )

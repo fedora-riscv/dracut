@@ -11,7 +11,7 @@
 
 Name: dracut
 Version: 043
-Release: 66%{?dist}
+Release: 67%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -95,6 +95,7 @@ Patch62: 0062-shutdown-guard-against-read-only-run.patch
 Patch63: 0063-livenet-add-livenet-generator.patch
 Patch64: 0064-livenet-livenet-generator.sh-mode-0755.patch
 Patch65: 0065-livenet-module-setup.sh-only-include-systemd-generat.patch
+Patch66: 0066-dracut.sh-create-the-initramfs-non-world-readable-al.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -554,6 +555,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Nov 07 2016 Harald Hoyer <harald@redhat.com> - 043-67
+- fixed permissions of initramfs file, if microcode is prepended
+  CVE-2016-8637
+
 * Fri Mar 18 2016 Harald Hoyer <harald@redhat.com> - 043-66
 - fixed livenet module with dracut-livenet-generator
 
