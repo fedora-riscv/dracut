@@ -16,7 +16,7 @@
 
 Name: dracut
 Version: 044
-Release: 77%{?dist}
+Release: 78%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -111,6 +111,7 @@ Patch73: 0073-move-ln_r-to-dracut-init.sh.patch
 Patch74: 0074-systemd-initrd-add-initrd-root-device.target.patch
 Patch75: 0075-network-dhclient.conf-add-missing-commata.patch
 Patch76: 0076-systemd-dracut-cmdline.sh-unset-UNSET-root.patch
+Patch77: 0077-dracut.sh-create-the-initramfs-non-world-readable-al.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -574,6 +575,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Nov 07 2016 Harald Hoyer <harald@redhat.com> - 044-78
+- fixed permissions of initramfs file, if microcode is prepended
+  CVE-2016-8637
+
 * Thu Aug 25 2016 Harald Hoyer <harald@redhat.com> - 044-77
 - backport of fix for empty root=
 
