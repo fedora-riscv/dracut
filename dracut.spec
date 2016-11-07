@@ -16,7 +16,7 @@
 
 Name: dracut
 Version: 044
-Release: 20%{?dist}
+Release: 21%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -54,6 +54,7 @@ Patch16: 0016-dracut.sh-restorecon-final-image-file.patch
 Patch17: 0017-add-support-to-F2FS-filesystem-fsck.patch
 Patch18: 0018-fs-lib-add-crc32c-kernel-module-for-f2fs.patch
 Patch19: 0019-fs-lib-f2fs-needs-crc32-not-crc32c.patch
+Patch20: 0020-dracut.sh-create-the-initramfs-non-world-readable-al.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -514,6 +515,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Nov 07 2016 Harald Hoyer <harald@redhat.com> - 044-21
+- fixed permissions of initramfs file, if microcode is prepended
+  CVE-2016-8637
+
 * Fri Jul 08 2016 Harald Hoyer <harald@redhat.com> - 044-20
 - add correct crc32 kernel module for f2fs
 
