@@ -1,4 +1,4 @@
-From e343c85763e7b981a5e9b53b04f90f0d83bffaaf Mon Sep 17 00:00:00 2001
+From 002979673505e2919be6451b4af86384567fc2b1 Mon Sep 17 00:00:00 2001
 From: Pratyush Anand <panand@redhat.com>
 Date: Wed, 16 Mar 2016 09:16:24 +0530
 Subject: [PATCH] watchdog: ensure that module is loaded as early as possible
@@ -24,7 +24,7 @@ Cc: Harald Hoyer <harald@redhat.com>
  1 file changed, 5 insertions(+)
 
 diff --git a/modules.d/04watchdog/module-setup.sh b/modules.d/04watchdog/module-setup.sh
-index 0ffaa96..c9da148 100755
+index 0ffaa965..c9da1482 100755
 --- a/modules.d/04watchdog/module-setup.sh
 +++ b/modules.d/04watchdog/module-setup.sh
 @@ -34,6 +34,7 @@ install() {

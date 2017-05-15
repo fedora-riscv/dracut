@@ -1,4 +1,4 @@
-From c45e856a659a37537c107f7ef3e680abf60a96a5 Mon Sep 17 00:00:00 2001
+From a273eec9be969fd8ed4cbbecbdc08d2adad7b3d0 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 22 Jul 2016 13:32:47 +0200
 Subject: [PATCH] add rd.emergency=[reboot|poweroff|halt]
@@ -11,7 +11,7 @@ specifies what action to execute in case of a critical failure
  3 files changed, 30 insertions(+), 10 deletions(-)
 
 diff --git a/dracut.cmdline.7.asc b/dracut.cmdline.7.asc
-index bf00719..a2d1f95 100644
+index bf007198..a2d1f952 100644
 --- a/dracut.cmdline.7.asc
 +++ b/dracut.cmdline.7.asc
 @@ -129,6 +129,9 @@ menuentry 'Live Fedora 20' --class fedora --class gnu-linux --class gnu --class
@@ -25,7 +25,7 @@ index bf00719..a2d1f95 100644
      do not load kernel module <drivername>. This parameter can be specified
      multiple times.
 diff --git a/modules.d/98dracut-systemd/dracut-emergency.sh b/modules.d/98dracut-systemd/dracut-emergency.sh
-index 63311c2..548f64b 100755
+index 63311c2d..548f64b9 100755
 --- a/modules.d/98dracut-systemd/dracut-emergency.sh
 +++ b/modules.d/98dracut-systemd/dracut-emergency.sh
 @@ -11,7 +11,7 @@ source_conf /etc/conf.d
@@ -58,7 +58,7 @@ index 63311c2..548f64b 100755
 +
  exit 0
 diff --git a/modules.d/99base/dracut-lib.sh b/modules.d/99base/dracut-lib.sh
-index 94e4614..060b3fe 100755
+index 94e4614c..060b3fed 100755
 --- a/modules.d/99base/dracut-lib.sh
 +++ b/modules.d/99base/dracut-lib.sh
 @@ -1111,6 +1111,8 @@ emergency_shell()

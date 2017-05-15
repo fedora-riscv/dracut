@@ -1,4 +1,4 @@
-From 3889234f7116d7f0b39a609d5d65c490251f7d5e Mon Sep 17 00:00:00 2001
+From 7c3a862d8989869772df48043bcaf3ea8e7cfd98 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 29 Jun 2016 17:32:31 +0200
 Subject: [PATCH] dracut.sh: make tmp dirs after the trap function is installed
@@ -9,7 +9,7 @@ otherwise a good timed ctrl-c will leave the tmp dir around
  1 file changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/dracut.sh b/dracut.sh
-index a50eaff..36607cf 100755
+index a50eaff7..36607cfb 100755
 --- a/dracut.sh
 +++ b/dracut.sh
 @@ -823,13 +823,7 @@ readonly DRACUT_TMPDIR="$(mktemp -p "$TMPDIR/" -d -t dracut.XXXXXX)"

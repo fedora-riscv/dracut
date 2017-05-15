@@ -1,4 +1,4 @@
-From ca31a7e368f839bc96fc8170c5454d8dc63f74e8 Mon Sep 17 00:00:00 2001
+From 24a45962f55b53341fde58ff922187977093268d Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 3 Nov 2016 15:05:36 +0100
 Subject: [PATCH] TODO: remove some items
@@ -8,7 +8,7 @@ Subject: [PATCH] TODO: remove some items
  1 file changed, 3 deletions(-)
 
 diff --git a/TODO b/TODO
-index 55fe13b..f4fc208 100644
+index 55fe13bd..f4fc208a 100644
 --- a/TODO
 +++ b/TODO
 @@ -18,11 +18,8 @@ INITRAMFS TODO

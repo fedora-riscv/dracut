@@ -9,7 +9,7 @@ udev rereads partitions, if watch is set for disks
  1 file changed, 2 insertions(+)
 
 diff --git a/modules.d/90dmraid/61-dmraid-imsm.rules b/modules.d/90dmraid/61-dmraid-imsm.rules
-index 0193fbc..4d4d939 100644
+index 0193fbc0..4d4d9391 100644
 --- a/modules.d/90dmraid/61-dmraid-imsm.rules
 +++ b/modules.d/90dmraid/61-dmraid-imsm.rules
 @@ -16,6 +16,8 @@ ENV{ID_FS_TYPE}=="ddf_raid_member", ENV{rd_NO_MDDDF}!="?*", GOTO="dm_end"

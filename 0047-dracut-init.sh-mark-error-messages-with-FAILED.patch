@@ -1,4 +1,4 @@
-From ff8f7026897edf1d0aa9c73b9f7a3d21b1b51da3 Mon Sep 17 00:00:00 2001
+From dac9aded662359d7dacabf7d5ac1bff2e73c62d8 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 11 Apr 2016 15:22:56 +0200
 Subject: [PATCH] dracut-init.sh: mark error messages with FAILED
@@ -8,7 +8,7 @@ Subject: [PATCH] dracut-init.sh: mark error messages with FAILED
  1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/dracut-init.sh b/dracut-init.sh
-index 2431171..a8b78ce 100644
+index 2431171e..a8b78cee 100644
 --- a/dracut-init.sh
 +++ b/dracut-init.sh
 @@ -168,7 +168,7 @@ fi

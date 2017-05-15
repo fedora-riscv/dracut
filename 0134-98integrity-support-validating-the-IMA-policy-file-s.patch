@@ -1,4 +1,4 @@
-From 479b5cd94f16052cf6ea28d0e8abba2b926fff83 Mon Sep 17 00:00:00 2001
+From 8a94895d9632b15ec697f20c9c3427488fce0859 Mon Sep 17 00:00:00 2001
 From: Stefan Berger <stefanb@us.ibm.com>
 Date: Thu, 13 Oct 2016 16:49:43 -0400
 Subject: [PATCH] 98integrity: support validating the IMA policy file signature
@@ -18,7 +18,7 @@ Signed-off-by: Mimi Zohar <zohar@linux.vnet.ibm.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/98integrity/ima-policy-load.sh b/modules.d/98integrity/ima-policy-load.sh
-index 0061cff..5460d02 100755
+index 0061cfff..5460d025 100755
 --- a/modules.d/98integrity/ima-policy-load.sh
 +++ b/modules.d/98integrity/ima-policy-load.sh
 @@ -30,7 +30,8 @@ load_ima_policy()

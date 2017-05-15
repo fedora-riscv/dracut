@@ -1,4 +1,4 @@
-From 3568d947db73cbe0d8bf75e46b2dce8f7bb44f43 Mon Sep 17 00:00:00 2001
+From db0bb7a01a9cbc5a140599bd7a5d1042cb516305 Mon Sep 17 00:00:00 2001
 From: Brendan Germain <brendan.germain@nasdaqomx.com>
 Date: Wed, 25 May 2016 08:29:55 -0400
 Subject: [PATCH] source dracut-lib for warn()
@@ -8,7 +8,7 @@ Subject: [PATCH] source dracut-lib for warn()
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/98syslog/rsyslogd-stop.sh b/modules.d/98syslog/rsyslogd-stop.sh
-index 010d56a..52c8edf 100755
+index 010d56a5..52c8edf6 100755
 --- a/modules.d/98syslog/rsyslogd-stop.sh
 +++ b/modules.d/98syslog/rsyslogd-stop.sh
 @@ -1,5 +1,7 @@

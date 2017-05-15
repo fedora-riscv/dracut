@@ -1,4 +1,4 @@
-From f7f5b82b4323210efc343132e3ae8fa91b26a68d Mon Sep 17 00:00:00 2001
+From 847f80b817a0e72d0304c3c46dc61e9ac8740313 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 21 Mar 2016 11:56:50 +0100
 Subject: [PATCH] dracut.sh: call dracut-install with "-f" in FIPS mode
@@ -12,10 +12,10 @@ missed conversion of commit 26cd262a6a575a50ea384a2ceac6a6829efe8106
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dracut.sh b/dracut.sh
-index 98dbe0b..37ae350 100755
+index ae8772b4..202a8ac9 100755
 --- a/dracut.sh
 +++ b/dracut.sh
-@@ -1496,7 +1496,7 @@ if [[ $kernel_only != yes ]]; then
+@@ -1517,7 +1517,7 @@ if [[ $kernel_only != yes ]]; then
      if [[ $DRACUT_RESOLVE_LAZY ]] && [[ $DRACUT_INSTALL ]]; then
          dinfo "*** Resolving executable dependencies ***"
          find "$initdir" -type f -perm /0111 -not -path '*.ko' -print0 \

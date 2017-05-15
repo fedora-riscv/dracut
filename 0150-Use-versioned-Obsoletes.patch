@@ -1,4 +1,4 @@
-From 4dbb4dc5bce6617824c38b2adc251b1add27d017 Mon Sep 17 00:00:00 2001
+From 9c043bd92a5d4aad293c8bfb73d6a686d076eb7c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
 Date: Mon, 7 Nov 2016 11:10:12 +0100
 Subject: [PATCH] Use versioned Obsoletes
@@ -12,7 +12,7 @@ pattern in the future.
  1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/dracut.spec b/dracut.spec
-index 7b9d675..0515006 100644
+index 7b9d6757..0515006e 100644
 --- a/dracut.spec
 +++ b/dracut.spec
 @@ -33,7 +33,7 @@ License: GPLv2+ and LGPLv2+

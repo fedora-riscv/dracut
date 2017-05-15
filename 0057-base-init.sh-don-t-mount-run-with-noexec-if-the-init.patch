@@ -1,4 +1,4 @@
-From db7d61cff7f5a5be3a56cff39dc278f004b9c461 Mon Sep 17 00:00:00 2001
+From 95046291894812732e1af3fe0b12fb909c6ea4d1 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 14 Apr 2016 14:56:37 +0200
 Subject: [PATCH] base/init.sh: don't mount /run with noexec, if the initramfs
@@ -13,7 +13,7 @@ Guard against it by looking where /bin/sh is really located.
  1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/99base/init.sh b/modules.d/99base/init.sh
-index bd7ef70..a563393 100755
+index bd7ef706..a5633936 100755
 --- a/modules.d/99base/init.sh
 +++ b/modules.d/99base/init.sh
 @@ -64,7 +64,12 @@ fi

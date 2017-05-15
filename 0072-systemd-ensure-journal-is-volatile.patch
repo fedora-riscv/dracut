@@ -1,4 +1,4 @@
-From 5dea430e087ec7749080547a6a6fe5b152f665ef Mon Sep 17 00:00:00 2001
+From 34be5b4f97deb44b857940aa0b2efbfb17c59349 Mon Sep 17 00:00:00 2001
 From: Michael Chapman <mike@very.puzzling.org>
 Date: Wed, 4 May 2016 10:49:56 +1000
 Subject: [PATCH] systemd: ensure journal is volatile
@@ -13,7 +13,7 @@ switching root.
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/00systemd/module-setup.sh b/modules.d/00systemd/module-setup.sh
-index deb5e06..951a5be 100755
+index deb5e06c..951a5be9 100755
 --- a/modules.d/00systemd/module-setup.sh
 +++ b/modules.d/00systemd/module-setup.sh
 @@ -210,9 +210,10 @@ install() {

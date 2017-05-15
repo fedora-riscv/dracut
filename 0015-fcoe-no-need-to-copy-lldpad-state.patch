@@ -1,4 +1,4 @@
-From e93ff1cf9aac8f97131b3101a5da240ce5f45239 Mon Sep 17 00:00:00 2001
+From c95e5cc39201c8d8320c4d991ce0fa4da8863796 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 7 Jan 2016 10:44:31 +0100
 Subject: [PATCH] fcoe: no need to copy lldpad state
@@ -9,7 +9,7 @@ Subject: [PATCH] fcoe: no need to copy lldpad state
  1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/modules.d/95fcoe/cleanup-fcoe.sh b/modules.d/95fcoe/cleanup-fcoe.sh
-index 5ff4d05..856e2d9 100644
+index 5ff4d054..856e2d99 100644
 --- a/modules.d/95fcoe/cleanup-fcoe.sh
 +++ b/modules.d/95fcoe/cleanup-fcoe.sh
 @@ -2,9 +2,8 @@

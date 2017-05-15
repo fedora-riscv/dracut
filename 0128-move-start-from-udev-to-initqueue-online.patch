@@ -1,4 +1,4 @@
-From 223547feab5eb85ee96e0e097b6172705803e260 Mon Sep 17 00:00:00 2001
+From ad1b9a9d0a79606d4bc6021e342badc01c637d70 Mon Sep 17 00:00:00 2001
 From: Brendan Germain <brendan.germain@nasdaqomx.com>
 Date: Wed, 25 May 2016 13:25:09 -0400
 Subject: [PATCH] move start from udev to initqueue/online
@@ -12,7 +12,7 @@ Subject: [PATCH] move start from udev to initqueue/online
  delete mode 100755 modules.d/98syslog/syslog-genrules.sh
 
 diff --git a/modules.d/98syslog/module-setup.sh b/modules.d/98syslog/module-setup.sh
-index 4458229..e18aecb 100755
+index 4458229b..e18aecbc 100755
 --- a/modules.d/98syslog/module-setup.sh
 +++ b/modules.d/98syslog/module-setup.sh
 @@ -29,9 +29,8 @@ install() {
@@ -27,7 +27,7 @@ index 4458229..e18aecb 100755
          mkdir -m 0755 -p ${initdir}/etc/templates
          inst_simple "${moddir}/rsyslog.conf" /etc/templates/rsyslog.conf
 diff --git a/modules.d/98syslog/parse-syslog-opts.sh b/modules.d/98syslog/parse-syslog-opts.sh
-index 3943258..50ec275 100755
+index 39432588..50ec2759 100755
 --- a/modules.d/98syslog/parse-syslog-opts.sh
 +++ b/modules.d/98syslog/parse-syslog-opts.sh
 @@ -9,10 +9,30 @@
@@ -63,7 +63,7 @@ index 3943258..50ec275 100755
 +    echo $syslogtype > /tmp/syslog.type
 +fi
 diff --git a/modules.d/98syslog/rsyslogd-start.sh b/modules.d/98syslog/rsyslogd-start.sh
-index c08e667..25dfb16 100755
+index c08e6675..25dfb16d 100755
 --- a/modules.d/98syslog/rsyslogd-start.sh
 +++ b/modules.d/98syslog/rsyslogd-start.sh
 @@ -1,9 +1,15 @@
@@ -111,7 +111,7 @@ index c08e667..25dfb16 100755
  fi
 diff --git a/modules.d/98syslog/syslog-genrules.sh b/modules.d/98syslog/syslog-genrules.sh
 deleted file mode 100755
-index 072bdea..0000000
+index 072bdea0..00000000
 --- a/modules.d/98syslog/syslog-genrules.sh
 +++ /dev/null
 @@ -1,30 +0,0 @@

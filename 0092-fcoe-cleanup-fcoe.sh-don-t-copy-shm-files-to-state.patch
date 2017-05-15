@@ -1,4 +1,4 @@
-From f8242a6a60c0cf5fb0cd51261f9b6c8570dc3031 Mon Sep 17 00:00:00 2001
+From 02fa8f2f0f474db4a797dd67730e033ea9c4d658 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 27 Jun 2016 12:03:55 +0200
 Subject: [PATCH] fcoe/cleanup-fcoe.sh: don't copy shm files to state
@@ -11,7 +11,7 @@ because /dev/shm is selinux relabled.
  1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/modules.d/95fcoe/cleanup-fcoe.sh b/modules.d/95fcoe/cleanup-fcoe.sh
-index 5ff4d05..1872156 100644
+index 5ff4d054..1872156e 100644
 --- a/modules.d/95fcoe/cleanup-fcoe.sh
 +++ b/modules.d/95fcoe/cleanup-fcoe.sh
 @@ -4,7 +4,11 @@

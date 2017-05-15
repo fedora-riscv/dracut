@@ -8,7 +8,7 @@ Subject: [PATCH] TEST-16-DMSQUASH: do not use "--" with ldconfig -r
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/test/TEST-16-DMSQUASH/test.sh b/test/TEST-16-DMSQUASH/test.sh
-index f2b9963..53a45d6 100755
+index f2b99633..53a45d69 100755
 --- a/test/TEST-16-DMSQUASH/test.sh
 +++ b/test/TEST-16-DMSQUASH/test.sh
 @@ -98,7 +98,7 @@ test_setup() {

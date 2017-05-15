@@ -1,4 +1,4 @@
-From 93d7b95ad43696fb8988339765cedc88a0890746 Mon Sep 17 00:00:00 2001
+From 2fd2483ee2b45b044a46928aba26daec7a22f35d Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 7 Nov 2016 17:22:08 +0100
 Subject: [PATCH] TEST-30-ISCSI: give server more time for the head start
@@ -8,7 +8,7 @@ Subject: [PATCH] TEST-30-ISCSI: give server more time for the head start
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/test/TEST-30-ISCSI/test.sh b/test/TEST-30-ISCSI/test.sh
-index 85ce29e..53ac5c7 100755
+index 85ce29e8..53ac5c79 100755
 --- a/test/TEST-30-ISCSI/test.sh
 +++ b/test/TEST-30-ISCSI/test.sh
 @@ -34,8 +34,8 @@ run_server() {

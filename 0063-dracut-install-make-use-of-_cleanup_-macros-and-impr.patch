@@ -1,4 +1,4 @@
-From eab32bda801e539c276f1b18e7c2b691eeab3d14 Mon Sep 17 00:00:00 2001
+From 85a5a68dfe785ba8f352c65c71579ba7931a6b1c Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 15 Apr 2016 15:29:52 +0200
 Subject: [PATCH] dracut-install: make use of _cleanup_ macros and improve
@@ -16,7 +16,7 @@ modules alias strings.
  1 file changed, 131 insertions(+), 49 deletions(-)
 
 diff --git a/install/dracut-install.c b/install/dracut-install.c
-index bef08da..9a0d53f 100644
+index bef08da5..9a0d53f5 100644
 --- a/install/dracut-install.c
 +++ b/install/dracut-install.c
 @@ -66,6 +66,7 @@ static char *logfile = NULL;

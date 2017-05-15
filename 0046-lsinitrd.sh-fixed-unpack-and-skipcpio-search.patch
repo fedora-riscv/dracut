@@ -1,4 +1,4 @@
-From 98fd06934c9e10567b4755714191cd2aee8822ac Mon Sep 17 00:00:00 2001
+From f8220869177f9483765c7393a5ea1ee386e74afd Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 11 Apr 2016 15:22:11 +0200
 Subject: [PATCH] lsinitrd.sh: fixed unpack and skipcpio search
@@ -8,7 +8,7 @@ Subject: [PATCH] lsinitrd.sh: fixed unpack and skipcpio search
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/lsinitrd.sh b/lsinitrd.sh
-index 224b9c1..b19a66a 100755
+index 224b9c1a..b19a66a0 100755
 --- a/lsinitrd.sh
 +++ b/lsinitrd.sh
 @@ -40,7 +40,6 @@ usage()

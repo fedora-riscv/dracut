@@ -1,4 +1,4 @@
-From 89da227de991ef3c1bb9ad3dc4f23d07535317d2 Mon Sep 17 00:00:00 2001
+From 47616626a7352b307aa7d95faaae24f70bbb6f2d Mon Sep 17 00:00:00 2001
 From: Pratyush Anand <panand@redhat.com>
 Date: Wed, 16 Mar 2016 09:09:09 +0530
 Subject: [PATCH] watchdog: Do not add hooks if systemd module is included
@@ -14,7 +14,7 @@ Cc: Harald Hoyer <harald@redhat.com>
  1 file changed, 5 insertions(+)
 
 diff --git a/modules.d/04watchdog/module-setup.sh b/modules.d/04watchdog/module-setup.sh
-index 576c589..7ec757a 100755
+index 576c589c..7ec757ae 100755
 --- a/modules.d/04watchdog/module-setup.sh
 +++ b/modules.d/04watchdog/module-setup.sh
 @@ -12,6 +12,11 @@ depends() {

@@ -1,4 +1,4 @@
-From 4fa5c235a76c085f5958002826436ed9c40e5034 Mon Sep 17 00:00:00 2001
+From 2704fffbc735ab18444859e9729d98105b27ee9e Mon Sep 17 00:00:00 2001
 From: Xunlei Pang <xlpang@redhat.com>
 Date: Tue, 26 Apr 2016 18:05:11 +0800
 Subject: [PATCH] network/net-lib.sh: delete duplicated DNS items from
@@ -19,7 +19,7 @@ Signed-off-by: Xunlei Pang <xlpang@redhat.com>
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/modules.d/40network/module-setup.sh b/modules.d/40network/module-setup.sh
-index 4bf93cc..53b4b60 100755
+index 4bf93cc6..53b4b60b 100755
 --- a/modules.d/40network/module-setup.sh
 +++ b/modules.d/40network/module-setup.sh
 @@ -23,7 +23,7 @@ installkernel() {
@@ -32,7 +32,7 @@ index 4bf93cc..53b4b60 100755
      inst_multiple -o brctl
      inst_multiple -o teamd teamdctl teamnl
 diff --git a/modules.d/40network/net-lib.sh b/modules.d/40network/net-lib.sh
-index 31f1a56..005ad1b 100755
+index 31f1a567..005ad1bb 100755
 --- a/modules.d/40network/net-lib.sh
 +++ b/modules.d/40network/net-lib.sh
 @@ -120,7 +120,7 @@ setup_net() {

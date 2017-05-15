@@ -1,4 +1,4 @@
-From dba974844eaff2beb31a3c248965f5789d22bbb6 Mon Sep 17 00:00:00 2001
+From cb13dd279dd8cb542217a0dd58f9bf3fc2739b6b Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 22 Aug 2016 13:32:03 +0200
 Subject: [PATCH] test/TEST-30-ISCSI: depend on tgtd and tgtadm
@@ -9,7 +9,7 @@ the testsuite now needs tgtd and tgtadm and not iscsi-target
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/test/TEST-30-ISCSI/test.sh b/test/TEST-30-ISCSI/test.sh
-index 63944b3..d4f0f8c 100755
+index 63944b3a..d4f0f8c6 100755
 --- a/test/TEST-30-ISCSI/test.sh
 +++ b/test/TEST-30-ISCSI/test.sh
 @@ -138,8 +138,8 @@ test_run() {

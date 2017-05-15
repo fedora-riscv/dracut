@@ -1,4 +1,4 @@
-From 607fec3e7965e3d38d764008e2b0c29757d90777 Mon Sep 17 00:00:00 2001
+From 7486be44a6ad38921a946bb6664f53a7a6bd47e8 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 13 Apr 2016 11:13:32 +0200
 Subject: [PATCH] Use pkg-config for libkmod CFLAGS and LIBS
@@ -10,7 +10,7 @@ Subject: [PATCH] Use pkg-config for libkmod CFLAGS and LIBS
  3 files changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 0a1ae6c..d28e4cf 100644
+index 0a1ae6c3..d28e4cfe 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -12,7 +12,7 @@ pkglibdir ?= ${libdir}/dracut
@@ -32,7 +32,7 @@ index 0a1ae6c..d28e4cf 100644
  dracut-install: install/dracut-install
  	ln -fs $< $@
 diff --git a/configure b/configure
-index 0bd3d2d..c92cb99 100755
+index 0bd3d2dc..c92cb99a 100755
 --- a/configure
 +++ b/configure
 @@ -50,6 +50,11 @@ while (($# > 0)); do
@@ -57,7 +57,7 @@ index 0bd3d2d..c92cb99 100755
  
  {
 diff --git a/dracut.spec b/dracut.spec
-index 9e19fcc..7b9d675 100644
+index 9e19fcc1..7b9d6757 100644
 --- a/dracut.spec
 +++ b/dracut.spec
 @@ -39,6 +39,7 @@ Source1: https://www.gnu.org/licenses/lgpl-2.1.txt

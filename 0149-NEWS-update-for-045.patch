@@ -1,4 +1,4 @@
-From 597b1592485d1956b75cb39c285a35385c8a3fea Mon Sep 17 00:00:00 2001
+From 39b95f5b072a40bfe98ccc0031f70fa7087ac4af Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 7 Nov 2016 11:01:36 +0100
 Subject: [PATCH] NEWS: update for 045
@@ -8,7 +8,7 @@ Subject: [PATCH] NEWS: update for 045
  1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/NEWS b/NEWS
-index 1ec8881..6f68de8 100644
+index 1ec8881d..6f68de81 100644
 --- a/NEWS
 +++ b/NEWS
 @@ -23,7 +23,7 @@ dracut-install:

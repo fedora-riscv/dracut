@@ -1,4 +1,4 @@
-From 556ff7c76a5c365889ea9972c1878eaf7073bde8 Mon Sep 17 00:00:00 2001
+From 9de2710b0fe746e4328b911875f3f1596da4e527 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 7 Mar 2016 12:38:23 +0100
 Subject: [PATCH] dracut-systemd/dracut-pre-pivot.sh: Break at switch_root only
@@ -13,7 +13,7 @@ given breakpoint and also at switch_root.
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/98dracut-systemd/dracut-pre-pivot.sh b/modules.d/98dracut-systemd/dracut-pre-pivot.sh
-index a07cf3e..cc70e3c 100755
+index a07cf3e0..cc70e3c3 100755
 --- a/modules.d/98dracut-systemd/dracut-pre-pivot.sh
 +++ b/modules.d/98dracut-systemd/dracut-pre-pivot.sh
 @@ -18,7 +18,9 @@ source_hook pre-pivot

@@ -1,4 +1,4 @@
-From b8278a99abcefc0a02548e95ab7da2ed5355845b Mon Sep 17 00:00:00 2001
+From b5ac9191beb668382c60c53eba94a3f732001bde Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 20 Oct 2016 15:35:08 +0200
 Subject: [PATCH] README.md: update
@@ -8,7 +8,7 @@ Subject: [PATCH] README.md: update
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/README.md b/README.md
-index 4c53f28..40b22de 100644
+index 4c53f28d..40b22def 100644
 --- a/README.md
 +++ b/README.md
 @@ -1,4 +1,4 @@

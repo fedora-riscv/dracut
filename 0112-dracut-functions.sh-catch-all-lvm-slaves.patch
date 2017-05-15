@@ -1,4 +1,4 @@
-From c7c8c4981ac3a0258ff053fdd02cfe17a11710da Mon Sep 17 00:00:00 2001
+From 8936bdf887264f23d6491aa6f62c5b0afe55c6c9 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 9 Aug 2016 15:26:04 +0200
 Subject: [PATCH] dracut-functions.sh: catch all lvm slaves
@@ -13,7 +13,7 @@ otherwise only the first lvm VG member would be processed
  1 file changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/dracut-functions.sh b/dracut-functions.sh
-index 4496bfe..249d8fb 100755
+index 4496bfe6..249d8fb4 100755
 --- a/dracut-functions.sh
 +++ b/dracut-functions.sh
 @@ -507,7 +507,7 @@ check_block_and_slaves_all() {

@@ -1,4 +1,4 @@
-From 1a7b71bb146b4355683bde5df8b1b5b7dc7e36ed Mon Sep 17 00:00:00 2001
+From cec8afbd47f3309e52d1974e05dee470dfbd8b05 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 17 Aug 2016 16:25:09 +0200
 Subject: [PATCH] network:ibft put IPv6 IP in brackets
@@ -16,7 +16,7 @@ https://bugzilla.redhat.com/show_bug.cgi?id=1322592#c19
  1 file changed, 1 insertion(+)
 
 diff --git a/modules.d/40network/net-lib.sh b/modules.d/40network/net-lib.sh
-index eb98f8e..69d96aa 100755
+index eb98f8e7..69d96aa4 100755
 --- a/modules.d/40network/net-lib.sh
 +++ b/modules.d/40network/net-lib.sh
 @@ -284,6 +284,7 @@ ibft_to_cmdline() {

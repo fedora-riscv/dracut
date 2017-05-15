@@ -1,4 +1,4 @@
-From 2afd60baa6aa5e8d64d24e7e3dd4f9e316520b0d Mon Sep 17 00:00:00 2001
+From 57ceb442338853c85f0debb4b96c60059f84bc4d Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 3 Nov 2016 14:48:31 +0100
 Subject: [PATCH] README.md: remove CI badge
@@ -8,7 +8,7 @@ Subject: [PATCH] README.md: remove CI badge
  1 file changed, 1 deletion(-)
 
 diff --git a/README.md b/README.md
-index 40b22de..27ad3ea 100644
+index 40b22def..27ad3eaa 100644
 --- a/README.md
 +++ b/README.md
 @@ -2,4 +2,3 @@

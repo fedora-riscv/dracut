@@ -1,4 +1,4 @@
-From 00929425314d4a661c441397a56b163bbaab3de4 Mon Sep 17 00:00:00 2001
+From a0450334113a09ac7de6f19a1cea0d3ae2c54e5f Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 9 Jun 2016 18:14:45 +0200
 Subject: [PATCH] test/TEST-99-RPM: fixed test suite
@@ -11,7 +11,7 @@ Subject: [PATCH] test/TEST-99-RPM: fixed test suite
  1 file changed, 14 insertions(+), 11 deletions(-)
 
 diff --git a/test/TEST-99-RPM/test.sh b/test/TEST-99-RPM/test.sh
-index d0c89e5..31520f1 100755
+index d0c89e5f..31520f14 100755
 --- a/test/TEST-99-RPM/test.sh
 +++ b/test/TEST-99-RPM/test.sh
 @@ -5,6 +5,7 @@ $TESTDIR

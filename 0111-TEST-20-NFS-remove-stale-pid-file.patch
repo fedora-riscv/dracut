@@ -1,4 +1,4 @@
-From 1de836c76316ac2cbd752227ed1b4ab322420224 Mon Sep 17 00:00:00 2001
+From 4a845f066d6d6f76adc752e980b2c10b04c6ce8e Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 19 Aug 2016 15:33:59 +0200
 Subject: [PATCH] TEST-20-NFS: remove stale pid file
@@ -10,7 +10,7 @@ Subject: [PATCH] TEST-20-NFS: remove stale pid file
  3 files changed, 173 insertions(+), 171 deletions(-)
 
 diff --git a/test/TEST-20-NFS/dhcpd.conf b/test/TEST-20-NFS/dhcpd.conf
-index a4f7fc1..4ba7301 100644
+index a4f7fc18..4ba73019 100644
 --- a/test/TEST-20-NFS/dhcpd.conf
 +++ b/test/TEST-20-NFS/dhcpd.conf
 @@ -3,175 +3,175 @@ ddns-update-style none;
@@ -360,7 +360,7 @@ index a4f7fc1..4ba7301 100644
  
  }
 diff --git a/test/TEST-20-NFS/server-init.sh b/test/TEST-20-NFS/server-init.sh
-index 5b6f42f..aa8af53 100755
+index 5b6f42f2..aa8af530 100755
 --- a/test/TEST-20-NFS/server-init.sh
 +++ b/test/TEST-20-NFS/server-init.sh
 @@ -46,10 +46,12 @@ rpc.idmapd
@@ -377,7 +377,7 @@ index 5b6f42f..aa8af53 100755
  echo "Serving NFS mounts"
  while :; do
 diff --git a/test/TEST-20-NFS/test.sh b/test/TEST-20-NFS/test.sh
-index 981cd82..039fb61 100755
+index 981cd821..039fb61b 100755
 --- a/test/TEST-20-NFS/test.sh
 +++ b/test/TEST-20-NFS/test.sh
 @@ -237,7 +237,7 @@ test_setup() {

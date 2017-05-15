@@ -1,4 +1,4 @@
-From 43819af68c7789ec932c25e699c56889fdf7276c Mon Sep 17 00:00:00 2001
+From d804d96ff2bf7cb7df02966c39f6563e1e0b5281 Mon Sep 17 00:00:00 2001
 From: Fabian Vogt <fvogt@suse.com>
 Date: Thu, 21 Jan 2016 17:13:07 +0100
 Subject: [PATCH] Correctly handle module aliases
@@ -13,7 +13,7 @@ Signed-off-by: Fabian Vogt <fvogt@suse.com>
  1 file changed, 21 insertions(+)
 
 diff --git a/dracut.sh b/dracut.sh
-index 98dbe0b..ae8772b 100755
+index 98dbe0bc..ae8772b4 100755
 --- a/dracut.sh
 +++ b/dracut.sh
 @@ -1195,6 +1195,27 @@ if [[ $hostonly ]]; then

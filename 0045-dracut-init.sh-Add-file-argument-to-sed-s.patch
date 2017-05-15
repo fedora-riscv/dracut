@@ -1,4 +1,4 @@
-From 374ef3ed2bff30db35126dd694b4234709398a2f Mon Sep 17 00:00:00 2001
+From 64c23d427ce3778a508ad368382f0f06379a6860 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 11 Apr 2016 13:36:06 +0200
 Subject: [PATCH] dracut-init.sh: Add file argument to sed's
@@ -9,7 +9,7 @@ fixup for 06a1d0769055f437c938edd40bd9fbd622475864
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/dracut-init.sh b/dracut-init.sh
-index b176421..2431171 100644
+index b1764218..2431171e 100644
 --- a/dracut-init.sh
 +++ b/dracut-init.sh
 @@ -275,7 +275,7 @@ rev_lib_symlinks() {

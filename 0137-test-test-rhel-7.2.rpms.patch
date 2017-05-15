@@ -1,4 +1,4 @@
-From ddfcfdf1992c22af8336950b44e594592b34d6c9 Mon Sep 17 00:00:00 2001
+From e21e5bbafe3d62b1638bbb3f46de0153f41fbd1e Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 20 Oct 2016 13:58:53 +0200
 Subject: [PATCH] test/test-rhel-7.2.rpms
@@ -11,7 +11,7 @@ list of rpms to install to run the testsuite on rhel-7.2
 
 diff --git a/test/test-rhel-7.2.rpms b/test/test-rhel-7.2.rpms
 new file mode 100644
-index 0000000..edec0cc
+index 00000000..edec0cc1
 --- /dev/null
 +++ b/test/test-rhel-7.2.rpms
 @@ -0,0 +1,12 @@

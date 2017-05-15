@@ -1,4 +1,4 @@
-From b37b141ecc9588bc5b29a8474943ec603b1f3ba4 Mon Sep 17 00:00:00 2001
+From f40870760a8245e60dd65f23ec84aca479298bb3 Mon Sep 17 00:00:00 2001
 From: Brendan Germain <brendan.germain@nasdaqomx.com>
 Date: Wed, 25 May 2016 15:40:02 -0400
 Subject: [PATCH] fixup No such file or directory errors when module is not
@@ -9,7 +9,7 @@ Subject: [PATCH] fixup No such file or directory errors when module is not
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/modules.d/98syslog/rsyslogd-start.sh b/modules.d/98syslog/rsyslogd-start.sh
-index 25dfb16..08b6fb2 100755
+index 25dfb16d..08b6fb24 100755
 --- a/modules.d/98syslog/rsyslogd-start.sh
 +++ b/modules.d/98syslog/rsyslogd-start.sh
 @@ -26,11 +26,11 @@ rsyslog_config() {

@@ -1,4 +1,4 @@
-From 8e010957557621c1a71d7289c4210d3ad5932893 Mon Sep 17 00:00:00 2001
+From 1f001bfa65f493fc83f442c9a0d06b832d95bf04 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 25 May 2016 17:05:03 +0200
 Subject: [PATCH] dracut-init.sh: set default firmware path, if not specified
@@ -8,7 +8,7 @@ Subject: [PATCH] dracut-init.sh: set default firmware path, if not specified
  1 file changed, 2 insertions(+)
 
 diff --git a/dracut-init.sh b/dracut-init.sh
-index d2bb845..7f628ce 100644
+index d2bb8457..7f628ce9 100644
 --- a/dracut-init.sh
 +++ b/dracut-init.sh
 @@ -69,6 +69,8 @@ srcmods="/lib/modules/$kernel/"

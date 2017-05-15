@@ -1,4 +1,4 @@
-From f81806db208a55bc4a6b04eb89cabf062c79f3ef Mon Sep 17 00:00:00 2001
+From a6377c6adea5f766dbadc8127fe637d0082a7c9c Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 14 Nov 2016 12:27:33 +0100
 Subject: [PATCH] TEST-99-RPM: use --best and install all rpms
@@ -8,7 +8,7 @@ Subject: [PATCH] TEST-99-RPM: use --best and install all rpms
  1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/test/TEST-99-RPM/test.sh b/test/TEST-99-RPM/test.sh
-index 345d524..f2efea0 100755
+index 345d5240..f2efea0c 100755
 --- a/test/TEST-99-RPM/test.sh
 +++ b/test/TEST-99-RPM/test.sh
 @@ -36,6 +36,7 @@ trap '[[ -d $rootdir ]] && { umount "$rootdir/proc"; umount "$rootdir/sys"; umou

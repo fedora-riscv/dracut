@@ -1,4 +1,4 @@
-From 45ab6b164724e3c7540bbc723f437806d3791098 Mon Sep 17 00:00:00 2001
+From 553aec64d1f053861650084de38246391e85b171 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 11 Nov 2016 12:18:06 +0100
 Subject: [PATCH] test/Makefile: proper return code for "make check"
@@ -9,7 +9,7 @@ Subject: [PATCH] test/Makefile: proper return code for "make check"
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/test/Makefile b/test/Makefile
-index f71f854..eaa944f 100644
+index f71f8540..eaa944fb 100644
 --- a/test/Makefile
 +++ b/test/Makefile
 @@ -2,13 +2,14 @@

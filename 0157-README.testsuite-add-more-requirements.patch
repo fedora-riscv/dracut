@@ -1,4 +1,4 @@
-From caa6d12fd7cce4704916c29c557bbb1bb592e024 Mon Sep 17 00:00:00 2001
+From 2231ccced0c680470d6c5a7c420f8ce00e5bac77 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 7 Nov 2016 17:20:43 +0100
 Subject: [PATCH] README.testsuite: add more requirements
@@ -8,7 +8,7 @@ Subject: [PATCH] README.testsuite: add more requirements
  1 file changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/README.testsuite b/README.testsuite
-index f9f60d4..127e302 100644
+index f9f60d41..127e3025 100644
 --- a/README.testsuite
 +++ b/README.testsuite
 @@ -9,8 +9,23 @@ nfs-utils \

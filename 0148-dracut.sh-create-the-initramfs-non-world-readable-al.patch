@@ -1,4 +1,4 @@
-From 0db98910a11c12a454eac4c8e86dc7a7bbc764a4 Mon Sep 17 00:00:00 2001
+From 24570febcb86a42a374da46ba7dbec507ab3744d Mon Sep 17 00:00:00 2001
 From: Andreas Stieger <astieger@suse.com>
 Date: Mon, 7 Nov 2016 10:37:22 +0100
 Subject: [PATCH] dracut.sh: create the initramfs non-world readable also if
@@ -13,7 +13,7 @@ Signed-off-by: Andreas Stieger <astieger@suse.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dracut.sh b/dracut.sh
-index 40ca08f..2d79bbc 100755
+index 40ca08f6..2d79bbcc 100755
 --- a/dracut.sh
 +++ b/dracut.sh
 @@ -1700,7 +1700,7 @@ if [[ $create_early_cpio = yes ]]; then

@@ -1,4 +1,4 @@
-From 794b2d2c753489635b922457a5ccb06669f37268 Mon Sep 17 00:00:00 2001
+From 9a44f5ae219c0eae0a96f9e997fc7d932d044d57 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 23 Jul 2015 10:35:06 +0200
 Subject: [PATCH] Use dracut-install to install kernel modules
@@ -21,7 +21,7 @@ firmware files.
  12 files changed, 580 insertions(+), 393 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 8281f90..0a1ae6c 100644
+index 8281f90d..0a1ae6c3 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -61,6 +61,7 @@ install/util.o: install/util.c install/util.h install/macro.h install/log.h
@@ -33,7 +33,7 @@ index 8281f90..0a1ae6c 100644
  dracut-install: install/dracut-install
  	ln -fs $< $@
 diff --git a/dracut-init.sh b/dracut-init.sh
-index a8b78ce..e26d97a 100644
+index a8b78cee..e26d97ad 100644
 --- a/dracut-init.sh
 +++ b/dracut-init.sh
 @@ -218,6 +218,13 @@ dracut_install() {
@@ -265,7 +265,7 @@ index a8b78ce..e26d97a 100644
      return $_ret
  }
 diff --git a/dracut.sh b/dracut.sh
-index 37ae350..f6d0439 100755
+index 202a8ac9..aaeb0dc6 100755
 --- a/dracut.sh
 +++ b/dracut.sh
 @@ -733,7 +733,7 @@ stdloglvl=$((stdloglvl + verbosity_mod_l))
@@ -293,7 +293,7 @@ index 37ae350..f6d0439 100755
  export DRACUT_RESOLVE_LAZY="1"
  
  if [[ $print_cmdline ]]; then
-@@ -1436,9 +1436,9 @@ if [[ $no_kernel != yes ]]; then
+@@ -1457,9 +1457,9 @@ if [[ $no_kernel != yes ]]; then
          hostonly='' instmods -c $filesystems
      fi
  
@@ -306,7 +306,7 @@ index 37ae350..f6d0439 100755
      if [[ $noimageifnotneeded == yes ]] && [[ $hostonly ]]; then
          if [[ ! -f "$initdir/lib/dracut/need-initqueue" ]] && \
 diff --git a/install/dracut-install.c b/install/dracut-install.c
-index 3b48ba8..a20e06c 100644
+index 3b48ba89..a20e06ca 100644
 --- a/install/dracut-install.c
 +++ b/install/dracut-install.c
 @@ -22,7 +22,7 @@
@@ -992,7 +992,7 @@ index 3b48ba8..a20e06c 100644
          return r;
  }
 diff --git a/modules.d/50drm/module-setup.sh b/modules.d/50drm/module-setup.sh
-index 55a214e..e0b2959 100755
+index 55a214ed..e0b29596 100755
 --- a/modules.d/50drm/module-setup.sh
 +++ b/modules.d/50drm/module-setup.sh
 @@ -15,40 +15,6 @@ installkernel() {
@@ -1072,7 +1072,7 @@ index 55a214e..e0b2959 100755
 +    fi
  }
 diff --git a/modules.d/90crypt/module-setup.sh b/modules.d/90crypt/module-setup.sh
-index 5d964f4..6c377ef 100755
+index 5d964f47..6c377efd 100755
 --- a/modules.d/90crypt/module-setup.sh
 +++ b/modules.d/90crypt/module-setup.sh
 @@ -24,8 +24,10 @@ depends() {
@@ -1088,7 +1088,7 @@ index 5d964f4..6c377ef 100755
  
  # called by dracut
 diff --git a/modules.d/90dm/module-setup.sh b/modules.d/90dm/module-setup.sh
-index 419e8b1..2b8e39f 100755
+index 419e8b11..2b8e39ff 100755
 --- a/modules.d/90dm/module-setup.sh
 +++ b/modules.d/90dm/module-setup.sh
 @@ -13,8 +13,7 @@ depends() {
@@ -1102,7 +1102,7 @@ index 419e8b1..2b8e39f 100755
  
  # called by dracut
 diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh
-index 300adc7..e97d598 100755
+index 300adc79..e97d5988 100755
 --- a/modules.d/90kernel-modules/module-setup.sh
 +++ b/modules.d/90kernel-modules/module-setup.sh
 @@ -2,54 +2,25 @@
@@ -1192,7 +1192,7 @@ index 300adc7..e97d598 100755
      fi
      :
 diff --git a/modules.d/90kernel-network-modules/module-setup.sh b/modules.d/90kernel-network-modules/module-setup.sh
-index 18d7d96..c004ff8 100755
+index 18d7d966..c004ff87 100755
 --- a/modules.d/90kernel-network-modules/module-setup.sh
 +++ b/modules.d/90kernel-network-modules/module-setup.sh
 @@ -14,47 +14,14 @@ depends() {
@@ -1250,7 +1250,7 @@ index 18d7d96..c004ff8 100755
      #instmods() will take care of hostonly
      instmods \
 diff --git a/modules.d/90multipath/module-setup.sh b/modules.d/90multipath/module-setup.sh
-index a808678..27817bd 100755
+index a8086788..27817bd0 100755
 --- a/modules.d/90multipath/module-setup.sh
 +++ b/modules.d/90multipath/module-setup.sh
 @@ -51,41 +51,14 @@ cmdline() {
@@ -1302,7 +1302,7 @@ index a808678..27817bd 100755
  
  # called by dracut
 diff --git a/modules.d/95iscsi/module-setup.sh b/modules.d/95iscsi/module-setup.sh
-index beb80e3..203e313 100755
+index beb80e3e..203e313a 100755
 --- a/modules.d/95iscsi/module-setup.sh
 +++ b/modules.d/95iscsi/module-setup.sh
 @@ -157,44 +157,17 @@ depends() {
@@ -1358,7 +1358,7 @@ index beb80e3..203e313 100755
  
  # called by dracut
 diff --git a/modules.d/95nfs/module-setup.sh b/modules.d/95nfs/module-setup.sh
-index 6f039bd..9767e57 100755
+index 6f039bdb..9767e575 100755
 --- a/modules.d/95nfs/module-setup.sh
 +++ b/modules.d/95nfs/module-setup.sh
 @@ -25,7 +25,7 @@ depends() {

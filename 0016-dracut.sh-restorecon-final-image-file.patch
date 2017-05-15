@@ -1,4 +1,4 @@
-From 60928f36b6c9a855077506444ea5edbe6be9ec4c Mon Sep 17 00:00:00 2001
+From 451cb5ca44357877f9e2eb161640839e4e346f96 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 8 Jan 2016 11:37:25 +0100
 Subject: [PATCH] dracut.sh: restorecon final image file
@@ -9,7 +9,7 @@ Instead of "mv" use "cp --reflink=auto" and restorecon the final image
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/dracut.sh b/dracut.sh
-index a2fc496..6dc9858 100755
+index a2fc4968..6dc98582 100755
 --- a/dracut.sh
 +++ b/dracut.sh
 @@ -1724,6 +1724,8 @@ if (( maxloglvl >= 5 )); then

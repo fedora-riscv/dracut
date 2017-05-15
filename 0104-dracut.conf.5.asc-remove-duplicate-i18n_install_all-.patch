@@ -1,4 +1,4 @@
-From aaaf035aedd043302c6fec57ba9570afe7639aab Mon Sep 17 00:00:00 2001
+From d32ca485e9d9590dc63afe96617da5f15c40f1d1 Mon Sep 17 00:00:00 2001
 From: Yu Watanabe <watanabe.yu+github@gmail.com>
 Date: Wed, 20 Jul 2016 18:23:44 +0900
 Subject: [PATCH] dracut.conf.5.asc: remove duplicate i18n_install_all option
@@ -8,7 +8,7 @@ Subject: [PATCH] dracut.conf.5.asc: remove duplicate i18n_install_all option
  1 file changed, 3 deletions(-)
 
 diff --git a/dracut.conf.5.asc b/dracut.conf.5.asc
-index 8f362b2..318024a 100644
+index 8f362b2d..318024a9 100644
 --- a/dracut.conf.5.asc
 +++ b/dracut.conf.5.asc
 @@ -99,9 +99,6 @@ Configuration files must have the extension .conf; other extensions are ignored.

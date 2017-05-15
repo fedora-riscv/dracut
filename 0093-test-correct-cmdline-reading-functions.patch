@@ -1,4 +1,4 @@
-From b039b20ec257901b89ecb32fa8d4ded676c0096c Mon Sep 17 00:00:00 2001
+From f151b09c28c5546bc1778866ffeccf6812331b3a Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 27 Jun 2016 12:05:37 +0200
 Subject: [PATCH] test: correct cmdline reading functions
@@ -21,7 +21,7 @@ Subject: [PATCH] test: correct cmdline reading functions
  14 files changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/test/TEST-01-BASIC/test-init.sh b/test/TEST-01-BASIC/test-init.sh
-index a8b6e39..78f124a 100755
+index a8b6e393..78f124a5 100755
 --- a/test/TEST-01-BASIC/test-init.sh
 +++ b/test/TEST-01-BASIC/test-init.sh
 @@ -2,7 +2,7 @@
@@ -34,7 +34,7 @@ index a8b6e39..78f124a 100755
  }
  
 diff --git a/test/TEST-02-SYSTEMD/test-init.sh b/test/TEST-02-SYSTEMD/test-init.sh
-index 0999bc0..63fd58f 100755
+index 0999bc02..63fd58f7 100755
 --- a/test/TEST-02-SYSTEMD/test-init.sh
 +++ b/test/TEST-02-SYSTEMD/test-init.sh
 @@ -2,7 +2,7 @@
@@ -56,7 +56,7 @@ index 0999bc0..63fd58f 100755
  exec </dev/console >/dev/console 2>&1
  echo "dracut-root-block-success" >/dev/sda1
 diff --git a/test/TEST-02-SYSTEMD/test.sh b/test/TEST-02-SYSTEMD/test.sh
-index 6189561..9736278 100755
+index 61895618..97362787 100755
 --- a/test/TEST-02-SYSTEMD/test.sh
 +++ b/test/TEST-02-SYSTEMD/test.sh
 @@ -4,7 +4,7 @@ TEST_DESCRIPTION="root filesystem on a ext3 filesystem"
@@ -69,7 +69,7 @@ index 6189561..9736278 100755
      $testdir/run-qemu \
  	-drive format=raw,index=0,media=disk,file=$TESTDIR/root.ext3 \
 diff --git a/test/TEST-03-USR-MOUNT/test-init.sh b/test/TEST-03-USR-MOUNT/test-init.sh
-index 68eaff0..dc03359 100755
+index 68eaff05..dc03359a 100755
 --- a/test/TEST-03-USR-MOUNT/test-init.sh
 +++ b/test/TEST-03-USR-MOUNT/test-init.sh
 @@ -2,7 +2,7 @@
@@ -82,7 +82,7 @@ index 68eaff0..dc03359 100755
  }
  
 diff --git a/test/TEST-04-FULL-SYSTEMD/test-init.sh b/test/TEST-04-FULL-SYSTEMD/test-init.sh
-index e388afc..3b29bee 100755
+index e388afca..3b29beec 100755
 --- a/test/TEST-04-FULL-SYSTEMD/test-init.sh
 +++ b/test/TEST-04-FULL-SYSTEMD/test-init.sh
 @@ -2,7 +2,7 @@
@@ -95,7 +95,7 @@ index e388afc..3b29bee 100755
  }
  
 diff --git a/test/TEST-10-RAID/test-init.sh b/test/TEST-10-RAID/test-init.sh
-index 7eb932a..5ca9de1 100755
+index 7eb932a0..5ca9de15 100755
 --- a/test/TEST-10-RAID/test-init.sh
 +++ b/test/TEST-10-RAID/test-init.sh
 @@ -2,7 +2,7 @@
@@ -108,7 +108,7 @@ index 7eb932a..5ca9de1 100755
  }
  
 diff --git a/test/TEST-11-LVM/test-init.sh b/test/TEST-11-LVM/test-init.sh
-index 18fd2b3..00d9da7 100755
+index 18fd2b35..00d9da77 100755
 --- a/test/TEST-11-LVM/test-init.sh
 +++ b/test/TEST-11-LVM/test-init.sh
 @@ -2,7 +2,7 @@
@@ -121,7 +121,7 @@ index 18fd2b3..00d9da7 100755
  }
  
 diff --git a/test/TEST-12-RAID-DEG/test-init.sh b/test/TEST-12-RAID-DEG/test-init.sh
-index 7eb932a..5ca9de1 100755
+index 7eb932a0..5ca9de15 100755
 --- a/test/TEST-12-RAID-DEG/test-init.sh
 +++ b/test/TEST-12-RAID-DEG/test-init.sh
 @@ -2,7 +2,7 @@
@@ -134,7 +134,7 @@ index 7eb932a..5ca9de1 100755
  }
  
 diff --git a/test/TEST-14-IMSM/test-init.sh b/test/TEST-14-IMSM/test-init.sh
-index 127185a..01cbe96 100755
+index 127185a2..01cbe961 100755
 --- a/test/TEST-14-IMSM/test-init.sh
 +++ b/test/TEST-14-IMSM/test-init.sh
 @@ -1,7 +1,7 @@
@@ -147,7 +147,7 @@ index 127185a..01cbe96 100755
  }
  
 diff --git a/test/TEST-16-DMSQUASH/test-init.sh b/test/TEST-16-DMSQUASH/test-init.sh
-index 5fe523c..3a93c80 100755
+index 5fe523c1..3a93c802 100755
 --- a/test/TEST-16-DMSQUASH/test-init.sh
 +++ b/test/TEST-16-DMSQUASH/test-init.sh
 @@ -1,7 +1,7 @@
@@ -160,7 +160,7 @@ index 5fe523c..3a93c80 100755
  }
  
 diff --git a/test/TEST-17-LVM-THIN/test-init.sh b/test/TEST-17-LVM-THIN/test-init.sh
-index 77fb346..cb9d921 100755
+index 77fb346d..cb9d921d 100755
 --- a/test/TEST-17-LVM-THIN/test-init.sh
 +++ b/test/TEST-17-LVM-THIN/test-init.sh
 @@ -1,7 +1,7 @@
@@ -173,7 +173,7 @@ index 77fb346..cb9d921 100755
  }
  
 diff --git a/test/TEST-20-NFS/client-init.sh b/test/TEST-20-NFS/client-init.sh
-index eea162c..55762d1 100755
+index eea162cb..55762d1e 100755
 --- a/test/TEST-20-NFS/client-init.sh
 +++ b/test/TEST-20-NFS/client-init.sh
 @@ -1,7 +1,7 @@
@@ -186,7 +186,7 @@ index eea162c..55762d1 100755
  }
  
 diff --git a/test/TEST-30-ISCSI/client-init.sh b/test/TEST-30-ISCSI/client-init.sh
-index 7279987..7a5b754 100755
+index 7279987c..7a5b7546 100755
 --- a/test/TEST-30-ISCSI/client-init.sh
 +++ b/test/TEST-30-ISCSI/client-init.sh
 @@ -1,7 +1,7 @@
@@ -199,7 +199,7 @@ index 7279987..7a5b754 100755
  }
  
 diff --git a/test/TEST-50-MULTINIC/client-init.sh b/test/TEST-50-MULTINIC/client-init.sh
-index d9ba45e..529379f 100755
+index d9ba45ec..529379f0 100755
 --- a/test/TEST-50-MULTINIC/client-init.sh
 +++ b/test/TEST-50-MULTINIC/client-init.sh
 @@ -1,7 +1,7 @@

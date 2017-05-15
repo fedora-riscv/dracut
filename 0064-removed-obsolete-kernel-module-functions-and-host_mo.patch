@@ -1,4 +1,4 @@
-From 3f60444ec1bff8a57a2cf4ada238e782928890eb Mon Sep 17 00:00:00 2001
+From 2bd80c958f9bd1adeb7faa4cc503e50f2415a023 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 15 Apr 2016 16:25:59 +0200
 Subject: [PATCH] removed obsolete kernel module functions and host_modules
@@ -14,7 +14,7 @@ find_kernel_modules()
  3 files changed, 2 insertions(+), 84 deletions(-)
 
 diff --git a/dracut-init.sh b/dracut-init.sh
-index 1056a31..a195c32 100644
+index 1056a315..a195c32b 100644
 --- a/dracut-init.sh
 +++ b/dracut-init.sh
 @@ -943,60 +943,6 @@ dracut_kernel_post() {
@@ -79,7 +79,7 @@ index 1056a31..a195c32 100644
      # instmods [-c [-s]] <kernel module> [<kernel module> ... ]
      # instmods [-c [-s]] <kernel subsystem>
 diff --git a/dracut.sh b/dracut.sh
-index aaeb0dc..8232fa4 100755
+index aaeb0dc6..8232fa48 100755
 --- a/dracut.sh
 +++ b/dracut.sh
 @@ -1101,8 +1101,6 @@ if (( ${#add_device_l[@]} )); then
@@ -134,7 +134,7 @@ index aaeb0dc..8232fa4 100755
  
  mods_to_load=""
 diff --git a/modules.d/90multipath/module-setup.sh b/modules.d/90multipath/module-setup.sh
-index 0af777d..1676798 100755
+index 0af777d9..1676798b 100755
 --- a/modules.d/90multipath/module-setup.sh
 +++ b/modules.d/90multipath/module-setup.sh
 @@ -41,7 +41,7 @@ depends() {

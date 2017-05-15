@@ -1,4 +1,4 @@
-From 740c46c0224a187d6b5a42b4aa56e173238884cc Mon Sep 17 00:00:00 2001
+From ea80c8eb89a0ec136d1e5bb1642fa635a72c70e5 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 29 Jun 2016 12:27:37 +0200
 Subject: [PATCH] network: support macaddr in brackets []
@@ -27,7 +27,7 @@ ip=::::test:ens3:dhcp:1000:[54:52:00:ab:cd:ef]
  1 file changed, 74 insertions(+), 50 deletions(-)
 
 diff --git a/modules.d/40network/net-lib.sh b/modules.d/40network/net-lib.sh
-index 92225c5..eb98f8e 100755
+index 92225c57..eb98f8e7 100755
 --- a/modules.d/40network/net-lib.sh
 +++ b/modules.d/40network/net-lib.sh
 @@ -447,60 +447,84 @@ ip_to_var() {

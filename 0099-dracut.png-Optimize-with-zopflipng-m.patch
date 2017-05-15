@@ -1,4 +1,4 @@
-From 828257dd824771cff41374679abb01189666ddf3 Mon Sep 17 00:00:00 2001
+From 54637361d05b4dc4b47b4ce2ec72747b23d0c208 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Ville=20Skytt=C3=A4?= <ville.skytta@iki.fi>
 Date: Thu, 7 Jul 2016 13:53:39 +0300
 Subject: [PATCH] dracut.png: Optimize with zopflipng -m

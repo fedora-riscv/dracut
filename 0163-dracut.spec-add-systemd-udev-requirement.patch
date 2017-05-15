@@ -1,4 +1,4 @@
-From e80ac43710440ef87829a2f6736acb421aad8493 Mon Sep 17 00:00:00 2001
+From cdc7eb78bb06e815da144e64b7e0272292a034f0 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 11 Nov 2016 16:04:09 +0100
 Subject: [PATCH] dracut.spec: add systemd-udev requirement
@@ -8,7 +8,7 @@ Subject: [PATCH] dracut.spec: add systemd-udev requirement
  1 file changed, 1 insertion(+)
 
 diff --git a/dracut.spec b/dracut.spec
-index 0515006..d4566cf 100644
+index 0515006e..d4566cfa 100644
 --- a/dracut.spec
 +++ b/dracut.spec
 @@ -115,6 +115,7 @@ Requires: kpartx

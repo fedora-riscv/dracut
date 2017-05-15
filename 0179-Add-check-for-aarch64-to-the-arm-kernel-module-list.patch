@@ -1,7 +1,7 @@
-From 917e1b6b5b2669a30bce69061686adbb6abc5e35 Mon Sep 17 00:00:00 2001
+From 330b4d6622378bd708d01b66b65c6deade4d3f9a Mon Sep 17 00:00:00 2001
 From: Peter Robinson <pbrobinson@gmail.com>
 Date: Thu, 23 Mar 2017 14:59:15 +0000
-Subject: [PATCH 138/159] Add check for aarch64 to the arm kernel module list
+Subject: [PATCH] Add check for aarch64 to the arm kernel module list
 
 This adds the same list of drivers we use for arm platforms for
 aarch64 too, also add the DMA drivers there too as they can add
@@ -31,6 +31,3 @@ index deb3709c..b1bced69 100755
                  "=drivers/i2c/busses" \
                  "=drivers/phy" \
                  "=drivers/power" \
--- 
-2.12.2
-

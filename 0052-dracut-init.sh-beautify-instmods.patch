@@ -1,4 +1,4 @@
-From 9bb030c5d8189f42eef3a0a881a361ce811414b0 Mon Sep 17 00:00:00 2001
+From 2cc4fa6cb61614de74085be7851c352beff3a865 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 13 Apr 2016 13:57:03 +0200
 Subject: [PATCH] dracut-init.sh: beautify instmods()
@@ -8,7 +8,7 @@ Subject: [PATCH] dracut-init.sh: beautify instmods()
  1 file changed, 28 insertions(+), 3 deletions(-)
 
 diff --git a/dracut-init.sh b/dracut-init.sh
-index e26d97a..8d1d9fa 100644
+index e26d97ad..8d1d9faa 100644
 --- a/dracut-init.sh
 +++ b/dracut-init.sh
 @@ -1001,22 +1001,47 @@ instmods() {

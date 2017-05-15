@@ -1,4 +1,4 @@
-From 8fce2c4d5eb6f48fdb2429cf1854aca3ced42423 Mon Sep 17 00:00:00 2001
+From f346b7a17806b54059a0d5c2ffbd76d955e21945 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 7 Jun 2016 14:47:27 +0200
 Subject: [PATCH] dracut-systemd/dracut-emergency.sh: call shutdown-emergency
@@ -10,7 +10,7 @@ if no rd.shell is given
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/modules.d/98dracut-systemd/dracut-emergency.sh b/modules.d/98dracut-systemd/dracut-emergency.sh
-index 26be291..63311c2 100755
+index 26be2919..63311c2d 100755
 --- a/modules.d/98dracut-systemd/dracut-emergency.sh
 +++ b/modules.d/98dracut-systemd/dracut-emergency.sh
 @@ -12,10 +12,9 @@ type plymouth >/dev/null 2>&1 && plymouth quit

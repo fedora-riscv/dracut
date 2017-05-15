@@ -20,7 +20,7 @@ exports are deprecated and were removed.
  7 files changed, 58 insertions(+), 34 deletions(-)
 
 diff --git a/dracut.cmdline.7.asc b/dracut.cmdline.7.asc
-index c34b45b..e160e3b 100644
+index c34b45bf..e160e3be 100644
 --- a/dracut.cmdline.7.asc
 +++ b/dracut.cmdline.7.asc
 @@ -755,13 +755,21 @@ NOTE: letters in the MAC-address must be lowercase!
@@ -49,7 +49,7 @@ index c34b45b..e160e3b 100644
  DASD
  ~~~~
 diff --git a/modules.d/95nbd/module-setup.sh b/modules.d/95nbd/module-setup.sh
-index 3cb6f49..22f6a3b 100755
+index 3cb6f496..22f6a3bf 100755
 --- a/modules.d/95nbd/module-setup.sh
 +++ b/modules.d/95nbd/module-setup.sh
 @@ -34,6 +34,9 @@ install() {
@@ -63,7 +63,7 @@ index 3cb6f49..22f6a3b 100755
  }
  
 diff --git a/modules.d/95nbd/nbdroot.sh b/modules.d/95nbd/nbdroot.sh
-index dd2bb55..7057f23 100755
+index dd2bb559..7057f233 100755
 --- a/modules.d/95nbd/nbdroot.sh
 +++ b/modules.d/95nbd/nbdroot.sh
 @@ -28,11 +28,6 @@ nbdfstype=${nroot%%:*}; nroot=${nroot#*:}
@@ -92,7 +92,7 @@ index dd2bb55..7057f23 100755
  # NBD doesn't emit uevents when it gets connected, so kick it
  echo change > /sys/block/nbd0/uevent
 diff --git a/modules.d/95nbd/parse-nbdroot.sh b/modules.d/95nbd/parse-nbdroot.sh
-index 746fb14..902e9a9 100755
+index 746fb14d..902e9a98 100755
 --- a/modules.d/95nbd/parse-nbdroot.sh
 +++ b/modules.d/95nbd/parse-nbdroot.sh
 @@ -1,8 +1,8 @@
@@ -120,7 +120,7 @@ index 746fb14..902e9a9 100755
  netroot_to_var $netroot
  [ -z "$server" ] && die "Argument server for nbdroot is missing"
 diff --git a/test/TEST-40-NBD/dhcpd.conf b/test/TEST-40-NBD/dhcpd.conf
-index 942bc6a..08461f9 100644
+index 942bc6a8..08461f9a 100644
 --- a/test/TEST-40-NBD/dhcpd.conf
 +++ b/test/TEST-40-NBD/dhcpd.conf
 @@ -20,7 +20,7 @@ subnet 192.168.50.0 netmask 255.255.255.0 {
@@ -169,7 +169,7 @@ index 942bc6a..08461f9 100644
  			hardware ethernet 52:54:00:12:34:05;
  			fixed-address 192.168.50.101;
 diff --git a/test/TEST-40-NBD/server-init.sh b/test/TEST-40-NBD/server-init.sh
-index 73c64d6..0039753 100755
+index 73c64d6e..00397536 100755
 --- a/test/TEST-40-NBD/server-init.sh
 +++ b/test/TEST-40-NBD/server-init.sh
 @@ -13,8 +13,7 @@ ip link set dev eth0 name ens3
@@ -183,7 +183,7 @@ index 73c64d6..0039753 100755
  chmod 777 /var/lib/dhcpd/dhcpd.leases
  dhcpd -d -cf /etc/dhcpd.conf -lf /var/lib/dhcpd/dhcpd.leases &
 diff --git a/test/TEST-40-NBD/test.sh b/test/TEST-40-NBD/test.sh
-index 39966ac..28ba6aa 100755
+index 39966ace..28ba6aa3 100755
 --- a/test/TEST-40-NBD/test.sh
 +++ b/test/TEST-40-NBD/test.sh
 @@ -5,8 +5,8 @@ TEST_DESCRIPTION="root filesystem on NBD"

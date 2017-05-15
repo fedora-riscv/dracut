@@ -1,4 +1,4 @@
-From 0a7d7f63106ce5a7f9869aacb21d0474621811e7 Mon Sep 17 00:00:00 2001
+From db1ca69432c2713baeb094ee7eda60b6f671084a Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 13 Jan 2016 09:17:40 +0100
 Subject: [PATCH] dracut.cmdline: remove extra ":" from ip= doc
@@ -8,7 +8,7 @@ Subject: [PATCH] dracut.cmdline: remove extra ":" from ip= doc
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dracut.cmdline.7.asc b/dracut.cmdline.7.asc
-index e160e3b..c4c5588 100644
+index e160e3be..c4c55884 100644
 --- a/dracut.cmdline.7.asc
 +++ b/dracut.cmdline.7.asc
 @@ -492,7 +492,7 @@ cannot be used in conjunction with the **ifname** argument for the

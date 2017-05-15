@@ -1,4 +1,4 @@
-From 4a7b55ee7e5c4e8ba650915fc81c48ae317a5dec Mon Sep 17 00:00:00 2001
+From 58ba89217cb2332f9ab5353db04b8a50ef8d497f Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 20 Oct 2016 14:46:40 +0200
 Subject: [PATCH] add README.md
@@ -10,7 +10,7 @@ Subject: [PATCH] add README.md
 
 diff --git a/README.md b/README.md
 new file mode 100644
-index 0000000..ebc15fe
+index 00000000..ebc15fe2
 --- /dev/null
 +++ b/README.md
 @@ -0,0 +1,5 @@

@@ -1,4 +1,4 @@
-From 86f0904004540b63664b2707ad782d788b2112e4 Mon Sep 17 00:00:00 2001
+From 885de501ed098e5341679452383c31a4270adfca Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 7 Nov 2016 13:23:39 +0100
 Subject: [PATCH] TEST-30-ISCSI: fixed dhcpd.conf and disabled nowait
@@ -9,7 +9,7 @@ Subject: [PATCH] TEST-30-ISCSI: fixed dhcpd.conf and disabled nowait
  2 files changed, 33 insertions(+), 10 deletions(-)
 
 diff --git a/test/TEST-30-ISCSI/dhcpd.conf b/test/TEST-30-ISCSI/dhcpd.conf
-index 22c1790..5fa1c15 100644
+index 22c17907..5fa1c150 100644
 --- a/test/TEST-30-ISCSI/dhcpd.conf
 +++ b/test/TEST-30-ISCSI/dhcpd.conf
 @@ -23,3 +23,26 @@ subnet 192.168.50.0 netmask 255.255.255.0 {
@@ -40,7 +40,7 @@ index 22c1790..5fa1c15 100644
 +        }
 +}
 diff --git a/test/TEST-30-ISCSI/test.sh b/test/TEST-30-ISCSI/test.sh
-index c5315bb..85ce29e 100755
+index c5315bb6..85ce29e8 100755
 --- a/test/TEST-30-ISCSI/test.sh
 +++ b/test/TEST-30-ISCSI/test.sh
 @@ -87,16 +87,16 @@ do_test_run() {

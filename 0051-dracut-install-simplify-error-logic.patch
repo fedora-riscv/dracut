@@ -1,4 +1,4 @@
-From fe6e0c23adbdafc4fc371107534b3b2681c96393 Mon Sep 17 00:00:00 2001
+From 128352840bf9e640739040d6510e3dc45b1f4e7a Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 13 Apr 2016 13:28:29 +0200
 Subject: [PATCH] dracut-install: simplify error logic
@@ -9,7 +9,7 @@ error out early, if "--optional" is not set
  1 file changed, 47 insertions(+), 17 deletions(-)
 
 diff --git a/install/dracut-install.c b/install/dracut-install.c
-index c246201..f414f30 100644
+index c246201d..f414f30c 100644
 --- a/install/dracut-install.c
 +++ b/install/dracut-install.c
 @@ -1181,8 +1181,10 @@ static int install_module(struct kmod_module *mod)

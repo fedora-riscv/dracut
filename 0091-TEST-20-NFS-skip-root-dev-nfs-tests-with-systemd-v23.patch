@@ -1,4 +1,4 @@
-From f6fa9ef1010b39a4cb71edd5f1074b6716a3488c Mon Sep 17 00:00:00 2001
+From 7e0812ef5a62ff7e8d0bd707d8dd5aad577ad3de Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 23 Jun 2016 16:36:43 +0200
 Subject: [PATCH] TEST-20-NFS: skip root=/dev/nfs tests with systemd v230
@@ -8,7 +8,7 @@ Subject: [PATCH] TEST-20-NFS: skip root=/dev/nfs tests with systemd v230
  1 file changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/test/TEST-20-NFS/test.sh b/test/TEST-20-NFS/test.sh
-index 222bd24..981cd82 100755
+index 222bd249..981cd821 100755
 --- a/test/TEST-20-NFS/test.sh
 +++ b/test/TEST-20-NFS/test.sh
 @@ -114,14 +114,16 @@ test_nfsv3() {

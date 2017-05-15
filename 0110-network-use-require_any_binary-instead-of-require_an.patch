@@ -1,4 +1,4 @@
-From 242c03d6fb45f2a291f2b924dedcf2237ad183ba Mon Sep 17 00:00:00 2001
+From 7b43ef7744cd3bb7d88c937b8ee03f176d5af44c Mon Sep 17 00:00:00 2001
 From: Xunlei Pang <xpang@redhat.com>
 Date: Fri, 19 Aug 2016 13:39:37 +0200
 Subject: [PATCH] network: use require_any_binary instead of
@@ -9,7 +9,7 @@ Subject: [PATCH] network: use require_any_binary instead of
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/modules.d/40network/module-setup.sh b/modules.d/40network/module-setup.sh
-index 0501ffe..4a10cf3 100755
+index 0501ffe7..4a10cf33 100755
 --- a/modules.d/40network/module-setup.sh
 +++ b/modules.d/40network/module-setup.sh
 @@ -5,7 +5,7 @@ check() {

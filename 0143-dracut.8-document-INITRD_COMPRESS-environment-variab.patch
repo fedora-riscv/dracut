@@ -1,4 +1,4 @@
-From bd98b884475e66a6a92a8efa0fed1b37576f4366 Mon Sep 17 00:00:00 2001
+From 44c82fcfd238749b3ea8b042bdbd7411c3cb1196 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 2 Nov 2016 13:49:17 +0100
 Subject: [PATCH] dracut.8: document INITRD_COMPRESS environment variable
@@ -9,7 +9,7 @@ https://bugzilla.redhat.com/show_bug.cgi?id=1389775
  1 file changed, 7 insertions(+)
 
 diff --git a/dracut.8.asc b/dracut.8.asc
-index 3b80000..0e01707 100644
+index 3b800001..0e017070 100644
 --- a/dracut.8.asc
 +++ b/dracut.8.asc
 @@ -434,6 +434,7 @@ will not be able to boot.

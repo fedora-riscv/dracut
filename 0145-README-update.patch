@@ -1,4 +1,4 @@
-From e7f52635d91df59574700f2b991b2032a6bec116 Mon Sep 17 00:00:00 2001
+From e2c42c38af72b7888449df07deb3c04fccc3ef8f Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 3 Nov 2016 14:54:45 +0100
 Subject: [PATCH] README: update
@@ -11,7 +11,7 @@ remove sourceforge repo links
  1 file changed, 7 insertions(+), 13 deletions(-)
 
 diff --git a/README b/README
-index c974c08..ff374af 100644
+index c974c08f..ff374af8 100644
 --- a/README
 +++ b/README
 @@ -1,9 +1,10 @@

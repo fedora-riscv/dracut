@@ -15,7 +15,7 @@ dracut-initqueue[307]: systemd-escape: invalid option -- 'c'
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/99base/dracut-lib.sh b/modules.d/99base/dracut-lib.sh
-index ad03394..0a0b1b9 100755
+index ad03394f..0a0b1b93 100755
 --- a/modules.d/99base/dracut-lib.sh
 +++ b/modules.d/99base/dracut-lib.sh
 @@ -874,7 +874,7 @@ dev_unit_name()

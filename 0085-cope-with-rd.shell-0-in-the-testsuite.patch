@@ -1,4 +1,4 @@
-From 781f1971c326da07d22516a4b555138b1978177b Mon Sep 17 00:00:00 2001
+From d1d803af1d24e39e38d568b33866a54bb4e7aca0 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 8 Jun 2016 09:33:48 +0200
 Subject: [PATCH] cope with "rd.shell=0" in the testsuite
@@ -58,7 +58,7 @@ also.
  45 files changed, 1315 insertions(+), 60 deletions(-)
 
 diff --git a/test/TEST-01-BASIC/hard-off.sh b/test/TEST-01-BASIC/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-01-BASIC/hard-off.sh
 +++ b/test/TEST-01-BASIC/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -68,7 +68,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-01-BASIC/test-init.sh b/test/TEST-01-BASIC/test-init.sh
-index ef196ec..a8b6e39 100755
+index ef196ecb..a8b6e393 100755
 --- a/test/TEST-01-BASIC/test-init.sh
 +++ b/test/TEST-01-BASIC/test-init.sh
 @@ -1,5 +1,100 @@
@@ -182,7 +182,7 @@ index ef196ec..a8b6e39 100755
  	setsid $CTTY sh -i
  fi
 diff --git a/test/TEST-01-BASIC/test.sh b/test/TEST-01-BASIC/test.sh
-index 959ac05..ab84074 100755
+index 959ac05d..ab840744 100755
 --- a/test/TEST-01-BASIC/test.sh
 +++ b/test/TEST-01-BASIC/test.sh
 @@ -14,7 +14,7 @@ test_run() {
@@ -203,7 +203,7 @@ index 959ac05..ab84074 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-02-SYSTEMD/hard-off.sh b/test/TEST-02-SYSTEMD/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-02-SYSTEMD/hard-off.sh
 +++ b/test/TEST-02-SYSTEMD/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -213,7 +213,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-02-SYSTEMD/test-init.sh b/test/TEST-02-SYSTEMD/test-init.sh
-index b7e0192..0999bc0 100755
+index b7e01921..0999bc02 100755
 --- a/test/TEST-02-SYSTEMD/test-init.sh
 +++ b/test/TEST-02-SYSTEMD/test-init.sh
 @@ -1,4 +1,102 @@
@@ -329,7 +329,7 @@ index b7e0192..0999bc0 100755
  	setsid $CTTY sh -i
  fi
 diff --git a/test/TEST-02-SYSTEMD/test.sh b/test/TEST-02-SYSTEMD/test.sh
-index 6dc6f42..350cff8 100755
+index 6dc6f42e..350cff8c 100755
 --- a/test/TEST-02-SYSTEMD/test.sh
 +++ b/test/TEST-02-SYSTEMD/test.sh
 @@ -10,7 +10,7 @@ test_run() {
@@ -350,7 +350,7 @@ index 6dc6f42..350cff8 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-03-USR-MOUNT/hard-off.sh b/test/TEST-03-USR-MOUNT/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-03-USR-MOUNT/hard-off.sh
 +++ b/test/TEST-03-USR-MOUNT/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -360,7 +360,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-03-USR-MOUNT/test-init.sh b/test/TEST-03-USR-MOUNT/test-init.sh
-index 48fbfea..68eaff0 100755
+index 48fbfeaf..68eaff05 100755
 --- a/test/TEST-03-USR-MOUNT/test-init.sh
 +++ b/test/TEST-03-USR-MOUNT/test-init.sh
 @@ -1,5 +1,100 @@
@@ -474,7 +474,7 @@ index 48fbfea..68eaff0 100755
  	setsid $CTTY sh -i
  fi
 diff --git a/test/TEST-03-USR-MOUNT/test.sh b/test/TEST-03-USR-MOUNT/test.sh
-index 0aca8cf..ed76d35 100755
+index 0aca8cf1..ed76d354 100755
 --- a/test/TEST-03-USR-MOUNT/test.sh
 +++ b/test/TEST-03-USR-MOUNT/test.sh
 @@ -21,7 +21,7 @@ client_run() {
@@ -495,7 +495,7 @@ index 0aca8cf..ed76d35 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-04-FULL-SYSTEMD/hard-off.sh b/test/TEST-04-FULL-SYSTEMD/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-04-FULL-SYSTEMD/hard-off.sh
 +++ b/test/TEST-04-FULL-SYSTEMD/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -505,7 +505,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-04-FULL-SYSTEMD/test-init.sh b/test/TEST-04-FULL-SYSTEMD/test-init.sh
-index ad516f1..e388afc 100755
+index ad516f1f..e388afca 100755
 --- a/test/TEST-04-FULL-SYSTEMD/test-init.sh
 +++ b/test/TEST-04-FULL-SYSTEMD/test-init.sh
 @@ -1,5 +1,100 @@
@@ -619,7 +619,7 @@ index ad516f1..e388afc 100755
  	strstr "$(setsid --help)" "control" && CTTY="-c"
  	setsid $CTTY sh -i
 diff --git a/test/TEST-04-FULL-SYSTEMD/test.sh b/test/TEST-04-FULL-SYSTEMD/test.sh
-index 884f441..88711ef 100755
+index 884f4412..88711eff 100755
 --- a/test/TEST-04-FULL-SYSTEMD/test.sh
 +++ b/test/TEST-04-FULL-SYSTEMD/test.sh
 @@ -22,7 +22,7 @@ client_run() {
@@ -640,7 +640,7 @@ index 884f441..88711ef 100755
      )
  
 diff --git a/test/TEST-10-RAID/hard-off.sh b/test/TEST-10-RAID/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-10-RAID/hard-off.sh
 +++ b/test/TEST-10-RAID/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -650,7 +650,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-10-RAID/test-init.sh b/test/TEST-10-RAID/test-init.sh
-index c7c114e..7eb932a 100755
+index c7c114e7..7eb932a0 100755
 --- a/test/TEST-10-RAID/test-init.sh
 +++ b/test/TEST-10-RAID/test-init.sh
 @@ -1,5 +1,100 @@
@@ -764,7 +764,7 @@ index c7c114e..7eb932a 100755
  mount -n -o remount,ro /
  #echo " rd.break=shutdown " >> /run/initramfs/etc/cmdline
 diff --git a/test/TEST-10-RAID/test.sh b/test/TEST-10-RAID/test.sh
-index 6ec77a6..2d09314 100755
+index 6ec77a68..2d09314c 100755
 --- a/test/TEST-10-RAID/test.sh
 +++ b/test/TEST-10-RAID/test.sh
 @@ -12,7 +12,7 @@ test_run() {
@@ -785,7 +785,7 @@ index 6ec77a6..2d09314 100755
          mkdir -p $initdir/etc
          echo "testluks UUID=$ID_FS_UUID /etc/key" > $initdir/etc/crypttab
 diff --git a/test/TEST-11-LVM/hard-off.sh b/test/TEST-11-LVM/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-11-LVM/hard-off.sh
 +++ b/test/TEST-11-LVM/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -795,7 +795,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-11-LVM/test-init.sh b/test/TEST-11-LVM/test-init.sh
-index 61a9543..18fd2b3 100755
+index 61a95435..18fd2b35 100755
 --- a/test/TEST-11-LVM/test-init.sh
 +++ b/test/TEST-11-LVM/test-init.sh
 @@ -1,5 +1,100 @@
@@ -909,7 +909,7 @@ index 61a9543..18fd2b3 100755
  mount -n -o remount,ro /
  poweroff -f
 diff --git a/test/TEST-11-LVM/test.sh b/test/TEST-11-LVM/test.sh
-index 412a065..97c2f97 100755
+index 412a0658..97c2f976 100755
 --- a/test/TEST-11-LVM/test.sh
 +++ b/test/TEST-11-LVM/test.sh
 @@ -11,7 +11,7 @@ test_run() {
@@ -930,7 +930,7 @@ index 412a065..97c2f97 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-12-RAID-DEG/hard-off.sh b/test/TEST-12-RAID-DEG/hard-off.sh
-index 07a8f1f..cf44fb0 100755
+index 07a8f1fe..cf44fb0b 100755
 --- a/test/TEST-12-RAID-DEG/hard-off.sh
 +++ b/test/TEST-12-RAID-DEG/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -940,7 +940,7 @@ index 07a8f1f..cf44fb0 100755
 +getargbool 0 rd.shell || poweroff -f
 +! getargbool 0 rd.break && getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-12-RAID-DEG/test-init.sh b/test/TEST-12-RAID-DEG/test-init.sh
-index c7c114e..7eb932a 100755
+index c7c114e7..7eb932a0 100755
 --- a/test/TEST-12-RAID-DEG/test-init.sh
 +++ b/test/TEST-12-RAID-DEG/test-init.sh
 @@ -1,5 +1,100 @@
@@ -1054,7 +1054,7 @@ index c7c114e..7eb932a 100755
  mount -n -o remount,ro /
  #echo " rd.break=shutdown " >> /run/initramfs/etc/cmdline
 diff --git a/test/TEST-12-RAID-DEG/test.sh b/test/TEST-12-RAID-DEG/test.sh
-index 444dca6..09d78dd 100755
+index 444dca6d..09d78dda 100755
 --- a/test/TEST-12-RAID-DEG/test.sh
 +++ b/test/TEST-12-RAID-DEG/test.sh
 @@ -19,7 +19,7 @@ client_run() {
@@ -1075,7 +1075,7 @@ index 444dca6..09d78dd 100755
  	inst ./cryptroot-ask.sh /sbin/cryptroot-ask
          mkdir -p $initdir/etc
 diff --git a/test/TEST-13-ENC-RAID-LVM/hard-off.sh b/test/TEST-13-ENC-RAID-LVM/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-13-ENC-RAID-LVM/hard-off.sh
 +++ b/test/TEST-13-ENC-RAID-LVM/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -1085,7 +1085,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-13-ENC-RAID-LVM/test.sh b/test/TEST-13-ENC-RAID-LVM/test.sh
-index 2a814f8..3e8c3e2 100755
+index 2a814f89..3e8c3e28 100755
 --- a/test/TEST-13-ENC-RAID-LVM/test.sh
 +++ b/test/TEST-13-ENC-RAID-LVM/test.sh
 @@ -19,7 +19,7 @@ test_run() {
@@ -1106,7 +1106,7 @@ index 2a814f8..3e8c3e2 100755
  	inst ./cryptroot-ask.sh /sbin/cryptroot-ask
          mkdir -p $initdir/etc
 diff --git a/test/TEST-14-IMSM/hard-off.sh b/test/TEST-14-IMSM/hard-off.sh
-index f340d2d..780a0b2 100755
+index f340d2d4..780a0b2d 100755
 --- a/test/TEST-14-IMSM/hard-off.sh
 +++ b/test/TEST-14-IMSM/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -1116,7 +1116,7 @@ index f340d2d..780a0b2 100755
 +getargbool 0 rd.shell || poweroff -f 
 +getargbool 0 failme && poweroff -f 
 diff --git a/test/TEST-14-IMSM/test-init.sh b/test/TEST-14-IMSM/test-init.sh
-index ba63245..127185a 100755
+index ba63245b..127185a2 100755
 --- a/test/TEST-14-IMSM/test-init.sh
 +++ b/test/TEST-14-IMSM/test-init.sh
 @@ -1,4 +1,99 @@
@@ -1229,7 +1229,7 @@ index ba63245..127185a 100755
  mount -n -o remount,ro /
  poweroff -f
 diff --git a/test/TEST-14-IMSM/test.sh b/test/TEST-14-IMSM/test.sh
-index 315bc5a..9083fd5 100755
+index 315bc5aa..9083fd50 100755
 --- a/test/TEST-14-IMSM/test.sh
 +++ b/test/TEST-14-IMSM/test.sh
 @@ -15,7 +15,7 @@ client_run() {
@@ -1250,7 +1250,7 @@ index 315bc5a..9083fd5 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-15-BTRFSRAID/hard-off.sh b/test/TEST-15-BTRFSRAID/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-15-BTRFSRAID/hard-off.sh
 +++ b/test/TEST-15-BTRFSRAID/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -1260,7 +1260,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-15-BTRFSRAID/test.sh b/test/TEST-15-BTRFSRAID/test.sh
-index 8e2ea49..281f856 100755
+index 8e2ea49e..281f856b 100755
 --- a/test/TEST-15-BTRFSRAID/test.sh
 +++ b/test/TEST-15-BTRFSRAID/test.sh
 @@ -11,7 +11,7 @@ test_run() {
@@ -1281,7 +1281,7 @@ index 8e2ea49..281f856 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-16-DMSQUASH/hard-off.sh b/test/TEST-16-DMSQUASH/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-16-DMSQUASH/hard-off.sh
 +++ b/test/TEST-16-DMSQUASH/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -1291,7 +1291,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-16-DMSQUASH/test-init.sh b/test/TEST-16-DMSQUASH/test-init.sh
-index 206298d..5fe523c 100755
+index 206298da..5fe523c1 100755
 --- a/test/TEST-16-DMSQUASH/test-init.sh
 +++ b/test/TEST-16-DMSQUASH/test-init.sh
 @@ -1,4 +1,99 @@
@@ -1404,7 +1404,7 @@ index 206298d..5fe523c 100755
  mount -n -o remount,ro /
  poweroff -f
 diff --git a/test/TEST-16-DMSQUASH/test.sh b/test/TEST-16-DMSQUASH/test.sh
-index b255492..4d72470 100755
+index b255492e..4d724706 100755
 --- a/test/TEST-16-DMSQUASH/test.sh
 +++ b/test/TEST-16-DMSQUASH/test.sh
 @@ -22,7 +22,7 @@ test_run() {
@@ -1425,7 +1425,7 @@ index b255492..4d72470 100755
      )
  
 diff --git a/test/TEST-17-LVM-THIN/hard-off.sh b/test/TEST-17-LVM-THIN/hard-off.sh
-index 12c3d5a..f4d19dc 100755
+index 12c3d5ac..f4d19dcb 100755
 --- a/test/TEST-17-LVM-THIN/hard-off.sh
 +++ b/test/TEST-17-LVM-THIN/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -1434,7 +1434,7 @@ index 12c3d5a..f4d19dc 100755
 +getargbool 0 rd.shell || poweroff -f
  getarg failme && poweroff -f
 diff --git a/test/TEST-17-LVM-THIN/test-init.sh b/test/TEST-17-LVM-THIN/test-init.sh
-index 61a9543..77fb346 100755
+index 61a95435..77fb346d 100755
 --- a/test/TEST-17-LVM-THIN/test-init.sh
 +++ b/test/TEST-17-LVM-THIN/test-init.sh
 @@ -1,4 +1,99 @@
@@ -1547,7 +1547,7 @@ index 61a9543..77fb346 100755
  mount -n -o remount,ro /
  poweroff -f
 diff --git a/test/TEST-17-LVM-THIN/test.sh b/test/TEST-17-LVM-THIN/test.sh
-index e337591..1485f72 100755
+index e3375918..1485f721 100755
 --- a/test/TEST-17-LVM-THIN/test.sh
 +++ b/test/TEST-17-LVM-THIN/test.sh
 @@ -11,7 +11,7 @@ test_run() {
@@ -1568,7 +1568,7 @@ index e337591..1485f72 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-20-NFS/client-init.sh b/test/TEST-20-NFS/client-init.sh
-index a443289..eea162c 100755
+index a443289e..eea162cb 100755
 --- a/test/TEST-20-NFS/client-init.sh
 +++ b/test/TEST-20-NFS/client-init.sh
 @@ -1,4 +1,99 @@
@@ -1681,7 +1681,7 @@ index a443289..eea162c 100755
  	strstr "$(setsid --help)" "control" && CTTY="-c"
  	setsid $CTTY sh -i
 diff --git a/test/TEST-20-NFS/hard-off.sh b/test/TEST-20-NFS/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-20-NFS/hard-off.sh
 +++ b/test/TEST-20-NFS/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -1691,7 +1691,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-20-NFS/test.sh b/test/TEST-20-NFS/test.sh
-index 1dfdfc4..d7df71e 100755
+index 1dfdfc4e..d7df71e9 100755
 --- a/test/TEST-20-NFS/test.sh
 +++ b/test/TEST-20-NFS/test.sh
 @@ -54,7 +54,7 @@ client_test() {
@@ -1712,7 +1712,7 @@ index 1dfdfc4..d7df71e 100755
      )
  
 diff --git a/test/TEST-30-ISCSI/client-init.sh b/test/TEST-30-ISCSI/client-init.sh
-index 2e422cd..7279987 100755
+index 2e422cd5..7279987c 100755
 --- a/test/TEST-30-ISCSI/client-init.sh
 +++ b/test/TEST-30-ISCSI/client-init.sh
 @@ -1,4 +1,99 @@
@@ -1825,7 +1825,7 @@ index 2e422cd..7279987 100755
  	setsid $CTTY sh -i
  fi
 diff --git a/test/TEST-30-ISCSI/hard-off.sh b/test/TEST-30-ISCSI/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-30-ISCSI/hard-off.sh
 +++ b/test/TEST-30-ISCSI/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -1835,7 +1835,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-30-ISCSI/test.sh b/test/TEST-30-ISCSI/test.sh
-index 1c06b06..83fd623 100755
+index 1c06b06d..83fd623a 100755
 --- a/test/TEST-30-ISCSI/test.sh
 +++ b/test/TEST-30-ISCSI/test.sh
 @@ -49,7 +49,7 @@ run_client() {
@@ -1856,7 +1856,7 @@ index 1c06b06..83fd623 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-40-NBD/hard-off.sh b/test/TEST-40-NBD/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-40-NBD/hard-off.sh
 +++ b/test/TEST-40-NBD/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -1866,7 +1866,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-40-NBD/test.sh b/test/TEST-40-NBD/test.sh
-index 2061392..40e09b7 100755
+index 2061392a..40e09b7d 100755
 --- a/test/TEST-40-NBD/test.sh
 +++ b/test/TEST-40-NBD/test.sh
 @@ -58,7 +58,7 @@ client_test() {
@@ -1887,7 +1887,7 @@ index 2061392..40e09b7 100755
          inst_hook initqueue/finished 01 ./finished-false.sh
          inst_simple ./99-idesymlinks.rules /etc/udev/rules.d/99-idesymlinks.rules
 diff --git a/test/TEST-50-MULTINIC/client-init.sh b/test/TEST-50-MULTINIC/client-init.sh
-index e6157af..d9ba45e 100755
+index e6157af2..d9ba45ec 100755
 --- a/test/TEST-50-MULTINIC/client-init.sh
 +++ b/test/TEST-50-MULTINIC/client-init.sh
 @@ -1,4 +1,100 @@
@@ -1999,7 +1999,7 @@ index e6157af..d9ba45e 100755
 +getargbool 0 rd.shell && sh -i
  poweroff -f
 diff --git a/test/TEST-50-MULTINIC/hard-off.sh b/test/TEST-50-MULTINIC/hard-off.sh
-index 12c3d5a..01acb19 100755
+index 12c3d5ac..01acb195 100755
 --- a/test/TEST-50-MULTINIC/hard-off.sh
 +++ b/test/TEST-50-MULTINIC/hard-off.sh
 @@ -1,3 +1,3 @@
@@ -2009,7 +2009,7 @@ index 12c3d5a..01acb19 100755
 +getargbool 0 rd.shell || poweroff -f
 +getargbool 0 failme && poweroff -f
 diff --git a/test/TEST-50-MULTINIC/test.sh b/test/TEST-50-MULTINIC/test.sh
-index e0bf7d2..656c237 100755
+index e0bf7d2f..656c237b 100755
 --- a/test/TEST-50-MULTINIC/test.sh
 +++ b/test/TEST-50-MULTINIC/test.sh
 @@ -54,7 +54,7 @@ client_test() {

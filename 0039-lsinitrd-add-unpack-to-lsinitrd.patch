@@ -1,4 +1,4 @@
-From 97bbba6938fc22605026b4cff3c5cc524c7bdf38 Mon Sep 17 00:00:00 2001
+From 363068740a5011eb3d073775bb7886bb6ca10a20 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 17 Mar 2016 14:45:24 +0100
 Subject: [PATCH] lsinitrd: add "--unpack" to lsinitrd
@@ -10,7 +10,7 @@ also "--unpackearly" and "--verbose"
  2 files changed, 41 insertions(+), 11 deletions(-)
 
 diff --git a/lsinitrd.1.asc b/lsinitrd.1.asc
-index 4293910..b6a704c 100644
+index 42939105..b6a704c2 100644
 --- a/lsinitrd.1.asc
 +++ b/lsinitrd.1.asc
 @@ -34,6 +34,15 @@ OPTIONS
@@ -30,7 +30,7 @@ index 4293910..b6a704c 100644
  ------------
  The lsinitrd command is part of the dracut package and is available from
 diff --git a/lsinitrd.sh b/lsinitrd.sh
-index 441fb92..224b9c1 100755
+index 441fb922..224b9c1a 100755
 --- a/lsinitrd.sh
 +++ b/lsinitrd.sh
 @@ -27,6 +27,9 @@ usage()

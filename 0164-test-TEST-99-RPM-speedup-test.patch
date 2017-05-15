@@ -1,4 +1,4 @@
-From eac751f1e0493b5736ff84ef0ca64017545f24bf Mon Sep 17 00:00:00 2001
+From b1a9ed124afc03171dc80d41a6706ff5e10d5157 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 11 Nov 2016 16:04:31 +0100
 Subject: [PATCH] test/TEST-99-RPM: speedup test
@@ -11,14 +11,14 @@ Subject: [PATCH] test/TEST-99-RPM: speedup test
 
 diff --git a/test/TEST-99-RPM/finished-false.sh b/test/TEST-99-RPM/finished-false.sh
 deleted file mode 100755
-index ecdbef9..0000000
+index ecdbef95..00000000
 --- a/test/TEST-99-RPM/finished-false.sh
 +++ /dev/null
 @@ -1,2 +0,0 @@
 -#!/bin/sh
 -exit 1
 diff --git a/test/TEST-99-RPM/test.sh b/test/TEST-99-RPM/test.sh
-index 0e3a1a6..1485278 100755
+index 0e3a1a68..1485278e 100755
 --- a/test/TEST-99-RPM/test.sh
 +++ b/test/TEST-99-RPM/test.sh
 @@ -16,6 +16,7 @@ test_run() {

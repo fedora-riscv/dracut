@@ -1,4 +1,4 @@
-From 36867f1abf5d82106447fa4d25275471c0406a56 Mon Sep 17 00:00:00 2001
+From b75dd4b683c2a5775f96c04e437ed6bec3ab9222 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 10 Jun 2016 08:53:01 +0200
 Subject: [PATCH] test: handle kernel panic in testsuite
@@ -25,7 +25,7 @@ Subject: [PATCH] test: handle kernel panic in testsuite
  16 files changed, 44 insertions(+), 22 deletions(-)
 
 diff --git a/test/TEST-01-BASIC/test.sh b/test/TEST-01-BASIC/test.sh
-index ab84074..e74c673 100755
+index ab840744..e74c6735 100755
 --- a/test/TEST-01-BASIC/test.sh
 +++ b/test/TEST-01-BASIC/test.sh
 @@ -14,7 +14,8 @@ test_run() {
@@ -39,7 +39,7 @@ index ab84074..e74c673 100755
      grep -F -m 1 -q dracut-root-block-success $TESTDIR/result || return 1
  }
 diff --git a/test/TEST-02-SYSTEMD/test.sh b/test/TEST-02-SYSTEMD/test.sh
-index 350cff8..6189561 100755
+index 350cff8c..61895618 100755
 --- a/test/TEST-02-SYSTEMD/test.sh
 +++ b/test/TEST-02-SYSTEMD/test.sh
 @@ -10,7 +10,8 @@ test_run() {
@@ -53,7 +53,7 @@ index 350cff8..6189561 100755
      grep -F -m 1 -q dracut-root-block-success $TESTDIR/root.ext3 || return 1
  }
 diff --git a/test/TEST-03-USR-MOUNT/test.sh b/test/TEST-03-USR-MOUNT/test.sh
-index ed76d35..c515613 100755
+index ed76d354..c515613d 100755
 --- a/test/TEST-03-USR-MOUNT/test.sh
 +++ b/test/TEST-03-USR-MOUNT/test.sh
 @@ -21,7 +21,8 @@ client_run() {
@@ -67,7 +67,7 @@ index ed76d35..c515613 100755
  
      if (($? != 0)); then
 diff --git a/test/TEST-04-FULL-SYSTEMD/test.sh b/test/TEST-04-FULL-SYSTEMD/test.sh
-index 88711ef..3baabb4 100755
+index 88711eff..3baabb45 100755
 --- a/test/TEST-04-FULL-SYSTEMD/test.sh
 +++ b/test/TEST-04-FULL-SYSTEMD/test.sh
 @@ -22,7 +22,8 @@ client_run() {
@@ -81,7 +81,7 @@ index 88711ef..3baabb4 100755
  
      if (($? != 0)); then
 diff --git a/test/TEST-10-RAID/test.sh b/test/TEST-10-RAID/test.sh
-index 2d09314..5324457 100755
+index 2d09314c..5324457d 100755
 --- a/test/TEST-10-RAID/test.sh
 +++ b/test/TEST-10-RAID/test.sh
 @@ -12,7 +12,8 @@ test_run() {
@@ -95,7 +95,7 @@ index 2d09314..5324457 100755
      grep -F -m 1 -q dracut-root-block-success $DISKIMAGE || return 1
  }
 diff --git a/test/TEST-11-LVM/test.sh b/test/TEST-11-LVM/test.sh
-index 97c2f97..cf7d376 100755
+index 97c2f976..cf7d376b 100755
 --- a/test/TEST-11-LVM/test.sh
 +++ b/test/TEST-11-LVM/test.sh
 @@ -11,7 +11,8 @@ test_run() {
@@ -109,7 +109,7 @@ index 97c2f97..cf7d376 100755
      grep -F -m 1 -q dracut-root-block-success $TESTDIR/root.ext2 || return 1
  }
 diff --git a/test/TEST-12-RAID-DEG/test.sh b/test/TEST-12-RAID-DEG/test.sh
-index 09d78dd..4c313eb 100755
+index 09d78dda..4c313eb5 100755
 --- a/test/TEST-12-RAID-DEG/test.sh
 +++ b/test/TEST-12-RAID-DEG/test.sh
 @@ -19,7 +19,8 @@ client_run() {
@@ -123,7 +123,7 @@ index 09d78dd..4c313eb 100755
      if ! grep -F -m 1 -q dracut-root-block-success $TESTDIR/root.ext2; then
  	echo "CLIENT TEST END: $@ [FAIL]"
 diff --git a/test/TEST-13-ENC-RAID-LVM/test.sh b/test/TEST-13-ENC-RAID-LVM/test.sh
-index 3e8c3e2..b8fd26e 100755
+index 3e8c3e28..b8fd26e2 100755
 --- a/test/TEST-13-ENC-RAID-LVM/test.sh
 +++ b/test/TEST-13-ENC-RAID-LVM/test.sh
 @@ -19,7 +19,8 @@ test_run() {
@@ -157,7 +157,7 @@ index 3e8c3e2..b8fd26e 100755
      grep -F -m 1 -q dracut-root-block-success $TESTDIR/check-success.img && return 1
      echo "CLIENT TEST END: [OK]"
 diff --git a/test/TEST-14-IMSM/test.sh b/test/TEST-14-IMSM/test.sh
-index 9083fd5..f9f03b7 100755
+index 9083fd50..f9f03b7b 100755
 --- a/test/TEST-14-IMSM/test.sh
 +++ b/test/TEST-14-IMSM/test.sh
 @@ -15,7 +15,8 @@ client_run() {
@@ -171,7 +171,7 @@ index 9083fd5..f9f03b7 100755
      if ! grep -F -m 1 -q dracut-root-block-success $TESTDIR/root.ext2; then
  	echo "CLIENT TEST END: $@ [FAIL]"
 diff --git a/test/TEST-15-BTRFSRAID/test.sh b/test/TEST-15-BTRFSRAID/test.sh
-index 281f856..adf31b1 100755
+index 281f856b..adf31b14 100755
 --- a/test/TEST-15-BTRFSRAID/test.sh
 +++ b/test/TEST-15-BTRFSRAID/test.sh
 @@ -11,7 +11,8 @@ test_run() {
@@ -185,7 +185,7 @@ index 281f856..adf31b1 100755
      dd if=$DISKIMAGE bs=512 count=4 skip=2048 | grep -F -m 1 -q dracut-root-block-success $DISKIMAGE || return 1
  }
 diff --git a/test/TEST-16-DMSQUASH/test.sh b/test/TEST-16-DMSQUASH/test.sh
-index 4d72470..876d910 100755
+index 4d724706..876d9103 100755
 --- a/test/TEST-16-DMSQUASH/test.sh
 +++ b/test/TEST-16-DMSQUASH/test.sh
 @@ -22,7 +22,8 @@ test_run() {
@@ -199,7 +199,7 @@ index 4d72470..876d910 100755
  
      # mediacheck test with qemu GUI
 diff --git a/test/TEST-17-LVM-THIN/test.sh b/test/TEST-17-LVM-THIN/test.sh
-index 1485f72..1ad9ba6 100755
+index 1485f721..1ad9ba6b 100755
 --- a/test/TEST-17-LVM-THIN/test.sh
 +++ b/test/TEST-17-LVM-THIN/test.sh
 @@ -11,7 +11,8 @@ test_run() {
@@ -213,7 +213,7 @@ index 1485f72..1ad9ba6 100755
      grep -F -m 1 -q dracut-root-block-success $TESTDIR/root.ext2 || return 1
  }
 diff --git a/test/TEST-20-NFS/test.sh b/test/TEST-20-NFS/test.sh
-index d7df71e..222bd24 100755
+index d7df71e9..222bd249 100755
 --- a/test/TEST-20-NFS/test.sh
 +++ b/test/TEST-20-NFS/test.sh
 @@ -20,7 +20,8 @@ run_server() {
@@ -237,7 +237,7 @@ index d7df71e..222bd24 100755
  
      if [[ $? -ne 0 ]] || ! grep -F -m 1 -q nfs-OK $TESTDIR/client.img; then
 diff --git a/test/TEST-30-ISCSI/test.sh b/test/TEST-30-ISCSI/test.sh
-index 83fd623..63944b3 100755
+index 83fd623a..63944b3a 100755
 --- a/test/TEST-30-ISCSI/test.sh
 +++ b/test/TEST-30-ISCSI/test.sh
 @@ -25,7 +25,8 @@ run_server() {
@@ -261,7 +261,7 @@ index 83fd623..63944b3 100755
      if ! grep -F -m 1 -q iscsi-OK $TESTDIR/client.img; then
  	echo "CLIENT TEST END: $test_name [FAILED - BAD EXIT]"
 diff --git a/test/TEST-40-NBD/test.sh b/test/TEST-40-NBD/test.sh
-index 40e09b7..8d49b05 100755
+index 40e09b7d..8d49b057 100755
 --- a/test/TEST-40-NBD/test.sh
 +++ b/test/TEST-40-NBD/test.sh
 @@ -22,7 +22,8 @@ run_server() {
@@ -285,7 +285,7 @@ index 40e09b7..8d49b05 100755
  
      if [[ $? -ne 0 ]] || ! grep -F -m 1 -q nbd-OK $TESTDIR/flag.img; then
 diff --git a/test/TEST-50-MULTINIC/test.sh b/test/TEST-50-MULTINIC/test.sh
-index 656c237..ef27682 100755
+index 656c237b..ef27682b 100755
 --- a/test/TEST-50-MULTINIC/test.sh
 +++ b/test/TEST-50-MULTINIC/test.sh
 @@ -20,7 +20,8 @@ run_server() {

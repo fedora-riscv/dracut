@@ -1,7 +1,7 @@
-From 0c5e5f271be8cb99e4f65fd6cb37ed70dd63754d Mon Sep 17 00:00:00 2001
+From 0696fde00fcab50838efb76640a51fcb71aea90c Mon Sep 17 00:00:00 2001
 From: Peter Robinson <pbrobinson@gmail.com>
 Date: Fri, 3 Feb 2017 10:29:12 +0000
-Subject: [PATCH 127/159] modules: kernel: add more usb controller modules
+Subject: [PATCH] modules: kernel: add more usb controller modules
 
 There's a number of usb controllers that are common yet aren't
 contained in the host directory. Include these for generic host.
@@ -27,6 +27,3 @@ index ae65de8a..deb3709c 100755
                  "=drivers/usb/phy" \
                  ${NULL}
          fi
--- 
-2.12.2
-

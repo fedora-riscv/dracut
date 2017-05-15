@@ -1,4 +1,4 @@
-From f4f8fb5c10cc8d0047123324197aff25f0a63e04 Mon Sep 17 00:00:00 2001
+From 580522add04ee23bfa30835529a447e24dc6d308 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 26 Jan 2016 12:26:03 +0100
 Subject: [PATCH] network: if rd.neednet=0 we don't need a bootdev
@@ -10,7 +10,7 @@ setup
  1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/modules.d/40network/parse-ip-opts.sh b/modules.d/40network/parse-ip-opts.sh
-index 12f4765..5779ef8 100755
+index 12f47659..5779ef88 100755
 --- a/modules.d/40network/parse-ip-opts.sh
 +++ b/modules.d/40network/parse-ip-opts.sh
 @@ -40,6 +40,8 @@ if [ -n "$NEEDBOOTDEV" ] && getargbool 1 rd.neednet; then

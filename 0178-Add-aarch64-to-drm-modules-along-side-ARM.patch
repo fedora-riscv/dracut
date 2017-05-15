@@ -1,7 +1,7 @@
-From eec49634d4fd5b2d9535a99e184c2450f6026903 Mon Sep 17 00:00:00 2001
+From abd55b2e5951cf96f6f52f245093fc50013566cc Mon Sep 17 00:00:00 2001
 From: Peter Robinson <pbrobinson@gmail.com>
 Date: Thu, 23 Mar 2017 14:51:48 +0000
-Subject: [PATCH 137/159] Add aarch64 to drm modules along side ARM
+Subject: [PATCH] Add aarch64 to drm modules along side ARM
 
 Add aarch64 to modules, also update the drivers checked for latest
 kernel changes.
@@ -33,6 +33,3 @@ index 6106d8c6..42a5e7bc 100755
              ${NULL}
      fi
  
--- 
-2.12.2
-

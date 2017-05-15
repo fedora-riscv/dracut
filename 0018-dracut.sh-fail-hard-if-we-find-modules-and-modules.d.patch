@@ -1,4 +1,4 @@
-From b019952f6df9b1dae54dd097f012e6c05fe6af00 Mon Sep 17 00:00:00 2001
+From 5fb5affa39e89619ed6fcc189bb2086327a5e3c5 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 13 Jan 2016 09:32:24 +0100
 Subject: [PATCH] dracut.sh: fail hard, if we find modules and modules.dep is
@@ -11,7 +11,7 @@ is empty, depmod was not run most likely.
  1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/dracut.sh b/dracut.sh
-index 6dc9858..98dbe0b 100755
+index 6dc98582..98dbe0bc 100755
 --- a/dracut.sh
 +++ b/dracut.sh
 @@ -925,7 +925,12 @@ abs_outfile=$(readlink -f "$outfile") && outfile="$abs_outfile"

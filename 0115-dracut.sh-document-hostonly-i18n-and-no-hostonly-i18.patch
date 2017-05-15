@@ -1,4 +1,4 @@
-From f367b73852f60d196bd5856d818730e08ca14270 Mon Sep 17 00:00:00 2001
+From 8e63a697b2826ea6c0b4dc851fedc5c2f5a10798 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 17 Aug 2016 16:48:07 +0200
 Subject: [PATCH] dracut.sh: document --hostonly-i18n and --no-hostonly-i18n
@@ -12,7 +12,7 @@ https://bugzilla.redhat.com/show_bug.cgi?id=1266448
  1 file changed, 3 insertions(+)
 
 diff --git a/dracut.sh b/dracut.sh
-index 36607cf..40ca08f 100755
+index 36607cfb..40ca08f6 100755
 --- a/dracut.sh
 +++ b/dracut.sh
 @@ -151,6 +151,9 @@ Creates initial ramdisk images for preloading modules

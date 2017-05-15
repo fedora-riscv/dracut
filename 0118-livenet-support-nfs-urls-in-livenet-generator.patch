@@ -1,4 +1,4 @@
-From 1090a8826a8435196554ac16f3b8a01cbb03f4be Mon Sep 17 00:00:00 2001
+From 072904f06c6b635e4246051f5817a39acac12b67 Mon Sep 17 00:00:00 2001
 From: Dan Fuhry <dfuhry@datto.com>
 Date: Thu, 25 Aug 2016 17:13:52 -0400
 Subject: [PATCH] livenet: support nfs:// urls in livenet-generator
@@ -9,7 +9,7 @@ This is a further improvement on PR #105 which re-adds support for nfs:// urls t
  1 file changed, 3 insertions(+)
 
 diff --git a/modules.d/90livenet/livenet-generator.sh b/modules.d/90livenet/livenet-generator.sh
-index 377d53b..969ef4f 100755
+index 377d53bc..969ef4f2 100755
 --- a/modules.d/90livenet/livenet-generator.sh
 +++ b/modules.d/90livenet/livenet-generator.sh
 @@ -16,6 +16,9 @@ fi

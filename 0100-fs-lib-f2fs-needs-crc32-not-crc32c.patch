@@ -1,4 +1,4 @@
-From 34a42f9f49d4ad8897c4890af5b9a455e1335c66 Mon Sep 17 00:00:00 2001
+From 0a41356e596ae813ba49ecb9635ec230454bb5ec Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 8 Jul 2016 10:01:52 +0200
 Subject: [PATCH] fs-lib: f2fs needs crc32 not crc32c
@@ -9,7 +9,7 @@ Subject: [PATCH] fs-lib: f2fs needs crc32 not crc32c
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/99fs-lib/module-setup.sh b/modules.d/99fs-lib/module-setup.sh
-index 2c5f4c0..bd61838 100755
+index 2c5f4c0e..bd61838b 100755
 --- a/modules.d/99fs-lib/module-setup.sh
 +++ b/modules.d/99fs-lib/module-setup.sh
 @@ -41,9 +41,12 @@ echo_fs_helper() {

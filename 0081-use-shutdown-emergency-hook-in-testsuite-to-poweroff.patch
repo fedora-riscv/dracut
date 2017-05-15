@@ -1,4 +1,4 @@
-From 4e882b8090e82b0f0ffabfb45f0a2cd69768ef53 Mon Sep 17 00:00:00 2001
+From 6775c5710f5c0c28871fc7180413ba4500cf6362 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 27 May 2016 10:52:28 +0200
 Subject: [PATCH] use shutdown-emergency hook in testsuite to poweroff the
@@ -25,7 +25,7 @@ Subject: [PATCH] use shutdown-emergency hook in testsuite to poweroff the
  17 files changed, 23 insertions(+), 19 deletions(-)
 
 diff --git a/modules.d/99base/dracut-lib.sh b/modules.d/99base/dracut-lib.sh
-index 48fc83d..94e4614 100755
+index 48fc83dc..94e4614c 100755
 --- a/modules.d/99base/dracut-lib.sh
 +++ b/modules.d/99base/dracut-lib.sh
 @@ -457,7 +457,11 @@ die() {
@@ -42,7 +42,7 @@ index 48fc83d..94e4614 100755
      if [ -n "$DRACUT_SYSTEMD" ]; then
          systemctl --no-block --force halt
 diff --git a/test/TEST-01-BASIC/test.sh b/test/TEST-01-BASIC/test.sh
-index 83320e2..959ac05 100755
+index 83320e27..959ac05d 100755
 --- a/test/TEST-01-BASIC/test.sh
 +++ b/test/TEST-01-BASIC/test.sh
 @@ -89,7 +89,7 @@ test_setup() {
@@ -55,7 +55,7 @@ index 83320e2..959ac05 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-02-SYSTEMD/test.sh b/test/TEST-02-SYSTEMD/test.sh
-index 16f5c26..6dc6f42 100755
+index 16f5c265..6dc6f42e 100755
 --- a/test/TEST-02-SYSTEMD/test.sh
 +++ b/test/TEST-02-SYSTEMD/test.sh
 @@ -86,7 +86,7 @@ test_setup() {
@@ -68,7 +68,7 @@ index 16f5c26..6dc6f42 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-03-USR-MOUNT/test.sh b/test/TEST-03-USR-MOUNT/test.sh
-index 61063fd..0aca8cf 100755
+index 61063fd5..0aca8cf1 100755
 --- a/test/TEST-03-USR-MOUNT/test.sh
 +++ b/test/TEST-03-USR-MOUNT/test.sh
 @@ -124,7 +124,7 @@ test_setup() {
@@ -81,7 +81,7 @@ index 61063fd..0aca8cf 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-04-FULL-SYSTEMD/test.sh b/test/TEST-04-FULL-SYSTEMD/test.sh
-index c7e08bf..884f441 100755
+index c7e08bfb..884f4412 100755
 --- a/test/TEST-04-FULL-SYSTEMD/test.sh
 +++ b/test/TEST-04-FULL-SYSTEMD/test.sh
 @@ -261,7 +261,7 @@ EOF
@@ -94,7 +94,7 @@ index c7e08bf..884f441 100755
      )
  
 diff --git a/test/TEST-10-RAID/test.sh b/test/TEST-10-RAID/test.sh
-index 523b61a..6ec77a6 100755
+index 523b61a6..6ec77a68 100755
 --- a/test/TEST-10-RAID/test.sh
 +++ b/test/TEST-10-RAID/test.sh
 @@ -86,7 +86,7 @@ test_setup() {
@@ -107,7 +107,7 @@ index 523b61a..6ec77a6 100755
          mkdir -p $initdir/etc
          echo "testluks UUID=$ID_FS_UUID /etc/key" > $initdir/etc/crypttab
 diff --git a/test/TEST-11-LVM/test.sh b/test/TEST-11-LVM/test.sh
-index 34c7736..412a065 100755
+index 34c7736a..412a0658 100755
 --- a/test/TEST-11-LVM/test.sh
 +++ b/test/TEST-11-LVM/test.sh
 @@ -79,7 +79,7 @@ test_setup() {
@@ -120,7 +120,7 @@ index 34c7736..412a065 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-12-RAID-DEG/test.sh b/test/TEST-12-RAID-DEG/test.sh
-index f4ec2d0..444dca6 100755
+index f4ec2d00..444dca6d 100755
 --- a/test/TEST-12-RAID-DEG/test.sh
 +++ b/test/TEST-12-RAID-DEG/test.sh
 @@ -129,7 +129,7 @@ test_setup() {
@@ -133,7 +133,7 @@ index f4ec2d0..444dca6 100755
  	inst ./cryptroot-ask.sh /sbin/cryptroot-ask
          mkdir -p $initdir/etc
 diff --git a/test/TEST-13-ENC-RAID-LVM/test.sh b/test/TEST-13-ENC-RAID-LVM/test.sh
-index ea81697..2a814f8 100755
+index ea816976..2a814f89 100755
 --- a/test/TEST-13-ENC-RAID-LVM/test.sh
 +++ b/test/TEST-13-ENC-RAID-LVM/test.sh
 @@ -123,7 +123,7 @@ test_setup() {
@@ -146,7 +146,7 @@ index ea81697..2a814f8 100755
  	inst ./cryptroot-ask.sh /sbin/cryptroot-ask
          mkdir -p $initdir/etc
 diff --git a/test/TEST-14-IMSM/test.sh b/test/TEST-14-IMSM/test.sh
-index f4ea7ae..315bc5a 100755
+index f4ea7ae0..315bc5aa 100755
 --- a/test/TEST-14-IMSM/test.sh
 +++ b/test/TEST-14-IMSM/test.sh
 @@ -113,7 +113,7 @@ test_setup() {
@@ -159,7 +159,7 @@ index f4ea7ae..315bc5a 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-15-BTRFSRAID/test.sh b/test/TEST-15-BTRFSRAID/test.sh
-index 5a9b6e1..8e2ea49 100755
+index 5a9b6e1f..8e2ea49e 100755
 --- a/test/TEST-15-BTRFSRAID/test.sh
 +++ b/test/TEST-15-BTRFSRAID/test.sh
 @@ -87,7 +87,7 @@ test_setup() {
@@ -172,7 +172,7 @@ index 5a9b6e1..8e2ea49 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-16-DMSQUASH/test.sh b/test/TEST-16-DMSQUASH/test.sh
-index 53a45d6..b255492 100755
+index 53a45d69..b255492e 100755
 --- a/test/TEST-16-DMSQUASH/test.sh
 +++ b/test/TEST-16-DMSQUASH/test.sh
 @@ -43,7 +43,7 @@ test_setup() {
@@ -185,7 +185,7 @@ index 53a45d6..b255492 100755
      )
  
 diff --git a/test/TEST-17-LVM-THIN/test.sh b/test/TEST-17-LVM-THIN/test.sh
-index 859d4dc..e337591 100755
+index 859d4dc0..e3375918 100755
 --- a/test/TEST-17-LVM-THIN/test.sh
 +++ b/test/TEST-17-LVM-THIN/test.sh
 @@ -79,7 +79,7 @@ test_setup() {
@@ -198,7 +198,7 @@ index 859d4dc..e337591 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-20-NFS/test.sh b/test/TEST-20-NFS/test.sh
-index ceca1f0..1dfdfc4 100755
+index ceca1f08..1dfdfc4e 100755
 --- a/test/TEST-20-NFS/test.sh
 +++ b/test/TEST-20-NFS/test.sh
 @@ -141,7 +141,7 @@ test_nfsv3() {
@@ -220,7 +220,7 @@ index ceca1f0..1dfdfc4 100755
      )
  
 diff --git a/test/TEST-30-ISCSI/test.sh b/test/TEST-30-ISCSI/test.sh
-index 940edb6..1c06b06 100755
+index 940edb6b..1c06b06d 100755
 --- a/test/TEST-30-ISCSI/test.sh
 +++ b/test/TEST-30-ISCSI/test.sh
 @@ -213,7 +213,7 @@ test_setup() {
@@ -233,7 +233,7 @@ index 940edb6..1c06b06 100755
      )
      sudo $basedir/dracut.sh -l -i $TESTDIR/overlay / \
 diff --git a/test/TEST-40-NBD/test.sh b/test/TEST-40-NBD/test.sh
-index 28ba6aa..2061392 100755
+index 28ba6aa3..2061392a 100755
 --- a/test/TEST-40-NBD/test.sh
 +++ b/test/TEST-40-NBD/test.sh
 @@ -226,7 +226,7 @@ make_encrypted_root() {
@@ -255,7 +255,7 @@ index 28ba6aa..2061392 100755
          inst ./cryptroot-ask.sh /sbin/cryptroot-ask
  
 diff --git a/test/TEST-50-MULTINIC/test.sh b/test/TEST-50-MULTINIC/test.sh
-index 484ebee..e0bf7d2 100755
+index 484ebeed..e0bf7d2f 100755
 --- a/test/TEST-50-MULTINIC/test.sh
 +++ b/test/TEST-50-MULTINIC/test.sh
 @@ -269,7 +269,7 @@ test_setup() {

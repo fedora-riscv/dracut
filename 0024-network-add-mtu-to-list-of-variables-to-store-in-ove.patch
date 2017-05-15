@@ -1,4 +1,4 @@
-From 9542f2fee4a398ed00730e6ffb7de5fe315aa093 Mon Sep 17 00:00:00 2001
+From 54d9ade31c3c343d50a068d0cc100afc7568ba94 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 19 Jan 2016 15:12:39 +0100
 Subject: [PATCH] network: add mtu to list of variables to store in override
@@ -8,7 +8,7 @@ Subject: [PATCH] network: add mtu to list of variables to store in override
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/40network/ifup.sh b/modules.d/40network/ifup.sh
-index 14ca86d..7c179bd 100755
+index 14ca86de..7c179bdb 100755
 --- a/modules.d/40network/ifup.sh
 +++ b/modules.d/40network/ifup.sh
 @@ -362,7 +362,7 @@ for p in $(getargs ip=); do

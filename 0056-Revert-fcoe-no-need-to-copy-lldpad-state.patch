@@ -1,4 +1,4 @@
-From b99e72427b517dea0d91d15fe43cf0a37420af36 Mon Sep 17 00:00:00 2001
+From dcd48d2fcb5bafdcb291162dc5da55cb977dbdb8 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 14 Apr 2016 13:38:24 +0200
 Subject: [PATCH] Revert "fcoe: no need to copy lldpad state"
@@ -13,7 +13,7 @@ https://bugzilla.redhat.com/show_bug.cgi?id=1246217
  1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/modules.d/95fcoe/cleanup-fcoe.sh b/modules.d/95fcoe/cleanup-fcoe.sh
-index 856e2d9..5ff4d05 100644
+index 856e2d99..5ff4d054 100644
 --- a/modules.d/95fcoe/cleanup-fcoe.sh
 +++ b/modules.d/95fcoe/cleanup-fcoe.sh
 @@ -2,8 +2,9 @@

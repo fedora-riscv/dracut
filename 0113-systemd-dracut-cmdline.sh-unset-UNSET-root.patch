@@ -1,4 +1,4 @@
-From e168eeef67a6680730e86ee389a383d9c1607c25 Mon Sep 17 00:00:00 2001
+From aa7ebbd549e2a8f5d9e6bf343138664813ddc9e5 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 12 Aug 2016 11:24:47 +0200
 Subject: [PATCH] systemd/dracut-cmdline.sh: unset "UNSET" $root
@@ -12,7 +12,7 @@ caused by commit 9aa224cc
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/modules.d/98dracut-systemd/dracut-cmdline.sh b/modules.d/98dracut-systemd/dracut-cmdline.sh
-index ccf24fb..6c6ee02 100755
+index ccf24fb2..6c6ee026 100755
 --- a/modules.d/98dracut-systemd/dracut-cmdline.sh
 +++ b/modules.d/98dracut-systemd/dracut-cmdline.sh
 @@ -25,7 +25,7 @@ source_conf /etc/conf.d

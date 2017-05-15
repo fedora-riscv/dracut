@@ -1,4 +1,4 @@
-From c000a21c25bd436f2b3cc2076cb7025cc82d2807 Mon Sep 17 00:00:00 2001
+From 81b169d274f5aff633f41c8f3310f90567d6461e Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Wed, 22 Jun 2016 18:12:19 +0200
 Subject: [PATCH] dracut-systemd/*.service: conflict with shutdown target
@@ -20,7 +20,7 @@ also conflict with emergency.target
  10 files changed, 22 insertions(+), 2 deletions(-)
 
 diff --git a/modules.d/98dracut-systemd/dracut-cmdline-ask.service b/modules.d/98dracut-systemd/dracut-cmdline-ask.service
-index 8bc7d80..1685479 100644
+index 8bc7d809..1685479a 100644
 --- a/modules.d/98dracut-systemd/dracut-cmdline-ask.service
 +++ b/modules.d/98dracut-systemd/dracut-cmdline-ask.service
 @@ -16,6 +16,8 @@ Wants=systemd-journald.socket
@@ -33,7 +33,7 @@ index 8bc7d80..1685479 100644
  [Service]
  Environment=DRACUT_SYSTEMD=1
 diff --git a/modules.d/98dracut-systemd/dracut-cmdline.service b/modules.d/98dracut-systemd/dracut-cmdline.service
-index 6eeb991..c22856e 100644
+index 6eeb991a..c22856e2 100644
 --- a/modules.d/98dracut-systemd/dracut-cmdline.service
 +++ b/modules.d/98dracut-systemd/dracut-cmdline.service
 @@ -20,6 +20,8 @@ ConditionDirectoryNotEmpty=|/lib/dracut/hooks/cmdline
@@ -46,7 +46,7 @@ index 6eeb991..c22856e 100644
  [Service]
  Environment=DRACUT_SYSTEMD=1
 diff --git a/modules.d/98dracut-systemd/dracut-emergency.service b/modules.d/98dracut-systemd/dracut-emergency.service
-index a523671..61077bd 100644
+index a5236716..61077bdd 100644
 --- a/modules.d/98dracut-systemd/dracut-emergency.service
 +++ b/modules.d/98dracut-systemd/dracut-emergency.service
 @@ -12,14 +12,15 @@ Description=Dracut Emergency Shell
@@ -68,7 +68,7 @@ index a523671..61077bd 100644
  Type=oneshot
  StandardInput=tty-force
 diff --git a/modules.d/98dracut-systemd/dracut-initqueue.service b/modules.d/98dracut-systemd/dracut-initqueue.service
-index fa5ca56..20d6a8c 100644
+index fa5ca561..20d6a8c2 100644
 --- a/modules.d/98dracut-systemd/dracut-initqueue.service
 +++ b/modules.d/98dracut-systemd/dracut-initqueue.service
 @@ -18,6 +18,8 @@ Wants=systemd-udev-trigger.service
@@ -81,7 +81,7 @@ index fa5ca56..20d6a8c 100644
  [Service]
  Environment=DRACUT_SYSTEMD=1
 diff --git a/modules.d/98dracut-systemd/dracut-mount.service b/modules.d/98dracut-systemd/dracut-mount.service
-index 1b14f4a..baa8edb 100644
+index 1b14f4a3..baa8edbc 100644
 --- a/modules.d/98dracut-systemd/dracut-mount.service
 +++ b/modules.d/98dracut-systemd/dracut-mount.service
 @@ -15,6 +15,8 @@ After=dracut-initqueue.service dracut-pre-mount.service
@@ -94,7 +94,7 @@ index 1b14f4a..baa8edb 100644
  [Service]
  Environment=DRACUT_SYSTEMD=1
 diff --git a/modules.d/98dracut-systemd/dracut-pre-mount.service b/modules.d/98dracut-systemd/dracut-pre-mount.service
-index 1e4e29f..c7b123c 100644
+index 1e4e29f0..c7b123cc 100644
 --- a/modules.d/98dracut-systemd/dracut-pre-mount.service
 +++ b/modules.d/98dracut-systemd/dracut-pre-mount.service
 @@ -17,6 +17,8 @@ After=cryptsetup.target
@@ -107,7 +107,7 @@ index 1e4e29f..c7b123c 100644
  [Service]
  Environment=DRACUT_SYSTEMD=1
 diff --git a/modules.d/98dracut-systemd/dracut-pre-pivot.service b/modules.d/98dracut-systemd/dracut-pre-pivot.service
-index f5a85ce..20a872a 100644
+index f5a85ce0..20a872a7 100644
 --- a/modules.d/98dracut-systemd/dracut-pre-pivot.service
 +++ b/modules.d/98dracut-systemd/dracut-pre-pivot.service
 @@ -10,6 +10,7 @@
@@ -128,7 +128,7 @@ index f5a85ce..20a872a 100644
  [Service]
  Environment=DRACUT_SYSTEMD=1
 diff --git a/modules.d/98dracut-systemd/dracut-pre-trigger.service b/modules.d/98dracut-systemd/dracut-pre-trigger.service
-index 826b89b..2df9d7b 100644
+index 826b89b2..2df9d7bf 100644
 --- a/modules.d/98dracut-systemd/dracut-pre-trigger.service
 +++ b/modules.d/98dracut-systemd/dracut-pre-trigger.service
 @@ -17,6 +17,8 @@ Wants=dracut-pre-udev.service systemd-udevd.service
@@ -141,7 +141,7 @@ index 826b89b..2df9d7b 100644
  [Service]
  Environment=DRACUT_SYSTEMD=1
 diff --git a/modules.d/98dracut-systemd/dracut-pre-udev.service b/modules.d/98dracut-systemd/dracut-pre-udev.service
-index 73740be..7fdeb6e 100644
+index 73740bef..7fdeb6ef 100644
 --- a/modules.d/98dracut-systemd/dracut-pre-udev.service
 +++ b/modules.d/98dracut-systemd/dracut-pre-udev.service
 @@ -20,6 +20,8 @@ ConditionKernelCommandLine=|rd.break=pre-udev
@@ -154,7 +154,7 @@ index 73740be..7fdeb6e 100644
  [Service]
  Environment=DRACUT_SYSTEMD=1
 diff --git a/modules.d/98dracut-systemd/emergency.service b/modules.d/98dracut-systemd/emergency.service
-index 35d9c31..969a300 100644
+index 35d9c317..969a300e 100644
 --- a/modules.d/98dracut-systemd/emergency.service
 +++ b/modules.d/98dracut-systemd/emergency.service
 @@ -12,6 +12,8 @@ Description=Emergency Shell

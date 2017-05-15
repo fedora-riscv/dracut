@@ -1,4 +1,4 @@
-From de7ab164dd0aa68100c290f355b858900193e004 Mon Sep 17 00:00:00 2001
+From 4077c6df556a6575631a98d3785bd75ff54517f8 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 13 Oct 2016 09:20:33 +0200
 Subject: [PATCH] dmsquash-live/dmsquash-live-root: det_img_fs() redirect
@@ -10,7 +10,7 @@ Otherwise the output is taken as input for modprobe.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/90dmsquash-live/dmsquash-live-root.sh b/modules.d/90dmsquash-live/dmsquash-live-root.sh
-index 68d076c..e58d7c2 100755
+index 68d076cb..e58d7c22 100755
 --- a/modules.d/90dmsquash-live/dmsquash-live-root.sh
 +++ b/modules.d/90dmsquash-live/dmsquash-live-root.sh
 @@ -57,7 +57,7 @@ ln -s $livedev /run/initramfs/livedev

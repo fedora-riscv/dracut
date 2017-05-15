@@ -1,8 +1,7 @@
-From e752d42de9c37dd9906a802a5cdf528fbd360453 Mon Sep 17 00:00:00 2001
+From 205d01d3bede28e15fa01c82018451e30e052ca5 Mon Sep 17 00:00:00 2001
 From: Peter Robinson <pbrobinson@gmail.com>
 Date: Mon, 4 Jul 2016 16:57:39 +0100
-Subject: [PATCH 126/159] modules: kernel: add phy and power modules to generic
- initrd
+Subject: [PATCH] modules: kernel: add phy and power modules to generic initrd
 
 The phy and power modules are needed by some of the recent ARM
 devices that have appeared like CHIP and some exynos devices.
@@ -25,6 +24,3 @@ index 868341cb..ae65de8a 100755
                  "=drivers/regulator" \
                  "=drivers/rtc" \
                  "=drivers/usb/host" \
--- 
-2.12.2
-

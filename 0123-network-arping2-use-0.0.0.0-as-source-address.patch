@@ -1,4 +1,4 @@
-From 00ca15abbf14f51d098867cc8b583089981ab0ae Mon Sep 17 00:00:00 2001
+From 5d59890a3c82e07172324c227a54fce1fc6200f4 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 22 Aug 2016 14:38:54 +0200
 Subject: [PATCH] network: arping2 use 0.0.0.0 as source address
@@ -9,7 +9,7 @@ Subject: [PATCH] network: arping2 use 0.0.0.0 as source address
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/modules.d/40network/dhclient-script.sh b/modules.d/40network/dhclient-script.sh
-index 2eade35..f49cdb8 100755
+index 2eade353..f49cdb88 100755
 --- a/modules.d/40network/dhclient-script.sh
 +++ b/modules.d/40network/dhclient-script.sh
 @@ -160,7 +160,7 @@ case $reason in
@@ -22,7 +22,7 @@ index 2eade35..f49cdb8 100755
                      exit 1
                  fi
 diff --git a/modules.d/40network/ifup.sh b/modules.d/40network/ifup.sh
-index 1461b91..8051156 100755
+index 1461b916..80511562 100755
 --- a/modules.d/40network/ifup.sh
 +++ b/modules.d/40network/ifup.sh
 @@ -111,7 +111,7 @@ do_static() {

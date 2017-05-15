@@ -1,4 +1,4 @@
-From e63ac4433a2a46d69e45edabaccf0ae7457383f8 Mon Sep 17 00:00:00 2001
+From 24ad5bc7054597d2bab2ed52b63c0e3d3592f607 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 14 Nov 2016 12:30:52 +0100
 Subject: [PATCH] test/test-rhel-7.2.rpms: remove file
@@ -10,7 +10,7 @@ Subject: [PATCH] test/test-rhel-7.2.rpms: remove file
 
 diff --git a/test/test-rhel-7.2.rpms b/test/test-rhel-7.2.rpms
 deleted file mode 100644
-index edec0cc..0000000
+index edec0cc1..00000000
 --- a/test/test-rhel-7.2.rpms
 +++ /dev/null
 @@ -1,12 +0,0 @@

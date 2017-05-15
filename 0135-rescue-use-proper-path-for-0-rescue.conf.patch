@@ -1,4 +1,4 @@
-From b29901c083ba22a0794849c1e93afc40c11588a2 Mon Sep 17 00:00:00 2001
+From 6da3f32dbe905b4e3204b95e35a8cb298025f8a0 Mon Sep 17 00:00:00 2001
 From: Yu Watanabe <watanabe.yu+github@gmail.com>
 Date: Wed, 19 Oct 2016 12:22:48 +0900
 Subject: [PATCH] rescue: use proper path for 0-rescue.conf
@@ -8,7 +8,7 @@ Subject: [PATCH] rescue: use proper path for 0-rescue.conf
  1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/51-dracut-rescue.install b/51-dracut-rescue.install
-index 60d7372..0a5f14b 100755
+index 60d73728..0a5f14be 100755
 --- a/51-dracut-rescue.install
 +++ b/51-dracut-rescue.install
 @@ -59,16 +59,15 @@ if ! [[ ${BOOT_OPTIONS[*]} ]]; then

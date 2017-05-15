@@ -1,4 +1,4 @@
-From 5d274f93654f85b9c52aae02e733f901ff69b97f Mon Sep 17 00:00:00 2001
+From eb53f97d7d19a3e911c029a55136c5aad32f7a50 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 7 Nov 2016 13:14:49 +0100
 Subject: [PATCH] Makefile: create rpms in DESTDIR for target rpm
@@ -8,7 +8,7 @@ Subject: [PATCH] Makefile: create rpms in DESTDIR for target rpm
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index d28e4cf..4cab7d5 100644
+index d28e4cfe..4cab7d5f 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -211,7 +211,7 @@ rpm: dracut-$(VERSION).tar.xz syncheck

@@ -1,4 +1,4 @@
-From bb1b924792a688ea3da7e7f4503527e5bc0b18fb Mon Sep 17 00:00:00 2001
+From ba04220dc991b8f81c3452fae1944e3b2ce8f9d5 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 19 Jan 2016 14:43:43 +0100
 Subject: [PATCH] TEST-30-ISCSI: some tests have unknown return code
@@ -9,7 +9,7 @@ by design
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/test/TEST-30-ISCSI/test.sh b/test/TEST-30-ISCSI/test.sh
-index 00c1fbd..940edb6 100755
+index 00c1fbd0..940edb6b 100755
 --- a/test/TEST-30-ISCSI/test.sh
 +++ b/test/TEST-30-ISCSI/test.sh
 @@ -85,7 +85,7 @@ do_test_run() {

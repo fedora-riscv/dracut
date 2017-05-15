@@ -1,4 +1,4 @@
-From b4dd861a0b916368bad9413fdc5d90482fcbd65a Mon Sep 17 00:00:00 2001
+From e0a668904416464f59b46a0e8755493fbe174e9d Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 26 Jan 2016 14:56:05 +0100
 Subject: [PATCH] kernel-modules: add usb-storage
@@ -10,7 +10,7 @@ needed
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh
-index c5f2397..13f48c9 100755
+index c5f23975..13f48c98 100755
 --- a/modules.d/90kernel-modules/module-setup.sh
 +++ b/modules.d/90kernel-modules/module-setup.sh
 @@ -47,7 +47,8 @@ installkernel() {

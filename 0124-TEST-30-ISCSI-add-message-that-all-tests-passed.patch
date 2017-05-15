@@ -1,4 +1,4 @@
-From d7c9ad504e9d3926324e749831938d74919b3a31 Mon Sep 17 00:00:00 2001
+From cfb973c9f5d7a7d94c20a25091778dba22494961 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 22 Aug 2016 14:39:25 +0200
 Subject: [PATCH] TEST-30-ISCSI: add message, that all tests passed
@@ -8,7 +8,7 @@ Subject: [PATCH] TEST-30-ISCSI: add message, that all tests passed
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/test/TEST-30-ISCSI/test.sh b/test/TEST-30-ISCSI/test.sh
-index d4f0f8c..c5315bb 100755
+index d4f0f8c6..c5315bb6 100755
 --- a/test/TEST-30-ISCSI/test.sh
 +++ b/test/TEST-30-ISCSI/test.sh
 @@ -110,16 +110,17 @@ do_test_run() {

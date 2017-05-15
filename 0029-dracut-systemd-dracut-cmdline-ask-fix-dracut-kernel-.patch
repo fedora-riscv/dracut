@@ -1,4 +1,4 @@
-From eddca3c9c24e4cb9c5def0b98920e36b16fafaac Mon Sep 17 00:00:00 2001
+From 97c64381f4904eb413cd447a3cb3b29755b00f11 Mon Sep 17 00:00:00 2001
 From: Evgeny Vereshchagin <evvers@ya.ru>
 Date: Mon, 15 Feb 2016 08:29:40 +0000
 Subject: [PATCH] dracut-systemd/dracut-cmdline-ask: fix dracut
@@ -25,7 +25,7 @@ Signed-off-by: Evgeny Vereshchagin <evvers@ya.ru>
  2 files changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/98dracut-systemd/dracut-cmdline-ask.service b/modules.d/98dracut-systemd/dracut-cmdline-ask.service
-index 9a34b35..8bc7d80 100644
+index 9a34b355..8bc7d809 100644
 --- a/modules.d/98dracut-systemd/dracut-cmdline-ask.service
 +++ b/modules.d/98dracut-systemd/dracut-cmdline-ask.service
 @@ -14,7 +14,8 @@ Before=dracut-cmdline.service
@@ -39,7 +39,7 @@ index 9a34b35..8bc7d80 100644
  [Service]
  Environment=DRACUT_SYSTEMD=1
 diff --git a/modules.d/98dracut-systemd/dracut-cmdline-ask.sh b/modules.d/98dracut-systemd/dracut-cmdline-ask.sh
-index ab8933a..f410f46 100755
+index ab8933ad..f410f464 100755
 --- a/modules.d/98dracut-systemd/dracut-cmdline-ask.sh
 +++ b/modules.d/98dracut-systemd/dracut-cmdline-ask.sh
 @@ -1,5 +1,9 @@

@@ -1,4 +1,4 @@
-From 61c761bc2c35fb244d46fbbde97161f5927071dc Mon Sep 17 00:00:00 2001
+From efc42cc9d56a938d6dcfb7b32d3eb010a068dfa6 Mon Sep 17 00:00:00 2001
 From: Stefan Berger <stefanb@us.ibm.com>
 Date: Tue, 25 Oct 2016 15:09:49 -0400
 Subject: [PATCH] dracut-install: preserve extended attributes when copying
@@ -28,7 +28,7 @@ Signed-off-by: Stefan Berger <stefanb@linux.vnet.ibm.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/install/dracut-install.c b/install/dracut-install.c
-index fe30bba..c0f1c17 100644
+index fe30bbac..c0f1c17c 100644
 --- a/install/dracut-install.c
 +++ b/install/dracut-install.c
 @@ -294,7 +294,7 @@ static int cp(const char *src, const char *dst)

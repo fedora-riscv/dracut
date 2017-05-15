@@ -1,4 +1,4 @@
-From 2fd8588da51a0e43684852dcdabe327aca684a9f Mon Sep 17 00:00:00 2001
+From 2a273560f0acf2f7e71d566c69be978a789e0e89 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 18 Jan 2016 16:59:42 +0100
 Subject: [PATCH] dracut-functions.sh:fix check_vol_slaves() volume group name
@@ -11,7 +11,7 @@ stripping from lvm volume group names.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/dracut-functions.sh b/dracut-functions.sh
-index 59747ec..c7ea9f5 100755
+index 59747ec1..c7ea9f58 100755
 --- a/dracut-functions.sh
 +++ b/dracut-functions.sh
 @@ -580,7 +580,7 @@ check_vol_slaves() {

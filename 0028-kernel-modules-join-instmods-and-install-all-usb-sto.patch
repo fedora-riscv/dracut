@@ -1,4 +1,4 @@
-From 6bc2096cf58c4b52f23ecc1bf8dc301d6122dfb5 Mon Sep 17 00:00:00 2001
+From 814964837587933001b2f459c58eb66c7934cf29 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 26 Jan 2016 14:59:28 +0100
 Subject: [PATCH] kernel-modules: join instmods and install all usb/storage
@@ -8,7 +8,7 @@ Subject: [PATCH] kernel-modules: join instmods and install all usb/storage
  1 file changed, 8 insertions(+), 10 deletions(-)
 
 diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh
-index 13f48c9..300adc7 100755
+index 13f48c98..300adc79 100755
 --- a/modules.d/90kernel-modules/module-setup.sh
 +++ b/modules.d/90kernel-modules/module-setup.sh
 @@ -39,16 +39,17 @@ installkernel() {

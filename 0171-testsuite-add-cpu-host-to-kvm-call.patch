@@ -1,4 +1,4 @@
-From dfb3db3dad1de3be8b1ff126af728d82b5a4087d Mon Sep 17 00:00:00 2001
+From 44c0cd2b0ce07ea4b381e47b37495dd9db628c1f Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Mon, 14 Nov 2016 16:21:06 +0100
 Subject: [PATCH] testsuite: add "-cpu host" to kvm call
@@ -23,7 +23,7 @@ Subject: [PATCH] testsuite: add "-cpu host" to kvm call
  16 files changed, 35 insertions(+), 35 deletions(-)
 
 diff --git a/test/TEST-01-BASIC/test.sh b/test/TEST-01-BASIC/test.sh
-index e74c673..fe0989d 100755
+index e74c6735..fe0989d8 100755
 --- a/test/TEST-01-BASIC/test.sh
 +++ b/test/TEST-01-BASIC/test.sh
 @@ -11,7 +11,7 @@ test_run() {
@@ -45,7 +45,7 @@ index e74c673..fe0989d 100755
  	-initrd $TESTDIR/initramfs.makeroot  || return 1
      grep -F -m 1 -q dracut-root-block-created $TESTDIR/root.ext3 || return 1
 diff --git a/test/TEST-02-SYSTEMD/test.sh b/test/TEST-02-SYSTEMD/test.sh
-index 9736278..0398509 100755
+index 97362787..03985099 100755
 --- a/test/TEST-02-SYSTEMD/test.sh
 +++ b/test/TEST-02-SYSTEMD/test.sh
 @@ -8,7 +8,7 @@ KVERSION="${KVERSION-$(uname -r)}"
@@ -67,7 +67,7 @@ index 9736278..0398509 100755
  	-initrd $TESTDIR/initramfs.makeroot  || return 1
      grep -F -m 1 -q dracut-root-block-created $TESTDIR/root.ext3 || return 1
 diff --git a/test/TEST-03-USR-MOUNT/test.sh b/test/TEST-03-USR-MOUNT/test.sh
-index c515613..68fe443 100755
+index c515613d..68fe443e 100755
 --- a/test/TEST-03-USR-MOUNT/test.sh
 +++ b/test/TEST-03-USR-MOUNT/test.sh
 @@ -18,7 +18,7 @@ client_run() {
@@ -89,7 +89,7 @@ index c515613..68fe443 100755
  	-initrd $TESTDIR/initramfs.makeroot  || return 1
      grep -F -m 1 -q dracut-root-block-created $TESTDIR/root.btrfs || return 1
 diff --git a/test/TEST-04-FULL-SYSTEMD/test.sh b/test/TEST-04-FULL-SYSTEMD/test.sh
-index 3baabb4..6ec4327 100755
+index 3baabb45..6ec43273 100755
 --- a/test/TEST-04-FULL-SYSTEMD/test.sh
 +++ b/test/TEST-04-FULL-SYSTEMD/test.sh
 @@ -20,7 +20,7 @@ client_run() {
@@ -111,7 +111,7 @@ index 3baabb4..6ec4327 100755
  	-initrd $TESTDIR/initramfs.makeroot  || return 1
      grep -F -m 1 -q dracut-root-block-created $TESTDIR/root.btrfs || return 1
 diff --git a/test/TEST-10-RAID/test.sh b/test/TEST-10-RAID/test.sh
-index 5324457..0338d18 100755
+index 5324457d..0338d18c 100755
 --- a/test/TEST-10-RAID/test.sh
 +++ b/test/TEST-10-RAID/test.sh
 @@ -10,7 +10,7 @@ test_run() {
@@ -133,7 +133,7 @@ index 5324457..0338d18 100755
  	-initrd $TESTDIR/initramfs.makeroot  || return 1
      grep -F -m 1 -q dracut-root-block-created $DISKIMAGE || return 1
 diff --git a/test/TEST-11-LVM/test.sh b/test/TEST-11-LVM/test.sh
-index cf7d376..0091148 100755
+index cf7d376b..0091148f 100755
 --- a/test/TEST-11-LVM/test.sh
 +++ b/test/TEST-11-LVM/test.sh
 @@ -9,7 +9,7 @@ KVERSION=${KVERSION-$(uname -r)}
@@ -155,7 +155,7 @@ index cf7d376..0091148 100755
  	-initrd $TESTDIR/initramfs.makeroot  || return 1
      grep -F -m 1 -q dracut-root-block-created $TESTDIR/root.ext2 || return 1
 diff --git a/test/TEST-12-RAID-DEG/test.sh b/test/TEST-12-RAID-DEG/test.sh
-index 4c313eb..269b3a2 100755
+index 4c313eb5..269b3a22 100755
 --- a/test/TEST-12-RAID-DEG/test.sh
 +++ b/test/TEST-12-RAID-DEG/test.sh
 @@ -15,7 +15,7 @@ client_run() {
@@ -177,7 +177,7 @@ index 4c313eb..269b3a2 100755
  	-initrd $TESTDIR/initramfs.makeroot  || return 1
  
 diff --git a/test/TEST-13-ENC-RAID-LVM/test.sh b/test/TEST-13-ENC-RAID-LVM/test.sh
-index b8fd26e..1dd4179 100755
+index b8fd26e2..1dd4179a 100755
 --- a/test/TEST-13-ENC-RAID-LVM/test.sh
 +++ b/test/TEST-13-ENC-RAID-LVM/test.sh
 @@ -17,7 +17,7 @@ test_run() {
@@ -217,7 +217,7 @@ index b8fd26e..1dd4179 100755
  	-initrd $TESTDIR/initramfs.makeroot  || return 1
      grep -F -m 1 -q dracut-root-block-created $TESTDIR/root.ext2 || return 1
 diff --git a/test/TEST-14-IMSM/test.sh b/test/TEST-14-IMSM/test.sh
-index f9f03b7..d5ce58e 100755
+index f9f03b7b..d5ce58e0 100755
 --- a/test/TEST-14-IMSM/test.sh
 +++ b/test/TEST-14-IMSM/test.sh
 @@ -13,7 +13,7 @@ client_run() {
@@ -230,7 +230,7 @@ index f9f03b7..d5ce58e 100755
          -no-reboot \
  	-append "panic=1 $* root=LABEL=root rw debug rd.retry=5 rd.debug console=ttyS0,115200n81 selinux=0 rd.info rd.shell=0 $DEBUGFAIL" \
 diff --git a/test/TEST-15-BTRFSRAID/test.sh b/test/TEST-15-BTRFSRAID/test.sh
-index adf31b1..d33f531 100755
+index adf31b14..d33f5310 100755
 --- a/test/TEST-15-BTRFSRAID/test.sh
 +++ b/test/TEST-15-BTRFSRAID/test.sh
 @@ -9,7 +9,7 @@ test_run() {
@@ -252,7 +252,7 @@ index adf31b1..d33f531 100755
  	-initrd $TESTDIR/initramfs.makeroot  || return 1
  
 diff --git a/test/TEST-16-DMSQUASH/test.sh b/test/TEST-16-DMSQUASH/test.sh
-index 876d910..71f3156 100755
+index 876d9103..71f3156d 100755
 --- a/test/TEST-16-DMSQUASH/test.sh
 +++ b/test/TEST-16-DMSQUASH/test.sh
 @@ -19,7 +19,7 @@ test_run() {
@@ -274,7 +274,7 @@ index 876d910..71f3156 100755
      #     -append "root=live:CDLABEL=LiveCD live quiet rhgb selinux=0 rd.live.check" \
      #     -initrd "$TESTDIR"/initramfs.testing
 diff --git a/test/TEST-17-LVM-THIN/test.sh b/test/TEST-17-LVM-THIN/test.sh
-index 1ad9ba6..c375fa2 100755
+index 1ad9ba6b..c375fa2d 100755
 --- a/test/TEST-17-LVM-THIN/test.sh
 +++ b/test/TEST-17-LVM-THIN/test.sh
 @@ -9,7 +9,7 @@ KVERSION=${KVERSION-$(uname -r)}
@@ -296,7 +296,7 @@ index 1ad9ba6..c375fa2 100755
  	-initrd $TESTDIR/initramfs.makeroot  || return 1
      grep -F -m 1 -q dracut-root-block-created $TESTDIR/root.ext2 || return 1
 diff --git a/test/TEST-20-NFS/test.sh b/test/TEST-20-NFS/test.sh
-index 039fb61..66e5e3e 100755
+index 039fb61b..66e5e3e1 100755
 --- a/test/TEST-20-NFS/test.sh
 +++ b/test/TEST-20-NFS/test.sh
 @@ -14,7 +14,7 @@ run_server() {
@@ -318,7 +318,7 @@ index 039fb61..66e5e3e 100755
          -net socket,connect=127.0.0.1:12320 \
          -watchdog i6300esb -watchdog-action poweroff \
 diff --git a/test/TEST-30-ISCSI/test.sh b/test/TEST-30-ISCSI/test.sh
-index 53ac5c7..1abde7a 100755
+index 53ac5c79..1abde7a4 100755
 --- a/test/TEST-30-ISCSI/test.sh
 +++ b/test/TEST-30-ISCSI/test.sh
 @@ -19,7 +19,7 @@ run_server() {
@@ -349,7 +349,7 @@ index 53ac5c7..1abde7a 100755
          -initrd $TESTDIR/initramfs.makeroot  || return 1
      grep -F -m 1 -q dracut-root-block-created $TESTDIR/client.img || return 1
 diff --git a/test/TEST-40-NBD/test.sh b/test/TEST-40-NBD/test.sh
-index 8d49b05..7f7aa66 100755
+index 8d49b057..7f7aa661 100755
 --- a/test/TEST-40-NBD/test.sh
 +++ b/test/TEST-40-NBD/test.sh
 @@ -17,7 +17,7 @@ run_server() {
@@ -380,7 +380,7 @@ index 8d49b05..7f7aa66 100755
          -append "root=/dev/fakeroot rw quiet console=ttyS0,115200n81 selinux=0" \
          -initrd $TESTDIR/initramfs.makeroot  || return 1
 diff --git a/test/TEST-50-MULTINIC/test.sh b/test/TEST-50-MULTINIC/test.sh
-index ef27682..e919bac 100755
+index ef27682b..e919bace 100755
 --- a/test/TEST-50-MULTINIC/test.sh
 +++ b/test/TEST-50-MULTINIC/test.sh
 @@ -14,7 +14,7 @@ run_server() {

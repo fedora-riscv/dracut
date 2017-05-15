@@ -1,4 +1,4 @@
-From 13e8bf850ce5e64b2a6b0c9baa336ce525c45848 Mon Sep 17 00:00:00 2001
+From 57825c42663901f3c4f196943a2f7ed7288e289c Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Thu, 8 Dec 2016 17:53:40 +0100
 Subject: [PATCH] dracut.sh: add default path for --uefi
@@ -18,7 +18,7 @@ filename of --uefi and will discard the <MACHINE_ID> part.
  2 files changed, 42 insertions(+), 11 deletions(-)
 
 diff --git a/dracut.8.asc b/dracut.8.asc
-index 0e01707..4ab0872 100644
+index 0e017070..4ab0872f 100644
 --- a/dracut.8.asc
 +++ b/dracut.8.asc
 @@ -485,7 +485,15 @@ will not be able to boot.
@@ -39,7 +39,7 @@ index 0e01707..4ab0872 100644
  **--uefi-stub _<FILE>_**::
      Specifies the UEFI stub loader, which will load the attached kernel, initramfs and
 diff --git a/dracut.sh b/dracut.sh
-index 2d79bbc..0886343 100755
+index 2d79bbcc..0886343f 100755
 --- a/dracut.sh
 +++ b/dracut.sh
 @@ -371,6 +371,7 @@ rearrange_params()

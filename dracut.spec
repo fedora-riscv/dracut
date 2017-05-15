@@ -16,7 +16,7 @@
 
 Name: dracut
 Version: 044
-Release: 178%{?dist}
+Release: 181%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -214,6 +214,7 @@ Patch176: 0176-modules-kernel-add-phy-and-power-modules-to-generic-.patch
 Patch177: 0177-modules-kernel-add-more-usb-controller-modules.patch
 Patch178: 0178-Add-aarch64-to-drm-modules-along-side-ARM.patch
 Patch179: 0179-Add-check-for-aarch64-to-the-arm-kernel-module-list.patch
+Patch180: 0180-Handle-curl-using-libnssckbi-for-TLS-RHBZ-1447777.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -678,6 +679,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon May 15 2017 Harald Hoyer <harald@redhat.com> - 044-181
+- add patch to fix curl TLS
+Resolves: rhbz#1447777
+
 * Wed Apr 12 2017 Peter Robinson <pbrobinson@fedoraproject.org> 044-178
 - Add upstream patches needed for ARMv7/aarch64 fixes
 

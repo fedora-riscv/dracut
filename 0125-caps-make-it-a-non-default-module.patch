@@ -1,4 +1,4 @@
-From c85034c91f90529287c0e169ce64d7ed3b0c1a82 Mon Sep 17 00:00:00 2001
+From 339d3c9e0e84dca470a36c632d46ade4770efa8e Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 2 Sep 2016 07:50:24 +0200
 Subject: [PATCH] caps: make it a non default module
@@ -8,7 +8,7 @@ Subject: [PATCH] caps: make it a non default module
  1 file changed, 1 insertion(+)
 
 diff --git a/modules.d/02caps/module-setup.sh b/modules.d/02caps/module-setup.sh
-index 01327c9..fb16526 100755
+index 01327c9a..fb16526a 100755
 --- a/modules.d/02caps/module-setup.sh
 +++ b/modules.d/02caps/module-setup.sh
 @@ -3,6 +3,7 @@
