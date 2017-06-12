@@ -325,7 +325,7 @@ Summary: dracut modules to build a dracut initramfs with network support
 # modules ("base-runtime" provides most functionality, but we need
 # dracut-network in "installer". Since these two modules build with separate
 # dist-tags, we need to reduce this strict requirement to ignore the dist-tag.
-Requires: %{name} = %{version}-%{dist_free_release}
+Requires: %{name} >= %{version}-%{dist_free_release}
 %else
 Requires: %{name} = %{version}-%{release}
 %endif
