@@ -377,7 +377,12 @@ initramfs with dracut, which drops capabilities.
 
 %package live
 Summary: dracut modules to build a dracut initramfs with live image capabilities
+%if 0%{?_module_build}
+# See the network subpackage comment.
+Requires: %{name} >= %{version}-%{dist_free_release}
+%else
 Requires: %{name} = %{version}-%{release}
+%endif
 Requires: %{name}-network = %{version}-%{release}
 Requires: tar gzip coreutils bash device-mapper curl
 
