@@ -14,7 +14,7 @@
 %define with_nbd 0
 %endif
 
-%define dist_free_release 182
+%define dist_free_release 183
 
 Name: dracut
 Version: 044
@@ -217,6 +217,8 @@ Patch177: 0177-modules-kernel-add-more-usb-controller-modules.patch
 Patch178: 0178-Add-aarch64-to-drm-modules-along-side-ARM.patch
 Patch179: 0179-Add-check-for-aarch64-to-the-arm-kernel-module-list.patch
 Patch180: 0180-Handle-curl-using-libnssckbi-for-TLS-RHBZ-1447777.patch
+
+Patch200: fix-dwmmc-sub-modules.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -695,6 +697,9 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Jun 29 2017 Peter Robinson <pbrobinson@fedoraproject.org> 044-183
+- Fixes for dwmmc sub modules, add MFD modules
+
 * Thu Jun 08 2017 Stephen Gallagher <sgallagh@redhat.com> - 044-182
 - Skip dist-tag comparison when building in modules
 
