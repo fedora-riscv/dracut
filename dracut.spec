@@ -14,7 +14,7 @@
 %define with_nbd 0
 %endif
 
-%define dist_free_release 2.git20170811
+%define dist_free_release 3.git20170811
 
 Name: dracut
 Version: 046
@@ -204,6 +204,9 @@ Requires: %{name} = %{version}-%{release}
 %endif
 Requires: %{name}-network = %{version}-%{release}
 Requires: tar gzip coreutils bash device-mapper curl
+%if 0%{?fedora}
+Requires: fuse ntfs-3g
+%endif
 
 %description live
 This package requires everything which is needed to build an
@@ -517,6 +520,9 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Aug 22 2017 Robert Scheck <robert@fedoraproject.org> - 046-3
+- Add fuse/ntfs-3g run-time dependencies for -live subpackage
+
 * Fri Aug 11 2017 Harald Hoyer <harald@redhat.com> - 046-2
 - add support for dist-tag less build
 
