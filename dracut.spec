@@ -14,7 +14,7 @@
 %define with_nbd 0
 %endif
 
-%define dist_free_release 3.1
+%define dist_free_release 4
 
 Name: dracut
 Version: 046
@@ -40,6 +40,7 @@ Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar
 Patch1: 0001.patch
 Patch2: grubby.patch
 Patch3: timeout.patch
+Patch4: arm-sbc-fixes.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -519,6 +520,9 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Oct 12 2017 Peter Robinson <pbrobinson@fedoraproject.org> 046-4
+- Add fix for some ARM SBCs
+
 * Thu Oct 12 2017 Harald Hoyer <harald@redhat.com> - 046-3.1
 - fixed setting of timeouts for device units
 Resolves: rhbz#1495635
