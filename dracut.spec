@@ -14,7 +14,7 @@
 %define with_nbd 0
 %endif
 
-%define dist_free_release 3
+%define dist_free_release 3.1
 
 Name: dracut
 Version: 046
@@ -39,6 +39,7 @@ URL: https://dracut.wiki.kernel.org/
 Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar.xz
 Patch1: 0001.patch
 Patch2: grubby.patch
+Patch3: timeout.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -518,6 +519,9 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Nov 06 2017 Harald Hoyer <harald@redhat.com> - 046-3
+- fixed setting of timeouts for device units
+
 * Mon Nov 06 2017 Harald Hoyer <harald@redhat.com> - 046-3
 - fixed default image location
 Resolves: rhbz#1509599
