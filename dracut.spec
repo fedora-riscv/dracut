@@ -14,7 +14,7 @@
 %define with_nbd 0
 %endif
 
-%define dist_free_release 4
+%define dist_free_release 5
 
 Name: dracut
 Version: 046
@@ -41,6 +41,9 @@ Patch1: 0001.patch
 Patch2: grubby.patch
 Patch3: timeout.patch
 Patch4: arm-sbc-fixes.patch
+
+# https://github.com/dracutdevs/dracut/pull/302
+Patch5: 302.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -520,6 +523,9 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Nov 02 2017 Adam Williamson <awilliam@redhat.com> - 046-5
+- Backport upstream fix for RHBZ #1508794 (media check timeout)
+
 * Thu Oct 12 2017 Peter Robinson <pbrobinson@fedoraproject.org> 046-4
 - Add fix for some ARM SBCs
 
