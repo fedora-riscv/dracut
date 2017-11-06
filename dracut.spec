@@ -14,7 +14,7 @@
 %define with_nbd 0
 %endif
 
-%define dist_free_release 2.git20170811
+%define dist_free_release 3
 
 Name: dracut
 Version: 046
@@ -38,6 +38,7 @@ URL: https://dracut.wiki.kernel.org/
 # http://git.kernel.org/?p=boot/dracut/dracut.git;a=snapshot;h=%%{version};sf=tgz
 Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar.xz
 Patch1: 0001.patch
+Patch2: grubby.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -517,6 +518,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Nov 06 2017 Harald Hoyer <harald@redhat.com> - 046-3
+- fixed default image location
+Resolves: rhbz#1509599
+
 * Fri Aug 11 2017 Harald Hoyer <harald@redhat.com> - 046-2
 - version 046
 
