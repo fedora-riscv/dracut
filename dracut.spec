@@ -526,11 +526,7 @@ rm -rf -- $RPM_BUILD_ROOT
 %changelog
 * Fri Jan 05 2018 Harald Hoyer <harald@redhat.com> - 046-8
 - support for AMD CPU early microcode
-
-* Thu Nov 02 2017 Adam Williamson <awilliam@redhat.com> - 046-5
 - Backport upstream fix for RHBZ #1508794 (media check timeout)
-
-* Thu Oct 12 2017 Peter Robinson <pbrobinson@fedoraproject.org> 046-4
 - Add fix for some ARM SBCs
 
 * Mon Nov 06 2017 Harald Hoyer <harald@redhat.com> - 046-3
