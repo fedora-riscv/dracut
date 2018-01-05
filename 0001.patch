@@ -1,4 +1,4 @@
-From 0344c2be134fbdf1019052eb314b76b7e3251d52 Mon Sep 17 00:00:00 2001
+From 517bf10afb5daf4f64e9488603ce9d931fca5733 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Fri, 11 Aug 2017 14:11:32 +0200
 Subject: [PATCH] dracut.spec: add support for builds without dist-tag
@@ -7,6 +7,8 @@ In the module-build-service, we have pieces of dracut provided by different
 modules ("base-runtime" provides most functionality, but we need
 dracut-network in "installer". Since these two modules build with separate
 dist-tags, we need to reduce this strict requirement to ignore the dist-tag.
+
+(cherry picked from commit 0344c2be134fbdf1019052eb314b76b7e3251d52)
 ---
  dracut.spec | 17 ++++++++++++++++-
  git2spec.pl |  4 ++--
@@ -73,3 +75,4 @@ index 4b03a95c..0c5f3b9e 100755
      }
      elsif ((/^Source0:/) || (/^Source:/)) {
  	print $_;
+

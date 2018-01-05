@@ -1,4 +1,4 @@
-From 28401778c4c95b3750e73675dd4a4867303402d5 Mon Sep 17 00:00:00 2001
+From c63da4085b473152804f40e30327f802ed1171c5 Mon Sep 17 00:00:00 2001
 From: Michal Sekletar <msekleta@redhat.com>
 Date: Wed, 27 Sep 2017 13:27:42 +0200
 Subject: [PATCH] systemd: fix setting of timeouts for device units
@@ -13,6 +13,8 @@ i.e. disabling running state timeout disables generic timeout. But doing
 it this way we would create implicit dependency on fairly new
 systemd-234. However, by setting both options we don't create dependency
 on specific systemd version.
+
+(cherry picked from commit 28401778c4c95b3750e73675dd4a4867303402d5)
 ---
  modules.d/90dmsquash-live/dmsquash-generator.sh | 1 +
  modules.d/90livenet/livenet-generator.sh        | 1 +
