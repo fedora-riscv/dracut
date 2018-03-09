@@ -14,7 +14,7 @@
 %define with_nbd 0
 %endif
 
-%define dist_free_release 8.git20180305
+%define dist_free_release 9.git20180305
 
 Name: dracut
 Version: 047
@@ -44,6 +44,7 @@ Patch4: 0004.patch
 Patch5: 0005.patch
 Patch6: 0006.patch
 Patch7: 0007.patch
+Patch8: 0008.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -541,6 +542,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %endif
 
 %changelog
+* Fri Mar 09 2018 Javier Martinez Canillas <javierm@redhat.com> - 047-9
+- Fix for rescue initramfs when is not generated in /boot
+
 * Mon Mar 05 2018 Harald Hoyer <harald@redhat.com> - 047-8
 - git snapshot
 
