@@ -1,0 +1,35 @@
+From 86af70598961ec8358794884983d0f9edab56961 Mon Sep 17 00:00:00 2001
+From: Javier Martinez Canillas <javierm@redhat.com>
+Date: Mon, 25 Jun 2018 13:12:08 +0200
+Subject: [PATCH] 51-dracut-rescue.install: Don't install BLS fragment in
+ /boot/efi on EFI
+
+For EFI systems, the BLS fragments were stored in the EFI System Partition
+(ESP) while in non-EFI systems it was stored in /boot.
+
+For consistency, it's better to always store the BLS fragments in the same
+path regardless of the firmware interface used.
+
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+---
+ 51-dracut-rescue.install | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/51-dracut-rescue.install b/51-dracut-rescue.install
+index 679e94b1b8e..d57a20fea82 100755
+--- a/51-dracut-rescue.install
++++ b/51-dracut-rescue.install
+@@ -71,10 +71,6 @@ if [[ -d "${BOOT_DIR_ABS%/*}" ]]; then
+     INITRD="initrd"
+ else
+     BLS_DIR="/boot/loader/entries"
+-    if [ -d /sys/firmware/efi ]; then
+-	BLS_DIR="/boot/efi/EFI/${ID}/loader/entries"
+-    fi
+-
+     BOOT_DIR_ABS="/boot"
+     LOADER_ENTRY="$BLS_DIR/${MACHINE_ID}-0-rescue.conf"
+     KERNEL="vmlinuz-0-rescue-${MACHINE_ID}"
+-- 
+2.17.1
+

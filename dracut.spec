@@ -14,7 +14,7 @@
 %define with_nbd 0
 %endif
 
-%define dist_free_release 8.git20180305
+%define dist_free_release 9.git20180305
 
 Name: dracut
 Version: 047
@@ -44,6 +44,12 @@ Patch4: 0004.patch
 Patch5: 0005.patch
 Patch6: 0006.patch
 Patch7: 0007.patch
+# https://github.com/dracutdevs/dracut/commit/f8c24964cdd
+Patch8: 0008.patch
+# https://github.com/dracutdevs/dracut/pull/416
+Patch9: 0009.patch
+# https://github.com/dracutdevs/dracut/pull/419
+Patch10: 0010.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -541,6 +547,11 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %endif
 
 %changelog
+* Tue Jun 26 2018 Javier Martinez Canillas <javierm@redhat.com> - 047-9
+- Fix the case when initramfs is not generated in /boot
+- Fix script exit status code
+- Use /boot/loader/entries as BLS directory also on EFI systems
+
 * Mon Mar 05 2018 Harald Hoyer <harald@redhat.com> - 047-8
 - git snapshot
 

@@ -1,0 +1,52 @@
+From 4e53fceb74a8ef5d1671ed196a45ee52ea624afe Mon Sep 17 00:00:00 2001
+From: Javier Martinez Canillas <javierm@redhat.com>
+Date: Fri, 15 Jun 2018 10:36:27 +0200
+Subject: [PATCH] 51-dracut-rescue.install: fix exit status code
+
+After the $COMMAND case statement, the exit status of the last executed
+command is added to the $ret variable.
+
+But for the "add" pattern, this last executed command is an arithmetic
+expression that also adds the exit status $? to the $ret variable. If
+both $? and $ret are 0, then the arithmetic expression evaluates to 0
+so is considered false and has an exit status of 1.
+
+This makes the script to wrongly exit with an status code of 1 when it
+should had been 0.
+
+  case "$COMMAND" in
+      add)
+      ...
+          ((ret+=$?))
+	  # $ret is 0 here
+          ;;
+  ...
+  esac
+
+  ((ret+=$?))
+  # $ ret is 1 here
+
+  exit $ret
+
+Since $ret is set in the case statement, just exit with that status code
+and remove the last arithmetic expression that wrongly sets $ret to 1.
+
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+---
+ 51-dracut-rescue.install | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/51-dracut-rescue.install b/51-dracut-rescue.install
+index 679e94b1b8e..26878929bec 100755
+--- a/51-dracut-rescue.install
++++ b/51-dracut-rescue.install
+@@ -132,6 +132,4 @@ case "$COMMAND" in
+         ret=1;;
+ esac
+ 
+-((ret+=$?))
+-
+ exit $ret
+-- 
+2.17.1
+
