@@ -9,7 +9,7 @@
 
 Name: dracut
 Version: 048
-Release: %{dist_free_release}%{?dist}.1
+Release: %{dist_free_release}%{?dist}.2
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -33,6 +33,8 @@ Patch2: 0002.patch
 Patch3: 0003.patch
 Patch4: 0004.patch
 Patch5: 0005.patch
+# https://github.com/dracutdevs/dracut/pull/430
+Patch6: 0006.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -263,6 +265,9 @@ rm -f -- $RPM_BUILD_ROOT%{_bindir}/lsinitrd
 %endif
 
 %if 0%{?fedora} || 0%{?rhel}
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/kernel/postinst.d
+install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kernel/postinst.d/51-dracut-rescue-postinst.sh
+
 echo 'hostonly="no"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-generic-image.conf
 echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-rescue.conf
 %endif
@@ -451,9 +456,14 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/dracut.conf.d/02-rescue.conf
 %if 0%{?fedora} || 0%{?rhel}
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
+%{_sysconfdir}/kernel/postinst.d/51-dracut-rescue-postinst.sh
 %endif
 
 %changelog
+* Tue Jul 24 2018 Javier Martinez Canillas <javierm@redhat.com> - 048-6.git20180718.2
+- Reintroduce 51-dracut-rescue-postinst.sh script
+Resolves: rhbz#1581487
+
 * Wed Jul 18 2018 Harald Hoyer <harald@redhat.com> - 048-6.git20180718
 - git snapshot
 
