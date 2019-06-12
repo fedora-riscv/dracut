@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 26.git20181204
+%define dist_free_release 27.git20181204
 
 Name: dracut
 Version: 049
@@ -55,6 +55,11 @@ Patch24: 0024.patch
 # Fixes https://bugzilla.redhat.com/show_bug.cgi?id=1676357
 # dracut-install crash during kernel scriptlets
 Patch100: 541.patch
+
+# https://github.com/dracutdevs/dracut/pull/578
+# Fixes https://bugzilla.redhat.com/show_bug.cgi?id=1719057
+# installer boot fails if network is required during initramfs
+Patch101: 578.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -500,6 +505,9 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %changelog
+* Wed Jun 12 2019 Adam Williamson <awilliam@redhat.com> - 049-27.git20181204
+- Backport PR #578 to fix RHBZ #1719057 (installer boot bug)
+
 * Thu Feb 14 2019 Adam Williamson <awilliam@redhat.com> - 049-26.git20181204
 - Backport PR #541 to fix RHBZ #1676357 (crasher bug)
 
