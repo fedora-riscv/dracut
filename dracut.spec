@@ -9,7 +9,7 @@
 
 Name: dracut
 Version: 049
-Release: %{dist_free_release}%{?dist}
+Release: %{dist_free_release}%{?dist}.1
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -505,6 +505,9 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %changelog
+* Wed Jul 24 2019 Fedora Release Engineering <releng@fedoraproject.org> - 049-27.git20181204.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Wed Jun 12 2019 Adam Williamson <awilliam@redhat.com> - 049-27.git20181204
 - Backport PR #578 to fix RHBZ #1719057 (installer boot bug)
 
