@@ -1,30 +1,53 @@
-From 319b21b51e7dc9343d4200e34252fc2e4d942c1f Mon Sep 17 00:00:00 2001
+From 4c216b1db6a86373549e13b60250a7fcf94417b9 Mon Sep 17 00:00:00 2001
 From: Lubomir Rintel <lkundrak@v3.sk>
-Date: Mon, 27 May 2019 12:44:17 +0200
-Subject: [PATCH 1/3] network-manager: also read out next-server from NM state
+Date: Mon, 17 Jun 2019 10:07:38 +0200
+Subject: [PATCH 1/4] network-manager: remove useless use of basename
 
 ---
  modules.d/35network-manager/nm-run.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules.d/35network-manager/nm-run.sh b/modules.d/35network-manager/nm-run.sh
-index 0f9436316..c77f6074e 100755
+index 0f9436316..5f4b38caf 100755
+--- a/modules.d/35network-manager/nm-run.sh
++++ b/modules.d/35network-manager/nm-run.sh
+@@ -10,7 +10,7 @@ for _i in /sys/class/net/*/
+ do
+     state=/run/NetworkManager/devices/$(cat $_i/ifindex)
+     grep -q connection-uuid= $state 2>/dev/null || continue
+-    ifname=$(basename $_i)
++    ifname=${_i##*/}
+     sed -n 's/root-path/new_root_path/p' <$state >/tmp/dhclient.$ifname.dhcpopts
+     source_hook initqueue/online $ifname
+     /sbin/netroot $ifname
+
+From e5a76daabfc1e43ab1579ac234c886b7eb165329 Mon Sep 17 00:00:00 2001
+From: Lubomir Rintel <lkundrak@v3.sk>
+Date: Mon, 27 May 2019 12:44:17 +0200
+Subject: [PATCH 2/4] network-manager: also read out next-server from NM state
+
+---
+ modules.d/35network-manager/nm-run.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules.d/35network-manager/nm-run.sh b/modules.d/35network-manager/nm-run.sh
+index 5f4b38caf..a539d5b2c 100755
 --- a/modules.d/35network-manager/nm-run.sh
 +++ b/modules.d/35network-manager/nm-run.sh
 @@ -11,7 +11,7 @@ do
      state=/run/NetworkManager/devices/$(cat $_i/ifindex)
      grep -q connection-uuid= $state 2>/dev/null || continue
-     ifname=$(basename $_i)
+     ifname=${_i##*/}
 -    sed -n 's/root-path/new_root_path/p' <$state >/tmp/dhclient.$ifname.dhcpopts
 +    sed -n 's/root-path/new_root_path/p;s/next-server/new_next_server/p' <$state >/tmp/dhclient.$ifname.dhcpopts
      source_hook initqueue/online $ifname
      /sbin/netroot $ifname
  done
 
-From ab24d818e206ab443d71194365d1d50c673a86e4 Mon Sep 17 00:00:00 2001
+From 86936c1c30f30c704aac6b38ae3f1d5860e2fbec Mon Sep 17 00:00:00 2001
 From: Lubomir Rintel <lkundrak@v3.sk>
 Date: Mon, 27 May 2019 12:43:59 +0200
-Subject: [PATCH 2/3] network-manager: generate configuration with netroot=
+Subject: [PATCH 3/4] network-manager: generate configuration with netroot=
 
 If the root is on network, let nm-initrd-generator create configuration
 even if none was explicitly specified on the command line.
@@ -49,10 +72,10 @@ index 1339ebe76..1efa737c5 100755
 +
  /usr/libexec/nm-initrd-generator -- $(getcmdline)
 
-From 9a9c061fd70ce83191c6df5846bcb84559f46bf6 Mon Sep 17 00:00:00 2001
+From c0a31a574c5b4fc885a8f3c0eb30c8d105cd951c Mon Sep 17 00:00:00 2001
 From: Lubomir Rintel <lkundrak@v3.sk>
 Date: Mon, 27 May 2019 11:12:22 +0200
-Subject: [PATCH 3/3] network: parse root=dhcp also with network-manager module
+Subject: [PATCH 4/4] network: parse root=dhcp also with network-manager module
 
 Move the logic from network-legacy to common network code.
 ---

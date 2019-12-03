@@ -9,7 +9,7 @@
 
 Name: dracut
 Version: 049
-Release: %{dist_free_release}%{?dist}.1
+Release: %{dist_free_release}%{?dist}.2
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -505,6 +505,10 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %changelog
+* Tue Dec 03 2019 Sergio Correia <scorreia@redhat.com> 049-27.git20181204.2
+- Backport the full PR #580, which has additional needed fixes, like
+  removing the need for basename in 99-nm-run.sh
+
 * Wed Jul 24 2019 Fedora Release Engineering <releng@fedoraproject.org> - 049-27.git20181204.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
