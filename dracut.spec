@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 1
+%define dist_free_release 2
 
 Name: dracut
 Version: 050
@@ -30,6 +30,10 @@ URL: https://dracut.wiki.kernel.org/
 Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar.xz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
+
+# Fix pre-trigger stage by replacing exit with return in lldpad.sh
+# https://github.com/dracutdevs/dracut/pull/754
+Patch0: 0001-Fix-pre-trigger-stage-by-replacing-exit-with-return-.patch
 
 BuildRequires: bash
 BuildRequires: git
@@ -482,6 +486,9 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %changelog
+* Tue Mar 10 2020 Adam Williamson <awilliam@redhat.com> - 050-2
+- Backport fix for pre-trigger stage early exit from upstream (#1811070)
+
 * Wed Mar 04 2020 Harald Hoyer <harald@redhat.com> - 050-1
 - version 050
 
