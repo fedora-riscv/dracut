@@ -21,3 +21,4 @@ index 5190f220..3bb479e4 100755
          -initrd $TESTDIR/initramfs.testing
  
      if ! grep -F -m 1 -q dracut-root-block-success $TESTDIR/result; then
+
