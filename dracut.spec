@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 25.git20200313
+%define dist_free_release 26.git20200316
 
 Name: dracut
 Version: 050
@@ -52,6 +52,7 @@ Patch21: 0021.patch
 Patch22: 0022.patch
 Patch23: 0023.patch
 Patch24: 0024.patch
+Patch25: 0025.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -506,6 +507,9 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %changelog
+* Mon Mar 16 2020 Harald Hoyer <harald@redhat.com> - 050-26.git20200316
+- fixed `--tmpdir` mishandling
+
 * Fri Mar 13 2020 Harald Hoyer <harald@redhat.com> - 050-25.git20200313
 - network-manager: ensure that nm-run.sh is executed for rd.neednet
 
