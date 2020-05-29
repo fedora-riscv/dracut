@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 26.git20200316
+%define dist_free_release 61.git20200529
 
 Name: dracut
 Version: 050
@@ -53,6 +53,41 @@ Patch22: 0022.patch
 Patch23: 0023.patch
 Patch24: 0024.patch
 Patch25: 0025.patch
+Patch26: 0026.patch
+Patch27: 0027.patch
+Patch28: 0028.patch
+Patch29: 0029.patch
+Patch30: 0030.patch
+Patch31: 0031.patch
+Patch32: 0032.patch
+Patch33: 0033.patch
+Patch34: 0034.patch
+Patch35: 0035.patch
+Patch36: 0036.patch
+Patch37: 0037.patch
+Patch38: 0038.patch
+Patch39: 0039.patch
+Patch40: 0040.patch
+Patch41: 0041.patch
+Patch42: 0042.patch
+Patch43: 0043.patch
+Patch44: 0044.patch
+Patch45: 0045.patch
+Patch46: 0046.patch
+Patch47: 0047.patch
+Patch48: 0048.patch
+Patch49: 0049.patch
+Patch50: 0050.patch
+Patch51: 0051.patch
+Patch52: 0052.patch
+Patch53: 0053.patch
+Patch54: 0054.patch
+Patch55: 0055.patch
+Patch56: 0056.patch
+Patch57: 0057.patch
+Patch58: 0058.patch
+Patch59: 0059.patch
+Patch60: 0060.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -103,6 +138,7 @@ Requires: xz
 Requires: gzip
 
 %if 0%{?fedora} || 0%{?rhel}
+Recommends: memstrack
 Recommends: hardlink
 Recommends: pigz
 Recommends: kpartx
@@ -124,7 +160,7 @@ Requires: libkcapi-hmaccalc
 
 %description
 dracut contains tools to create bootable initramfses for the Linux
-kernel. Unlike previous implementations, dracut hard-codes as little
+kernel. Unlike other implementations, dracut hard-codes as little
 as possible into the initramfs. dracut contains various modules which
 are driven by the event-based udev. Having root on MD, DM, LVM2, LUKS
 is supported as well as NFS, iSCSI, NBD, FCoE with the dracut-network
@@ -429,6 +465,7 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %{dracutlibdir}/modules.d/98syslog
 %{dracutlibdir}/modules.d/98usrmount
 %{dracutlibdir}/modules.d/99base
+%{dracutlibdir}/modules.d/99memstrack
 %{dracutlibdir}/modules.d/99fs-lib
 %{dracutlibdir}/modules.d/99shutdown
 %attr(0644,root,root) %ghost %config(missingok,noreplace) %{_localstatedir}/log/dracut.log
@@ -507,6 +544,9 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %changelog
+* Fri May 29 2020 Harald Hoyer <harald@redhat.com> - 050-61.git20200529
+- git snapshot
+
 * Mon Mar 16 2020 Harald Hoyer <harald@redhat.com> - 050-26.git20200316
 - fixed `--tmpdir` mishandling
 
