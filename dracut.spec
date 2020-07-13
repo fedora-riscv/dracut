@@ -9,7 +9,7 @@
 
 Name: dracut
 Version: 050
-Release: %{dist_free_release}%{?dist}
+Release: %{dist_free_release}%{?dist}.1
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -264,11 +264,10 @@ cp %{SOURCE1} .
 %endif
             ${NULL}
 
-make %{?_smp_mflags}
+%make_build
 
 %install
-make %{?_smp_mflags} install \
-     DESTDIR=$RPM_BUILD_ROOT \
+%make_install %{?_smp_mflags} \
      libdir=%{_prefix}/lib
 
 echo "DRACUT_VERSION=%{version}-%{release}" > $RPM_BUILD_ROOT/%{dracutlibdir}/dracut-version.sh
@@ -544,6 +543,10 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %changelog
+* Mon Jul 13 2020 Tom Stellard <tstellar@redhat.com> - 050-61.git20200529.1
+- Use make macros
+- https://fedoraproject.org/wiki/Changes/UseMakeBuildInstallMacro
+
 * Fri May 29 2020 Harald Hoyer <harald@redhat.com> - 050-61.git20200529
 - git snapshot
 
