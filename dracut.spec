@@ -9,7 +9,7 @@
 
 Name: dracut
 Version: 050
-Release: %{dist_free_release}%{?dist}.1
+Release: %{dist_free_release}%{?dist}.2
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -543,6 +543,9 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %changelog
+* Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 050-61.git20200529.2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
 * Mon Jul 13 2020 Tom Stellard <tstellar@redhat.com> - 050-61.git20200529.1
 - Use make macros
 - https://fedoraproject.org/wiki/Changes/UseMakeBuildInstallMacro
