@@ -9,7 +9,7 @@
 
 Name: dracut
 Version: 050
-Release: %{dist_free_release}%{?dist}.2
+Release: %{dist_free_release}%{?dist}.3
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -339,7 +339,7 @@ rm -f -- $RPM_BUILD_ROOT%{_mandir}/man1/lsinitrd.1*
 echo 'hostonly="no"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-generic-image.conf
 echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-rescue.conf
 
-%if 0%{?fedora} <= 30 || 0%{?rhel} <= 8
+%if 0%{?rhel} && 0%{?rhel} <= 8
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/kernel/postinst.d
 install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kernel/postinst.d/51-dracut-rescue-postinst.sh
 %endif
@@ -537,12 +537,15 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %files config-rescue
 %{dracutlibdir}/dracut.conf.d/02-rescue.conf
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
-%if 0%{?fedora} <= 30 || 0%{?rhel} <= 8
-# FIXME: remove after F30
+%if 0%{?rhel} && 0%{?rhel} <= 8
 %{_sysconfdir}/kernel/postinst.d/51-dracut-rescue-postinst.sh
 %endif
 
 %changelog
+* Wed Aug 19 2020 Merlin Mathesius <mmathesi@redhat.com> - 050-61.git20200529.3
+- Correct conditionals to drop 51-dracut-rescue-postinst.sh for Fedora and
+  recent RHEL releases
+
 * Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 050-61.git20200529.2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
