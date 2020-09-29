@@ -1,0 +1,31 @@
+From 5afd3cfc96aac425f7de23de60b94ab88dc189ee Mon Sep 17 00:00:00 2001
+From: Nicolas Chauvet <kwizart@gmail.com>
+Date: Sat, 26 Sep 2020 13:15:55 +0200
+Subject: [PATCH 2/3] 50drm: Include drm platform drivers in hostonly
+
+On arm, many drm drivers are located in the plaform bus.
+
+Adding the platform bus will allow drm drivers to be included in the
+initramfs when using hostonly mode.
+
+Signed-off-by: Nicolas Chauvet <kwizart@gmail.com>
+---
+ modules.d/50drm/module-setup.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules.d/50drm/module-setup.sh b/modules.d/50drm/module-setup.sh
+index 81d2e662..ad0e6d80 100755
+--- a/modules.d/50drm/module-setup.sh
++++ b/modules.d/50drm/module-setup.sh
+@@ -31,7 +31,7 @@ installkernel() {
+     # as we could e.g. be in the installer; nokmsboot boot parameter will disable
+     # loading of the driver if needed
+     if [[ $hostonly ]]; then
+-        for i in /sys/bus/{pci/devices,virtio/devices,soc/devices/soc?}/*/modalias; do
++        for i in /sys/bus/{pci/devices,platform/devices,virtio/devices,soc/devices/soc?}/*/modalias; do
+             [[ -e $i ]] || continue
+             if hostonly="" dracut_instmods --silent -s "drm_crtc_init|drm_dev_register" -S "iw_handler_get_spy" $(<"$i"); then
+                 if strstr "$(modinfo -F filename $(<"$i") 2>/dev/null)" radeon.ko; then
+-- 
+2.26.2
+

@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 62.git20200529
+%define dist_free_release 63.git20200529
 
 Name: dracut
 Version: 050
@@ -88,7 +88,11 @@ Patch57: 0057.patch
 Patch58: 0058.patch
 Patch59: 0059.patch
 Patch60: 0060.patch
-Patch61: 0001-Include-devfreq-drivers-in-initrd.patch
+Patch61: 0001-fix-graphics-startup-failure-with-the-rhgb-paramter-.patch
+Patch62: 0001-Include-devfreq-drivers-in-initrd.patch
+Patch63: 0001-50drm-fix-ambiguous-redirects.patch
+Patch64: 0002-50drm-Include-drm-platform-drivers-in-hostonly.patch
+Patch65: 0003-50drm-Check-drm_encoder_init-along-drm_crtc_init.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -543,6 +547,9 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %changelog
+* Tue Sep 29 2020 Peter Robinson <pbrobinson@fedoraproject.org> - 050-63.git20200529
+- Fixes for Arm GPUs in early boot
+
 * Fri Sep 25 2020 Peter Robinson <pbrobinson@fedoraproject.org> - 050-62.git20200529
 - Fix for Rockchip devices
 
