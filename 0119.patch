@@ -1,0 +1,47 @@
+From fc1d50b27046985d7882d7b4ff3abde374a39891 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B3hann=20B=2E=20Gu=C3=B0mundsson?= <johannbg@gmail.com>
+Date: Fri, 7 Aug 2020 16:17:45 +0000
+Subject: [PATCH] Update master-labels.yml
+
+Removing branches not sure if they work with the cron scheduler in workflow actions
+---
+ .github/workflows/master-labels.yml | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
+
+diff --git a/.github/workflows/master-labels.yml b/.github/workflows/master-labels.yml
+index ad92fd2b..0a46425a 100644
+--- a/.github/workflows/master-labels.yml
++++ b/.github/workflows/master-labels.yml
+@@ -1,19 +1,17 @@
+-# This workflow will triage pull requests for the RHEL-6 branch and 
+-# apply a label based on the paths that are modified in the pull request.
++# This workflow will triage pull request and apply a 
++# label based on the paths that are modified in the pull request.
+ 
+ name: master-labeler
+-  on: 
++on:
+    schedule:
+-     - cron: '*/15 * * * *'
+-   branches:
+-     - master
++        - cron: '*/15 * * * *'
+ 
+ jobs:
+-  label:
+-    runs-on: ubuntu-latest
+-      steps:
+-       - uses: paulfantom/periodic-labeler@master
+-           env:
+-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+-              GITHUB_REPOSITORY: ${{ github.repository }}
+-              LABEL_MAPPINGS_FILE: .github/master-label-triggers.yml
++    label:
++        runs-on: ubuntu-latest
++        steps:
++            - uses: paulfantom/periodic-labeler@master
++              env:
++                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
++                  GITHUB_REPOSITORY: ${{ github.repository }}
++                  LABEL_MAPPINGS_FILE: .github/labeler.yml
+

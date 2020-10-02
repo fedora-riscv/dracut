@@ -1,0 +1,35 @@
+From 05ce5c41b61f97d41044f2f146de980e38f7991a Mon Sep 17 00:00:00 2001
+From: q66 <daniel@octaforge.org>
+Date: Sat, 25 Jul 2020 17:47:00 +0200
+Subject: [PATCH] 90ppcmac: respect DRACUT_ARCH, don't exclude ppcle
+
+---
+ modules.d/90ppcmac/module-setup.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/modules.d/90ppcmac/module-setup.sh b/modules.d/90ppcmac/module-setup.sh
+index 59221ec4..d457119f 100644
+--- a/modules.d/90ppcmac/module-setup.sh
++++ b/modules.d/90ppcmac/module-setup.sh
+@@ -17,9 +17,9 @@
+ 
+ # called by dracut
+ check() {
+-    local _arch="$(uname -m)"
++    local _arch=${DRACUT_ARCH:-$(uname -m)}
+     # only for PowerPC Macs
+-    [[ "$_arch" == ppc* && "$_arch" != ppc*le ]] || return 1
++    [[ "$_arch" == ppc* && "$_arch" != ppc64le ]] || return 1
+     return 0
+ }
+ 
+@@ -36,7 +36,7 @@ installkernel() {
+     }
+ 
+     # only PowerMac3,6 has a module, special case
+-    if [[ "$(uname -m)" == ppc ]]; then
++    if [[ "${DRACUT_ARCH:-$(uname -m)}" != ppc64* ]]; then
+         if ! [[ $hostonly ]] || [[ "$(pmac_model)" == "PowerMac3,6" ]]; then
+             instmods therm_windtunnel
+         fi
+

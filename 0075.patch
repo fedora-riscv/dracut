@@ -1,0 +1,25 @@
+From 317d841c788e841d3533515ceda5597a099eb64e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B3hann=20B=2E=20Gu=C3=B0mundsson?= <johannbg@gmail.com>
+Date: Wed, 15 Jul 2020 14:31:59 +0000
+Subject: [PATCH] As of v246 of systemd "syslog" and "syslog-console" switches
+ have been deprecated
+
+---
+ modules.d/98dracut-systemd/dracut-initqueue.service | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/modules.d/98dracut-systemd/dracut-initqueue.service b/modules.d/98dracut-systemd/dracut-initqueue.service
+index 207d545d..3a8679a5 100644
+--- a/modules.d/98dracut-systemd/dracut-initqueue.service
++++ b/modules.d/98dracut-systemd/dracut-initqueue.service
+@@ -21,8 +21,7 @@ Environment=NEWROOT=/sysroot
+ Type=oneshot
+ ExecStart=-/bin/dracut-initqueue
+ StandardInput=null
+-StandardOutput=syslog
+-StandardError=syslog+console
++StandardError=journal+console
+ KillMode=process
+ RemainAfterExit=yes
+ 
+

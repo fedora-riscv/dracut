@@ -1,0 +1,24 @@
+From a5372b8ba85bc70c68771feab9504ebd5a336625 Mon Sep 17 00:00:00 2001
+From: Daniel Molkentin <dmolkentin@suse.com>
+Date: Fri, 28 Aug 2020 17:12:27 +0200
+Subject: [PATCH] Add --version to man page
+
+---
+ dracut.8.asc | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/dracut.8.asc b/dracut.8.asc
+index a873611e..b99019e5 100644
+--- a/dracut.8.asc
++++ b/dracut.8.asc
+@@ -265,6 +265,9 @@ example:
+ **-v, --verbose**::
+     increase verbosity level (default is info(4))
+ 
++**--version**::
++    display version and exit
++
+ **-q, --quiet**:: decrease verbosity level (default is info(4))
+ 
+ **-c, --conf** _<dracut configuration file>_::
+

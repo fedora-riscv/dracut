@@ -1,0 +1,23 @@
+From d418e292e3f15e4ca88870265229282a631e3df7 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B3hann=20B=2E=20Gu=C3=B0mundsson?= <johannbg@gmail.com>
+Date: Fri, 28 Aug 2020 17:57:45 +0000
+Subject: [PATCH] Fix CoC URL
+
+---
+ README.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/README.md b/README.md
+index 1932da4d..2c08b7b3 100644
+--- a/README.md
++++ b/README.md
+@@ -3,7 +3,7 @@ dracut
+ 
+ dracut is an event driven initramfs infrastructure.
+ 
+-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md) 
++[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](.github/CODE_OF_CONDUCT.md) 
+ [![Build Status](https://travis-ci.org/dracutdevs/dracut.svg?branch=master)](https://travis-ci.org/dracutdevs/dracut)
+ [![Fedora-31](https://github.com/dracutdevs/dracut/workflows/Fedora-31/badge.svg?branch=master)](https://github.com/dracutdevs/dracut/actions?query=workflow%3AFedora-31)
+ [![Fedora-32](https://github.com/dracutdevs/dracut/workflows/Fedora-32/badge.svg?branch=master)](https://github.com/dracutdevs/dracut/actions?query=workflow%3AFedora-32)
+

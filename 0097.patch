@@ -1,0 +1,51 @@
+From dc9596155def879c99caa03acc5bd6d7090488ed Mon Sep 17 00:00:00 2001
+From: Kairui Song <kasong@redhat.com>
+Date: Fri, 2 Aug 2019 17:11:19 +0800
+Subject: [PATCH] dracut-initqueue: Print more useful info in case of timeout
+
+Currently when initqueue timeout, it span the console with
+"dracut-initqueue timeout - starting timeout scripts", which isn't very
+helpful as we still don't know what actually happened. Try to improve
+this by print what is actually being waited.
+
+Besides, only print "starting timeout scripts" when there are
+actual timeout scripts to use.
+
+Signed-off-by: Kairui Song <kasong@redhat.com>
+---
+ modules.d/98dracut-systemd/dracut-initqueue.sh | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
+
+diff --git a/modules.d/98dracut-systemd/dracut-initqueue.sh b/modules.d/98dracut-systemd/dracut-initqueue.sh
+index 3ddc2362..89225995 100755
+--- a/modules.d/98dracut-systemd/dracut-initqueue.sh
++++ b/modules.d/98dracut-systemd/dracut-initqueue.sh
+@@ -55,14 +55,20 @@ while :; do
+     done
+ 
+     if [ $main_loop -gt $((2*$RDRETRY/3)) ]; then
+-        warn "dracut-initqueue timeout - starting timeout scripts"
+-        for job in $hookdir/initqueue/timeout/*.sh; do
+-            [ -e "$job" ] || break
+-            job=$job . $job
+-            udevadm settle --timeout=0 >/dev/null 2>&1 || main_loop=0
+-            [ -f $hookdir/initqueue/work ] && main_loop=0
+-            [ $main_loop -eq 0 ] && break
++        warn "dracut-initqueue: timeout, still waiting for following initqueue hooks:"
++        for _f in $hookdir/initqueue/finished/*.sh; do
++            warn "$_f: \"$(cat "$_f")\""
+         done
++        if [ "$(ls -A $hookdir/initqueue/finished)" ]; then
++            warn "dracut-initqueue: starting timeout scripts"
++            for job in $hookdir/initqueue/timeout/*.sh; do
++                [ -e "$job" ] || break
++                job=$job . $job
++                udevadm settle --timeout=0 >/dev/null 2>&1 || main_loop=0
++                [ -f $hookdir/initqueue/work ] && main_loop=0
++                [ $main_loop -eq 0 ] && break
++            done
++        fi
+     fi
+ 
+     main_loop=$(($main_loop+1))
+

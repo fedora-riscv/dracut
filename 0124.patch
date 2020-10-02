@@ -1,0 +1,25 @@
+From 74f83fb9f355609121940e4a1d9bb5e73206ea3e Mon Sep 17 00:00:00 2001
+From: Daniel Molkentin <dmolkentin@suse.com>
+Date: Tue, 11 Aug 2020 19:55:35 +0200
+Subject: [PATCH] 95nvmf: fix typo in the example documentation
+
+---
+ modules.d/95nvmf/parse-nvmf-boot-connections.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/modules.d/95nvmf/parse-nvmf-boot-connections.sh b/modules.d/95nvmf/parse-nvmf-boot-connections.sh
+index 61c6dec1..0ed53a81 100755
+--- a/modules.d/95nvmf/parse-nvmf-boot-connections.sh
++++ b/modules.d/95nvmf/parse-nvmf-boot-connections.sh
+@@ -8,8 +8,8 @@
+ # Examples:
+ # nvmf.hostnqn=nqn.2014-08.org.nvmexpress:uuid:37303738-3034-584d-5137-333230423843
+ # nvmf.discover=rdma:192.168.1.3::4420
+-# nvme.discover=tcp:192.168.1.3::4420
+-# nvme.discover=tcp:192.168.1.3
++# nvmf.discover=tcp:192.168.1.3::4420
++# nvmf.discover=tcp:192.168.1.3
+ # nvmf.discover=fc:auto
+ #
+ # Note: FC does autodiscovery, so typically there is no need to
+

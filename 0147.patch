@@ -1,7 +1,7 @@
 From d76e9ad5d7b16edb3c544ed3888640bea0efbf72 Mon Sep 17 00:00:00 2001
 From: GuoChuang <guo.chuang@zte.com.cn>
 Date: Mon, 24 Aug 2020 14:03:48 +0800
-Subject: [PATCH 1/8] fix graphics startup failure with the rhgb paramter in
+Subject: [PATCH] fix graphics startup failure with the rhgb paramter in
  CentOS8.2
 
 ---
@@ -21,6 +21,4 @@ index 08cfa45b..c69b2cfa 100755
                  if strstr "$(modinfo -F filename $(<$i) 2>/dev/null)" radeon.ko; then
                      hostonly='' instmods amdkfd
                  fi
--- 
-2.26.2
 

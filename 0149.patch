@@ -1,0 +1,226 @@
+From 37502d4c8974370a38496f44e279d56061fe67c3 Mon Sep 17 00:00:00 2001
+From: Antz <antzz@protonmail.ch>
+Date: Sat, 29 Aug 2020 14:54:19 +0200
+Subject: [PATCH] 90crypt: make `rd.luks.key` usable with encrypted keydev.
+
+Introduce prefix `keysource:` for the values of `rd.luks.partuuid`,
+`rd.luks.serial` and `rd.luks.uuid`.
+If specified, ask for passphrase instead of waiting for keydevs to come
+online.
+---
+ dracut.cmdline.7.asc               | 45 ++++++++++++++++++++++++++++++++++++++
+ modules.d/90crypt/cryptroot-ask.sh | 18 +++++++++++++--
+ modules.d/90crypt/parse-crypt.sh   | 43 ++++++++++++++++++++++++++----------
+ 3 files changed, 92 insertions(+), 14 deletions(-)
+
+diff --git a/dracut.cmdline.7.asc b/dracut.cmdline.7.asc
+index c37d427e..dbbbfed0 100644
+--- a/dracut.cmdline.7.asc
++++ b/dracut.cmdline.7.asc
+@@ -302,6 +302,8 @@ crypto LUKS
+     The comparisons also matches, if _<luks uuid>_ is only the beginning of the
+     LUKS UUID, so you don't have to specify the full UUID.
+     This parameter can be specified multiple times.
++    _<luks uuid>_ may be prefixed by the keyword `keysource:`, see
++    _rd.luks.key_ below.
+ 
+ **rd.luks.allow-discards=**__<luks uuid>__::
+     Allow  using  of discards (TRIM) requests for LUKS partitions with the given
+@@ -397,6 +399,49 @@ head -32c /dev/urandom > rootkey.key
+ cryptsetup --batch-mode --key-file rootkey.key \
+            luksFormat /dev/sda47
+ --
++
++You can also use regular key files on an encrypted _keydev_.
++
++Compared to using GPG encrypted keyfiles on an unencrypted
++device this provides the following advantages:
++
++- you can unlock your disk(s) using multiple passphrases
++- better security by not loosing the key stretching mechanism
++
++To use an encrypted _keydev_ you *must* ensure that it becomes
++available by using the keyword `keysource`, e.g.
++`rd.luks.uuid=keysource:aaaa`
++_aaaa_ being the uuid of the encrypted _keydev_.
++
++Example:
++
++Lets assume you have three disks _A_, _B_ and _C_ with the uuids
++_aaaa_, _bbbb_ and _cccc_. +
++You want to unlock _A_ and _B_ using keyfile _keyfile_. +
++The unlocked volumes be _A'_, _B'_ and _C'_ with the uuids
++_AAAA_, _BBBB_ and _CCCC_. +
++_keyfile_ is saved on _C'_ as _/keyfile_.
++
++One luks keyslot of each _A_, _B_ and _C_ is setup with a
++passphrase. +
++Another luks keyslot of each _A_ and _B_ is setup with _keyfile_.
++
++To boot this configuration you could use:
++[listing]
++--
++rd.luks.uuid=aaaa
++rd.luks.uuid=bbbb
++rd.luks.uuid=keysource:cccc
++rd.luks.key=/keyfile:UUID=CCCC
++--
++Dracut asks for the passphrase for _C_ and uses the
++keyfile to unlock _A_ and _B_. +
++If getting the passphrase for _C_ fails it falls back to
++asking for the passphrases for _A_ and _B_.
++
++If you want _C'_ to stay unlocked, specify a luks name for
++it, e.g. `rd.luks.name=cccc=mykeys`, otherwise it gets closed
++when not needed anymore.
+ ===============================
+ 
+ MD RAID
+diff --git a/modules.d/90crypt/cryptroot-ask.sh b/modules.d/90crypt/cryptroot-ask.sh
+index 97047ae9..19d2bcb4 100755
+--- a/modules.d/90crypt/cryptroot-ask.sh
++++ b/modules.d/90crypt/cryptroot-ask.sh
+@@ -20,8 +20,11 @@ fi
+ # default luksname - luks-UUID
+ luksname=$2
+ 
++# is_keysource - ask for passphrase even if a rd.luks.key argument is set
++is_keysource=${3:-0}
++
+ # number of tries
+-numtries=${3:-10}
++numtries=${4:-10}
+ 
+ # TODO: improve to support what cmdline does
+ if [ -f /etc/crypttab ] && getargbool 1 rd.luks.crypttab -d -n rd_NO_CRYPTTAB; then
+@@ -137,6 +140,8 @@ if [ -n "$luksfile" -a "$luksfile" != "none" -a -e "$luksfile" ]; then
+     if cryptsetup --key-file "$luksfile" $cryptsetupopts luksOpen "$device" "$luksname"; then
+         ask_passphrase=0
+     fi
++elif [ "$is_keysource" -ne 0 ]; then
++    info "Asking for passphrase because $device is a keysource."
+ else
+     while [ -n "$(getarg rd.luks.key)" ]; do
+         if tmp=$(getkey /tmp/luks.keys $device); then
+@@ -151,7 +156,7 @@ else
+             info "No key found for $device.  Will try $numtries time(s) more later."
+             initqueue --unique --onetime --settled \
+                 --name cryptroot-ask-$luksname \
+-                $(command -v cryptroot-ask) "$device" "$luksname" "$(($numtries-1))"
++                $(command -v cryptroot-ask) "$device" "$luksname" "$is_keysource" "$(($numtries-1))"
+             exit 0
+         fi
+         unset tmp
+@@ -178,6 +183,15 @@ if [ $ask_passphrase -ne 0 ]; then
+     unset _timeout
+ fi
+ 
++if [ "$is_keysource" -ne 0 -a ${luksname##luks-} != "$luksname" ]; then
++    luks_close="$(command -v cryptsetup) close"
++    {
++        printf -- '[ -e /dev/mapper/%s ] && ' "$luksname"
++        printf -- '%s "%s"\n' "$luks_close" "$luksname"
++    } >> "$hookdir/cleanup/31-crypt-keysource.sh"
++    unset luks_close
++fi
++
+ unset device luksname luksfile
+ 
+ # mark device as asked
+diff --git a/modules.d/90crypt/parse-crypt.sh b/modules.d/90crypt/parse-crypt.sh
+index f6911cc8..4e899fed 100755
+--- a/modules.d/90crypt/parse-crypt.sh
++++ b/modules.d/90crypt/parse-crypt.sh
+@@ -49,6 +49,12 @@ else
+     if [ -n "$PARTUUID" ]; then
+         for uuid in $PARTUUID; do
+ 
++            is_keysource=0
++            _uuid=$uuid
++            uuid=${uuid#keysource:}
++            [ $uuid != $_uuid ] && is_keysource=1
++            unset _uuid
++
+             uuid=${uuid##luks-}
+             if luksname=$(_cryptgetargsname "rd.luks.name=$uuid="); then
+                 luksname="${luksname#$uuid=}"
+@@ -61,7 +67,7 @@ else
+                     printf -- 'ENV{ID_PART_ENTRY_UUID}=="*%s*", ' "$uuid"
+                     printf -- 'RUN+="%s --settled --unique --onetime ' "$(command -v initqueue)"
+                     printf -- '--name cryptroot-ask-%%k %s ' "$(command -v cryptroot-ask)"
+-                    printf -- '$env{DEVNAME} %s %s"\n' "$luksname" "$tout"
++                    printf -- '$env{DEVNAME} %s %s"\n' "$luksname" "$is_keysource" "$tout"
+                 } >> /etc/udev/rules.d/70-luks.rules.new
+             else
+                 luksname=$(dev_unit_name "$luksname")
+@@ -81,6 +87,12 @@ else
+     elif [ -n "$SERIAL" ]; then
+         for serialid in $SERIAL; do
+ 
++            is_keysource=0
++            _serialid=$serialid
++            serialid=${serialid#keysource:}
++            [ $serialid != $_serialid ] && is_keysource=1
++            unset _serialid
++
+             serialid=${serialid##luks-}
+             if luksname=$(_cryptgetargsname "rd.luks.name=$serialid="); then
+                 luksname="${luksname#$serialid=}"
+@@ -93,7 +105,7 @@ else
+                     printf -- 'ENV{ID_SERIAL_SHORT}=="*%s*", ' "$serialid"
+                     printf -- 'RUN+="%s --settled --unique --onetime ' "$(command -v initqueue)"
+                     printf -- '--name cryptroot-ask-%%k %s ' "$(command -v cryptroot-ask)"
+-                    printf -- '$env{DEVNAME} %s %s"\n' "$luksname" "$tout"
++                    printf -- '$env{DEVNAME} %s %s"\n' "$luksname" "$is_keysource" "$tout"
+                 } >> /etc/udev/rules.d/70-luks.rules.new
+             else
+                 luksname=$(dev_unit_name "$luksname")
+@@ -113,6 +125,12 @@ else
+     elif [ -n "$LUKS" ]; then
+         for luksid in $LUKS; do
+ 
++            is_keysource=0
++            _luksid=$luksid
++            luksid=${luksid#keysource:}
++            [ $luksid != $_luksid ] && is_keysource=1
++            unset _luksid
++
+             luksid=${luksid##luks-}
+             if luksname=$(_cryptgetargsname "rd.luks.name=$luksid="); then
+                 luksname="${luksname#$luksid=}"
+@@ -126,7 +144,7 @@ else
+                     printf -- 'ENV{ID_FS_UUID}=="*%s*", ' "$luksid"
+                     printf -- 'RUN+="%s --settled --unique --onetime ' "$(command -v initqueue)"
+                     printf -- '--name cryptroot-ask-%%k %s ' "$(command -v cryptroot-ask)"
+-                    printf -- '$env{DEVNAME} %s %s"\n' "$luksname" "$tout"
++                    printf -- '$env{DEVNAME} %s %s %s"\n' "$luksname" "$is_keysource" "$tout"
+                 } >> /etc/udev/rules.d/70-luks.rules.new
+             else
+                 luksname=$(dev_unit_name "$luksname")
+@@ -143,15 +161,16 @@ else
+                 fi
+             fi
+ 
+-            uuid=$luksid
+-            while [ "$uuid" != "${uuid#*-}" ]; do uuid=${uuid%%-*}${uuid#*-}; done
+-            printf -- '[ -e /dev/disk/by-id/dm-uuid-CRYPT-LUKS?-*%s*-* ] || exit 1\n' $uuid \
+-                >> "$hookdir/initqueue/finished/90-crypt.sh"
+-
+-            {
+-                printf -- '[ -e /dev/disk/by-uuid/*%s* ] || ' $luksid
+-                printf -- 'warn "crypto LUKS UUID "%s" not found"\n' $luksid
+-            } >> "$hookdir/emergency/90-crypt.sh"
++            if [ $is_keysource -eq 0 ]; then
++                uuid=$luksid
++                while [ "$uuid" != "${uuid#*-}" ]; do uuid=${uuid%%-*}${uuid#*-}; done
++                printf -- '[ -e /dev/disk/by-id/dm-uuid-CRYPT-LUKS?-*%s*-* ] || exit 1\n' $uuid \
++                    >> "$hookdir/initqueue/finished/90-crypt.sh"
++                {
++                    printf -- '[ -e /dev/disk/by-uuid/*%s* ] || ' $luksid
++                    printf -- 'warn "crypto LUKS UUID "%s" not found"\n' $luksid
++                } >> "$hookdir/emergency/90-crypt.sh"
++            fi
+         done
+     elif getargbool 0 rd.auto; then
+         if [ -z "$DRACUT_SYSTEMD" ]; then
+

@@ -1,0 +1,26 @@
+From fece5bfcac527b6695ca04840a1a154c283e4063 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B3hann=20B=2E=20Gu=C3=B0mundsson?= <johannbg@gmail.com>
+Date: Fri, 28 Aug 2020 11:47:06 +0000
+Subject: [PATCH] Adding a pull request template
+
+---
+ .github/pull_request_template.md | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/.github/pull_request_template.md b/.github/pull_request_template.md
+new file mode 100644
+index 00000000..ef281c3d
+--- /dev/null
++++ b/.github/pull_request_template.md
+@@ -0,0 +1,10 @@
++This pull request changes...
++
++## Changes
++
++## Checklist
++- [ ] I have tested it locally
++- [ ] I have reviewed and updated any documentation if relevant
++- [ ] I am providing new code and test(s) for it
++
++Fixes #
+

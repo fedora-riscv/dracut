@@ -1,0 +1,23 @@
+From f87605e3ab2955e7b50d34ba0462332cb1f079d8 Mon Sep 17 00:00:00 2001
+From: Beniamino Galvani <bgalvani@redhat.com>
+Date: Mon, 13 Jul 2020 08:51:33 +0200
+Subject: [PATCH] dracut.cmdline.7.asc: fix typo
+
+---
+ dracut.cmdline.7.asc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dracut.cmdline.7.asc b/dracut.cmdline.7.asc
+index 751f5276..c37d427e 100644
+--- a/dracut.cmdline.7.asc
++++ b/dracut.cmdline.7.asc
+@@ -607,7 +607,7 @@ interface name. Better name it "bootnet" or "bluesocket".
+     boolean, bring up network even without netroot set
+ 
+ **vlan=**__<vlanname>__:__<phydevice>__::
+-    Setup vlan device named <vlanname> on <phydeivce>.
++    Setup vlan device named <vlanname> on <phydevice>.
+     We support the four styles of vlan names: VLAN_PLUS_VID (vlan0005),
+     VLAN_PLUS_VID_NO_PAD (vlan5), DEV_PLUS_VID (eth0.0005),
+     DEV_PLUS_VID_NO_PAD (eth0.5)
+

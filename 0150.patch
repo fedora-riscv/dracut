@@ -1,0 +1,24 @@
+From f3e328a7fd30c7109a3af188e84e621770bb6b85 Mon Sep 17 00:00:00 2001
+From: Beniamino Galvani <bgalvani@redhat.com>
+Date: Sun, 20 Sep 2020 09:44:08 +0200
+Subject: [PATCH] dracut.spec: include the 04watchdog-modules module
+
+Include the 04watchdog-modules module that was added in 39d90012a652
+("04watchdog: split the watchdog module install").
+---
+ dracut.spec | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/dracut.spec b/dracut.spec
+index b1891a2f..3597c6e5 100644
+--- a/dracut.spec
++++ b/dracut.spec
+@@ -348,6 +348,7 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
+ %{dracutlibdir}/modules.d/03modsign
+ %{dracutlibdir}/modules.d/03rescue
+ %{dracutlibdir}/modules.d/04watchdog
++%{dracutlibdir}/modules.d/04watchdog-modules
+ %{dracutlibdir}/modules.d/05busybox
+ %{dracutlibdir}/modules.d/06rngd
+ %{dracutlibdir}/modules.d/10i18n
+

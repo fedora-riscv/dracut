@@ -57,3 +57,4 @@ index 1eb47402..4d1cb7a4 100644
  as possible into the initramfs. dracut contains various modules which
  are driven by the event-based udev. Having root on MD, DM, LVM2, LUKS
  is supported as well as NFS, iSCSI, NBD, FCoE with the dracut-network
+

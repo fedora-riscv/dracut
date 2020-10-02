@@ -10,14 +10,14 @@ Also simplify make_trace_mem a bit.
 
 And currently rd.memdebug=4 is unstable, fails from time to time.
 ---
- dracut.cmdline.7.asc                             |   4 +--
+ dracut.cmdline.7.asc                             |   4 +-
  modules.d/98dracut-systemd/dracut-cmdline.sh     |   2 +-
  modules.d/98dracut-systemd/dracut-pre-mount.sh   |   2 +-
  modules.d/98dracut-systemd/dracut-pre-pivot.sh   |   2 +-
  modules.d/98dracut-systemd/dracut-pre-trigger.sh |   2 +-
- modules.d/99base/dracut-lib.sh                   |  44 +++++-------------------
- modules.d/99base/init.sh                         |   8 ++---
- modules.d/99base/memtrace-ko.sh                  | 191 -----------------------------------------------------------------------------------------------------
+ modules.d/99base/dracut-lib.sh                   |  44 +-----
+ modules.d/99base/init.sh                         |   8 +-
+ modules.d/99base/memtrace-ko.sh                  | 191 -----------------------
  modules.d/99base/module-setup.sh                 |   1 -
  9 files changed, 18 insertions(+), 238 deletions(-)
 

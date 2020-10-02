@@ -1,0 +1,25 @@
+From 8cb5ac1b30be458df9497911ba601d90e68f4d5b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B3hann=20B=2E=20Gu=C3=B0mundsson?= <johannbg@gmail.com>
+Date: Wed, 15 Jul 2020 14:35:38 +0000
+Subject: [PATCH] As of v246 of systemd "syslog" and "syslog-console" switches
+ have been deprecated
+
+---
+ modules.d/98dracut-systemd/dracut-mount.service | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/modules.d/98dracut-systemd/dracut-mount.service b/modules.d/98dracut-systemd/dracut-mount.service
+index 77d34f62..c88e6d84 100644
+--- a/modules.d/98dracut-systemd/dracut-mount.service
++++ b/modules.d/98dracut-systemd/dracut-mount.service
+@@ -19,8 +19,7 @@ Environment=NEWROOT=/sysroot
+ Type=oneshot
+ ExecStart=-/bin/dracut-mount
+ StandardInput=null
+-StandardOutput=syslog
+-StandardError=syslog+console
++StandardError=journal+console
+ KillMode=process
+ RemainAfterExit=yes
+ 
+

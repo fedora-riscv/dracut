@@ -1,0 +1,24 @@
+From 265f696b532f63f0ac1f9f341e0469a6eafe2fdd Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B3hann=20B=2E=20Gu=C3=B0mundsson?= <johannbg@gmail.com>
+Date: Wed, 15 Jul 2020 14:26:00 +0000
+Subject: [PATCH] As of v246 of systemd "syslog" and "syslog-console" switches
+ have been deprecated
+
+---
+ modules.d/90stratis/stratisd-init.service | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/modules.d/90stratis/stratisd-init.service b/modules.d/90stratis/stratisd-init.service
+index 318e8c27..1be2e33b 100644
+--- a/modules.d/90stratis/stratisd-init.service
++++ b/modules.d/90stratis/stratisd-init.service
+@@ -8,8 +8,6 @@ DefaultDependencies=no
+ Type=simple
+ ExecStart=/sbin/stratisd-init --debug
+ KillSignal=SIGINT
+-StandardOutput=syslog
+-StandardError=syslog
+ 
+ [Install]
+ WantedBy=sysinit.target
+

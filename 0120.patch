@@ -1,0 +1,20 @@
+From 3f4771ebf4826192ec95f17e4eb0b9114f319221 Mon Sep 17 00:00:00 2001
+From: Daniel Molkentin <dmolkentin@suse.com>
+Date: Fri, 7 Aug 2020 18:54:43 +0200
+Subject: [PATCH] .github: fix path to label workflow mapping file
+
+---
+ .github/workflows/master-labels.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/master-labels.yml b/.github/workflows/master-labels.yml
+index 0a46425a..249b2148 100644
+--- a/.github/workflows/master-labels.yml
++++ b/.github/workflows/master-labels.yml
+@@ -14,4 +14,4 @@ jobs:
+               env:
+                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                   GITHUB_REPOSITORY: ${{ github.repository }}
+-                  LABEL_MAPPINGS_FILE: .github/labeler.yml
++                  LABEL_MAPPINGS_FILE: .github/master-label-triggers.yml
+

@@ -1,0 +1,24 @@
+From 0132527b8f377795287542d1ddfeee2a690a7782 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B3hann=20B=2E=20Gu=C3=B0mundsson?= <johannbg@gmail.com>
+Date: Fri, 28 Aug 2020 16:03:37 +0000
+Subject: [PATCH] Adding documentation template
+
+---
+ .github/ISSUE_TEMPLATE/documentation.md | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/.github/ISSUE_TEMPLATE/documentation.md b/.github/ISSUE_TEMPLATE/documentation.md
+new file mode 100644
+index 00000000..7efadfaf
+--- /dev/null
++++ b/.github/ISSUE_TEMPLATE/documentation.md
+@@ -0,0 +1,8 @@
++---
++name: \U0001F4D6 Documentation
++about: Suggest an improvement for documentation in Dracut
++labels: 'documents'
++---
++
++**Describe the documentation**
++A clear and concise description of what should be better documented.
+

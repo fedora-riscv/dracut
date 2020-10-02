@@ -1,0 +1,24 @@
+From 55b0d2edafdd18c2e85f47063f0ac81652f86956 Mon Sep 17 00:00:00 2001
+From: Daniel Molkentin <dmolkentin@suse.com>
+Date: Wed, 10 Jun 2020 22:36:56 +0200
+Subject: [PATCH] 95iscsi: fix missing space when compiling cmdline args
+
+Reference: bsc#1172816
+---
+ modules.d/95iscsi/module-setup.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules.d/95iscsi/module-setup.sh b/modules.d/95iscsi/module-setup.sh
+index 19a8bdbd..8b6300d5 100755
+--- a/modules.d/95iscsi/module-setup.sh
++++ b/modules.d/95iscsi/module-setup.sh
+@@ -65,7 +65,7 @@ install_ibft() {
+             if [ ${d##*/} = "ibft" ] && [ "$ibft_mod" != "bnx2i" ] ; then
+                 echo -n "rd.iscsi.ibft=1 "
+             fi
+-            echo -n "rd.iscsi.firmware=1"
++            echo -n "rd.iscsi.firmware=1 "
+         fi
+     done
+ }
+

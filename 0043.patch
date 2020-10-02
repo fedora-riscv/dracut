@@ -82,13 +82,13 @@ the stack trace of the top memory user, also printed on pri-pivot:
 
 This could be very helpful for debuging memory usage issues.
 ---
- dracut.cmdline.7.asc                      | 16 ++++++++++------
- dracut.spec                               |  2 ++
+ dracut.cmdline.7.asc                      | 16 +++++---
+ dracut.spec                               |  2 +
  modules.d/99base/dracut-lib.sh            |  2 +-
- modules.d/99memstrack/memstrack-report.sh | 23 +++++++++++++++++++++++
- modules.d/99memstrack/memstrack-start.sh  | 68 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- modules.d/99memstrack/memstrack.service   | 13 +++++++++++++
- modules.d/99memstrack/module-setup.sh     | 27 +++++++++++++++++++++++++++
+ modules.d/99memstrack/memstrack-report.sh | 23 +++++++++++
+ modules.d/99memstrack/memstrack-start.sh  | 68 +++++++++++++++++++++++++++++++
+ modules.d/99memstrack/memstrack.service   | 13 ++++++
+ modules.d/99memstrack/module-setup.sh     | 27 ++++++++++++
  7 files changed, 144 insertions(+), 7 deletions(-)
 
 diff --git a/dracut.cmdline.7.asc b/dracut.cmdline.7.asc

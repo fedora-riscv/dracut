@@ -1,0 +1,51 @@
+From de3cb0e3214c3fbab3a94e705445b4d1c2bf0dff Mon Sep 17 00:00:00 2001
+From: Kairui Song <kasong@redhat.com>
+Date: Tue, 9 Jun 2020 03:03:18 +0800
+Subject: [PATCH] dracut.sh: Move the library workaround after squash
+
+Ensure the workaround is also valid when dracut-squash module is used
+
+Signed-off-by: Kairui Song <kasong@redhat.com>
+---
+ dracut.sh | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
+
+diff --git a/dracut.sh b/dracut.sh
+index 81c6d654..9ee722c9 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -1661,15 +1661,6 @@ if [[ $kernel_only != yes ]]; then
+     # Now we are done with lazy resolving, always install dependencies
+     unset DRACUT_RESOLVE_LAZY
+     export DRACUT_RESOLVE_DEPS=1
+-
+-    # libpthread workaround: pthread_cancel wants to dlopen libgcc_s.so
+-    for _dir in $libdirs; do
+-        for _f in "$dracutsysrootdir$_dir/libpthread.so"*; do
+-            [[ -e "$_f" ]] || continue
+-            inst_libdir_file "libgcc_s.so*"
+-            break 2
+-        done
+-    done
+ fi
+ 
+ for ((i=0; i < ${#include_src[@]}; i++)); do
+@@ -1941,6 +1932,17 @@ if dracut_module_included "squash"; then
+     done
+ fi
+ 
++if [[ $kernel_only != yes ]]; then
++    # libpthread workaround: pthread_cancel wants to dlopen libgcc_s.so
++    for _dir in $libdirs; do
++        for _f in "$dracutsysrootdir$_dir/libpthread.so"*; do
++            [[ -e "$_f" ]] || continue
++            inst_libdir_file "libgcc_s.so*"
++            break 2
++        done
++    done
++fi
++
+ if [[ $do_strip = yes ]] && ! [[ $DRACUT_FIPS_MODE ]]; then
+     dinfo "*** Stripping files ***"
+     find "$initdir" -type f \
+

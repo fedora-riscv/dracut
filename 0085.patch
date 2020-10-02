@@ -1,0 +1,23 @@
+From 63b05a8e6787301dce435bd414a37a8f3ae9cdde Mon Sep 17 00:00:00 2001
+From: q66 <daniel@octaforge.org>
+Date: Sat, 25 Jul 2020 17:20:40 +0200
+Subject: [PATCH] dracut.sh: fix ia32 detection for uefi executables
+
+---
+ dracut.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dracut.sh b/dracut.sh
+index d5dfa77d..8f78da06 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -1153,7 +1153,7 @@ if [[ ! $print_cmdline ]]; then
+         case $(uname -m) in
+             x86_64)
+                 EFI_MACHINE_TYPE_NAME=x64;;
+-            ia32)
++            i?86)
+                 EFI_MACHINE_TYPE_NAME=ia32;;
+             *)
+                 dfatal "Architecture '$(uname -m)' not supported to create a UEFI executable"
+

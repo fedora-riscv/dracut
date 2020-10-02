@@ -1,7 +1,7 @@
 From dee4f26adcfd9a9a0e4664f0dc22974b60b5eea2 Mon Sep 17 00:00:00 2001
 From: Nicolas Chauvet <kwizart@gmail.com>
 Date: Sat, 26 Sep 2020 15:01:55 +0200
-Subject: [PATCH 3/3] 50drm: Check drm_encoder_init along drm_crtc_init
+Subject: [PATCH] 50drm: Check drm_encoder_init along drm_crtc_init
 
 Some modules are involved in the display output without to rely on
 drm_crtc_init.
@@ -34,6 +34,4 @@ index ad0e6d80..ddc1223d 100755
 +        dracut_instmods -o -s "drm_crtc_init|drm_dev_register|drm_encoder_init" "=drivers/gpu/drm" "=drivers/staging"
      fi
  }
--- 
-2.26.2
 
