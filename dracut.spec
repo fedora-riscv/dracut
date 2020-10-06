@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 157.git20201002
+%define dist_free_release 167.git20201006
 
 Name: dracut
 Version: 050
@@ -184,6 +184,16 @@ Patch153: 0153.patch
 Patch154: 0154.patch
 Patch155: 0155.patch
 Patch156: 0156.patch
+Patch157: 0157.patch
+Patch158: 0158.patch
+Patch159: 0159.patch
+Patch160: 0160.patch
+Patch161: 0161.patch
+Patch162: 0162.patch
+Patch163: 0163.patch
+Patch164: 0164.patch
+Patch165: 0165.patch
+Patch166: 0166.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -639,6 +649,9 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %changelog
+* Tue Oct 06 2020 Harald Hoyer <harald@redhat.com> - 050-167.git20201006
+- git snapshot
+
 * Fri Oct 02 2020 Harald Hoyer <harald@redhat.com> - 050-157.git20201002
 - git snapshot
 

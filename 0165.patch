@@ -1,0 +1,24 @@
+From 7ea391b527eb19c572a750fe00f95d02a50beabf Mon Sep 17 00:00:00 2001
+From: Jonathan Lebon <jonathan@jlebon.com>
+Date: Wed, 23 Sep 2020 21:15:52 -0400
+Subject: [PATCH] 90crypt: pull in remote-cryptsetup.target enablement
+
+This is enabled upstream in
+https://github.com/systemd/systemd/pull/17149.
+---
+ modules.d/90crypt/module-setup.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/modules.d/90crypt/module-setup.sh b/modules.d/90crypt/module-setup.sh
+index e3d6338f..f43b2e5d 100755
+--- a/modules.d/90crypt/module-setup.sh
++++ b/modules.d/90crypt/module-setup.sh
+@@ -151,6 +151,7 @@ install() {
+                       $systemdsystemunitdir/systemd-ask-password-console.service \
+                       $systemdsystemunitdir/cryptsetup.target \
+                       $systemdsystemunitdir/sysinit.target.wants/cryptsetup.target \
++                      $systemdsystemunitdir/initrd-root-fs.target.wants/remote-cryptsetup.target \
+                       systemd-ask-password systemd-tty-ask-password-agent
+     fi
+ 
+

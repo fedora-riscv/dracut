@@ -26,3 +26,4 @@ index fded5f17..e20aaa67 100644
       libdir=%{_prefix}/lib
  
  echo "DRACUT_VERSION=%{version}-%{release}" > $RPM_BUILD_ROOT/%{dracutlibdir}/dracut-version.sh
+

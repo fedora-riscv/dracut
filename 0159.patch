@@ -1,0 +1,153 @@
+From 4087fd4d1a618ece6b2f8bbb1761aeccd59fcc92 Mon Sep 17 00:00:00 2001
+From: Hannes Reinecke <hare@suse.com>
+Date: Mon, 28 Sep 2020 11:25:53 +0200
+Subject: [PATCH] 95nvmf: rework parameter handling
+
+Always add the nvmf.discover parameters to /etc/nvme/discovery
+when parsing the dracut commandline, and rely on NVMe autodiscovery
+when no parameters are given.
+And modify the syntax to use a comma ',' as a separator for nvmf.discover
+as the semicolon ':' is already used for the FC-NVMe transport address format.
+
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+---
+ modules.d/95nvmf/module-setup.sh                | 32 +++++++++++++++++++-
+ modules.d/95nvmf/parse-nvmf-boot-connections.sh | 39 ++++++++++++-------------
+ 2 files changed, 50 insertions(+), 21 deletions(-)
+
+diff --git a/modules.d/95nvmf/module-setup.sh b/modules.d/95nvmf/module-setup.sh
+index 418b5e0c..92400c21 100755
+--- a/modules.d/95nvmf/module-setup.sh
++++ b/modules.d/95nvmf/module-setup.sh
+@@ -57,6 +57,31 @@ installkernel() {
+ cmdline() {
+     local _hostnqn
+     local _hostid
++
++    gen_nvmf_cmdline() {
++        local _dev=$1
++        local trtype
++
++        [[ -L "/sys/dev/block/$_dev" ]] || return 0
++        cd -P "/sys/dev/block/$_dev" || return 0
++        if [ -f partition ] ; then
++            cd ..
++        fi
++        for d in device/nvme* ; do
++            [ -L "$d" ] || continue
++            if readlink "$d" | grep -q nvme-fabrics ; then
++                trtype=$(cat "$d"/transport)
++                break
++            fi
++        done
++
++        [ -z "$trtype" ] && return 0
++        nvme list-subsys ${PWD##*/} | while read x dev trtype traddr host_traddr state ana; do
++            [ "$trtype" != "${trtype#NQN}" ] && continue
++            echo -n " nvmf.discover=$trtype,${traddr#traddr=},${host_traddr#host_traddr=}"
++        done
++    }
++
+     if [ -f /etc/nvme/hostnqn ] ; then
+         _hostnqn=$(cat /etc/nvme/hostnqn)
+         echo -n " nvmf.hostnqn=${_hostnqn}"
+@@ -65,7 +90,12 @@ cmdline() {
+         _hostid=$(cat /etc/nvme/hostid)
+         echo -n " nvmf.hostid=${_hostid}"
+     fi
+-    echo ""
++
++    [[ $hostonly ]] || [[ $mount_needs ]] && {
++        pushd . >/dev/null
++        for_each_host_dev_and_slaves gen_nvmf_cmdline
++        popd >/dev/null
++    }
+ }
+ 
+ # called by dracut
+diff --git a/modules.d/95nvmf/parse-nvmf-boot-connections.sh b/modules.d/95nvmf/parse-nvmf-boot-connections.sh
+index 0ed53a81..3ff731f1 100755
+--- a/modules.d/95nvmf/parse-nvmf-boot-connections.sh
++++ b/modules.d/95nvmf/parse-nvmf-boot-connections.sh
+@@ -3,14 +3,14 @@
+ # Supported formats:
+ # nvmf.hostnqn=<hostnqn>
+ # nvmf.hostid=<hostid>
+-# nvmf.discover=<transport>:<traddr>:<host-traddr>:<trsvcid>
++# nvmf.discover=<transport>,<traddr>,<host-traddr>,<trsvcid>
+ #
+ # Examples:
+ # nvmf.hostnqn=nqn.2014-08.org.nvmexpress:uuid:37303738-3034-584d-5137-333230423843
+-# nvmf.discover=rdma:192.168.1.3::4420
+-# nvmf.discover=tcp:192.168.1.3::4420
+-# nvmf.discover=tcp:192.168.1.3
+-# nvmf.discover=fc:auto
++# nvmf.discover=rdma,192.168.1.3,,4420
++# nvmf.discover=tcp,192.168.1.3,,4420
++# nvmf.discover=tcp,192.168.1.3
++# nvmf.discover=fc,nn-0x200400a098d85236:pn-0x201400a098d85236,nn-0x200000109b7db455:pn-0x100000109b7db455
+ #
+ # Note: FC does autodiscovery, so typically there is no need to
+ # specify any discover parameters for FC.
+@@ -25,11 +25,6 @@ fi
+ 
+ initqueue --onetime modprobe --all -b -q nvme nvme_tcp nvme_core nvme_fabrics
+ 
+-traddr="none"
+-trtype="none"
+-hosttraddr="none"
+-trsvcid=4420
+-
+ validate_ip_conn() {
+     if ! getargbool 0 rd.neednet ; then
+         warn "$trtype transport requires rd.neednet=1"
+@@ -59,8 +54,12 @@ validate_ip_conn() {
+ }
+ 
+ parse_nvmf_discover() {
++    traddr="none"
++    trtype="none"
++    hosttraddr="none"
++    trsvcid=4420
+     OLDIFS="$IFS"
+-    IFS=:
++    IFS=,
+     set $1
+     IFS="$OLDIFS"
+ 
+@@ -101,7 +100,11 @@ parse_nvmf_discover() {
+     if [ "$trtype" = "tcp" ]; then
+         validate_ip_conn
+     fi
+-    echo "--transport=$trtype --traddr=$traddr --host-traddr=$hosttraddr --trsvcid=$trsvcid" >> /etc/nvme/discovery.conf
++    if [ "$trtype" = "fc" ] ; then
++        echo "--transport=$trtype --traddr=$traddr --host-traddr=$hosttraddr" >> /etc/nvme/discovery.conf
++    else
++        echo "--transport=$trtype --traddr=$traddr --host-traddr=$hosttraddr --trsvcid=$trsvcid" >> /etc/nvme/discovery.conf
++    fi
+ }
+ 
+ nvmf_hostnqn=$(getarg nvmf.hostnqn=)
+@@ -122,17 +125,13 @@ done
+ [ -f "/etc/nvme/hostid" ] || exit 0
+ 
+ if [ -f "/etc/nvme/discovery.conf" ] ; then
++    /sbin/initqueue --settled --onetime --unique --name nvme-discover /usr/sbin/nvme connect-all
+     if [ "$trtype" = "tcp" ] ; then
+-        /sbin/initqueue --settled --onetime --unique --name nvme-discover /usr/sbin/nvme connect-all
+         > /tmp/net.$ifname.did-setup
+-    else
+-        /sbin/initqueue --onetime --unique --name nvme-discover /usr/sbin/nvme connect-all
+     fi
+ else
+-    if [ "$trtype" = "tcp" ] ; then
+-        /sbin/initqueue --settled --onetime --unique /usr/sbin/nvme connect-all -t tcp -a $traddr -s $trsvcid
+-        > /tmp/net.$ifname.did-setup
+-    else
+-        /sbin/initqueue --finished --unique --name nvme-fc-autoconnect echo 1 > /sys/class/fc/fc_udev_device/nvme_discovery
++    # No nvme command line arguments present, try autodiscovery
++    if [ "$trtype" = "fc" ] ; then
++        /sbin/initqueue --finished --onetime --unique --name nvme-fc-autoconnect echo 1 > /sys/class/fc/fc_udev_device/nvme_discovery
+     fi
+ fi
+
