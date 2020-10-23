@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 63.git20200529
+%define dist_free_release 64.git20200529
 
 Name: dracut
 Version: 050
@@ -93,6 +93,10 @@ Patch62: 0001-Include-devfreq-drivers-in-initrd.patch
 Patch63: 0001-50drm-fix-ambiguous-redirects.patch
 Patch64: 0002-50drm-Include-drm-platform-drivers-in-hostonly.patch
 Patch65: 0003-50drm-Check-drm_encoder_init-along-drm_crtc_init.patch
+# taken from the PR because we really don't need 11 separate patches
+# for this. Fixes annoying log messages
+# https://github.com/dracutdevs/dracut/pull/859
+Patch66: 859.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -547,6 +551,9 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %changelog
+* Fri Oct 23 2020 Adam Williamson <awilliam@redhat.com> - 050-64.git20200529
+- Backport fix for systemd warnings about logging arguments
+
 * Tue Sep 29 2020 Peter Robinson <pbrobinson@fedoraproject.org> - 050-63.git20200529
 - Fixes for Arm GPUs in early boot
 
