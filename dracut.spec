@@ -55,6 +55,7 @@ BuildRequires: docbook-xsl-stylesheets libxslt
 
 BuildRequires: asciidoc
 %endif
+BuildRequires: make
 
 %if 0%{?suse_version} > 9999
 Obsoletes: mkinitrd < 2.6.1
