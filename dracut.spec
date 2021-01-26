@@ -9,7 +9,7 @@
 
 Name: dracut
 Version: 051
-Release: %{dist_free_release}%{?dist}
+Release: %{dist_free_release}%{?dist}.1
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -478,6 +478,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 051-1.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Tue Dec 15 2020 Harald Hoyer <harald@redhat.com> - 051-1
 - version 051
 
