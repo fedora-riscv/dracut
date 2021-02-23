@@ -8,8 +8,8 @@
 %define dist_free_release 1
 
 Name: dracut
-Version: 051
-Release: %{dist_free_release}%{?dist}.1
+Version: 053
+Release: %{dist_free_release}%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -32,7 +32,7 @@ Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
 BuildRequires: bash
-BuildRequires: git
+BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
 BuildRequires: gcc
 
@@ -55,7 +55,6 @@ BuildRequires: docbook-xsl-stylesheets libxslt
 
 BuildRequires: asciidoc
 %endif
-BuildRequires: make
 
 %if 0%{?suse_version} > 9999
 Obsoletes: mkinitrd < 2.6.1
@@ -217,11 +216,6 @@ echo "DRACUT_VERSION=%{version}-%{release}" > $RPM_BUILD_ROOT/%{dracutlibdir}/dr
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/01fips
 %endif
 
-%if %{defined _unitdir}
-# for systemd, better use systemd-bootchart
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00bootchart
-%endif
-
 # we do not support dash in the initramfs
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00dash
 
@@ -282,7 +276,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 
 %files
 %if %{with doc}
-%doc README.md HACKING TODO AUTHORS NEWS dracut.html dracut.png dracut.svg
+%doc README.md HACKING.md AUTHORS NEWS.md dracut.html dracut.png dracut.svg
 %endif
 %{!?_licensedir:%global license %%doc}
 %license COPYING lgpl-2.1.txt
@@ -330,7 +324,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %endif
 
 %if %{undefined _unitdir}
-%{dracutlibdir}/modules.d/00bootchart
 %endif
 %{dracutlibdir}/modules.d/00bash
 %{dracutlibdir}/modules.d/00systemd
@@ -340,14 +333,22 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version}
 %{dracutlibdir}/modules.d/01fips
 %endif
+%{dracutlibdir}/modules.d/01systemd-ask-password
+%{dracutlibdir}/modules.d/01systemd-coredump
 %{dracutlibdir}/modules.d/01systemd-initrd
+%{dracutlibdir}/modules.d/01systemd-modules-load
+%{dracutlibdir}/modules.d/01systemd-repart
+%{dracutlibdir}/modules.d/01systemd-sysctl
+%{dracutlibdir}/modules.d/01systemd-sysusers
 %{dracutlibdir}/modules.d/03modsign
 %{dracutlibdir}/modules.d/03rescue
 %{dracutlibdir}/modules.d/04watchdog
 %{dracutlibdir}/modules.d/04watchdog-modules
 %{dracutlibdir}/modules.d/05busybox
-%{dracutlibdir}/modules.d/06dbus
+%{dracutlibdir}/modules.d/06dbus-broker
+%{dracutlibdir}/modules.d/06dbus-daemon
 %{dracutlibdir}/modules.d/06rngd
+%{dracutlibdir}/modules.d/09dbus
 %{dracutlibdir}/modules.d/10i18n
 %{dracutlibdir}/modules.d/30convertfs
 %{dracutlibdir}/modules.d/45url-lib
