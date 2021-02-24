@@ -479,6 +479,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue Feb 23 2021 Harald Hoyer <harald@redhat.com> - 053-1
+- version 053
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 051-1.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
