@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 1
+%define dist_free_release 2
 
 Name: dracut
 Version: 053
@@ -30,6 +30,8 @@ URL: https://dracut.wiki.kernel.org/
 Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar.xz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
+
+Patch001: 001.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -479,6 +481,10 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue Apr 06 2021 Sergio Correia <scorreia@redhat.com> - 053-2
+- No default deps for nm-run.service - backport of upstream commit ba4bcf5f4f
+  Resolves: rhbz#1945596
+
 * Tue Feb 23 2021 Harald Hoyer <harald@redhat.com> - 053-1
 - version 053
 
