@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 1
+%define dist_free_release 2
 
 Name: dracut
 Version: 053
@@ -30,6 +30,12 @@ URL: https://dracut.wiki.kernel.org/
 Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar.xz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
+
+# https://github.com/dracutdevs/dracut/commit/ba4bcf5f4f11ad624c647ddf4f566997186135e7
+# Fixes boot failure with some encrypted LVM configurations, see:
+# https://bugzilla.redhat.com/show_bug.cgi?id=1946074
+# https://bugzilla.redhat.com/show_bug.cgi?id=1945596
+Patch0: 0001-fix-network-manager-no-default-deps-for-nm-run.servi.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -479,6 +485,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Apr 08 2021 Adam Williamson <awilliam@redhat.com> - 053-2
+- Backport upstream change reported to fix boot on some encrypted LVM setups (#1946074)
+
 * Tue Feb 23 2021 Harald Hoyer <harald@redhat.com> - 053-1
 - version 053
 
