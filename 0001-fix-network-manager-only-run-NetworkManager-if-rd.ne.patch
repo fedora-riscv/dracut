@@ -1,0 +1,47 @@
+From ac0e8f7dcc81432311906c3fca0d4211f6a2f68c Mon Sep 17 00:00:00 2001
+From: Dusty Mabe <dusty@dustymabe.com>
+Date: Tue, 13 Apr 2021 11:36:21 -0400
+Subject: [PATCH 1/2] fix(network-manager): only run NetworkManager if
+ rd.neednet=1
+
+Don't run the new systemd unit (nm-run.service) if rd.neednet=1
+isn't set. nm-initrd-generator will generate configuration even
+without rd.neednet=1 so determining if we should start based on
+just if connection profiles exist isn't enough. We need some other
+indicator. In this case we lay down a /run/NetworkManager/initrd/neednet
+if rd.neednet=1, which is used by nm-run.service to determine the
+need to run.
+---
+ modules.d/35network-manager/nm-lib.sh      | 1 +
+ modules.d/35network-manager/nm-run.service | 3 +++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/modules.d/35network-manager/nm-lib.sh b/modules.d/35network-manager/nm-lib.sh
+index fe053cf..d756022 100644
+--- a/modules.d/35network-manager/nm-lib.sh
++++ b/modules.d/35network-manager/nm-lib.sh
+@@ -14,6 +14,7 @@ nm_generate_connections()
+                  /etc/sysconfig/network-scripts/ifcfg-*; do
+             [ -f "$i" ] || continue
+             echo '[ -f /tmp/nm.done ]' >$hookdir/initqueue/finished/nm.sh
++            : > /run/NetworkManager/initrd/neednet # activate nm-run.service
+             break
+         done
+     fi
+diff --git a/modules.d/35network-manager/nm-run.service b/modules.d/35network-manager/nm-run.service
+index b667ce3..f041ade 100644
+--- a/modules.d/35network-manager/nm-run.service
++++ b/modules.d/35network-manager/nm-run.service
+@@ -15,6 +15,9 @@ Before=network.target network-online.target
+ #run before we try to mount anything from the dracut hooks
+ Before=dracut-initqueue.service
+ 
++#do not run if networking not needed
++ConditionPathExists=/run/NetworkManager/initrd/neednet
++
+ #do not run, if there is no configuration
+ ConditionPathExistsGlob=|/usr/lib/NetworkManager/system-connections/*
+ ConditionPathExistsGlob=|/run/NetworkManager/system-connections/*
+-- 
+2.30.2
+

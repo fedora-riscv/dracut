@@ -1,0 +1,46 @@
+From 1f21fac646daa46cbe184ef8ff7705842f06ba15 Mon Sep 17 00:00:00 2001
+From: Dusty Mabe <dusty@dustymabe.com>
+Date: Wed, 14 Apr 2021 10:46:12 -0400
+Subject: [PATCH] fix(network-manager): nm-run.service: don't kill forked
+ processes
+
+If teaming is set up via NetworkManager we don't want systemd to take
+down the userspace teamd process when NetworkManager quits. `KillMode=process`
+will allow it to leave those processes behind.
+
+This is fallout from the change to run NetworkManager via systemd (c17c5b7).
+
+With `KillMode=process` we get something like:
+
+```
+sh-5.1# journalctl -u nm-run -o cat | tail
+<info>  [1618411262.7030] quitting now that startup is complete
+<info>  [1618411262.7030] device (team0): carrier: link connected
+<info>  [1618411262.7033] device (team0): team port ens2 was released
+<info>  [1618411262.7033] device (team0): team port ens3 was released
+<info>  [1618411262.7033] manager: NetworkManager state is now CONNECTED_SITE
+<info>  [1618411262.7034] exiting (success)
+nm-run.service: Deactivated successfully.
+nm-run.service: Unit process 476 (teamd) remains running after unit stopped.
+Finished nm-run.service.
+```
+---
+ modules.d/35network-manager/nm-run.service | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/modules.d/35network-manager/nm-run.service b/modules.d/35network-manager/nm-run.service
+index f3493c41..b667ce37 100644
+--- a/modules.d/35network-manager/nm-run.service
++++ b/modules.d/35network-manager/nm-run.service
+@@ -23,6 +23,8 @@ ConditionPathExistsGlob=|/etc/sysconfig/network-scripts/ifcfg-*
+ #run the script and wait before it finishes
+ Type=oneshot
+ ExecStart=/usr/sbin/NetworkManager --configure-and-quit=initrd --no-daemon
++#don't kill forked off processes (for example: teamd for teaming)
++KillMode=process
+ 
+ [Install]
+ WantedBy=initrd.target
+-- 
+2.30.2
+

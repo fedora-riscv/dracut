@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 3
+%define dist_free_release 4
 
 Name: dracut
 Version: 053
@@ -39,6 +39,16 @@ Patch0: 0001-fix-network-manager-no-default-deps-for-nm-run.servi.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1936781#c6
 # Should fix loss of critical system files with kdump enabled
 Patch1: 0001-Partially-revert-41cfdfc-to-fix-RHBZ-1936781-per-ryn.patch
+# Fix logger error when building initramfs
+# https://github.com/dracutdevs/dracut/pull/1351
+Patch2: 0001-fix-dracut-logger.sh-double-dash-trigger-unknown-log.patch
+# Fix issue where teaming would get brought down by systemd
+# https://github.com/dracutdevs/dracut/pull/1349
+Patch3: 0001-fix-network-manager-nm-run.service-don-t-kill-forked.patch
+# Fix issue where NM was getting brought up unconditionally
+# https://github.com/dracutdevs/dracut/pull/1347
+Patch4: 0001-fix-network-manager-only-run-NetworkManager-if-rd.ne.patch
+Patch5: 0002-fix-network-manager-use-run-NetworkManager-initrd-ne.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -488,6 +498,12 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Mon Apr 19 2021 Dusty Mabe <dusty@dustymabe.com> - 053-4
+- Backport: fix(dracut-logger.sh): double dash trigger unknown logger warnings during run
+- Backport: fix(network-manager): nm-run.service: don't kill forked processes
+- Backport: fix(network-manager): only run NetworkManager if rd.neednet=1
+- Backport: fix(network-manager): use /run/NetworkManager/initrd/neednet in initqueue
+
 * Mon Apr 19 2021 Adam Williamson <awilliam@redhat.com> - 053-3
 - Fix removal of key system files when kdump enabled (thanks kasong) (#1936781)
 
