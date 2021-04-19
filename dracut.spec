@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 2
+%define dist_free_release 3
 
 Name: dracut
 Version: 053
@@ -36,6 +36,9 @@ Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 # https://bugzilla.redhat.com/show_bug.cgi?id=1946074
 # https://bugzilla.redhat.com/show_bug.cgi?id=1945596
 Patch0: 0001-fix-network-manager-no-default-deps-for-nm-run.servi.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1936781#c6
+# Should fix loss of critical system files with kdump enabled
+Patch1: 0001-Partially-revert-41cfdfc-to-fix-RHBZ-1936781-per-ryn.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -485,6 +488,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Mon Apr 19 2021 Adam Williamson <awilliam@redhat.com> - 053-3
+- Fix removal of key system files when kdump enabled (thanks kasong) (#1936781)
+
 * Thu Apr 08 2021 Adam Williamson <awilliam@redhat.com> - 053-2
 - Backport upstream change reported to fix boot on some encrypted LVM setups (#1946074)
 

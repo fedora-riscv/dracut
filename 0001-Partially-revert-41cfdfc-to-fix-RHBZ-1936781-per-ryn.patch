@@ -1,0 +1,31 @@
+From 9db78bc16fc66d1200ab032bd667809a4404c869 Mon Sep 17 00:00:00 2001
+From: Adam Williamson <awilliam@redhat.com>
+Date: Mon, 19 Apr 2021 08:33:38 -0700
+Subject: [PATCH] Partially revert 41cfdfc to fix RHBZ #1936781 per @ryncsn
+
+Signed-off-by: Adam Williamson <awilliam@redhat.com>
+---
+ dracut.sh | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/dracut.sh b/dracut.sh
+index 062ed6c1..71942ce1 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -2059,8 +2059,11 @@ if dracut_module_included "squash"; then
+ 
+     # Remove duplicated files
+     for folder in "${squash_candidate[@]}"; do
+-        find "$initdir/$folder/" -not -type d \
+-            -exec bash -c 'mv -f "$squash_dir${1#$initdir}" "$1"' -- "{}" \;
++        for file in $(find $initdir/$folder/ -not -type d); do
++            if [[ -e $squash_dir${file#$initdir} ]]; then
++                mv -f $squash_dir${file#$initdir} $file
++            fi
++        done
+     done
+ fi
+ 
+-- 
+2.31.1
+
