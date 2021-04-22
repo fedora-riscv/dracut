@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 4
+%define dist_free_release 5
 
 Name: dracut
 Version: 053
@@ -49,6 +49,9 @@ Patch3: 0001-fix-network-manager-nm-run.service-don-t-kill-forked.patch
 # https://github.com/dracutdevs/dracut/pull/1347
 Patch4: 0001-fix-network-manager-only-run-NetworkManager-if-rd.ne.patch
 Patch5: 0002-fix-network-manager-use-run-NetworkManager-initrd-ne.patch
+# add watchdog drivers for generic initrd
+# https://github.com/dracutdevs/dracut/pull/1377
+Patch6: 0001-fix-90kernel-modules-add-watchdog-drivers-for-generi.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -498,6 +501,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Apr 22 2021 Peter Robinson <pbrobinson@fedoraproject.org> - 053-5
+- Backport: fix(90kernel-modules): add watchdog drivers for generic initrd (rhbz 1592148)
+
 * Mon Apr 19 2021 Dusty Mabe <dusty@dustymabe.com> - 053-4
 - Backport: fix(dracut-logger.sh): double dash trigger unknown logger warnings during run
 - Backport: fix(network-manager): nm-run.service: don't kill forked processes
