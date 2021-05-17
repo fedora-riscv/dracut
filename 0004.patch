@@ -1,54 +1,38 @@
-From 7ef5ead6f4cf4834b84ea6d9546b77ddc0da394b Mon Sep 17 00:00:00 2001
-From: Martin Wilck <mwilck@suse.de>
-Date: Thu, 30 Jan 2020 13:48:11 +0100
-Subject: [PATCH] Add module "90nvdimm" for NVDIMM support
+From 7275c6f6a0f6808cd939ea5bdf1244c7bd13ba44 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 17 May 2021 14:22:10 +0200
+Subject: [PATCH] feat(dracut.sh): detect running in a container
 
-Detection of persistent memory devices works mostly out of the box
-already. Only the "provider" modules for ndbus devices, which are responsible
-to extract information of available NVDIMM devices and their configuration
-from system firmware, are only indirectly linked into the module stack.
-Examples for such modules are nfit.ko, nd_e820.ko, and virtio-pmem.ko.
-
-Add a module that resolves these dependencies.
+Don't try to `mknod` by setting DRACUT_NO_MKNOD.
+Don't try to `cp` extended attributrs by setting DRACUT_NO_XATTR.
 ---
- modules.d/90nvdimm/module-setup.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ dracut.sh | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/modules.d/90nvdimm/module-setup.sh b/modules.d/90nvdimm/module-setup.sh
-new file mode 100755
-index 00000000..6d58efd7
---- /dev/null
-+++ b/modules.d/90nvdimm/module-setup.sh
-@@ -0,0 +1,31 @@
-+#!/bin/bash
-+
-+# called by dracut
-+check() {
-+    if [[ ! $hostonly ]]; then
-+        return 0
+diff --git a/dracut.sh b/dracut.sh
+index bfb7a1ac..24e1c2e7 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -1171,6 +1171,13 @@ if [[ -f $dracutbasedir/dracut-version.sh ]]; then
+     . "$dracutbasedir"/dracut-version.sh
+ fi
+ 
++if systemd-detect-virt -c &> /dev/null; then
++    export DRACUT_NO_MKNOD=1 DRACUT_NO_XATTR=1
++    if [[ $hostonly ]]; then
++        printf "%s\n" "dracut: WARNING: running in hostonly mode in a container!!"
 +    fi
-+    [[ $DRACUT_KERNEL_MODALIASES && -f "$DRACUT_KERNEL_MODALIASES" ]] && \
-+        grep -q libnvdimm "$DRACUT_KERNEL_MODALIASES" && return 0
-+    return 255
-+}
++fi
 +
-+# called by dracut
-+depends() {
-+    return 0
-+}
-+
-+# called by dracut
-+installkernel() {
-+    # Directories to search for NVDIMM "providers" (firmware drivers)
-+    # These modules call "nvdimm_bus_register()".
-+    local _provider_dirs='=drivers/nvdimm =drivers/acpi =arch/powerpc'
-+
-+    #instmods() will take care of hostonly
-+    dracut_instmods -o -s nvdimm_bus_register $_provider_dirs
-+}
-+
-+# called by dracut
-+install() {
-+    inst_multiple -o ndctl
-+}
-
+ if [[ -f $dracutbasedir/dracut-init.sh ]]; then
+     # shellcheck source=./dracut-init.sh
+     . "$dracutbasedir"/dracut-init.sh
+@@ -1888,7 +1895,7 @@ if [[ $kernel_only != yes ]]; then
+         # shellcheck disable=SC2174
+         mkdir -m 0755 -p "${initdir}/lib/dracut/hooks/$_d"
+     done
+-    if [[ $EUID == "0" ]]; then
++    if [[ $EUID == "0" ]] && ! [[ $DRACUT_NO_MKNOD ]]; then
+         [[ -c ${initdir}/dev/null ]] || mknod "${initdir}"/dev/null c 1 3
+         [[ -c ${initdir}/dev/kmsg ]] || mknod "${initdir}"/dev/kmsg c 1 11
+         [[ -c ${initdir}/dev/console ]] || mknod "${initdir}"/dev/console c 5 1

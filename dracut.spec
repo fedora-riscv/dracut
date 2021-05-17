@@ -5,10 +5,10 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 64.git20200529
+%define dist_free_release 5.git20210517
 
 Name: dracut
-Version: 050
+Version: 054
 Release: %{dist_free_release}%{?dist}
 
 Summary: Initramfs generator using udev
@@ -21,7 +21,8 @@ Group: System/Base
 
 # The entire source code is GPLv2+
 # except install/* which is LGPLv2+
-License: GPLv2+ and LGPLv2+
+# except util/* which is GPLv2
+License: GPLv2+ and LGPLv2+ and GPLv2
 
 URL: https://dracut.wiki.kernel.org/
 
@@ -32,76 +33,11 @@ Patch1: 0001.patch
 Patch2: 0002.patch
 Patch3: 0003.patch
 Patch4: 0004.patch
-Patch5: 0005.patch
-Patch6: 0006.patch
-Patch7: 0007.patch
-Patch8: 0008.patch
-Patch9: 0009.patch
-Patch10: 0010.patch
-Patch11: 0011.patch
-Patch12: 0012.patch
-Patch13: 0013.patch
-Patch14: 0014.patch
-Patch15: 0015.patch
-Patch16: 0016.patch
-Patch17: 0017.patch
-Patch18: 0018.patch
-Patch19: 0019.patch
-Patch20: 0020.patch
-Patch21: 0021.patch
-Patch22: 0022.patch
-Patch23: 0023.patch
-Patch24: 0024.patch
-Patch25: 0025.patch
-Patch26: 0026.patch
-Patch27: 0027.patch
-Patch28: 0028.patch
-Patch29: 0029.patch
-Patch30: 0030.patch
-Patch31: 0031.patch
-Patch32: 0032.patch
-Patch33: 0033.patch
-Patch34: 0034.patch
-Patch35: 0035.patch
-Patch36: 0036.patch
-Patch37: 0037.patch
-Patch38: 0038.patch
-Patch39: 0039.patch
-Patch40: 0040.patch
-Patch41: 0041.patch
-Patch42: 0042.patch
-Patch43: 0043.patch
-Patch44: 0044.patch
-Patch45: 0045.patch
-Patch46: 0046.patch
-Patch47: 0047.patch
-Patch48: 0048.patch
-Patch49: 0049.patch
-Patch50: 0050.patch
-Patch51: 0051.patch
-Patch52: 0052.patch
-Patch53: 0053.patch
-Patch54: 0054.patch
-Patch55: 0055.patch
-Patch56: 0056.patch
-Patch57: 0057.patch
-Patch58: 0058.patch
-Patch59: 0059.patch
-Patch60: 0060.patch
-Patch61: 0001-fix-graphics-startup-failure-with-the-rhgb-paramter-.patch
-Patch62: 0001-Include-devfreq-drivers-in-initrd.patch
-Patch63: 0001-50drm-fix-ambiguous-redirects.patch
-Patch64: 0002-50drm-Include-drm-platform-drivers-in-hostonly.patch
-Patch65: 0003-50drm-Check-drm_encoder_init-along-drm_crtc_init.patch
-# taken from the PR because we really don't need 11 separate patches
-# for this. Fixes annoying log messages
-# https://github.com/dracutdevs/dracut/pull/859
-Patch66: 859.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
 BuildRequires: bash
-BuildRequires: git
+BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
 BuildRequires: gcc
 
@@ -123,11 +59,6 @@ BuildRequires: docbook-xsl-stylesheets libxslt
 %endif
 
 BuildRequires: asciidoc
-%endif
-
-%if 0%{?suse_version} > 9999
-Obsoletes: mkinitrd < 2.6.1
-Provides: mkinitrd = 2.6.1
 %endif
 
 Obsoletes: dracut-fips <= 047
@@ -285,11 +216,6 @@ echo "DRACUT_VERSION=%{version}-%{release}" > $RPM_BUILD_ROOT/%{dracutlibdir}/dr
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/01fips
 %endif
 
-%if %{defined _unitdir}
-# for systemd, better use systemd-bootchart
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00bootchart
-%endif
-
 # we do not support dash in the initramfs
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00dash
 
@@ -339,23 +265,16 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man?/*suse*
 %endif
 
 %if 0%{?fedora} == 0 && 0%{?rhel} == 0 && 0%{?suse_version} <= 9999
-rm -f -- $RPM_BUILD_ROOT%{_bindir}/mkinitrd
 rm -f -- $RPM_BUILD_ROOT%{_bindir}/lsinitrd
-rm -f -- $RPM_BUILD_ROOT%{_mandir}/man8/mkinitrd.8*
 rm -f -- $RPM_BUILD_ROOT%{_mandir}/man1/lsinitrd.1*
 %endif
 
 echo 'hostonly="no"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-generic-image.conf
 echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-rescue.conf
 
-%if 0%{?rhel} && 0%{?rhel} <= 8
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/kernel/postinst.d
-install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kernel/postinst.d/51-dracut-rescue-postinst.sh
-%endif
-
 %files
 %if %{with doc}
-%doc README.md HACKING TODO AUTHORS NEWS dracut.html dracut.png dracut.svg
+%doc README.md docs/HACKING.md AUTHORS NEWS.md dracut.html docs/dracut.png docs/dracut.svg
 %endif
 %{!?_licensedir:%global license %%doc}
 %license COPYING lgpl-2.1.txt
@@ -363,7 +282,6 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %{_datadir}/bash-completion/completions/dracut
 %{_datadir}/bash-completion/completions/lsinitrd
 %if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version} > 9999
-%{_bindir}/mkinitrd
 %{_bindir}/lsinitrd
 %endif
 %dir %{dracutlibdir}
@@ -375,6 +293,7 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %{dracutlibdir}/dracut-logger.sh
 %{dracutlibdir}/dracut-initramfs-restore
 %{dracutlibdir}/dracut-install
+%{dracutlibdir}/dracut-util
 %{dracutlibdir}/skipcpio
 %config(noreplace) %{_sysconfdir}/dracut.conf
 %if 0%{?fedora} || 0%{?suse_version} || 0%{?rhel}
@@ -389,11 +308,7 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %{_mandir}/man8/dracut.8*
 %{_mandir}/man8/*service.8*
 %if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version} > 9999
-%{_mandir}/man8/mkinitrd.8*
 %{_mandir}/man1/lsinitrd.1*
-%endif
-%if 0%{?suse_version}
-%{_mandir}/man8/mkinitrd-suse.8*
 %endif
 %{_mandir}/man7/dracut.kernel.7*
 %{_mandir}/man7/dracut.cmdline.7*
@@ -403,27 +318,50 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %endif
 
 %if %{undefined _unitdir}
-%{dracutlibdir}/modules.d/00bootchart
 %endif
 %{dracutlibdir}/modules.d/00bash
 %{dracutlibdir}/modules.d/00systemd
+%{dracutlibdir}/modules.d/00systemd-network-management
 %ifnarch s390 s390x
 %{dracutlibdir}/modules.d/00warpclock
 %endif
 %if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version}
 %{dracutlibdir}/modules.d/01fips
 %endif
+%{dracutlibdir}/modules.d/01systemd-ac-power
+%{dracutlibdir}/modules.d/01systemd-ask-password
+%{dracutlibdir}/modules.d/01systemd-coredump
+%{dracutlibdir}/modules.d/01systemd-hostnamed
 %{dracutlibdir}/modules.d/01systemd-initrd
+%{dracutlibdir}/modules.d/01systemd-journald
+%{dracutlibdir}/modules.d/01systemd-ldconfig
+%{dracutlibdir}/modules.d/01systemd-modules-load
+%{dracutlibdir}/modules.d/01systemd-repart
+%{dracutlibdir}/modules.d/01systemd-resolved
+%{dracutlibdir}/modules.d/01systemd-rfkill
+%{dracutlibdir}/modules.d/01systemd-sysext
+%{dracutlibdir}/modules.d/01systemd-sysctl
+%{dracutlibdir}/modules.d/01systemd-sysusers
+%{dracutlibdir}/modules.d/01systemd-timedated
+%{dracutlibdir}/modules.d/01systemd-timesyncd
+%{dracutlibdir}/modules.d/01systemd-tmpfiles
+%{dracutlibdir}/modules.d/01systemd-udevd
+%{dracutlibdir}/modules.d/01systemd-veritysetup
 %{dracutlibdir}/modules.d/03modsign
 %{dracutlibdir}/modules.d/03rescue
 %{dracutlibdir}/modules.d/04watchdog
+%{dracutlibdir}/modules.d/04watchdog-modules
 %{dracutlibdir}/modules.d/05busybox
+%{dracutlibdir}/modules.d/06dbus-broker
+%{dracutlibdir}/modules.d/06dbus-daemon
 %{dracutlibdir}/modules.d/06rngd
+%{dracutlibdir}/modules.d/09dbus
 %{dracutlibdir}/modules.d/10i18n
 %{dracutlibdir}/modules.d/30convertfs
 %{dracutlibdir}/modules.d/45url-lib
 %{dracutlibdir}/modules.d/50drm
 %{dracutlibdir}/modules.d/50plymouth
+%{dracutlibdir}/modules.d/62bluetooth
 %{dracutlibdir}/modules.d/80lvmmerge
 %{dracutlibdir}/modules.d/90btrfs
 %{dracutlibdir}/modules.d/90crypt
@@ -435,14 +373,15 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %{dracutlibdir}/modules.d/90mdraid
 %{dracutlibdir}/modules.d/90multipath
 %{dracutlibdir}/modules.d/90nvdimm
-%{dracutlibdir}/modules.d/90stratis
 %{dracutlibdir}/modules.d/90ppcmac
 %{dracutlibdir}/modules.d/90qemu
 %{dracutlibdir}/modules.d/91crypt-gpg
 %{dracutlibdir}/modules.d/91crypt-loop
+%{dracutlibdir}/modules.d/91tpm2-tss
 %{dracutlibdir}/modules.d/95debug
 %{dracutlibdir}/modules.d/95fstab-sys
 %{dracutlibdir}/modules.d/95lunmask
+%{dracutlibdir}/modules.d/95nvmf
 %{dracutlibdir}/modules.d/95resume
 %{dracutlibdir}/modules.d/95rootfs-block
 %{dracutlibdir}/modules.d/95terminfo
@@ -499,9 +438,10 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %{_prefix}/lib/kernel/install.d/50-dracut.install
 
 %files network
-%{dracutlibdir}/modules.d/02systemd-networkd
+%{dracutlibdir}/modules.d/01systemd-networkd
 %{dracutlibdir}/modules.d/35network-manager
 %{dracutlibdir}/modules.d/35network-legacy
+%{dracutlibdir}/modules.d/35network-wicked
 %{dracutlibdir}/modules.d/40network
 %{dracutlibdir}/modules.d/45ifcfg
 %{dracutlibdir}/modules.d/90kernel-network-modules
@@ -546,13 +486,43 @@ install -m 0755 51-dracut-rescue-postinst.sh $RPM_BUILD_ROOT%{_sysconfdir}/kerne
 %files config-rescue
 %{dracutlibdir}/dracut.conf.d/02-rescue.conf
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
-%if 0%{?rhel} && 0%{?rhel} <= 8
-%{_sysconfdir}/kernel/postinst.d/51-dracut-rescue-postinst.sh
-%endif
 
 %changelog
+* Mon May 17 2021 Harald Hoyer <harald@redhat.com> - 054-4.git20210517
+- version 054
+
+* Thu Apr 22 2021 Peter Robinson <pbrobinson@fedoraproject.org> - 053-5
+- Backport: fix(90kernel-modules): add watchdog drivers for generic initrd (rhbz 1592148)
+
+* Mon Apr 19 2021 Dusty Mabe <dusty@dustymabe.com> - 053-4
+- Backport: fix(dracut-logger.sh): double dash trigger unknown logger warnings during run
+- Backport: fix(network-manager): nm-run.service: don't kill forked processes
+- Backport: fix(network-manager): only run NetworkManager if rd.neednet=1
+- Backport: fix(network-manager): use /run/NetworkManager/initrd/neednet in initqueue
+
+* Mon Apr 19 2021 Adam Williamson <awilliam@redhat.com> - 053-3
+- Fix removal of key system files when kdump enabled (thanks kasong) (#1936781)
+
+* Thu Apr 08 2021 Adam Williamson <awilliam@redhat.com> - 053-2
+- Backport upstream change reported to fix boot on some encrypted LVM setups (#1946074)
+
+* Tue Feb 23 2021 Harald Hoyer <harald@redhat.com> - 053-1
+- version 053
+
+* Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 051-1.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
+* Tue Dec 15 2020 Harald Hoyer <harald@redhat.com> - 051-1
+- version 051
+
 * Fri Oct 23 2020 Adam Williamson <awilliam@redhat.com> - 050-64.git20200529
 - Backport fix for systemd warnings about logging arguments
+
+* Tue Oct 06 2020 Harald Hoyer <harald@redhat.com> - 050-167.git20201006
+- git snapshot
+
+* Fri Oct 02 2020 Harald Hoyer <harald@redhat.com> - 050-157.git20201002
+- git snapshot
 
 * Tue Sep 29 2020 Peter Robinson <pbrobinson@fedoraproject.org> - 050-63.git20200529
 - Fixes for Arm GPUs in early boot
