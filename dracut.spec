@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 5.git20210517
+%define dist_free_release 6.git20210518
 
 Name: dracut
 Version: 054
@@ -33,6 +33,7 @@ Patch1: 0001.patch
 Patch2: 0002.patch
 Patch3: 0003.patch
 Patch4: 0004.patch
+Patch5: 0005.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -488,6 +489,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue May 18 2021 Harald Hoyer <harald@redhat.com> - 054-6.git20210518
+- fix for `str_replace: command not found`
+
 * Mon May 17 2021 Harald Hoyer <harald@redhat.com> - 054-4.git20210517
 - version 054
 
