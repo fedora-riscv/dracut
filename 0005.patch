@@ -1,4 +1,4 @@
-From 805599442110985dfee83ea826d35b5943805313 Mon Sep 17 00:00:00 2001
+From 148e420be5b5809aa8d5033f47477573bbbf3e60 Mon Sep 17 00:00:00 2001
 From: Harald Hoyer <harald@redhat.com>
 Date: Tue, 18 May 2021 10:13:56 +0200
 Subject: [PATCH] fix(base): add missing `str_replace` to `dracut-dev-lib.sh`
@@ -55,3 +55,4 @@ index 7eb0a277..07c33eef 100755
  
                  # shellcheck source=dracut-dev-lib.sh
                  . "$moddir/dracut-dev-lib.sh"
+
