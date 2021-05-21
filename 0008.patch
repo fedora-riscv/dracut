@@ -1,0 +1,59 @@
+From 9355cb8ea5024533210067373657dc337d63ecb9 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?J=C3=B3hann=20B=2E=20Gu=C3=B0mundsson?= <johannbg@gmail.com>
+Date: Tue, 18 May 2021 12:39:34 +0000
+Subject: [PATCH] fix(bash): minor cleanups
+
+- Remove hard coded path to binary
+- Add missing license header
+- Document sections
+- refactor install section
+---
+ modules.d/00bash/module-setup.sh | 28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
+
+diff --git a/modules.d/00bash/module-setup.sh b/modules.d/00bash/module-setup.sh
+index f72c297b..89ef6541 100755
+--- a/modules.d/00bash/module-setup.sh
++++ b/modules.d/00bash/module-setup.sh
+@@ -1,20 +1,32 @@
+ #!/bin/bash
++# This file is part of dracut.
++# SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-# called by dracut
++# Prerequisite check(s) for module.
+ check() {
+-    require_binaries /bin/bash
++
++    # If the binary(s) requirements are not fulfilled the module can't be installed.
++    require_binaries bash || return 1
++
++    # Return 255 to only include the module, if another module requires it.
++    return 255
++
+ }
+ 
+-# called by dracut
++# Module dependency requirements.
+ depends() {
++
++    # Return 0 to include the dependent module(s) in the initramfs.
+     return 0
++
+ }
+ 
+-# called by dracut
++# Install the required file(s) and directories for the module in the initramfs.
+ install() {
+-    # If another shell is already installed, do not use bash
+-    [[ -x $initdir/bin/sh ]] && return
+ 
+-    # Prefer bash as /bin/sh if it is available.
+-    inst /bin/bash && ln -sf bash "${initdir}/bin/sh"
++    inst /bin/bash
++
++    # Prefer bash as default shell if no other shell is preferred.
++    [[ -L $initdir/bin/sh ]] || ln -sf bash "${initdir}/bin/sh"
++
+ }
+

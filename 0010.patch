@@ -1,0 +1,33 @@
+From 0a6007bf4f472565d2c0c205a56edea7ba3e3bc3 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Fri, 21 May 2021 11:30:47 +0200
+Subject: [PATCH] fix(dracut): pipe hardlink output to `dinfo`
+
+Otherwise the output is cluttered with:
+```
+Mode:           real
+Files:          1364
+Linked:         5 files
+Compared:       0 xattrs
+Compared:       384 files
+Saved:          12.84 KiB
+Duration:       0.052674 seconds
+```
+---
+ dracut.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dracut.sh b/dracut.sh
+index 24e1c2e7..60ac46f4 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -2092,7 +2092,7 @@ done
+ 
+ if [[ $do_hardlink == yes ]] && command -v hardlink > /dev/null; then
+     dinfo "*** Hardlinking files ***"
+-    hardlink "$initdir" 2>&1
++    hardlink "$initdir" 2>&1 | dinfo
+     dinfo "*** Hardlinking files done ***"
+ fi
+ 
+

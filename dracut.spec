@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 6.git20210518
+%define dist_free_release 12.git20210521
 
 Name: dracut
 Version: 054
@@ -34,6 +34,12 @@ Patch2: 0002.patch
 Patch3: 0003.patch
 Patch4: 0004.patch
 Patch5: 0005.patch
+Patch6: 0006.patch
+Patch7: 0007.patch
+Patch8: 0008.patch
+Patch9: 0009.patch
+Patch10: 0010.patch
+Patch11: 0011.patch
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
@@ -489,6 +495,12 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Fri May 21 2021 Harald Hoyer <harald@redhat.com> - 054-12.git20210521
+- fix `get_maj_min` for kdump
+- suppress hardlink output
+- sane default --kerneldir for dracut-install
+- squash: don't mount the mount points if already mounted
+
 * Tue May 18 2021 Harald Hoyer <harald@redhat.com> - 054-6.git20210518
 - fix for `str_replace: command not found`
 

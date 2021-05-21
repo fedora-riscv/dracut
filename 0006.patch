@@ -1,0 +1,61 @@
+From fa63c9be13660ae5223f9c3e87234ab281b97a95 Mon Sep 17 00:00:00 2001
+From: Harald Hoyer <harald@redhat.com>
+Date: Mon, 17 May 2021 13:07:09 +0200
+Subject: [PATCH] ci: add shfmt to Fedora containers
+
+---
+ test/container/Dockerfile-Fedora-33      | 1 +
+ test/container/Dockerfile-Fedora-34      | 1 +
+ test/container/Dockerfile-Fedora-latest  | 1 +
+ test/container/Dockerfile-Fedora-rawhide | 1 +
+ 4 files changed, 4 insertions(+)
+
+diff --git a/test/container/Dockerfile-Fedora-33 b/test/container/Dockerfile-Fedora-33
+index 51ca39f4..8e09cf5e 100644
+--- a/test/container/Dockerfile-Fedora-33
++++ b/test/container/Dockerfile-Fedora-33
+@@ -48,6 +48,7 @@ RUN dnf -y install --setopt=install_weak_deps=False \
+     python3-imgcreate \
+     which \
+     ShellCheck \
++    shfmt \
+     && dnf -y update && dnf clean all
+ 
+ # Set default command
+diff --git a/test/container/Dockerfile-Fedora-34 b/test/container/Dockerfile-Fedora-34
+index 7e295e9a..b9701f6d 100644
+--- a/test/container/Dockerfile-Fedora-34
++++ b/test/container/Dockerfile-Fedora-34
+@@ -48,6 +48,7 @@ RUN dnf -y install --setopt=install_weak_deps=False \
+     python3-imgcreate \
+     which \
+     ShellCheck \
++    shfmt \
+     && dnf -y update && dnf clean all
+ 
+ # Set default command
+diff --git a/test/container/Dockerfile-Fedora-latest b/test/container/Dockerfile-Fedora-latest
+index 81d5b9b9..3fc4a370 100644
+--- a/test/container/Dockerfile-Fedora-latest
++++ b/test/container/Dockerfile-Fedora-latest
+@@ -48,6 +48,7 @@ RUN dnf -y install --setopt=install_weak_deps=False \
+     python3-imgcreate \
+     which \
+     ShellCheck \
++    shfmt \
+     && dnf -y update && dnf clean all
+ 
+ # Set default command
+diff --git a/test/container/Dockerfile-Fedora-rawhide b/test/container/Dockerfile-Fedora-rawhide
+index bd75e611..2d5653a7 100644
+--- a/test/container/Dockerfile-Fedora-rawhide
++++ b/test/container/Dockerfile-Fedora-rawhide
+@@ -48,6 +48,7 @@ RUN dnf -y install --setopt=install_weak_deps=False \
+     python3-imgcreate \
+     which \
+     ShellCheck \
++    shfmt \
+     && dnf -y update && dnf clean all
+ 
+ # Set default command
+
