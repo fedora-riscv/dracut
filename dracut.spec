@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 1
+%define dist_free_release 2
 
 Name: dracut
 Version: 055
@@ -31,6 +31,11 @@ URL: https://dracut.wiki.kernel.org/
 Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar.xz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
+
+# Never auto-enable bluetooth module (but it can be manually included
+# for debugging) - workaround for RHBZ #1964879 / upstream #1521, to
+# be removed when that is properly fixed
+Patch0: 0001-Never-enable-the-bluetooth-module-by-default-1521.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -484,6 +489,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Jun 10 2021 Adam Williamson <awilliam@redhat.com> - 055-2
+- Never include bluetooth module by default (rhbz 1964879) (workaround)
+
 * Thu May 27 2021 Harald Hoyer <harald@redhat.com> - 055-1
 - version 055
 - install the missing fsck utils
