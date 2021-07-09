@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 2
+%define dist_free_release 3
 
 Name: dracut
 Version: 055
@@ -36,6 +36,14 @@ Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 # for debugging) - workaround for RHBZ #1964879 / upstream #1521, to
 # be removed when that is properly fixed
 Patch0: 0001-Never-enable-the-bluetooth-module-by-default-1521.patch
+# Fixes for NM running via systemd+dbus in the initramfs
+# https://github.com/dracutdevs/dracut/pull/1547
+# https://github.com/dracutdevs/dracut/pull/1548
+Patch1: 0001-fix-network-manager-support-teaming-under-NM-systemd.patch
+Patch2: 0001-fix-network-manager-pull-in-network.target-in-nm-ini.patch
+# Drop requirement on deprecated systemd-udev-settle
+# https://github.com/dracutdevs/dracut/pull/1552
+Patch3: 0001-fix-network-manager-don-t-pull-in-systemd-udev-settl.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -489,6 +497,10 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Fri Jul 09 2021 Dusty Mabe <dusty@dustymabe.com> - 055-3
+- Fixes for NM running via systemd+dbus in the initramfs
+- Drop requirement on deprecated systemd-udev-settle
+
 * Thu Jun 10 2021 Adam Williamson <awilliam@redhat.com> - 055-2
 - Never include bluetooth module by default (rhbz 1964879) (workaround)
 
