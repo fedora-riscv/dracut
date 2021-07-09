@@ -32,6 +32,12 @@ Source0: https://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.ta
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
+Source2: https://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar.sign
+# GPG key from https://people.redhat.com/harald/gpg-pub-7F3D64824AC0B6B8009E50504BC0896FB5693595.asc
+# Which is for Harald Hoyer (linked from https://people.redhat.com/harald/ )
+# which seems to be the right person for dracut
+Source3: gpg-pub-7F3D64824AC0B6B8009E50504BC0896FB5693595.asc
+
 # Never auto-enable bluetooth module (but it can be manually included
 # for debugging) - workaround for RHBZ #1964879 / upstream #1521, to
 # be removed when that is properly fixed
@@ -45,6 +51,9 @@ BuildRequires: bash
 BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
 BuildRequires: gcc
+
+# For gpg signature verification
+BuildRequires: gnupg2 xz
 
 %if 0%{?fedora} || 0%{?rhel}
 BuildRequires: pkgconfig
@@ -197,6 +206,7 @@ in a squashfs image, result in a smaller initramfs size and reduce runtime memor
 usage.
 
 %prep
+xzcat '%{SOURCE0}' | %{gpgverify} --keyring='%{SOURCE3}' --signature='%{SOURCE2}' --data=-
 %autosetup -n %{name}-%{version} -S git_am
 cp %{SOURCE1} .
 
