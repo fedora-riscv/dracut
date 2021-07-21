@@ -9,7 +9,7 @@
 
 Name: dracut
 Version: 055
-Release: %{dist_free_release}%{?dist}
+Release: %{dist_free_release}%{?dist}.1
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -497,6 +497,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 055-3.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Fri Jul 09 2021 Dusty Mabe <dusty@dustymabe.com> - 055-3
 - Fixes for NM running via systemd+dbus in the initramfs
 - Drop requirement on deprecated systemd-udev-settle
