@@ -5,11 +5,11 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 3
+%define dist_free_release 4
 
 Name: dracut
 Version: 055
-Release: %{dist_free_release}%{?dist}.1
+Release: %{dist_free_release}%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -44,6 +44,8 @@ Patch2: 0001-fix-network-manager-pull-in-network.target-in-nm-ini.patch
 # Drop requirement on deprecated systemd-udev-settle
 # https://github.com/dracutdevs/dracut/pull/1552
 Patch3: 0001-fix-network-manager-don-t-pull-in-systemd-udev-settl.patch
+# https://github.com/dracutdevs/dracut/pull/1616/
+Patch4: 0001-fix-90kernel-modules-add-Type-C-USB-drivers-for-gene.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -497,6 +499,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Wed Oct 06 2021 Peter Robinson <pbrobinson@fedoraproject.org> - 055-4
+- Add USB Type-C to fix display/input/storage attached via it (rhbz #1964218)
+
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 055-3.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
