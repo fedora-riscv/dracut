@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 5
+%define dist_free_release 6
 
 Name: dracut
 Version: 055
@@ -50,6 +50,8 @@ Patch4: 0001-fix-90kernel-modules-add-Type-C-USB-drivers-for-gene.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=2010058
 # https://github.com/dracutdevs/dracut/pull/1584
 Patch5: 0001-fix-kernel-modules-add-blk_mq_alloc_disk-and-blk_cle.patch
+# Network manager: disable tty output if the console is not usable
+Patch6: https://github.com/dracutdevs/dracut/pull/1611.patch#/0001-fix-network-manager-disable-tty-if-no-console.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -503,6 +505,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue Oct 26 2021 Olivier Lemasle <o.lemasle@gmail.com> - 055-6
+- Backport PR #1611 to fix network manager when console is not usable
+
 * Mon Oct 18 2021 Adam Williamson <awilliam@redhat.com> - 055-5
 - Backport PR #1584 to fix missing block drivers, boot in EC2 (#2010058)
 
