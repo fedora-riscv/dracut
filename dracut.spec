@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 6
+%define dist_free_release 7
 
 Name: dracut
 Version: 055
@@ -52,6 +52,8 @@ Patch4: 0001-fix-90kernel-modules-add-Type-C-USB-drivers-for-gene.patch
 Patch5: 0001-fix-kernel-modules-add-blk_mq_alloc_disk-and-blk_cle.patch
 # Network manager: disable tty output if the console is not usable
 Patch6: https://github.com/dracutdevs/dracut/pull/1611.patch#/0001-fix-network-manager-disable-tty-if-no-console.patch
+# Add support for isp1760 usb device used as the boot drive on arm/corestone
+Patch7: 0001-fix-90kernel-modules-add-isp1760-USB-controller.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -505,6 +507,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Nov  4 2021 Jeremy Linton <jeremy.linton@arm.com> - 055-7
+- Backport Upstream: 15398458 fix(90kernel-modules): add isp1760 USB controller
+
 * Tue Oct 26 2021 Olivier Lemasle <o.lemasle@gmail.com> - 055-6
 - Backport PR #1611 to fix network manager when console is not usable
 
