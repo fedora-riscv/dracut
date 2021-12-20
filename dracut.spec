@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 7
+%define dist_free_release 8
 
 Name: dracut
 Version: 055
@@ -54,6 +54,9 @@ Patch5: 0001-fix-kernel-modules-add-blk_mq_alloc_disk-and-blk_cle.patch
 Patch6: https://github.com/dracutdevs/dracut/pull/1611.patch#/0001-fix-network-manager-disable-tty-if-no-console.patch
 # Add support for isp1760 usb device used as the boot drive on arm/corestone
 Patch7: 0001-fix-90kernel-modules-add-isp1760-USB-controller.patch
+# For new drm-privacy screen support in kernel >= 5.17, also see:
+# https://hansdegoede.livejournal.com/25948.html
+Patch8: 0001-fix-drm-add-privacy-screen-modules-to-the-initrd.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -507,6 +510,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Mon Dec 20 2021 Hans de Goede <hdegoede@redhat.com> - 055-8
+- Backport upstream changes for drm-privacy screen support in kernel >= 5.17
+
 * Thu Nov  4 2021 Jeremy Linton <jeremy.linton@arm.com> - 055-7
 - Backport Upstream: 15398458 fix(90kernel-modules): add isp1760 USB controller
 
