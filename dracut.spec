@@ -9,7 +9,7 @@
 
 Name: dracut
 Version: 055
-Release: %{dist_free_release}%{?dist}
+Release: %{dist_free_release}%{?dist}.1
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -510,6 +510,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 055-8.1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+
 * Mon Dec 20 2021 Hans de Goede <hdegoede@redhat.com> - 055-8
 - Backport upstream changes for drm-privacy screen support in kernel >= 5.17
 
