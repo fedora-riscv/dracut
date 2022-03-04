@@ -5,11 +5,11 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 8
+%define dist_free_release 1
 
 Name: dracut
-Version: 055
-Release: %{dist_free_release}%{?dist}.1
+Version: 056
+Release: %{dist_free_release}%{?dist}
 
 Summary: Initramfs generator using udev
 %if 0%{?fedora} || 0%{?rhel}
@@ -36,27 +36,6 @@ Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 # for debugging) - workaround for RHBZ #1964879 / upstream #1521, to
 # be removed when that is properly fixed
 Patch0: 0001-Never-enable-the-bluetooth-module-by-default-1521.patch
-# Fixes for NM running via systemd+dbus in the initramfs
-# https://github.com/dracutdevs/dracut/pull/1547
-# https://github.com/dracutdevs/dracut/pull/1548
-Patch1: 0001-fix-network-manager-support-teaming-under-NM-systemd.patch
-Patch2: 0001-fix-network-manager-pull-in-network.target-in-nm-ini.patch
-# Drop requirement on deprecated systemd-udev-settle
-# https://github.com/dracutdevs/dracut/pull/1552
-Patch3: 0001-fix-network-manager-don-t-pull-in-systemd-udev-settl.patch
-# https://github.com/dracutdevs/dracut/pull/1616/
-Patch4: 0001-fix-90kernel-modules-add-Type-C-USB-drivers-for-gene.patch
-# Adds more block functions to ensure all needed block drivers are included
-# https://bugzilla.redhat.com/show_bug.cgi?id=2010058
-# https://github.com/dracutdevs/dracut/pull/1584
-Patch5: 0001-fix-kernel-modules-add-blk_mq_alloc_disk-and-blk_cle.patch
-# Network manager: disable tty output if the console is not usable
-Patch6: https://github.com/dracutdevs/dracut/pull/1611.patch#/0001-fix-network-manager-disable-tty-if-no-console.patch
-# Add support for isp1760 usb device used as the boot drive on arm/corestone
-Patch7: 0001-fix-90kernel-modules-add-isp1760-USB-controller.patch
-# For new drm-privacy screen support in kernel >= 5.17, also see:
-# https://hansdegoede.livejournal.com/25948.html
-Patch8: 0001-fix-drm-add-privacy-screen-modules-to-the-initrd.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -249,6 +228,7 @@ rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/50gensplash
 
 %if %{defined _unitdir}
 # with systemd IMA and selinux modules do not make sense
+rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/01systemd-integritysetup
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/96securityfs
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/97masterkey
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/98integrity
@@ -399,6 +379,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/90qemu
 %{dracutlibdir}/modules.d/91crypt-gpg
 %{dracutlibdir}/modules.d/91crypt-loop
+%{dracutlibdir}/modules.d/91fido2
+%{dracutlibdir}/modules.d/91pcsc
+%{dracutlibdir}/modules.d/91pkcs11
 %{dracutlibdir}/modules.d/91tpm2-tss
 %{dracutlibdir}/modules.d/95debug
 %{dracutlibdir}/modules.d/95fstab-sys
@@ -422,6 +405,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/95zfcp_rules
 %endif
 %if %{undefined _unitdir}
+%{dracutlibdir}/modules.d/01systemd-integritysetup
 %{dracutlibdir}/modules.d/96securityfs
 %{dracutlibdir}/modules.d/97masterkey
 %{dracutlibdir}/modules.d/98integrity
@@ -449,6 +433,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_unitdir}/dracut-pre-pivot.service
 %{_unitdir}/dracut-pre-trigger.service
 %{_unitdir}/dracut-pre-udev.service
+%{_unitdir}/dracut-shutdown-onfailure.service
 %{_unitdir}/initrd.target.wants/dracut-cmdline.service
 %{_unitdir}/initrd.target.wants/dracut-initqueue.service
 %{_unitdir}/initrd.target.wants/dracut-mount.service
@@ -510,6 +495,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Mar 03 2022 Peter Robinson <pbrobinson@fedoraproject.org> - 056-1
+- Update to 056
+
 * Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 055-8.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
