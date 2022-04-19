@@ -5,19 +5,13 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 1
+%define dist_free_release 3
 
 Name: dracut
-Version: 056
+Version: 057
 Release: %{dist_free_release}%{?dist}
 
 Summary: Initramfs generator using udev
-%if 0%{?fedora} || 0%{?rhel}
-Group: System Environment/Base
-%endif
-%if 0%{?suse_version}
-Group: System/Base
-%endif
 
 # The entire source code is GPLv2+
 # except install/* which is LGPLv2+
@@ -32,33 +26,26 @@ Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 
+# dmsquash-live-root: Run checkisomd5 on correct device
+# https://github.com/dracutdevs/dracut/pull/1882
+Patch0: 1882-dmsquash-live-root-Run-checkisomd5-on-correct-device.patch
+
 # Never auto-enable bluetooth module (but it can be manually included
-# for debugging) - workaround for RHBZ #1964879 / upstream #1521, to
-# be removed when that is properly fixed
-Patch0: 0001-Never-enable-the-bluetooth-module-by-default-1521.patch
+# for debugging) - workaround for RHBZ #1964879.
+# https://github.com/dracutdevs/dracut/pull/1521
+Patch1: 1521-Never-enable-the-bluetooth-module-by-default.patch
 
 BuildRequires: bash
 BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
 BuildRequires: gcc
 
-%if 0%{?fedora} || 0%{?rhel}
 BuildRequires: pkgconfig
 BuildRequires: systemd
-%endif
-%if 0%{?fedora}
 BuildRequires: bash-completion
-%endif
 
 %if %{with doc}
-%if 0%{?fedora} || 0%{?rhel}
 BuildRequires: docbook-style-xsl docbook-dtds libxslt
-%endif
-
-%if 0%{?suse_version}
-BuildRequires: docbook-xsl-stylesheets libxslt
-%endif
-
 BuildRequires: asciidoc
 %endif
 
@@ -78,26 +65,17 @@ Requires: sed
 Requires: xz
 Requires: gzip
 
-%if 0%{?fedora} || 0%{?rhel}
 Recommends: memstrack
 Recommends: hardlink
 Recommends: pigz
 Recommends: kpartx
+Recommends: (tpm2-tools if tpm2-tss)
 Requires: util-linux >= 2.21
 Requires: systemd >= 219
 Requires: systemd-udev >= 219
 Requires: procps-ng
-%else
-Requires: hardlink
-Requires: gzip
-Requires: kpartx
-Requires: udev > 166
-Requires: util-linux-ng >= 2.21
-%endif
 
-%if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version}
 Requires: libkcapi-hmaccalc
-%endif
 
 %description
 dracut contains tools to create bootable initramfses for the Linux
@@ -109,15 +87,7 @@ package.
 
 %package network
 Summary: dracut modules to build a dracut initramfs with network support
-%if 0%{?_module_build}
-# In the module-build-service, we have pieces of dracut provided by different
-# modules ("base-runtime" provides most functionality, but we need
-# dracut-network in "installer". Since these two modules build with separate
-# dist-tags, we need to reduce this strict requirement to ignore the dist-tag.
-Requires: %{name} >= %{version}-%{dist_free_release}
-%else
 Requires: %{name} = %{version}-%{release}
-%endif
 Requires: iputils
 Requires: iproute
 Requires: (NetworkManager >= 1.20 or dhclient)
@@ -140,17 +110,10 @@ initramfs with dracut, which drops capabilities.
 
 %package live
 Summary: dracut modules to build a dracut initramfs with live image capabilities
-%if 0%{?_module_build}
-# See the network subpackage comment.
-Requires: %{name} >= %{version}-%{dist_free_release}
-%else
 Requires: %{name} = %{version}-%{release}
-%endif
 Requires: %{name}-network = %{version}-%{release}
 Requires: tar gzip coreutils bash device-mapper curl
-%if 0%{?fedora}
 Requires: fuse ntfs-3g
-%endif
 
 %description live
 This package requires everything which is needed to build an
@@ -223,12 +186,8 @@ rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00dash
 # we do not support mksh in the initramfs
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00mksh
 
-# remove gentoo specific modules
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/50gensplash
-
 %if %{defined _unitdir}
 # with systemd IMA and selinux modules do not make sense
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/01systemd-integritysetup
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/96securityfs
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/97masterkey
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/98integrity
@@ -254,22 +213,10 @@ rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00warpclock
 mkdir -p $RPM_BUILD_ROOT/boot/dracut
 mkdir -p $RPM_BUILD_ROOT/var/lib/dracut/overlay
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log
-touch $RPM_BUILD_ROOT%{_localstatedir}/log/dracut.log
 mkdir -p $RPM_BUILD_ROOT%{_sharedstatedir}/initramfs
 
-%if 0%{?fedora} || 0%{?rhel}
 install -m 0644 dracut.conf.d/fedora.conf.example $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/01-dist.conf
-%endif
-%if 0%{?suse_version}
-install -m 0644 dracut.conf.d/suse.conf.example   $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/01-dist.conf
-%else
 rm -f $RPM_BUILD_ROOT%{_mandir}/man?/*suse*
-%endif
-
-%if 0%{?fedora} == 0 && 0%{?rhel} == 0 && 0%{?suse_version} <= 9999
-rm -f -- $RPM_BUILD_ROOT%{_bindir}/lsinitrd
-rm -f -- $RPM_BUILD_ROOT%{_mandir}/man1/lsinitrd.1*
-%endif
 
 echo 'hostonly="no"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-generic-image.conf
 echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-rescue.conf
@@ -278,14 +225,11 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %if %{with doc}
 %doc README.md docs/HACKING.md AUTHORS NEWS.md dracut.html docs/dracut.png docs/dracut.svg
 %endif
-%{!?_licensedir:%global license %%doc}
 %license COPYING lgpl-2.1.txt
 %{_bindir}/dracut
 %{_datadir}/bash-completion/completions/dracut
 %{_datadir}/bash-completion/completions/lsinitrd
-%if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version} > 9999
 %{_bindir}/lsinitrd
-%endif
 %dir %{dracutlibdir}
 %dir %{dracutlibdir}/modules.d
 %{dracutlibdir}/dracut-functions.sh
@@ -298,9 +242,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/dracut-util
 %{dracutlibdir}/skipcpio
 %config(noreplace) %{_sysconfdir}/dracut.conf
-%if 0%{?fedora} || 0%{?suse_version} || 0%{?rhel}
 %{dracutlibdir}/dracut.conf.d/01-dist.conf
-%endif
 %dir %{_sysconfdir}/dracut.conf.d
 %dir %{dracutlibdir}/dracut.conf.d
 %dir %{_datadir}/pkgconfig
@@ -309,9 +251,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %if %{with doc}
 %{_mandir}/man8/dracut.8*
 %{_mandir}/man8/*service.8*
-%if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version} > 9999
 %{_mandir}/man1/lsinitrd.1*
-%endif
 %{_mandir}/man7/dracut.kernel.7*
 %{_mandir}/man7/dracut.cmdline.7*
 %{_mandir}/man7/dracut.modules.7*
@@ -319,22 +259,19 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_mandir}/man5/dracut.conf.5*
 %endif
 
-%if %{undefined _unitdir}
-%endif
 %{dracutlibdir}/modules.d/00bash
 %{dracutlibdir}/modules.d/00systemd
 %{dracutlibdir}/modules.d/00systemd-network-management
 %ifnarch s390 s390x
 %{dracutlibdir}/modules.d/00warpclock
 %endif
-%if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version}
 %{dracutlibdir}/modules.d/01fips
-%endif
 %{dracutlibdir}/modules.d/01systemd-ac-power
 %{dracutlibdir}/modules.d/01systemd-ask-password
 %{dracutlibdir}/modules.d/01systemd-coredump
 %{dracutlibdir}/modules.d/01systemd-hostnamed
 %{dracutlibdir}/modules.d/01systemd-initrd
+%{dracutlibdir}/modules.d/01systemd-integritysetup
 %{dracutlibdir}/modules.d/01systemd-journald
 %{dracutlibdir}/modules.d/01systemd-ldconfig
 %{dracutlibdir}/modules.d/01systemd-modules-load
@@ -365,6 +302,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/50plymouth
 %{dracutlibdir}/modules.d/62bluetooth
 %{dracutlibdir}/modules.d/80lvmmerge
+%{dracutlibdir}/modules.d/80lvmthinpool-monitor
 %{dracutlibdir}/modules.d/90btrfs
 %{dracutlibdir}/modules.d/90crypt
 %{dracutlibdir}/modules.d/90dm
@@ -392,6 +330,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/95terminfo
 %{dracutlibdir}/modules.d/95udev-rules
 %{dracutlibdir}/modules.d/95virtfs
+%{dracutlibdir}/modules.d/95virtiofs
 %ifarch s390 s390x
 %{dracutlibdir}/modules.d/80cms
 %{dracutlibdir}/modules.d/81cio_ignore
@@ -405,7 +344,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/95zfcp_rules
 %endif
 %if %{undefined _unitdir}
-%{dracutlibdir}/modules.d/01systemd-integritysetup
 %{dracutlibdir}/modules.d/96securityfs
 %{dracutlibdir}/modules.d/97masterkey
 %{dracutlibdir}/modules.d/98integrity
@@ -421,10 +359,10 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/99memstrack
 %{dracutlibdir}/modules.d/99fs-lib
 %{dracutlibdir}/modules.d/99shutdown
-%attr(0644,root,root) %ghost %config(missingok,noreplace) %{_localstatedir}/log/dracut.log
 %dir %{_sharedstatedir}/initramfs
 %if %{defined _unitdir}
 %{_unitdir}/dracut-shutdown.service
+%{_unitdir}/dracut-shutdown-onfailure.service
 %{_unitdir}/sysinit.target.wants/dracut-shutdown.service
 %{_unitdir}/dracut-cmdline.service
 %{_unitdir}/dracut-initqueue.service
@@ -433,7 +371,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_unitdir}/dracut-pre-pivot.service
 %{_unitdir}/dracut-pre-trigger.service
 %{_unitdir}/dracut-pre-udev.service
-%{_unitdir}/dracut-shutdown-onfailure.service
 %{_unitdir}/initrd.target.wants/dracut-cmdline.service
 %{_unitdir}/initrd.target.wants/dracut-initqueue.service
 %{_unitdir}/initrd.target.wants/dracut-mount.service
@@ -446,6 +383,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 
 %files network
 %{dracutlibdir}/modules.d/01systemd-networkd
+%{dracutlibdir}/modules.d/35connman
 %{dracutlibdir}/modules.d/35network-manager
 %{dracutlibdir}/modules.d/35network-legacy
 %{dracutlibdir}/modules.d/35network-wicked
@@ -495,6 +433,11 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Aug 25 2022 Pavel Valena <pvalena@redhat.com> - 057-3
+- Update to 057
+- dmsquash-live-root: Run checkisomd5 on correct device
+- Recommend tpm2-tools package, as it's required by crypt module
+
 * Thu Mar 03 2022 Peter Robinson <pbrobinson@fedoraproject.org> - 056-1
 - Update to 056
 
