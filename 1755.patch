@@ -1,0 +1,34 @@
+From e488704701b73d05384cf38a017c055b95317b34 Mon Sep 17 00:00:00 2001
+From: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
+Date: Fri, 18 Mar 2022 15:42:42 +0100
+Subject: [PATCH] fix(dracut-initramfs-restore.sh): unpack uncompressed initrd
+ as last option
+
+Attempting to unpack the initrd assuming it is uncompressed when
+it is delays the shutdown process by several seconds. This must
+be the last check.
+---
+ dracut-initramfs-restore.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/dracut-initramfs-restore.sh b/dracut-initramfs-restore.sh
+index 3c70b42c3..2efd798c5 100644
+--- a/dracut-initramfs-restore.sh
++++ b/dracut-initramfs-restore.sh
+@@ -51,13 +51,13 @@ fi
+ 
+ cd /run/initramfs
+ 
+-if $SKIP "$IMG" | cpio -id --no-absolute-filenames --quiet > /dev/null \
+-    || $SKIP "$IMG" | zcat | cpio -id --no-absolute-filenames --quiet > /dev/null \
++if $SKIP "$IMG" | zcat | cpio -id --no-absolute-filenames --quiet > /dev/null \
+     || $SKIP "$IMG" | bzcat | cpio -id --no-absolute-filenames --quiet > /dev/null \
+     || $SKIP "$IMG" | xzcat | cpio -id --no-absolute-filenames --quiet > /dev/null \
+     || $SKIP "$IMG" | lz4 -d -c | cpio -id --no-absolute-filenames --quiet > /dev/null \
+     || $SKIP "$IMG" | lzop -d -c | cpio -id --no-absolute-filenames --quiet > /dev/null \
+-    || $SKIP "$IMG" | zstd -d -c | cpio -id --no-absolute-filenames --quiet > /dev/null; then
++    || $SKIP "$IMG" | zstd -d -c | cpio -id --no-absolute-filenames --quiet > /dev/null \
++    || $SKIP "$IMG" | cpio -id --no-absolute-filenames --quiet > /dev/null; then
+     rm -f -- .need_shutdown
+ else
+     # something failed, so we clean up

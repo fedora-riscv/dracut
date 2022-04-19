@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 1
+%define dist_free_release 2
 
 Name: dracut
 Version: 056
@@ -36,6 +36,10 @@ Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 # for debugging) - workaround for RHBZ #1964879 / upstream #1521, to
 # be removed when that is properly fixed
 Patch0: 0001-Never-enable-the-bluetooth-module-by-default-1521.patch
+# Add upstream patch to change order of initramfs decompression to
+# hopefully avoid compose failures due to oz trying to convert
+# garbage output to utf-8
+Patch1: https://patch-diff.githubusercontent.com/raw/dracutdevs/dracut/pull/1755.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -495,6 +499,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue Apr 19 2022 Kevin Fenzi <kevin@scrye.com> - 056-2
+- Add already upstream patch to change dracut-initramfs-restore to hopefully not break oz/composes
+
 * Thu Mar 03 2022 Peter Robinson <pbrobinson@fedoraproject.org> - 056-1
 - Update to 056
 
