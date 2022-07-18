@@ -5,10 +5,10 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 2
+%define dist_free_release 1
 
 Name: dracut
-Version: 056
+Version: 057
 Release: %{dist_free_release}%{?dist}
 
 Summary: Initramfs generator using udev
@@ -31,15 +31,6 @@ URL: https://dracut.wiki.kernel.org/
 Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar.xz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
-
-# Never auto-enable bluetooth module (but it can be manually included
-# for debugging) - workaround for RHBZ #1964879 / upstream #1521, to
-# be removed when that is properly fixed
-Patch0: 0001-Never-enable-the-bluetooth-module-by-default-1521.patch
-# Add upstream patch to change order of initramfs decompression to
-# hopefully avoid compose failures due to oz trying to convert
-# garbage output to utf-8
-Patch1: https://patch-diff.githubusercontent.com/raw/dracutdevs/dracut/pull/1755.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -227,12 +218,8 @@ rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00dash
 # we do not support mksh in the initramfs
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00mksh
 
-# remove gentoo specific modules
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/50gensplash
-
 %if %{defined _unitdir}
 # with systemd IMA and selinux modules do not make sense
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/01systemd-integritysetup
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/96securityfs
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/97masterkey
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/98integrity
@@ -258,7 +245,6 @@ rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00warpclock
 mkdir -p $RPM_BUILD_ROOT/boot/dracut
 mkdir -p $RPM_BUILD_ROOT/var/lib/dracut/overlay
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log
-touch $RPM_BUILD_ROOT%{_localstatedir}/log/dracut.log
 mkdir -p $RPM_BUILD_ROOT%{_sharedstatedir}/initramfs
 
 %if 0%{?fedora} || 0%{?rhel}
@@ -339,6 +325,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01systemd-coredump
 %{dracutlibdir}/modules.d/01systemd-hostnamed
 %{dracutlibdir}/modules.d/01systemd-initrd
+%{dracutlibdir}/modules.d/01systemd-integritysetup
 %{dracutlibdir}/modules.d/01systemd-journald
 %{dracutlibdir}/modules.d/01systemd-ldconfig
 %{dracutlibdir}/modules.d/01systemd-modules-load
@@ -369,6 +356,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/50plymouth
 %{dracutlibdir}/modules.d/62bluetooth
 %{dracutlibdir}/modules.d/80lvmmerge
+%{dracutlibdir}/modules.d/80lvmthinpool-monitor
 %{dracutlibdir}/modules.d/90btrfs
 %{dracutlibdir}/modules.d/90crypt
 %{dracutlibdir}/modules.d/90dm
@@ -396,6 +384,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/95terminfo
 %{dracutlibdir}/modules.d/95udev-rules
 %{dracutlibdir}/modules.d/95virtfs
+%{dracutlibdir}/modules.d/95virtiofs
 %ifarch s390 s390x
 %{dracutlibdir}/modules.d/80cms
 %{dracutlibdir}/modules.d/81cio_ignore
@@ -409,7 +398,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/95zfcp_rules
 %endif
 %if %{undefined _unitdir}
-%{dracutlibdir}/modules.d/01systemd-integritysetup
 %{dracutlibdir}/modules.d/96securityfs
 %{dracutlibdir}/modules.d/97masterkey
 %{dracutlibdir}/modules.d/98integrity
@@ -425,10 +413,10 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/99memstrack
 %{dracutlibdir}/modules.d/99fs-lib
 %{dracutlibdir}/modules.d/99shutdown
-%attr(0644,root,root) %ghost %config(missingok,noreplace) %{_localstatedir}/log/dracut.log
 %dir %{_sharedstatedir}/initramfs
 %if %{defined _unitdir}
 %{_unitdir}/dracut-shutdown.service
+%{_unitdir}/dracut-shutdown-onfailure.service
 %{_unitdir}/sysinit.target.wants/dracut-shutdown.service
 %{_unitdir}/dracut-cmdline.service
 %{_unitdir}/dracut-initqueue.service
@@ -437,7 +425,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_unitdir}/dracut-pre-pivot.service
 %{_unitdir}/dracut-pre-trigger.service
 %{_unitdir}/dracut-pre-udev.service
-%{_unitdir}/dracut-shutdown-onfailure.service
 %{_unitdir}/initrd.target.wants/dracut-cmdline.service
 %{_unitdir}/initrd.target.wants/dracut-initqueue.service
 %{_unitdir}/initrd.target.wants/dracut-mount.service
@@ -450,6 +437,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 
 %files network
 %{dracutlibdir}/modules.d/01systemd-networkd
+%{dracutlibdir}/modules.d/35connman
 %{dracutlibdir}/modules.d/35network-manager
 %{dracutlibdir}/modules.d/35network-legacy
 %{dracutlibdir}/modules.d/35network-wicked
@@ -499,6 +487,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Mon Jul 18 2022 Pavel Valena <pvalena@redhat.com> - 057-1
+- Update to 057
+
 * Tue Apr 19 2022 Kevin Fenzi <kevin@scrye.com> - 056-2
 - Add already upstream patch to change dracut-initramfs-restore to hopefully not break oz/composes
 
