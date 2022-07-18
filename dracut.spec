@@ -12,12 +12,6 @@ Version: 057
 Release: %{dist_free_release}%{?dist}
 
 Summary: Initramfs generator using udev
-%if 0%{?fedora} || 0%{?rhel}
-Group: System Environment/Base
-%endif
-%if 0%{?suse_version}
-Group: System/Base
-%endif
 
 # The entire source code is GPLv2+
 # except install/* which is LGPLv2+
@@ -37,23 +31,12 @@ BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
 BuildRequires: gcc
 
-%if 0%{?fedora} || 0%{?rhel}
 BuildRequires: pkgconfig
 BuildRequires: systemd
-%endif
-%if 0%{?fedora}
 BuildRequires: bash-completion
-%endif
 
 %if %{with doc}
-%if 0%{?fedora} || 0%{?rhel}
 BuildRequires: docbook-style-xsl docbook-dtds libxslt
-%endif
-
-%if 0%{?suse_version}
-BuildRequires: docbook-xsl-stylesheets libxslt
-%endif
-
 BuildRequires: asciidoc
 %endif
 
@@ -73,7 +56,6 @@ Requires: sed
 Requires: xz
 Requires: gzip
 
-%if 0%{?fedora} || 0%{?rhel}
 Recommends: memstrack
 Recommends: hardlink
 Recommends: pigz
@@ -82,17 +64,8 @@ Requires: util-linux >= 2.21
 Requires: systemd >= 219
 Requires: systemd-udev >= 219
 Requires: procps-ng
-%else
-Requires: hardlink
-Requires: gzip
-Requires: kpartx
-Requires: udev > 166
-Requires: util-linux-ng >= 2.21
-%endif
 
-%if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version}
 Requires: libkcapi-hmaccalc
-%endif
 
 %description
 dracut contains tools to create bootable initramfses for the Linux
@@ -104,15 +77,7 @@ package.
 
 %package network
 Summary: dracut modules to build a dracut initramfs with network support
-%if 0%{?_module_build}
-# In the module-build-service, we have pieces of dracut provided by different
-# modules ("base-runtime" provides most functionality, but we need
-# dracut-network in "installer". Since these two modules build with separate
-# dist-tags, we need to reduce this strict requirement to ignore the dist-tag.
-Requires: %{name} >= %{version}-%{dist_free_release}
-%else
 Requires: %{name} = %{version}-%{release}
-%endif
 Requires: iputils
 Requires: iproute
 Requires: (NetworkManager >= 1.20 or dhclient)
@@ -135,17 +100,10 @@ initramfs with dracut, which drops capabilities.
 
 %package live
 Summary: dracut modules to build a dracut initramfs with live image capabilities
-%if 0%{?_module_build}
-# See the network subpackage comment.
-Requires: %{name} >= %{version}-%{dist_free_release}
-%else
 Requires: %{name} = %{version}-%{release}
-%endif
 Requires: %{name}-network = %{version}-%{release}
 Requires: tar gzip coreutils bash device-mapper curl
-%if 0%{?fedora}
 Requires: fuse ntfs-3g
-%endif
 
 %description live
 This package requires everything which is needed to build an
@@ -247,19 +205,8 @@ mkdir -p $RPM_BUILD_ROOT/var/lib/dracut/overlay
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log
 mkdir -p $RPM_BUILD_ROOT%{_sharedstatedir}/initramfs
 
-%if 0%{?fedora} || 0%{?rhel}
 install -m 0644 dracut.conf.d/fedora.conf.example $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/01-dist.conf
-%endif
-%if 0%{?suse_version}
-install -m 0644 dracut.conf.d/suse.conf.example   $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/01-dist.conf
-%else
 rm -f $RPM_BUILD_ROOT%{_mandir}/man?/*suse*
-%endif
-
-%if 0%{?fedora} == 0 && 0%{?rhel} == 0 && 0%{?suse_version} <= 9999
-rm -f -- $RPM_BUILD_ROOT%{_bindir}/lsinitrd
-rm -f -- $RPM_BUILD_ROOT%{_mandir}/man1/lsinitrd.1*
-%endif
 
 echo 'hostonly="no"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-generic-image.conf
 echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/02-rescue.conf
@@ -268,14 +215,11 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %if %{with doc}
 %doc README.md docs/HACKING.md AUTHORS NEWS.md dracut.html docs/dracut.png docs/dracut.svg
 %endif
-%{!?_licensedir:%global license %%doc}
 %license COPYING lgpl-2.1.txt
 %{_bindir}/dracut
 %{_datadir}/bash-completion/completions/dracut
 %{_datadir}/bash-completion/completions/lsinitrd
-%if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version} > 9999
 %{_bindir}/lsinitrd
-%endif
 %dir %{dracutlibdir}
 %dir %{dracutlibdir}/modules.d
 %{dracutlibdir}/dracut-functions.sh
@@ -288,9 +232,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/dracut-util
 %{dracutlibdir}/skipcpio
 %config(noreplace) %{_sysconfdir}/dracut.conf
-%if 0%{?fedora} || 0%{?suse_version} || 0%{?rhel}
 %{dracutlibdir}/dracut.conf.d/01-dist.conf
-%endif
 %dir %{_sysconfdir}/dracut.conf.d
 %dir %{dracutlibdir}/dracut.conf.d
 %dir %{_datadir}/pkgconfig
@@ -299,9 +241,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %if %{with doc}
 %{_mandir}/man8/dracut.8*
 %{_mandir}/man8/*service.8*
-%if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version} > 9999
 %{_mandir}/man1/lsinitrd.1*
-%endif
 %{_mandir}/man7/dracut.kernel.7*
 %{_mandir}/man7/dracut.cmdline.7*
 %{_mandir}/man7/dracut.modules.7*
@@ -309,17 +249,13 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_mandir}/man5/dracut.conf.5*
 %endif
 
-%if %{undefined _unitdir}
-%endif
 %{dracutlibdir}/modules.d/00bash
 %{dracutlibdir}/modules.d/00systemd
 %{dracutlibdir}/modules.d/00systemd-network-management
 %ifnarch s390 s390x
 %{dracutlibdir}/modules.d/00warpclock
 %endif
-%if 0%{?fedora} || 0%{?rhel} || 0%{?suse_version}
 %{dracutlibdir}/modules.d/01fips
-%endif
 %{dracutlibdir}/modules.d/01systemd-ac-power
 %{dracutlibdir}/modules.d/01systemd-ask-password
 %{dracutlibdir}/modules.d/01systemd-coredump
