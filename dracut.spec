@@ -5,11 +5,11 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 1
+%define dist_free_release 2
 
 Name: dracut
 Version: 057
-Release: %{dist_free_release}%{?dist}.1
+Release: %{dist_free_release}%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -25,6 +25,10 @@ URL: https://dracut.wiki.kernel.org/
 Source0: http://www.kernel.org/pub/linux/utils/boot/dracut/dracut-%{version}.tar.xz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
+
+# dmsquash-live-root: Run checkisomd5 on correct device
+# https://github.com/dracutdevs/dracut/pull/1882
+Patch0: 1882-dmsquash-live-root-Run-checkisomd5-on-correct-device.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -423,6 +427,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue Aug 16 2022 Pavel Valena <pvalena@redhat.com> - 057-2
+- dmsquash-live-root: Run checkisomd5 on correct device
+
 * Thu Jul 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 057-1.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
 
