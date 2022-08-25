@@ -5,7 +5,7 @@
 # strip the automatically generated dep here and instead co-own the
 # directory.
 %global __requires_exclude pkg-config
-%define dist_free_release 2
+%define dist_free_release 3
 
 Name: dracut
 Version: 057
@@ -29,6 +29,11 @@ Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 # dmsquash-live-root: Run checkisomd5 on correct device
 # https://github.com/dracutdevs/dracut/pull/1882
 Patch0: 1882-dmsquash-live-root-Run-checkisomd5-on-correct-device.patch
+
+# Never auto-enable bluetooth module (but it can be manually included
+# for debugging) - workaround for RHBZ #1964879.
+# https://github.com/dracutdevs/dracut/pull/1521
+Patch1: 1521-Never-enable-the-bluetooth-module-by-default.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -427,6 +432,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Aug 25 2022 Pavel Valena <pvalena@redhat.com> - 057-3
+- Re-add patch Never-enable-the-bluetooth-module-by-default-1521
+
 * Tue Aug 16 2022 Pavel Valena <pvalena@redhat.com> - 057-2
 - dmsquash-live-root: Run checkisomd5 on correct device
 
