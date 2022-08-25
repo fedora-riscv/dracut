@@ -69,6 +69,7 @@ Recommends: memstrack
 Recommends: hardlink
 Recommends: pigz
 Recommends: kpartx
+Recommends: (tpm2-tools if tpm2-tss)
 Requires: util-linux >= 2.21
 Requires: systemd >= 219
 Requires: systemd-udev >= 219
@@ -434,6 +435,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %changelog
 * Thu Aug 25 2022 Pavel Valena <pvalena@redhat.com> - 057-3
 - Re-add patch Never-enable-the-bluetooth-module-by-default-1521
+- Recommend tpm2-tools package, as it's required by crypt module
 
 * Tue Aug 16 2022 Pavel Valena <pvalena@redhat.com> - 057-2
 - dmsquash-live-root: Run checkisomd5 on correct device
