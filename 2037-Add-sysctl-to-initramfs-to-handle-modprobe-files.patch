@@ -1,0 +1,29 @@
+From 16f1daa9015b4cac6f390c0832f37479bc1377ba Mon Sep 17 00:00:00 2001
+From: Neal Gompa <neal@gompa.dev>
+Date: Sat, 5 Nov 2022 18:28:34 -0400
+Subject: [PATCH] fix(kernel-modules): add sysctl to initramfs to handle
+ modprobe files
+
+Users were seeing errors like this:
+
+[     2.917246] dracut-pre-udev[717]: sh: line 1: /sbin/sysctl: No such file or directory
+
+This was the result of modprobe.d files that needed to call sysctl
+and failing because sysctl wasn't included in the initramfs.
+
+This change makes it so that we have the binary included so those
+modprobe configuration files work properly.
+---
+ modules.d/90kernel-modules/module-setup.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh
+index b1fb74020..eb478c7ee 100755
+--- a/modules.d/90kernel-modules/module-setup.sh
++++ b/modules.d/90kernel-modules/module-setup.sh
+@@ -147,4 +147,5 @@ install() {
+         inst_hook cmdline 01 "$moddir/parse-kernel.sh"
+     fi
+     inst_simple "$moddir/insmodpost.sh" /sbin/insmodpost.sh
++    inst_multiple -o sysctl
+ }
