@@ -1,0 +1,21 @@
+From 5e3d6b7d8685f468ca27d246352411572c9ae1b2 Mon Sep 17 00:00:00 2001
+From: Gordon Messmer <gordon.messmer@gmail.com>
+Date: Mon, 6 Feb 2023 18:52:47 -0800
+Subject: [PATCH] Include iscsi-starter.service in iscsi support.
+
+
+diff --git a/modules.d/95iscsi/module-setup.sh b/modules.d/95iscsi/module-setup.sh
+index e7d74fe3..181ba631 100755
+--- a/modules.d/95iscsi/module-setup.sh
++++ b/modules.d/95iscsi/module-setup.sh
+@@ -224,6 +224,7 @@ install() {
+     else
+         inst_multiple -o \
+             "$systemdsystemunitdir"/iscsi.service \
++            "$systemdsystemunitdir"/iscsi-starter.service \
+             "$systemdsystemunitdir"/iscsi-init.service \
+             "$systemdsystemunitdir"/iscsid.service \
+             "$systemdsystemunitdir"/iscsid.socket \
+-- 
+2.39.1
+

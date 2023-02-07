@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 # rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 6
+%global baserelease 7
 
 Name: dracut
 Version: 057
@@ -44,6 +44,9 @@ Patch2: 1991-feat-dmsquash-live-add-new-dmsquash-live-autooverlay.patch
 # Add sysctl to initramfs to handle modprobe files
 # https://github.com/dracutdevs/dracut/pull/2037
 Patch3: 2037-Add-sysctl-to-initramfs-to-handle-modprobe-files.patch
+
+# Include iscsi-starter.service in the initrd
+Patch4: 2038-include-iscsi-starter.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -444,6 +447,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Mon Feb 06 2023 Gordon Messmer <gordon.messmer@gmail.com> 057-7
+- Include iscsi-starter.service
+
 * Thu Jan 19 2023 Fedora Release Engineering <releng@fedoraproject.org> - 057-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_38_Mass_Rebuild
 
