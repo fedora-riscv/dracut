@@ -31,6 +31,11 @@ Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 # https://github.com/dracutdevs/dracut/pull/1521
 Patch1: 1521-Never-enable-the-bluetooth-module-by-default.patch
 
+# Skip creating initrd when initrd already provided,
+# or different generator is configured
+# https://github.com/dracutdevs/dracut/pull/1825/
+Patch2: 1825-Skip-creating-initrd-when-initrd-is-provided.patch
+
 BuildRequires: bash
 BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
@@ -439,6 +444,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %changelog
 * Tue Mar 14 2023 Pavel Valena <pvalena@redhat.com> - 059-1
 - Update to 059
+- feat(dracut.sh): option to skip creating initrd
 
 * Sun Nov 13 2022 Davide Cavalca <dcavalca@fedoraproject.org> - 057-5
 - Backport fix to add sysctl to initramfs to handle modprobe files
