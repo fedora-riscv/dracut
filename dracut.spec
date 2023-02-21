@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 # rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 1
+%global baserelease 2
 
 Name: dracut
 Version: 059
@@ -39,6 +39,11 @@ Patch2: 1825-Skip-creating-initrd-when-initrd-is-provided.patch
 # Add kernel module with support for macbook keyboards
 # https://github.com/dracutdevs/dracut/pull/2218
 Patch3: 2218-add-module-driver-support-for-macbook-keyboards.patch
+
+# fix(dmsquash-live): restore compatibility with earlier releases
+# https://github.com/dracutdevs/dracut/pull/2233/
+# https://bugzilla.redhat.com/show_bug.cgi?id=2172269
+Patch4: 2233-dmsquash-live-restore-compatibility.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -446,6 +451,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue Mar 14 2023  Pavel Valena <pvalena@redhat.com> - 059-2
+- fix(dmsquash-live): restore compatibility with earlier releases
+
 * Mon Feb 13 2023 Pavel Valena <pvalena@redhat.com> - 059-1
 - Update to 059
 - feat(dracut.sh): option to skip creating initrd
