@@ -36,6 +36,10 @@ Patch1: 1521-Never-enable-the-bluetooth-module-by-default.patch
 # https://github.com/dracutdevs/dracut/pull/1825/
 Patch2: 1825-Skip-creating-initrd-when-initrd-is-provided.patch
 
+# Add kernel module with support for macbook keyboards
+# https://github.com/dracutdevs/dracut/pull/2218
+Patch3: 2218-add-module-driver-support-for-macbook-keyboards.patch
+
 BuildRequires: bash
 BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
@@ -445,6 +449,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 * Tue Mar 14 2023 Pavel Valena <pvalena@redhat.com> - 059-1
 - Update to 059
 - feat(dracut.sh): option to skip creating initrd
+- feat(kernel-modules): driver support for macbook keyboards
 
 * Sun Nov 13 2022 Davide Cavalca <dcavalca@fedoraproject.org> - 057-5
 - Backport fix to add sysctl to initramfs to handle modprobe files
