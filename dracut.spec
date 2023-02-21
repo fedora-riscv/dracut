@@ -40,6 +40,11 @@ Patch2: 1825-Skip-creating-initrd-when-initrd-is-provided.patch
 # https://github.com/dracutdevs/dracut/pull/2218
 Patch3: 2218-add-module-driver-support-for-macbook-keyboards.patch
 
+# fix(dmsquash-live): restore compatibility with earlier releases
+# https://github.com/dracutdevs/dracut/pull/2233/
+# https://bugzilla.redhat.com/show_bug.cgi?id=2172269
+Patch4: 2233-dmsquash-live-restore-compatibility.patch
+
 BuildRequires: bash
 BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
@@ -450,6 +455,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 - Update to 059
 - feat(dracut.sh): option to skip creating initrd
 - feat(kernel-modules): driver support for macbook keyboards
+- fix(dmsquash-live): restore compatibility with earlier releases
 
 * Sun Nov 13 2022 Davide Cavalca <dcavalca@fedoraproject.org> - 057-5
 - Backport fix to add sysctl to initramfs to handle modprobe files
