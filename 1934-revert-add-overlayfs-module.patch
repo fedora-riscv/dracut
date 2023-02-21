@@ -1,0 +1,205 @@
+From 59105d4a8e51f7d3e7fe716b4382bf604933abdd Mon Sep 17 00:00:00 2001
+From: rpm-build <rpm-build>
+Date: Tue, 21 Feb 2023 21:47:34 +0100
+Subject: [PATCH] Revert PR#1934
+
+---
+ .github/labeler.yml                           |  3 --
+ .../90dmsquash-live/dmsquash-live-root.sh     | 17 ++++++++++
+ modules.d/90dmsquash-live/module-setup.sh     |  4 +--
+ .../90dmsquash-live/parse-dmsquash-live.sh    |  3 --
+ modules.d/90overlayfs/module-setup.sh         | 18 ----------
+ modules.d/90overlayfs/mount-overlayfs.sh      | 33 -------------------
+ test/TEST-16-DMSQUASH/test.sh                 |  6 ----
+ test/TEST-20-NFS/test.sh                      | 10 +-----
+ 8 files changed, 20 insertions(+), 74 deletions(-)
+ delete mode 100755 modules.d/90overlayfs/module-setup.sh
+ delete mode 100755 modules.d/90overlayfs/mount-overlayfs.sh
+
+diff --git a/.github/labeler.yml b/.github/labeler.yml
+index ba47d04..faa782a 100644
+--- a/.github/labeler.yml
++++ b/.github/labeler.yml
+@@ -138,9 +138,6 @@ multipath:
+ nvdimm:
+   - modules.d/90nvdimm/*
+ 
+-overlayfs:
+-  - modules.d/90overlayfs/*
+-
+ ppcmac:
+   - modules.d/90ppcmac/*
+ 
+diff --git a/modules.d/90dmsquash-live/dmsquash-live-root.sh b/modules.d/90dmsquash-live/dmsquash-live-root.sh
+index 62d1b5e..d5b03bc 100755
+--- a/modules.d/90dmsquash-live/dmsquash-live-root.sh
++++ b/modules.d/90dmsquash-live/dmsquash-live-root.sh
+@@ -410,6 +410,23 @@ if [ -n "$overlayfs" ]; then
+     else
+         ln -sf /run/initramfs/live /run/rootfsbase
+     fi
++    mkdir -m 0755 -p /run/overlayfs
++    mkdir -m 0755 -p /run/ovlwork
++    if [ -n "$reset_overlay" ] && [ -h /run/overlayfs ]; then
++        ovlfs=$(readlink /run/overlayfs)
++        info "Resetting the OverlayFS overlay directory."
++        rm -r -- "${ovlfs:?}"/* "${ovlfs:?}"/.* > /dev/null 2>&1
++    fi
++    if [ -n "$readonly_overlay" ] && [ -h /run/overlayfs-r ]; then
++        ovlfs=lowerdir=/run/overlayfs-r:/run/rootfsbase
++    else
++        ovlfs=lowerdir=/run/rootfsbase
++    fi
++    if [ -z "$DRACUT_SYSTEMD" ]; then
++        printf 'mount -t overlay LiveOS_rootfs -o%s,%s %s\n' "$ROOTFLAGS" \
++            "$ovlfs",upperdir=/run/overlayfs,workdir=/run/ovlwork \
++            "$NEWROOT" > "$hookdir"/mount/01-$$-live.sh
++    fi
+ else
+     if [ -z "$DRACUT_SYSTEMD" ]; then
+         [ -n "$ROOTFLAGS" ] && ROOTFLAGS="-o $ROOTFLAGS"
+diff --git a/modules.d/90dmsquash-live/module-setup.sh b/modules.d/90dmsquash-live/module-setup.sh
+index b905e3d..cf3dfe5 100755
+--- a/modules.d/90dmsquash-live/module-setup.sh
++++ b/modules.d/90dmsquash-live/module-setup.sh
+@@ -11,13 +11,13 @@ check() {
+ depends() {
+     # if dmsetup is not installed, then we cannot support fedora/red hat
+     # style live images
+-    echo dm rootfs-block img-lib overlayfs
++    echo dm rootfs-block img-lib
+     return 0
+ }
+ 
+ # called by dracut
+ installkernel() {
+-    instmods squashfs loop iso9660
++    instmods squashfs loop iso9660 overlay
+ }
+ 
+ # called by dracut
+diff --git a/modules.d/90dmsquash-live/parse-dmsquash-live.sh b/modules.d/90dmsquash-live/parse-dmsquash-live.sh
+index 1a316a2..8c4423b 100755
+--- a/modules.d/90dmsquash-live/parse-dmsquash-live.sh
++++ b/modules.d/90dmsquash-live/parse-dmsquash-live.sh
+@@ -39,9 +39,6 @@ case "$liveroot" in
+     live:/*.[Ii][Mm][Gg] | /*.[Ii][Mm][Gg])
+         [ -f "${root#live:}" ] && rootok=1
+         ;;
+-    live:nfs*)
+-        rootok=1
+-        ;;
+ esac
+ 
+ [ "$rootok" = "1" ] || return 1
+diff --git a/modules.d/90overlayfs/module-setup.sh b/modules.d/90overlayfs/module-setup.sh
+deleted file mode 100755
+index 27aa7cf..0000000
+--- a/modules.d/90overlayfs/module-setup.sh
++++ /dev/null
+@@ -1,18 +0,0 @@
+-#!/bin/bash
+-
+-check() {
+-    [[ $hostonly ]] && return 1
+-    return 255
+-}
+-
+-depends() {
+-    echo base
+-}
+-
+-installkernel() {
+-    instmods overlay
+-}
+-
+-install() {
+-    inst_hook mount 01 "$moddir/mount-overlayfs.sh"
+-}
+diff --git a/modules.d/90overlayfs/mount-overlayfs.sh b/modules.d/90overlayfs/mount-overlayfs.sh
+deleted file mode 100755
+index 7e2da1a..0000000
+--- a/modules.d/90overlayfs/mount-overlayfs.sh
++++ /dev/null
+@@ -1,33 +0,0 @@
+-#!/bin/sh
+-
+-type getarg > /dev/null 2>&1 || . /lib/dracut-lib.sh
+-
+-getargbool 0 rd.live.overlay.overlayfs && overlayfs="yes"
+-getargbool 0 rd.live.overlay.reset -d -y reset_overlay && reset_overlay="yes"
+-getargbool 0 rd.live.overlay.readonly -d -y readonly_overlay && readonly_overlay="--readonly" || readonly_overlay=""
+-
+-ROOTFLAGS="$(getarg rootflags)"
+-
+-if [ -n "$overlayfs" ]; then
+-    if ! [ -e /run/rootfsbase ]; then
+-        mkdir -m 0755 -p /run/rootfsbase
+-        mount --bind "$NEWROOT" /run/rootfsbase
+-    fi
+-
+-    mkdir -m 0755 -p /run/overlayfs
+-    mkdir -m 0755 -p /run/ovlwork
+-    if [ -n "$reset_overlay" ] && [ -h /run/overlayfs ]; then
+-        ovlfsdir=$(readlink /run/overlayfs)
+-        info "Resetting the OverlayFS overlay directory."
+-        rm -r -- "${ovlfsdir:?}"/* "${ovlfsdir:?}"/.* > /dev/null 2>&1
+-    fi
+-    if [ -n "$readonly_overlay" ] && [ -h /run/overlayfs-r ]; then
+-        ovlfs=lowerdir=/run/overlayfs-r:/run/rootfsbase
+-    else
+-        ovlfs=lowerdir=/run/rootfsbase
+-    fi
+-
+-    if ! strstr "$(cat /proc/mounts)" LiveOS_rootfs; then
+-        mount -t overlay LiveOS_rootfs -o "$ROOTFLAGS,$ovlfs",upperdir=/run/overlayfs,workdir=/run/ovlwork "$NEWROOT"
+-    fi
+-fi
+diff --git a/test/TEST-16-DMSQUASH/test.sh b/test/TEST-16-DMSQUASH/test.sh
+index d8a7bc7..5854ab8 100755
+--- a/test/TEST-16-DMSQUASH/test.sh
++++ b/test/TEST-16-DMSQUASH/test.sh
+@@ -15,12 +15,6 @@ test_run() {
+     qemu_add_drive_args disk_index disk_args "$TESTDIR"/marker.img marker
+     qemu_add_drive_args disk_index disk_args "$TESTDIR"/root.img root
+ 
+-    "$testdir"/run-qemu \
+-        "${disk_args[@]}" \
+-        -boot order=d \
+-        -append "rd.live.overlay.overlayfs=1 root=LABEL=dracut console=ttyS0,115200n81 quiet selinux=0 rd.info rd.shell=0 panic=1 oops=panic softlockup_panic=1 $DEBUGFAIL" \
+-        -initrd "$TESTDIR"/initramfs.testing
+-
+     "$testdir"/run-qemu \
+         "${disk_args[@]}" \
+         -boot order=d \
+diff --git a/test/TEST-20-NFS/test.sh b/test/TEST-20-NFS/test.sh
+index c637b57..2af41f4 100755
+--- a/test/TEST-20-NFS/test.sh
++++ b/test/TEST-20-NFS/test.sh
+@@ -173,14 +173,6 @@ test_nfsv3() {
+     client_test "NFSv3 root=dhcp DHCP proto:IP:path,options" 52:54:00:12:34:07 \
+         "root=dhcp" 192.168.50.3 wsize=4096 || return 1
+ 
+-    client_test "NFSv3 Overlayfs root=nfs:..." 52:54:00:12:34:04 \
+-        "root=nfs:192.168.50.1:/nfs/client rd.live.overlay.overlayfs=1" \
+-        192.168.50.1 -wsize=4096 || return 1
+-
+-    client_test "NFSv3 Live Overlayfs root=nfs:..." 52:54:00:12:34:04 \
+-        "root=nfs:192.168.50.1:/nfs/client rd.live.image rd.live.overlay.overlayfs=1" \
+-        192.168.50.1 -wsize=4096 || return 1
+-
+     return 0
+ }
+ 
+@@ -400,7 +392,7 @@ test_setup() {
+     # Make client's dracut image
+     "$basedir"/dracut.sh -l -i "$TESTDIR"/overlay / \
+         -o "plymouth" \
+-        -a "dmsquash-live debug watchdog ${USE_NETWORK}" \
++        -a "debug watchdog ${USE_NETWORK}" \
+         --no-hostonly-cmdline -N \
+         -f "$TESTDIR"/initramfs.testing "$KVERSION" || return 1
+ 
+-- 
+2.39.1
+

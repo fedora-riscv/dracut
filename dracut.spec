@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 # rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 1
+%global baserelease 2
 
 Name: dracut
 Version: 059
@@ -39,6 +39,10 @@ Patch2: 1825-Skip-creating-initrd-when-initrd-is-provided.patch
 # Add kernel module with support for macbook keyboards
 # https://github.com/dracutdevs/dracut/pull/2218
 Patch3: 2218-add-module-driver-support-for-macbook-keyboards.patch
+
+# Revert PR#1934
+# https://bugzilla.redhat.com/show_bug.cgi?id=2172269#c3
+Patch4: 1934-revert-add-overlayfs-module.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -324,7 +328,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/90mdraid
 %{dracutlibdir}/modules.d/90multipath
 %{dracutlibdir}/modules.d/90nvdimm
-%{dracutlibdir}/modules.d/90overlayfs
 %{dracutlibdir}/modules.d/90ppcmac
 %{dracutlibdir}/modules.d/90qemu
 %{dracutlibdir}/modules.d/91crypt-gpg
@@ -446,6 +449,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue Feb 21 2023 Pavel Valena <pvalena@redhat.com> - 059-2
+- Revert: PR#1934 add overlayfs module
+
 * Mon Feb 13 2023 Pavel Valena <pvalena@redhat.com> - 059-1
 - Update to 059
 - feat(dracut.sh): option to skip creating initrd
