@@ -45,6 +45,10 @@ Patch3: 2218-add-module-driver-support-for-macbook-keyboards.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=2172269
 Patch4: 2233-dmsquash-live-restore-compatibility.patch
 
+# Fix: dracut --kmoddir fails on paths with traling /
+# https://bugzilla.redhat.com/show_bug.cgi?id=2173100
+Patch5: 2237-kmoddir-fix-trailing-forwardslash-handling.patch
+
 BuildRequires: bash
 BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
@@ -453,6 +457,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %changelog
 * Tue Mar 14 2023  Pavel Valena <pvalena@redhat.com> - 059-2
 - fix(dmsquash-live): restore compatibility with earlier releases
+- fix(dracut.sh): handle --kmoddir with trailing /
 
 * Mon Feb 13 2023 Pavel Valena <pvalena@redhat.com> - 059-1
 - Update to 059
