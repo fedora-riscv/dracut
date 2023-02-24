@@ -45,6 +45,10 @@ Patch3: 2218-add-module-driver-support-for-macbook-keyboards.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=2172269
 Patch4: 2233-dmsquash-live-restore-compatibility.patch
 
+# Fix: dracut --kmoddir fails on paths with traling /
+# https://bugzilla.redhat.com/show_bug.cgi?id=2173100
+Patch5: 2237-kmoddir-fix-trailing-forwardslash-handling.patch
+
 BuildRequires: bash
 BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
@@ -456,6 +460,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 - feat(dracut.sh): option to skip creating initrd
 - feat(kernel-modules): driver support for macbook keyboards
 - fix(dmsquash-live): restore compatibility with earlier releases
+- fix(dracut.sh): handle --kmoddir with trailing /
 
 * Sun Nov 13 2022 Davide Cavalca <dcavalca@fedoraproject.org> - 057-5
 - Backport fix to add sysctl to initramfs to handle modprobe files
