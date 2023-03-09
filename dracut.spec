@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 # rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 3
+%global baserelease 4
 
 Name: dracut
 Version: 059
@@ -40,9 +40,10 @@ Patch2: 1825-Skip-creating-initrd-when-initrd-is-provided.patch
 # https://github.com/dracutdevs/dracut/pull/2218
 Patch3: 2218-add-module-driver-support-for-macbook-keyboards.patch
 
-# Revert PR#1934
-# https://bugzilla.redhat.com/show_bug.cgi?id=2172269#c3
-Patch4: 1934-revert-add-overlayfs-module.patch
+# fix(dmsquash-live): restore compatibility with earlier releases
+# https://github.com/dracutdevs/dracut/pull/2233/
+# https://bugzilla.redhat.com/show_bug.cgi?id=2172269
+Patch4: 2233-dmsquash-live-restore-compatibility.patch
 
 # Fix: dracut --kmoddir fails on paths with traling /
 # https://bugzilla.redhat.com/show_bug.cgi?id=2173100
@@ -332,6 +333,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/90mdraid
 %{dracutlibdir}/modules.d/90multipath
 %{dracutlibdir}/modules.d/90nvdimm
+%{dracutlibdir}/modules.d/90overlayfs
 %{dracutlibdir}/modules.d/90ppcmac
 %{dracutlibdir}/modules.d/90qemu
 %{dracutlibdir}/modules.d/91crypt-gpg
@@ -453,6 +455,10 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Mar 09 2023 Pavel Valena <pvalena@redhat.com> - 059-4
+- fix(dmsquash-live): restore compatibility with earlier releases
+- Re-add overlayfs module (drop patch 1934)
+
 * Fri Feb 24 2023 Pavel Valena <pvalena@redhat.com> - 059-3
 - fix(dracut.sh): handle --kmoddir with trailing /
 
