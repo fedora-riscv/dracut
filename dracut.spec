@@ -49,6 +49,10 @@ Patch4: 2233-dmsquash-live-restore-compatibility.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=2173100
 Patch5: 2237-kmoddir-fix-trailing-forwardslash-handling.patch
 
+# revert(network-manager): avoid restarting NetworkManager
+# https://github.com/dracutdevs/dracut/pull/2134
+Patch6: 2134-revert-avoid-restarting-NetworkManager.patch
+
 BuildRequires: bash
 BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
@@ -458,6 +462,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 * Tue Mar 14 2023  Pavel Valena <pvalena@redhat.com> - 059-2
 - fix(dmsquash-live): restore compatibility with earlier releases
 - fix(dracut.sh): handle --kmoddir with trailing /
+- revert(network-manager): avoid restarting NetworkManager
 
 * Mon Feb 13 2023 Pavel Valena <pvalena@redhat.com> - 059-1
 - Update to 059
