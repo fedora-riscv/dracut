@@ -53,6 +53,11 @@ Patch5: 2237-kmoddir-fix-trailing-forwardslash-handling.patch
 # https://github.com/dracutdevs/dracut/pull/2134
 Patch6: 2134-revert-avoid-restarting-NetworkManager.patch
 
+# Support MACAddressPolicy=none for bond/bridge/team devices
+# https://fedoraproject.org/wiki/Changes/MAC_Address_Policy_none
+# https://github.com/dracutdevs/dracut/pull/2224
+Patch7: 2224-network-include-default-mac-none-link.patch
+
 BuildRequires: bash
 BuildRequires: git-core
 BuildRequires: pkgconfig(libkmod) >= 23
@@ -466,6 +471,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 - fix(dmsquash-live): restore compatibility with earlier releases
 - fix(dracut.sh): handle --kmoddir with trailing /
 - revert(network-manager): avoid restarting NetworkManager
+- feat(network): include 98-default-mac-none.link if it exists
 
 * Sun Nov 13 2022 Davide Cavalca <dcavalca@fedoraproject.org> - 057-5
 - Backport fix to add sysctl to initramfs to handle modprobe files
