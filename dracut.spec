@@ -20,7 +20,7 @@ Summary: Initramfs generator using udev
 # except util/* which is GPLv2
 License: GPLv2+ and LGPLv2+ and GPLv2
 
-URL: https://dracut.wiki.kernel.org/
+URL: https://github.com/dracutdevs/dracut/wiki/
 
 Source0: https://github.com/dracutdevs/dracut/archive/refs/tags/%{version}.tar.gz
 
