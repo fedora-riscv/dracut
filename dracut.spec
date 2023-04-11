@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 # rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 5
+%global baserelease 6
 
 Name: dracut
 Version: 059
@@ -18,7 +18,7 @@ Summary: Initramfs generator using udev
 # The entire source code is GPLv2+
 # except install/* which is LGPLv2+
 # except util/* which is GPLv2
-License: GPLv2+ and LGPLv2+ and GPLv2
+License: GPL-2.0-or-later AND LGPL-2.1-or-later AND GPL-2.0-only
 
 URL: https://dracut.wiki.kernel.org/
 
@@ -464,6 +464,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue Apr 11 2023 Lukáš Zaoral <lzaoral@redhat.com> - 059-6
+- migrate to SPDX license format
+
 * Tue Mar 14 2023 Dusty Mabe <dusty@dustymabe.com> - 059-5
 - feat(network): include 98-default-mac-none.link if it exists
 
