@@ -186,6 +186,16 @@ This package provides a dracut module to build an initramfs, but store most file
 in a squashfs image, result in a smaller initramfs size and reduce runtime memory
 usage.
 
+%package integrity
+Summary: dracut module for IMA and EVM integrity support
+Requires: %{name} = %{version}-%{release}
+
+%description integrity
+This package provides dracut modules for support of IMA and EVM integrity. It
+includes support for mounting securityfs, loading a master key, loading of
+EVM and IMA keys, activating EVM, and loading an IMA policy contained in the
+initramfs.
+
 %prep
 %autosetup -n %{name}-%{version} -S git_am
 cp %{SOURCE1} .
@@ -216,13 +226,6 @@ rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00dash
 
 # we do not support mksh in the initramfs
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00mksh
-
-%if %{defined _unitdir}
-# with systemd IMA and selinux modules do not make sense
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/96securityfs
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/97masterkey
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/98integrity
-%endif
 
 %ifnarch s390 s390x
 # remove architecture specific modules
@@ -381,11 +384,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/95zfcp
 %{dracutlibdir}/modules.d/95zfcp_rules
 %endif
-%if %{undefined _unitdir}
-%{dracutlibdir}/modules.d/96securityfs
-%{dracutlibdir}/modules.d/97masterkey
-%{dracutlibdir}/modules.d/98integrity
-%endif
 %{dracutlibdir}/modules.d/97biosdevname
 %{dracutlibdir}/modules.d/98dracut-systemd
 %{dracutlibdir}/modules.d/98ecryptfs
@@ -450,6 +448,11 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/90dmsquash-live-autooverlay
 %{dracutlibdir}/modules.d/90dmsquash-live-ntfs
 %{dracutlibdir}/modules.d/90livenet
+
+%files integrity
+%{dracutlibdir}/modules.d/96securityfs
+%{dracutlibdir}/modules.d/97masterkey
+%{dracutlibdir}/modules.d/98integrity
 
 %files tools
 %if %{with doc}
