@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 # rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 10
+%global baserelease 11
 
 Name: dracut
 Version: 059
@@ -69,6 +69,10 @@ Patch9: 2377-fix-kernel-modules-add-interconnect-drivers.patch
 # feat(nvmf): support for NVMeoF
 # https://github.com/dracutdevs/dracut/pull/2184
 Patch10: 2184-add-nvmeof-module.patch
+
+# fix(dracut.sh): use dynamically uefi's sections offset
+# https://github.com/dracutdevs/dracut/pull/2277
+Patch11: 0001-fix-dracut.sh-use-dynamically-uefi-s-sections-offset.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -476,6 +480,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Mon Jul 24 2023 Lukáš Nykrýn <lnykryn@redhat.com> - 059-11
+- fix(dracut.sh): use dynamically uefi's sections offset
+
 * Mon Jul 24 2023 Pavel Valena <pvalena@redhat.com> - 059-10
 - feat(nvmf): support for NVMeoF
 
