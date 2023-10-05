@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 # rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 3
+%global baserelease 4
 
 Name: dracut
 Version: 059
@@ -61,6 +61,11 @@ Patch7: 2224-network-include-default-mac-none-link.patch
 # fix(multipath): remove dependency on multipathd.socket
 # https://github.com/dracutdevs/dracut/pull/2290
 Patch8: 2290-remove-dependency-on-multipathd-socket.patch
+
+# fix iso-scan feature by triggering udev events
+# https://github.com/dracutdevs/dracut/pull/2196
+# https://bugzilla.redhat.com/show_bug.cgi?id=2131852
+Patch9: 0001-fix-make-iso-scan-trigger-udev-events.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -468,6 +473,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu Oct 05 2023 Adam Williamson <awilliam@redhat.com> - 059-4
+- Backport PR #2196 to fix boot with iso-scan feature
+
 * Thu Apr 27 2023 Michael Hofmann <mhofmann@redhat.com> - 059-3
 - Backport fix to remove dependency on multipathd.socket
 
