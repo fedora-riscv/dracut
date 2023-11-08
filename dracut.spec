@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 # rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 15
+%global baserelease 16
 
 Name: dracut
 Version: 059
@@ -82,6 +82,10 @@ Patch12: 0001-fix-make-iso-scan-trigger-udev-events.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=2246410
 # https://github.com/dracutdevs/dracut/pull/2545
 Patch13: 0001-fix-wait-12-hours-before-halt-on-media-check-fail.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=2248671
+# https://github.com/dracutdevs/dracut/pull/2535
+Patch14: 0001-feat-systemd-install-systemd-executor.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -483,6 +487,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Wed Nov  8 2023 Yanko Kaneti <yaneti@declera.com> - 059-16
+- Backport PR #2535 to include systemd-executor for systemd-255
+
 * Sat Oct 28 2023 Adam Williamson <awilliam@redhat.com> - 059-15
 - Backport PR #2545 to fix media check failure visibility
 
