@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 # rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 20
+%global baserelease 21
 
 Name: dracut
 Version: 059
@@ -97,6 +97,15 @@ Patch17: 2481-remove-microcode-check-based-on-CONFIG_MICROCODE_.patch
 # Fix for Lenovo x13s
 # https://github.com/dracutdevs/dracut/pull/2531
 Patch: 2531.patch
+
+# https://github.com/dracutdevs/dracut/pull/2540
+# fix(pkcs11): delete trailing dot on libcryptsetup-token-systemd-pkcs11.so
+Patch19: https://github.com/dracutdevs/dracut/commit/1c762c0da6ed2bb6fa44d5e0968605cc4d45361c.patch
+
+# https://github.com/dracutdevs/dracut/pull/2547
+# fix(pcsc): add opensc load module file
+# fix(pcsc): add --disable-polkit to pcscd.service
+Patch20: https://github.com/dracutdevs/dracut/pull/2547.patch
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -498,6 +507,11 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Sat Jan 27 2024 Manuel Fombuena <fombuena@outlook.com> - 059-21
+- fix(pkcs11): delete trailing dot on libcryptsetup-token-systemd-pkcs11.so
+- fix(pcsc): add opensc load module file
+- fix(pcsc): add --disable-polkit to pcscd.service
+
 * Wed Jan 24 2024 Fedora Release Engineering <releng@fedoraproject.org> - 059-20
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
 
