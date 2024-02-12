@@ -7,7 +7,7 @@
 %global __requires_exclude pkg-config
 
 # rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 21
+%global baserelease 22
 
 Name: dracut
 Version: 059
@@ -163,7 +163,7 @@ Requires: %{name} = %{version}-%{release}
 Requires: iputils
 Requires: iproute
 Requires: jq
-Requires: (NetworkManager >= 1.20 or dhclient)
+Requires: NetworkManager >= 1.20
 Suggests: NetworkManager
 Obsoletes: dracut-generic < 008
 Provides:  dracut-generic = %{version}-%{release}
@@ -260,6 +260,9 @@ rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00dash
 
 # we do not support mksh in the initramfs
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00mksh
+
+# Remove obsolete module
+rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/35network-legacy
 
 %ifnarch s390 s390x
 # remove architecture specific modules
@@ -457,7 +460,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01systemd-networkd
 %{dracutlibdir}/modules.d/35connman
 %{dracutlibdir}/modules.d/35network-manager
-%{dracutlibdir}/modules.d/35network-legacy
 %{dracutlibdir}/modules.d/35network-wicked
 %{dracutlibdir}/modules.d/40network
 %{dracutlibdir}/modules.d/45ifcfg
@@ -507,6 +509,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Mon Feb 12 2024 Pavel Valena <pvalena@redhat.com> - 059-22
+- Remove network-legacy module.
+
 * Sat Jan 27 2024 Manuel Fombuena <fombuena@outlook.com> - 059-21
 - fix(pkcs11): delete trailing dot on libcryptsetup-token-systemd-pkcs11.so
 - fix(pcsc): add opensc load module file
