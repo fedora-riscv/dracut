@@ -1,7 +1,8 @@
-From a8015f7dfc682100434e3ee051bf9472a8e6cad4 Mon Sep 17 00:00:00 2001
+From f38de6b6ad07edf5c534ae7a38b3fa48f5ef6153 Mon Sep 17 00:00:00 2001
 From: Jeremy Linton <jeremy.linton@arm.com>
 Date: Fri, 6 Oct 2023 10:33:22 -0500
-Subject: [PATCH] feat(kernel-modules): add Qualcomm IPC router to enable USB
+Subject: [PATCH 06/10] feat(kernel-modules): add Qualcomm IPC router to enable
+ USB
 
 The x13s, and possibly other Qualcomm based devices need the QC
 IPC router driver in order to enable USB. Without it, its not
@@ -26,12 +27,14 @@ https://android.googlesource.com/kernel/msm/+/android-7.1.0_r0.2/Documentation/a
 https://github.com/dracutdevs/dracut/pull/2531
 
 Signed-off-by: Jeremy Linton <jeremy.linton@arm.com>
+
+(Cherry-picked commit a8015f7dfc682100434e3ee051bf9472a8e6cad4 from PR#2531)
 ---
  modules.d/90kernel-modules/module-setup.sh | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/modules.d/90kernel-modules/module-setup.sh b/modules.d/90kernel-modules/module-setup.sh
-index e217512594..75afecc86f 100755
+index e2175125..75afecc8 100755
 --- a/modules.d/90kernel-modules/module-setup.sh
 +++ b/modules.d/90kernel-modules/module-setup.sh
 @@ -95,7 +95,8 @@ installkernel() {
@@ -44,3 +47,6 @@ index e217512594..75afecc86f 100755
          fi
  
          awk -F: '/^\// {print $1}' "$srcmods/modules.dep" 2> /dev/null | instmods
+-- 
+2.42.0
+

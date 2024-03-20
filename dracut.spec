@@ -6,12 +6,9 @@
 # directory.
 %global __requires_exclude pkg-config
 
-# rpmdev-bumpspec and releng automation compatible variable
-%global baserelease 22
-
 Name: dracut
-Version: 059
-Release: %{baserelease}%{?dist}
+Version: 060
+Release: 1%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -22,90 +19,48 @@ License: GPL-2.0-or-later AND LGPL-2.1-or-later AND GPL-2.0-only
 
 URL: https://github.com/dracutdevs/dracut/wiki/
 
-Source0: https://github.com/dracutdevs/dracut/archive/refs/tags/%{version}.tar.gz
+# Currently upstream does not create releases, therefore
+# source is created from commit 856e7acdb1462803c2517c8d64afb2e34c73c735
+# Reference PR: https://github.com/dracutdevs/dracut/pull/2509
+# Unpacked archive: https://github.com/pvalena/dracut-fedora/tree/v60-srpm-unpacked
+Source0: dracut-%{version}.tar.xz
+#Source0: https://github.com/dracutdevs/dracut/archive/refs/tags/%%{version}.tar.gz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
-
-# Never auto-enable bluetooth module (but it can be manually included
-# for debugging) - workaround for RHBZ #1964879.
-# https://github.com/dracutdevs/dracut/pull/1521
-Patch1: 1521-Never-enable-the-bluetooth-module-by-default.patch
-
-# Skip creating initrd when initrd already provided,
-# or different generator is configured
-# https://github.com/dracutdevs/dracut/pull/1825/
-Patch2: 1825-Skip-creating-initrd-when-initrd-is-provided.patch
-
-# Add kernel module with support for macbook keyboards
-# https://github.com/dracutdevs/dracut/pull/2218
-Patch3: 2218-add-module-driver-support-for-macbook-keyboards.patch
-
-# fix(dmsquash-live): restore compatibility with earlier releases
-# https://github.com/dracutdevs/dracut/pull/2233/
-# https://bugzilla.redhat.com/show_bug.cgi?id=2172269
-Patch4: 2233-dmsquash-live-restore-compatibility.patch
-
-# Fix: dracut --kmoddir fails on paths with traling /
-# https://bugzilla.redhat.com/show_bug.cgi?id=2173100
-Patch5: 2237-kmoddir-fix-trailing-forwardslash-handling.patch
-
-# revert(network-manager): avoid restarting NetworkManager
-# https://github.com/dracutdevs/dracut/pull/2134
-Patch6: 2134-revert-avoid-restarting-NetworkManager.patch
-
-# Support MACAddressPolicy=none for bond/bridge/team devices
-# https://fedoraproject.org/wiki/Changes/MAC_Address_Policy_none
-# https://github.com/dracutdevs/dracut/pull/2224
-Patch7: 2224-network-include-default-mac-none-link.patch
-
-# fix(multipath): remove dependency on multipathd.socket
-# https://github.com/dracutdevs/dracut/pull/2290
-Patch8: 2290-remove-dependency-on-multipathd-socket.patch
-
-# fix(kernel-modules): add interconnect drivers
-# https://github.com/dracutdevs/dracut/pull/2377
-Patch9: 2377-fix-kernel-modules-add-interconnect-drivers.patch
-
-# feat(nvmf): support for NVMeoF
-# https://github.com/dracutdevs/dracut/pull/2184
-Patch10: 2184-add-nvmeof-module.patch
-
-# fix(dracut.sh): use dynamically uefi's sections offset
-# https://github.com/dracutdevs/dracut/pull/2277
-Patch11: 0001-fix-dracut.sh-use-dynamically-uefi-s-sections-offset.patch
-
-# fix iso-scan feature by triggering udev events
-# https://github.com/dracutdevs/dracut/pull/2196
-# https://bugzilla.redhat.com/show_bug.cgi?id=2131852
-Patch12: 0001-fix-make-iso-scan-trigger-udev-events.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=2246410
-# https://github.com/dracutdevs/dracut/pull/2545
-Patch13: 0001-fix-wait-12-hours-before-halt-on-media-check-fail.patch
-
-# Unbreak new systemd
-Patch14: https://github.com/dracutdevs/dracut/commit/bee1c4824a8cd47ce6c01892a548bdc07b1fa678.patch
-# https://github.com/dracutdevs/dracut/pull/2526.patch rebased
-Patch15: 0001-fix-systemd-pcrphase-rename-systemd-pcrphase-binary-.patch
-Patch16: https://github.com/dracutdevs/dracut/pull/2527.patch
-
-# Fix for kernel 6.6
-# https://bugzilla.redhat.com/show_bug.cgi?id=2249112
-# https://github.com/dracutdevs/dracut/pull/2481
-Patch17: 2481-remove-microcode-check-based-on-CONFIG_MICROCODE_.patch
-
-# Fix for Lenovo x13s
-# https://github.com/dracutdevs/dracut/pull/2531
-Patch: 2531.patch
-
+# feat(kernel-install): do nothing when $KERNEL_INSTALL_INITRD_GENERATOR says so
+# Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
+Patch1:  0001-feat-kernel-install-do-nothing-when-KERNEL_INSTALL_I.patch
+# fix(systemd-pcrphase): rename systemd-pcrphase binary to systemd-pcrextend
+# Author: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
+Patch2:  0002-fix-systemd-pcrphase-rename-systemd-pcrphase-binary-.patch
+# fix(resume): add new systemd-hibernate-resume.service
+# Author: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
+Patch3:  0003-fix-resume-add-new-systemd-hibernate-resume.service.patch
+# fix: wait 12 hours before halt on media check fail
+# Author: Adam Williamson <awilliam@redhat.com>
+Patch4:  0004-fix-wait-12-hours-before-halt-on-media-check-fail.patch
+# feat(network): include 98-default-mac-none.link if it exists
+# Author: Dusty Mabe <dusty@dustymabe.com>
+Patch5:  0005-feat-network-include-98-default-mac-none.link-if-it-.patch
+# feat(kernel-modules): add Qualcomm IPC router to enable USB
+# Author: Jeremy Linton <jeremy.linton@arm.com>
+Patch6:  0006-feat-kernel-modules-add-Qualcomm-IPC-router-to-enabl.patch
+# fix(kernel-install): do not generate an initrd when one was specified
+# Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
+Patch7:  0007-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
 # fix(pkcs11): delete trailing dot on libcryptsetup-token-systemd-pkcs11.so
-# https://github.com/dracutdevs/dracut/pull/2540
-Patch19: 2540-fix-pkcs11-libcryptsetup-token-systemd-pkcs11-so-path.patch
-
-# fix(pcsc): add opensc load module file
+# Author: innovara <fombuena@outlook.com>
+Patch8:  0008-fix-pkcs11-delete-trailing-dot-on-libcryptsetup-toke.patch
 # fix(pcsc): add --disable-polkit to pcscd.service
-# https://github.com/dracutdevs/dracut/pull/2547
-Patch20: 2547-fix-pcsc-module.patch
+# Author: Manuel Fombuena <mfombuena@innovara.co.uk>
+Patch9:  0009-fix-pcsc-add-disable-polkit-to-pcscd.service.patch
+# fix(pcsc): add opensc load module file
+# Author: Manuel Fombuena <mfombuena@innovara.co.uk>
+Patch10: 0010-fix-pcsc-add-opensc-load-module-file.patch
+
+# Please use source-git to work with this spec file:
+# HowTo: https://packit.dev/source-git/work-with-source-git
+# Source-git repository: https://github.com/redhat-plumbers/dracut-fedora/
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -251,10 +206,6 @@ cp %{SOURCE1} .
 
 echo "DRACUT_VERSION=%{version}-%{release}" > $RPM_BUILD_ROOT/%{dracutlibdir}/dracut-version.sh
 
-%if 0%{?fedora} == 0 && 0%{?rhel} == 0 && 0%{?suse_version} == 0
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/01fips
-%endif
-
 # we do not support dash in the initramfs
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00dash
 
@@ -284,6 +235,7 @@ rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00warpclock
 mkdir -p $RPM_BUILD_ROOT/boot/dracut
 mkdir -p $RPM_BUILD_ROOT/var/lib/dracut/overlay
 mkdir -p $RPM_BUILD_ROOT%{_localstatedir}/log
+touch $RPM_BUILD_ROOT%{_localstatedir}/log/dracut.log
 mkdir -p $RPM_BUILD_ROOT%{_sharedstatedir}/initramfs
 
 install -m 0644 dracut.conf.d/fedora.conf.example $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/01-dist.conf
@@ -340,6 +292,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01systemd-ac-power
 %{dracutlibdir}/modules.d/01systemd-ask-password
 %{dracutlibdir}/modules.d/01systemd-coredump
+%{dracutlibdir}/modules.d/01systemd-creds
 %{dracutlibdir}/modules.d/01systemd-hostnamed
 %{dracutlibdir}/modules.d/01systemd-initrd
 %{dracutlibdir}/modules.d/01systemd-integritysetup
@@ -351,7 +304,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01systemd-pstore
 %{dracutlibdir}/modules.d/01systemd-repart
 %{dracutlibdir}/modules.d/01systemd-resolved
-%{dracutlibdir}/modules.d/01systemd-rfkill
 %{dracutlibdir}/modules.d/01systemd-sysext
 %{dracutlibdir}/modules.d/01systemd-sysctl
 %{dracutlibdir}/modules.d/01systemd-sysusers
@@ -434,6 +386,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/99memstrack
 %{dracutlibdir}/modules.d/99fs-lib
 %{dracutlibdir}/modules.d/99shutdown
+%attr(0644,root,root) %ghost %config(missingok,noreplace) %{_localstatedir}/log/dracut.log
 %dir %{_sharedstatedir}/initramfs
 %if %{defined _unitdir}
 %{_unitdir}/dracut-shutdown.service
@@ -460,7 +413,6 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/01systemd-networkd
 %{dracutlibdir}/modules.d/35connman
 %{dracutlibdir}/modules.d/35network-manager
-%{dracutlibdir}/modules.d/35network-wicked
 %{dracutlibdir}/modules.d/40network
 %{dracutlibdir}/modules.d/45ifcfg
 %{dracutlibdir}/modules.d/90kernel-network-modules
@@ -509,6 +461,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Wed Mar 20 2024 Pavel Valena <pvalena@redhat.com> - 060-1
+- Update to dracut 060.
+
 * Mon Feb 12 2024 Pavel Valena <pvalena@redhat.com> - 059-22
 - Remove network-legacy module.
 
