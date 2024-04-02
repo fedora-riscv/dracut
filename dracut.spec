@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 060
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -17,14 +17,9 @@ Summary: Initramfs generator using udev
 # except util/* which is GPLv2
 License: GPL-2.0-or-later AND LGPL-2.1-or-later AND GPL-2.0-only
 
-URL: https://github.com/dracutdevs/dracut/wiki/
+URL: https://github.com/dracut-ng/dracut-ng/wiki/
 
-# Currently upstream does not create releases, therefore
-# source is created from commit 856e7acdb1462803c2517c8d64afb2e34c73c735
-# Reference PR: https://github.com/dracutdevs/dracut/pull/2509
-# Unpacked archive: https://github.com/pvalena/dracut-fedora/tree/v60-srpm-unpacked
-Source0: dracut-%{version}.tar.xz
-#Source0: https://github.com/dracutdevs/dracut/archive/refs/tags/%%{version}.tar.gz
+Source0: https://github.com/dracut-ng/dracut-ng/archive/%{version}/dracut-ng-%{version}.tar.gz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 # feat(kernel-install): do nothing when $KERNEL_INSTALL_INITRD_GENERATOR says so
@@ -57,10 +52,6 @@ Patch9:  0009-fix-pcsc-add-disable-polkit-to-pcscd.service.patch
 # fix(pcsc): add opensc load module file
 # Author: Manuel Fombuena <mfombuena@innovara.co.uk>
 Patch10: 0010-fix-pcsc-add-opensc-load-module-file.patch
-
-# Please use source-git to work with this spec file:
-# HowTo: https://packit.dev/source-git/work-with-source-git
-# Source-git repository: https://github.com/redhat-plumbers/dracut-fedora/
 
 BuildRequires: bash
 BuildRequires: git-core
@@ -186,7 +177,7 @@ in a squashfs image, result in a smaller initramfs size and reduce runtime memor
 usage.
 
 %prep
-%autosetup -n %{name}-%{version} -S git_am
+%autosetup -n dracut-ng-%{version} -S git_am
 cp %{SOURCE1} .
 
 %build
@@ -461,6 +452,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Tue Apr 02 2024 Neal Gompa <ngompa@fedoraproject.org> - 060-2
+- Switch to dracut-ng fork
+
 * Wed Mar 20 2024 Pavel Valena <pvalena@redhat.com> - 060-1
 - Update to dracut 060.
 
