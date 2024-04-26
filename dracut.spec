@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 060
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -57,6 +57,14 @@ Patch9:  0009-fix-pcsc-add-disable-polkit-to-pcscd.service.patch
 # fix(pcsc): add opensc load module file
 # Author: Manuel Fombuena <mfombuena@innovara.co.uk>
 Patch10: 0010-fix-pcsc-add-opensc-load-module-file.patch
+
+# Not done with source-git, sorry, sometimes provenpackagers need to do stuff
+# fix(systemd): explicitly install some libs that will not be statically included
+# Author: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
+# https://github.com/dracut-ng/dracut-ng/commit/04b362d713235459cff1f370efb4cd5e36e4a358
+# Needed for system to boot with systemd 256
+# https://github.com/systemd/systemd/issues/32508
+Patch100: 0001-fix-systemd-explicitly-install-some-libs-that-will-n.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
@@ -461,6 +469,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Fri Apr 26 2024 Adam Williamson <awilliam@redhat.com> - 060-2
+- Backport fix to pull in required libs for systemd (dracut-ng PR #118)
+
 * Wed Mar 20 2024 Pavel Valena <pvalena@redhat.com> - 060-1
 - Update to dracut 060.
 
