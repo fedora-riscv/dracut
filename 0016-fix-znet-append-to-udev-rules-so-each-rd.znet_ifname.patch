@@ -1,0 +1,44 @@
+From cbc5eece88b8f6d0e69fdfbb8f34eabb45425c86 Mon Sep 17 00:00:00 2001
+From: Steffen Maier <maier@linux.ibm.com>
+Date: Fri, 26 May 2023 19:47:35 +0200
+Subject: [PATCH 16/23] fix(znet): append to udev rules so each rd.znet_ifname
+ is effective
+
+Otherwise the last rd.znet_ifname statement overwrites the persistent
+network interface settings of previous such statements.
+
+Signed-off-by: Steffen Maier <maier@linux.ibm.com>
+---
+ modules.d/95znet/parse-ccw.sh | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/modules.d/95znet/parse-ccw.sh b/modules.d/95znet/parse-ccw.sh
+index aacc988e..ccf05bc6 100755
+--- a/modules.d/95znet/parse-ccw.sh
++++ b/modules.d/95znet/parse-ccw.sh
+@@ -53,14 +53,16 @@ for ifname in $(getargs rd.znet_ifname); do
+         warn "Invalid arguments for rd.znet_ifname="
+     else
+         {
+-            ifname_subchannels=${ifname_subchannels//,/|}
++            ifname_subchannels="${ifname_subchannels//,/|}"
++            # sanitize for use in udev label: replace non-word characters by _
++            ifname_if_label="${ifname_if//[^[:word:]]/_}"
+ 
+-            echo 'ACTION!="add|change", GOTO="ccw_ifname_end"'
+-            echo 'ATTR{type}!="1", GOTO="ccw_ifname_end"'
+-            echo 'SUBSYSTEM!="net", GOTO="ccw_ifname_end"'
++            echo "ACTION!=\"add|change\", GOTO=\"ccw_ifname_${ifname_if_label}_end\""
++            echo "ATTR{type}!=\"1\", GOTO=\"ccw_ifname_${ifname_if_label}_end\""
++            echo "SUBSYSTEM!=\"net\", GOTO=\"ccw_ifname_${ifname_if_label}_end\""
+             echo "SUBSYSTEMS==\"ccwgroup\", KERNELS==\"$ifname_subchannels\", DRIVERS==\"?*\" NAME=\"$ifname_if\""
+-            echo 'LABEL="ccw_ifname_end"'
++            echo "LABEL=\"ccw_ifname_${ifname_if_label}_end\""
+ 
+-        } > /etc/udev/rules.d/81-ccw-ifname.rules
++        } >> /etc/udev/rules.d/81-ccw-ifname.rules
+     fi
+ done
+-- 
+2.42.0
+

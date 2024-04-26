@@ -1,0 +1,151 @@
+From 7294e45b5204e47bb8ee2108e2c38c5843e64fac Mon Sep 17 00:00:00 2001
+From: Steffen Maier <maier@linux.ibm.com>
+Date: Thu, 23 Mar 2023 18:06:23 +0100
+Subject: [PATCH 10/23] feat(dasd_rules): remove dasd handling consolidated in
+ s390-tools
+
+These are handled by s390-tools zdev dracut module 95zdev as of
+https://github.com/ibm-s390-linux/s390-tools/commit/99270236805972544932feab9692ee7122a343b8
+("zdev/dracut: add rd.dasd cmdline option handling").
+
+Even though this removes one implementation of parsing rd.dasd in dracut,
+above s390-tools change introduces another implementation of parsing the
+exact same rd.dasd syntax. Therefore, it would be good to keep the
+documentation in man/dracut.cmdline.7 of dracut as one central place
+describing all s390 device types that dracut handles.
+
+module-setup.sh having copied all udev rules from the root-fs into the
+initrd conflicted with s390-tools dracut module zdev-kdump, which
+intentionally only activates the dependencies of the kdump target.
+
+Signed-off-by: Steffen Maier <maier@linux.ibm.com>
+---
+ modules.d/95dasd_rules/module-setup.sh | 65 --------------------------
+ modules.d/95dasd_rules/parse-dasd.sh   | 43 -----------------
+ 2 files changed, 108 deletions(-)
+ delete mode 100755 modules.d/95dasd_rules/module-setup.sh
+ delete mode 100755 modules.d/95dasd_rules/parse-dasd.sh
+
+diff --git a/modules.d/95dasd_rules/module-setup.sh b/modules.d/95dasd_rules/module-setup.sh
+deleted file mode 100755
+index 06c57a48..00000000
+--- a/modules.d/95dasd_rules/module-setup.sh
++++ /dev/null
+@@ -1,65 +0,0 @@
+-#!/bin/bash
+-
+-# called by dracut
+-cmdline() {
+-    is_dasd() {
+-        local _dev=$1
+-        local _devpath
+-        _devpath=$(
+-            cd -P /sys/dev/block/"$_dev" || exit
+-            echo "$PWD"
+-        )
+-
+-        [ "${_devpath#*/dasd}" == "$_devpath" ] && return 1
+-        _ccw="${_devpath%%/block/*}"
+-        echo "rd.dasd=${_ccw##*/}"
+-        return 0
+-    }
+-    [[ $hostonly ]] || [[ $mount_needs ]] && {
+-        for_each_host_dev_and_slaves_all is_dasd || return 255
+-    } | sort | uniq
+-}
+-
+-# called by dracut
+-check() {
+-    local _arch=${DRACUT_ARCH:-$(uname -m)}
+-    local found=0
+-    local bdev
+-    [ "$_arch" = "s390" -o "$_arch" = "s390x" ] || return 1
+-
+-    [[ $hostonly ]] || [[ $mount_needs ]] && {
+-        for bdev in /sys/block/*; do
+-            case "${bdev##*/}" in
+-                dasd*)
+-                    found=$((found + 1))
+-                    break
+-                    ;;
+-            esac
+-        done
+-        [ $found -eq 0 ] && return 255
+-    }
+-    return 0
+-}
+-
+-# called by dracut
+-depends() {
+-    echo 'dasd_mod' bash
+-    return 0
+-}
+-
+-# called by dracut
+-install() {
+-    inst_hook cmdline 30 "$moddir/parse-dasd.sh"
+-    if [[ $hostonly_cmdline == "yes" ]]; then
+-        local _dasd
+-        _dasd=$(cmdline)
+-        [[ $_dasd ]] && printf "%s\n" "$_dasd" >> "${initdir}/etc/cmdline.d/95dasd.conf"
+-    fi
+-    if [[ $hostonly ]]; then
+-        inst_rules_wildcard "51-dasd-*.rules"
+-        inst_rules_wildcard "41-dasd-*.rules"
+-        mark_hostonly /etc/udev/rules.d/51-dasd-*.rules
+-        mark_hostonly /etc/udev/rules.d/41-dasd-*.rules
+-    fi
+-    inst_rules 59-dasd.rules
+-}
+diff --git a/modules.d/95dasd_rules/parse-dasd.sh b/modules.d/95dasd_rules/parse-dasd.sh
+deleted file mode 100755
+index 4454aec3..00000000
+--- a/modules.d/95dasd_rules/parse-dasd.sh
++++ /dev/null
+@@ -1,43 +0,0 @@
+-#!/bin/bash
+-
+-allow_device() {
+-    local ccw=$1
+-
+-    if [ -x /sbin/cio_ignore ] && cio_ignore -i "$ccw" > /dev/null; then
+-        cio_ignore -r "$ccw"
+-    fi
+-}
+-
+-if [[ -f /sys/firmware/ipl/ipl_type ]] && [[ $(< /sys/firmware/ipl/ipl_type) == "ccw" ]]; then
+-    allow_device "$(< /sys/firmware/ipl/device)"
+-fi
+-
+-for dasd_arg in $(getargs root=) $(getargs resume=); do
+-    [[ $dasd_arg =~ /dev/disk/by-path/ccw-* ]] || continue
+-
+-    ccw_dev="${dasd_arg##*/ccw-}"
+-    allow_device "${ccw_dev%%-*}"
+-done
+-
+-for dasd_arg in $(getargs rd.dasd=); do
+-    IFS=',' read -r -a devs <<< "$dasd_arg"
+-    declare -p devs
+-    for dev in "${devs[@]}"; do
+-        case "$dev" in
+-            autodetect | probeonly) ;;
+-
+-            *-*)
+-                IFS="-" read -r start end _ <<< "${dev%(ro)}"
+-                prefix=${start%.*}
+-                start=${start##*.}
+-                for rdev in $(seq $((16#$start)) $((16#$end))); do
+-                    allow_device "$(printf "%s.%04x" "$prefix" "$rdev")"
+-                done
+-                ;;
+-            *)
+-                IFS="." read -r sid ssid chan _ <<< "${dev%(ro)}"
+-                allow_device "$(printf "%01x.%01x.%04x" $((16#$sid)) $((16#$ssid)) $((16#$chan)))"
+-                ;;
+-        esac
+-    done
+-done
+-- 
+2.42.0
+
