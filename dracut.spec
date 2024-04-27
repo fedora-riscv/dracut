@@ -65,6 +65,10 @@ Patch10: 0010-fix-pcsc-add-opensc-load-module-file.patch
 # Needed for system to boot with systemd 256
 # https://github.com/systemd/systemd/issues/32508
 Patch100: 0001-fix-systemd-explicitly-install-some-libs-that-will-n.patch
+# fix(dracut): move hooks directory from /usr/lib to /var/lib
+# Author: Laszlo Gombos <laszlo.gombos@gmail.com>
+# Co-authored-by: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
+Patch101: 0001-fix-dracut-move-hooks-directory-from-usr-lib-to-var-.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
@@ -471,6 +475,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %changelog
 * Fri Apr 26 2024 Adam Williamson <awilliam@redhat.com> - 060-2
 - Backport fix to pull in required libs for systemd (dracut-ng PR #118)
+- Backport fix to move hook directory for systemd (dracut-ng PR #194)
 
 * Wed Mar 20 2024 Pavel Valena <pvalena@redhat.com> - 060-1
 - Update to dracut 060.
