@@ -1,0 +1,149 @@
+From 86b6e2979999cf5ecce8c76c6230d1f085b3a333 Mon Sep 17 00:00:00 2001
+From: Steffen Maier <maier@linux.ibm.com>
+Date: Tue, 25 Jul 2023 19:43:05 +0200
+Subject: [PATCH 13/23] feat(znet): use zdev for consolidated device
+ configuration
+
+Remove any distribution-specifics from s390 channel-attached network device
+configuration.
+
+Similar to 95qeth_rules, copy the existing persistent network configuration
+into the initrd. This needs to go via chzdev import so chzdev updates (adds
+to) the cio_ignore persistent config inside the initrd, because other
+dracut modules such as zdev from s390-tools also import
+persistent (non-network) config into initrd and the set union of devices
+needs to end up in the cio_ignore persistent config inside the initrd.
+
+Additional debugging output can be generated with e.g. dracut option
+"--stdlog 5" (or short -L5). It shows the chzdev export result, the output
+of chzdev imports, and an overview of the resulting persistent config
+within the initrd. Typically combined with "--debug" to get a shell trace
+from building an initrd (Note: --debug does not increase the log levels).
+
+Note that nm-initrd-generator also parses rd.znet and rd.znet_ifname
+to fill in s390 options of a NetworkManager connection definition.
+
+Signed-off-by: Steffen Maier <maier@linux.ibm.com>
+---
+ modules.d/95znet/module-setup.sh | 37 +++++++++++++++++++++++--
+ modules.d/95znet/parse-ccw.sh    | 47 ++++++++++++++++++++++++++++++--
+ 2 files changed, 78 insertions(+), 6 deletions(-)
+
+diff --git a/modules.d/95znet/module-setup.sh b/modules.d/95znet/module-setup.sh
+index df37c660..95164bba 100755
+--- a/modules.d/95znet/module-setup.sh
++++ b/modules.d/95znet/module-setup.sh
+@@ -5,7 +5,7 @@ check() {
+     arch=${DRACUT_ARCH:-$(uname -m)}
+     [ "$arch" = "s390" -o "$arch" = "s390x" ] || return 1
+ 
+-    require_binaries znet_cio_free grep sed seq readlink || return 1
++    require_binaries grep sed seq readlink chzdev || return 1
+ 
+     return 0
+ }
+@@ -24,6 +24,37 @@ installkernel() {
+ # called by dracut
+ install() {
+     inst_hook cmdline 30 "$moddir/parse-ccw.sh"
+-    inst_rules 81-ccw.rules
+-    inst_multiple znet_cio_free grep sed seq readlink /lib/udev/ccw_init
++    inst_multiple grep sed seq readlink chzdev
++    if [[ $hostonly ]]; then
++        local _tempfile
++        _tempfile=$(mktemp --tmpdir="${DRACUT_TMPDIR}" dracut-zdev.XXXXXX)
++        {
++            chzdev qeth --export - --configured --persistent --quiet --type
++            chzdev lcs --export - --configured --persistent --quiet --type
++            chzdev ctc --export - --configured --persistent --quiet --type
++        } 2> /dev/null > "$_tempfile"
++        ddebug < "$_tempfile"
++        chzdev --import "$_tempfile" --persistent --base "/etc=$initdir/etc" \
++            --yes --no-root-update --force 2>&1 | ddebug
++        lszdev --configured --persistent --info \
++            --base "/etc=$initdir/etc" 2>&1 | ddebug
++        rm -f "$_tempfile"
++        # these are purely generated udev rules so we have to glob expand
++        # within $initdir and strip the $initdir prefix for mark_hostonly
++        local -a _array
++        # shellcheck disable=SC2155
++        local _nullglob=$(shopt -p nullglob)
++        shopt -u nullglob
++        # shellcheck disable=SC2086
++        readarray -t _array < <(
++            ls -1 $initdir/etc/udev/rules.d/41-*.rules 2> /dev/null
++        )
++        [[ ${#_array[@]} -gt 0 ]] && mark_hostonly "${_array[@]#$initdir}"
++        # shellcheck disable=SC2086
++        readarray -t _array < <(
++            ls -1 $initdir/etc/modprobe.d/s390x-*.conf 2> /dev/null
++        )
++        [[ ${#_array[@]} -gt 0 ]] && mark_hostonly "${_array[@]#$initdir}"
++        $_nullglob
++    fi
+ }
+diff --git a/modules.d/95znet/parse-ccw.sh b/modules.d/95znet/parse-ccw.sh
+index d8953605..aacc988e 100755
+--- a/modules.d/95znet/parse-ccw.sh
++++ b/modules.d/95znet/parse-ccw.sh
+@@ -1,7 +1,50 @@
+ #!/bin/bash
+ 
++znet_base_args="--no-settle --yes --no-root-update --force"
++
++# at this point in time dracut's vinfo() only logs to journal which is hard for
++# s390 users to find and access on a line mode console such as 3215 mode
++# so use a vinfo alternative that still prints to the console via kmsg
++znet_vinfo() {
++    while read -r _znet_vinfo_line || [ -n "$_znet_vinfo_line" ]; do
++        # Prefix "<30>" represents facility LOG_DAEMON 3 and loglevel INFO 6:
++        # (facility << 3) | level.
++        echo "<30>dracut: $_znet_vinfo_line" > /dev/kmsg
++    done
++}
++
+ for ccw_arg in $(getargs rd.ccw -d 'rd_CCW=') $(getargs rd.znet -d 'rd_ZNET='); do
+-    echo "$ccw_arg" >> /etc/ccw.conf
++    (
++        SAVED_IFS="$IFS"
++        IFS=","
++        # shellcheck disable=SC2086
++        set -- $ccw_arg
++        IFS="$SAVED_IFS"
++        type="$1"
++        subchannel1="$2"
++        subchannel2="$3"
++        subchannel3="$4"
++        echo "rd.znet ${ccw_arg} :" | znet_vinfo
++        if [ "$#" -lt 3 ]; then
++            echo "rd.znet needs at least 3 list items: type,subchannel1,subchannel2" | znet_vinfo
++        fi
++        if [ "$1" = "qeth" ]; then
++            if [ "$#" -lt 4 ]; then
++                echo "rd.znet for type qeth needs at least 4 list items: qeth,subchannel1,subchannel2,subchannel3" | znet_vinfo
++            fi
++            subchannels="$subchannel1:$subchannel2:$subchannel3"
++            shift 4
++            # shellcheck disable=SC2086
++            chzdev --enable --persistent $znet_base_args \
++                "$type" "$subchannels" "$@" 2>&1 | znet_vinfo
++        else
++            subchannels="$subchannel1:$subchannel2"
++            shift 3
++            # shellcheck disable=SC2086
++            chzdev --enable --persistent $znet_base_args \
++                "$type" "$subchannels" "$@" 2>&1 | znet_vinfo
++        fi
++    )
+ done
+ 
+ for ifname in $(getargs rd.znet_ifname); do
+@@ -21,5 +64,3 @@ for ifname in $(getargs rd.znet_ifname); do
+         } > /etc/udev/rules.d/81-ccw-ifname.rules
+     fi
+ done
+-
+-znet_cio_free
+-- 
+2.42.0
+

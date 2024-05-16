@@ -1,0 +1,73 @@
+From a82045ef34bc8c913502eba37b6b9c60709d6997 Mon Sep 17 00:00:00 2001
+From: Steffen Maier <maier@linux.ibm.com>
+Date: Thu, 23 Mar 2023 18:22:56 +0100
+Subject: [PATCH 11/23] feat(dasd_mod): minimize dasd handling consolidated in
+ s390-tools
+
+Parsing of rd.dasd is handled by s390-tools zdev dracut module 95zdev as of
+https://github.com/ibm-s390-linux/s390-tools/commit/99270236805972544932feab9692ee7122a343b8
+("zdev/dracut: add rd.dasd cmdline option handling").
+
+Even though this removes one implementation of parsing rd.dasd in dracut,
+above s390-tools change introduces another implementation of parsing the
+exact same rd.dasd syntax. Therefore, it would be good to keep the
+documentation in man/dracut.cmdline.7 of dracut as one central place
+describing all s390 device types that dracut handles.
+
+95dasd/modules-setup.sh copies /etc/dasd.conf from root-fs into initrd.
+Retain the call of dasd_cio_free here so /etc/dasd.conf gets processed even
+with the typical cio_ignore kernel boot parameter ignoring most devices.
+
+Preparation for consolidating persistent configuration with zdev.
+
+Signed-off-by: Steffen Maier <maier@linux.ibm.com>
+---
+ modules.d/95dasd_mod/module-setup.sh   |  2 --
+ modules.d/95dasd_mod/parse-dasd-mod.sh | 14 --------------
+ 2 files changed, 16 deletions(-)
+
+diff --git a/modules.d/95dasd_mod/module-setup.sh b/modules.d/95dasd_mod/module-setup.sh
+index c59dd3ac..155eaacc 100755
+--- a/modules.d/95dasd_mod/module-setup.sh
++++ b/modules.d/95dasd_mod/module-setup.sh
+@@ -4,7 +4,6 @@
+ check() {
+     local _arch=${DRACUT_ARCH:-$(uname -m)}
+     [ "$_arch" = "s390" -o "$_arch" = "s390x" ] || return 1
+-    require_binaries grep sed seq
+ 
+     return 0
+ }
+@@ -22,6 +21,5 @@ installkernel() {
+ # called by dracut
+ install() {
+     inst_hook cmdline 31 "$moddir/parse-dasd-mod.sh"
+-    inst_multiple grep sed seq
+     inst_multiple -o dasd_cio_free
+ }
+diff --git a/modules.d/95dasd_mod/parse-dasd-mod.sh b/modules.d/95dasd_mod/parse-dasd-mod.sh
+index 2b86d454..b635ecf9 100755
+--- a/modules.d/95dasd_mod/parse-dasd-mod.sh
++++ b/modules.d/95dasd_mod/parse-dasd-mod.sh
+@@ -1,18 +1,4 @@
+ #!/bin/sh
+-mod_args=""
+-
+-for dasd_arg in $(getargs rd.dasd= -d rd_DASD= DASD=); do
+-    mod_args="$mod_args,$dasd_arg"
+-done
+-
+-mod_args="${mod_args#*,}"
+-
+-if [ -x /sbin/dasd_cio_free -a -n "$mod_args" ]; then
+-    [ -d /etc/modprobe.d ] || mkdir -m 0755 -p /etc/modprobe.d
+-    echo "options dasd_mod dasd=$mod_args" >> /etc/modprobe.d/dasd_mod.conf
+-fi
+-
+-unset dasd_arg
+ if [ -x /sbin/dasd_cio_free ]; then
+     dasd_cio_free
+ fi
+-- 
+2.42.0
+

@@ -1,0 +1,54 @@
+From 0b65ac224d831cc96da940cce510523c7276a5ec Mon Sep 17 00:00:00 2001
+From: Pavel Valena <pvalena@redhat.com>
+Date: Tue, 25 Apr 2023 14:56:59 +0200
+Subject: [PATCH 22/23] feat(hwdb): add hwdb module to install hwdb.bin on
+ demand
+
+Module to install hwdb.bin. Further extensions might make only selected
+part of hwdb installable to save space. The module is not included by default.
+
+Including the module adds 2MB of compressed data (on Fedora, the file has 12MB).
+
+Installing hwdb.bin is needed in case of custom HW like a keyboard/mouse, or various interfaces.
+
+Original PR: https://github.com/dracutdevs/dracut/pull/1681
+---
+ modules.d/95hwdb/module-setup.sh | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+ create mode 100755 modules.d/95hwdb/module-setup.sh
+
+diff --git a/modules.d/95hwdb/module-setup.sh b/modules.d/95hwdb/module-setup.sh
+new file mode 100755
+index 00000000..5d3250f3
+--- /dev/null
++++ b/modules.d/95hwdb/module-setup.sh
+@@ -0,0 +1,26 @@
++#!/bin/bash
++# This file is part of dracut.
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++check() {
++    return 255
++}
++
++# called by dracut
++install() {
++    local hwdb_bin
++
++    # Follow the same priority as `systemd-hwdb`; `/etc` is the default
++    # and `/usr/lib` an alternative location.
++    hwdb_bin="${udevconfdir}"/hwdb.bin
++
++    if [[ ! -r ${hwdb_bin} ]]; then
++        hwdb_bin="${udevdir}"/hwdb.bin
++    fi
++
++    if [[ $hostonly ]]; then
++        inst_multiple -H "${hwdb_bin}"
++    else
++        inst_multiple "${hwdb_bin}"
++    fi
++}
+-- 
+2.42.0
+

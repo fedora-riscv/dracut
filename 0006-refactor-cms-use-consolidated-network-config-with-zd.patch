@@ -1,0 +1,109 @@
+From cc14fe218861f2855ca88ad03220ecb78d4aa31a Mon Sep 17 00:00:00 2001
+From: Steffen Maier <maier@linux.ibm.com>
+Date: Wed, 26 Jul 2023 13:50:03 +0200
+Subject: [PATCH 06/23] refactor(cms): use consolidated network config with
+ zdev from s390-tools
+
+This is just internal to initrd, so we can already migrate the code to
+consolidated network device configuration with zdev
+https://github.com/ibm-s390-linux/s390-tools/tree/master/zdev/.
+The code change is transparent to users after dracut switch root.
+
+The generated persistent config of chzdev are pure udev rules so it has no
+dependency on the zdev dracut module.
+
+Keep the dependency on dracut module znet to at least pull in the required
+kernel device drivers.
+
+Since consolidated s390 network device configuration with zdev is used,
+it takes care of all s390-specific settings.
+None of the s390-specific ifcfg variables should be used anymore.
+NETTYPE, OPTIONS, PORTNAME, and CTCPROT can be removed entirely.
+SUBCHANNELS is kept because there are some dependency chains
+(probably around the key identifiying an interface which is not HWADDR):
+
+modules.d/35network-legacy/module-setup.sh
+parses (sources) each of /etc/sysconfig/network-scripts/ifcfg-*
+and if that contains SUBCHANNELS, create a symlink from the ifcfg file to
+/etc/sysconfig/network-scripts/ccw-${SUBCHANNELS}.conf
+
+modules.d/35network-legacy/ifup.sh installed as /sbin/ifup
+checks during team setup if a slave interface is an s390 channel-attached
+network interface and then parses (sources)
+/etc/sysconfig/network-scripts/ccw-${SUBCHANNELS}.conf
+from above, if that file exists
+
+Signed-off-by: Steffen Maier <maier@linux.ibm.com>
+---
+ modules.d/80cms/cms-write-ifcfg.sh | 13 -------------
+ modules.d/80cms/cmssetup.sh        | 21 +++++++++++++--------
+ 2 files changed, 13 insertions(+), 21 deletions(-)
+
+diff --git a/modules.d/80cms/cms-write-ifcfg.sh b/modules.d/80cms/cms-write-ifcfg.sh
+index ecfd53ef..91263092 100755
+--- a/modules.d/80cms/cms-write-ifcfg.sh
++++ b/modules.d/80cms/cms-write-ifcfg.sh
+@@ -81,21 +81,8 @@ EOF
+     fi
+     # colons in SEARCHDNS already replaced with spaces above for /etc/resolv.conf
+     [[ $SEARCHDNS ]] && echo "DOMAIN=\"$SEARCHDNS\"" >> "$IFCFGFILE"
+-    [[ $NETTYPE ]] && echo "NETTYPE=$NETTYPE" >> "$IFCFGFILE"
+     [[ $PEERID ]] && echo "PEERID=$PEERID" >> "$IFCFGFILE"
+-    [[ $PORTNAME ]] && echo "PORTNAME=$PORTNAME" >> "$IFCFGFILE"
+-    [[ $CTCPROT ]] && echo "CTCPROT=$CTCPROT" >> "$IFCFGFILE"
+     [[ $MACADDR ]] && echo "MACADDR=$MACADDR" >> "$IFCFGFILE"
+-    optstr=""
+-    for option in LAYER2 PORTNO; do
+-        [ -z "${!option}" ] && continue
+-        [ -n "$optstr" ] && optstr=${optstr}" "
+-        optstr=${optstr}$(echo ${option} | sed 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/')"="${!option}
+-    done
+-    # write single quotes since network.py removes double quotes but we need quotes
+-    echo "OPTIONS='$optstr'" >> "$IFCFGFILE"
+-    unset option
+-    unset optstr
+     unset DNS1
+     unset DNS2
+     echo "files /etc/sysconfig/network-scripts" >> /run/initramfs/rwtab
+diff --git a/modules.d/80cms/cmssetup.sh b/modules.d/80cms/cmssetup.sh
+index 01cfd303..5e5b9267 100755
+--- a/modules.d/80cms/cmssetup.sh
++++ b/modules.d/80cms/cmssetup.sh
+@@ -82,13 +82,19 @@ processcmsfile() {
+     SUBCHANNELS="$(echo "$SUBCHANNELS" | sed 'y/ABCDEF/abcdef/')"
+ 
+     if [[ $NETTYPE ]]; then
+-        (
+-            echo -n "$NETTYPE","$SUBCHANNELS"
+-            [[ $PORTNAME ]] && echo -n ",portname=$PORTNAME"
+-            [[ $LAYER2 ]] && echo -n ",layer2=$LAYER2"
+-            [[ $NETTYPE == "ctc" ]] && [[ $CTCPROT ]] && echo -n ",protocol=$CTCPROT"
+-            echo
+-        ) >> /etc/ccw.conf
++        _cms_attrs=""
++        if [[ $PORTNAME ]]; then
++            if [[ $NETTYPE == lcs ]]; then
++                _cms_attrs="$_cms_attrs portno=$PORTNAME"
++            else
++                _cms_attrs="$_cms_attrs portname=$PORTNAME"
++            fi
++        fi
++        [[ $LAYER2 ]] && _cms_attrs="$_cms_attrs layer2=$LAYER2"
++        [[ $CTCPROT ]] && _cms_attrs="$_cms_attrs protocol=$CTCPROT"
++        # shellcheck disable=SC2086
++        chzdev --enable --persistent --yes --no-root-update --force \
++            "$NETTYPE" "$SUBCHANNELS" $_cms_attrs 2>&1 | vinfo
+ 
+         OLDIFS=$IFS
+         IFS=,
+@@ -109,7 +115,6 @@ processcmsfile() {
+         [[ -f /etc/udev/rules.d/90-net.rules ]] \
+             || printf 'SUBSYSTEM=="net", ACTION=="online", RUN+="/sbin/initqueue --onetime --env netif=$name source_hook initqueue/online"\n' >> /etc/udev/rules.d/99-cms.rules
+         udevadm control --reload
+-        znet_cio_free
+     fi
+ 
+     if [[ $DASD ]] && [[ $DASD != "none" ]]; then
+-- 
+2.42.0
+

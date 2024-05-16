@@ -1,7 +1,8 @@
-From a45048b80c27ee5a45a380052a6d29ab1925f7f9 Mon Sep 17 00:00:00 2001
+From 55a56c546bde71fb42c99aadd96e98fca2199823 Mon Sep 17 00:00:00 2001
 From: Laszlo Gombos <laszlo.gombos@gmail.com>
 Date: Fri, 5 Apr 2024 15:50:20 +0200
-Subject: [PATCH] fix(dracut): move hooks directory from /usr/lib to /var/lib
+Subject: [PATCH 19/23] fix(dracut): move hooks directory from /usr/lib to
+ /var/lib
 
 Since https://github.com/systemd/systemd/commit/ffc1ec73, /usr is mounted as
 read-only in the initramfs by default.
@@ -17,10 +18,10 @@ Co-authored-by: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
  4 files changed, 15 insertions(+), 6 deletions(-)
 
 diff --git a/dracut-init.sh b/dracut-init.sh
-index 7ce3d1dd..863df0cb 100755
+index c37038e3..1c7ca58a 100755
 --- a/dracut-init.sh
 +++ b/dracut-init.sh
-@@ -633,7 +633,7 @@ inst_hook() {
+@@ -630,7 +630,7 @@ inst_hook() {
          dfatal "No such hook type $1. Aborting initrd creation."
          exit 1
      fi
@@ -30,10 +31,10 @@ index 7ce3d1dd..863df0cb 100755
      chmod u+x "$initdir/$hook"
  }
 diff --git a/dracut.sh b/dracut.sh
-index 3914d7c5..148ef8b0 100755
+index a0af3dd2..5d43f44c 100755
 --- a/dracut.sh
 +++ b/dracut.sh
-@@ -1884,7 +1884,11 @@ mkdir -p "${initdir}"/lib/dracut
+@@ -1883,7 +1883,11 @@ mkdir -p "${initdir}"/lib/dracut
  
  if [[ $kernel_only != yes ]]; then
      mkdir -p "${initdir}/etc/cmdline.d"
@@ -82,5 +83,5 @@ index 2b999024..f53017ff 100755
          mkdir -m 0755 -p "${initdir}"/lib/dracut/hooks/"$_d"
      done
 -- 
-2.44.0
+2.42.0
 

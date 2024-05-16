@@ -1,7 +1,7 @@
-From ee0c17d24940f08a41179edce58f688f807d1d75 Mon Sep 17 00:00:00 2001
+From 9f979fc9486af3c7c924d3f9f837f06616c61829 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Zbigniew=20J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
 Date: Tue, 18 Jan 2022 18:58:58 +0100
-Subject: [PATCH 07/10] fix(kernel-install): do not generate an initrd when one
+Subject: [PATCH 02/23] fix(kernel-install): do not generate an initrd when one
  was specified
 
 According to the synopsis, kernel-install can be called with an

@@ -1,0 +1,90 @@
+From 7ad6fef8fe110093939c422b5c3b381ebe47e4e9 Mon Sep 17 00:00:00 2001
+From: Steffen Maier <maier@linux.ibm.com>
+Date: Fri, 26 May 2023 19:51:09 +0200
+Subject: [PATCH 15/23] feat(qeth_rules): remove qeth handling consolidated in
+ 95znet
+
+Dracut module 95znet handles a superset of qeth_rules as of the preceding
+commit ("feat(znet): use zdev for consolidated device configuration").
+
+The instmods list in installkernel() seemed to have been incomplete because
+qeth needs one or both of qeth_l2 and qeth_l3 but qeth intentionally does
+not depend on them so depmod cannot resolve that.
+
+In contrast to the old dracut module 95znet, 95qeth_rules also did not seem
+to have parsing for the upstream dracut cmdline options "rd.znet=" and
+"rd.znet_ifname=".
+
+Signed-off-by: Steffen Maier <maier@linux.ibm.com>
+---
+ modules.d/95qeth_rules/module-setup.sh | 58 --------------------------
+ 1 file changed, 58 deletions(-)
+ delete mode 100755 modules.d/95qeth_rules/module-setup.sh
+
+diff --git a/modules.d/95qeth_rules/module-setup.sh b/modules.d/95qeth_rules/module-setup.sh
+deleted file mode 100755
+index a84ac151..00000000
+--- a/modules.d/95qeth_rules/module-setup.sh
++++ /dev/null
+@@ -1,58 +0,0 @@
+-#!/bin/bash
+-
+-# called by dracut
+-check() {
+-    local _arch=${DRACUT_ARCH:-$(uname -m)}
+-    local _online=0
+-    [ "$_arch" = "s390" -o "$_arch" = "s390x" ] || return 1
+-    dracut_module_included network || return 1
+-
+-    [[ $hostonly ]] && {
+-        for i in /sys/devices/qeth/*/online; do
+-            [ ! -f "$i" ] && continue
+-            read -r _online < "$i"
+-            [ "$_online" -eq 1 ] && return 0
+-        done
+-    }
+-    return 255
+-}
+-
+-# called by dracut
+-installkernel() {
+-    instmods qeth
+-}
+-
+-# called by dracut
+-install() {
+-    ccwid() {
+-        qeth_path=$(readlink -e -q "$1"/device)
+-        basename "$qeth_path"
+-    }
+-
+-    inst_rules_qeth() {
+-        for rule in /etc/udev/rules.d/{4,5}1-qeth-${1}.rules; do
+-            # prefer chzdev generated 41- rules
+-            if [ -f "$rule" ]; then
+-                inst_rules "$rule"
+-                break
+-            fi
+-        done
+-    }
+-
+-    has_carrier() {
+-        carrier=0
+-        # not readable in qeth interfaces
+-        # that have just been assembled, ignore
+-        # read error and assume no carrier
+-        read -r carrier 2> /dev/null < "$1/carrier"
+-        [ "$carrier" -eq 1 ] && return 0
+-        return 1
+-    }
+-
+-    for dev in /sys/class/net/*; do
+-        has_carrier "$dev" || continue
+-        id=$(ccwid "$dev")
+-        [ -n "$id" ] && inst_rules_qeth "$id"
+-    done
+-
+-}
+-- 
+2.42.0
+

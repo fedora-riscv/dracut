@@ -1,0 +1,81 @@
+From 74edb9758da26ef063e4686a595f1d34f07f86f7 Mon Sep 17 00:00:00 2001
+From: Steffen Maier <maier@linux.ibm.com>
+Date: Wed, 24 May 2023 19:04:48 +0200
+Subject: [PATCH 05/23] refactor(cms): use consolidated dasd config with zdev
+ from s390-tools
+
+Depends on https://github.com/ibm-s390-linux/s390-tools commit
+9b2fb1d4d2e2 ("zdev: add helper to convert from dasd_mod.dasd to zdev
+config").
+
+This is just internal to initrd, so it's possible to migrate the code to
+consolidated dasd device configuration with zdev
+https://github.com/ibm-s390-linux/s390-tools/tree/master/zdev/.
+The code change is transparent to users after dracut switch root.
+
+The generated persistent config of chzdev are pure udev rules so it has no
+dependency on other dracut modules such as zdev, dasd, or dasd_mod.
+Instead now install the corresponding kernel device drivers here directly.
+
+Signed-off-by: Steffen Maier <maier@linux.ibm.com>
+---
+ modules.d/80cms/cmssetup.sh     | 6 +++---
+ modules.d/80cms/module-setup.sh | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/modules.d/80cms/cmssetup.sh b/modules.d/80cms/cmssetup.sh
+index da42ec0f..01cfd303 100755
+--- a/modules.d/80cms/cmssetup.sh
++++ b/modules.d/80cms/cmssetup.sh
+@@ -1,6 +1,7 @@
+ #!/bin/bash
+ 
+ type getarg > /dev/null 2>&1 || . /lib/dracut-lib.sh
++type zdev_parse_dasd_list > /dev/null 2>&1 || . /lib/s390-tools/zdev-from-dasd_mod.dasd
+ 
+ function dasd_settle() {
+     local dasd_status
+@@ -112,9 +113,8 @@ processcmsfile() {
+     fi
+ 
+     if [[ $DASD ]] && [[ $DASD != "none" ]]; then
+-        echo "$DASD" | normalize_dasd_arg > /etc/dasd.conf
+-        echo "options dasd_mod dasd=$DASD" > /etc/modprobe.d/dasd_mod.conf
+-        dasd_cio_free
++        echo "$DASD" | zdev_parse_dasd_list globals 2>&1 | vinfo
++        echo "$DASD" | zdev_parse_dasd_list ranges 2>&1 | vinfo
+     fi
+ 
+     for i in ${!FCP_*}; do
+diff --git a/modules.d/80cms/module-setup.sh b/modules.d/80cms/module-setup.sh
+index 0dd86b80..05b049da 100755
+--- a/modules.d/80cms/module-setup.sh
++++ b/modules.d/80cms/module-setup.sh
+@@ -12,13 +12,13 @@ check() {
+ depends() {
+     arch=${DRACUT_ARCH:-$(uname -m)}
+     [ "$arch" = "s390" -o "$arch" = "s390x" ] || return 1
+-    echo znet dasd dasd_mod bash
++    echo znet bash
+     return 0
+ }
+ 
+ # called by dracut
+ installkernel() {
+-    instmods zfcp
++    instmods zfcp dasd_mod dasd_eckd_mod dasd_fba_mod dasd_diag_mod
+ }
+ 
+ # called by dracut
+@@ -28,7 +28,7 @@ install() {
+     inst_script "$moddir/cmsifup.sh" /sbin/cmsifup
+     # shellcheck disable=SC2046
+     inst_multiple /etc/cmsfs-fuse/filetypes.conf /etc/udev/rules.d/99-fuse.rules /etc/fuse.conf \
+-        cmsfs-fuse fusermount bash insmod rmmod cat normalize_dasd_arg sed \
++        cmsfs-fuse fusermount bash insmod rmmod cat /lib/s390-tools/zdev-from-dasd_mod.dasd sed \
+         $(rpm -ql s390utils-base) awk getopt chzdev lszdev
+ 
+     inst_libdir_file "gconv/*"
+-- 
+2.42.0
+

@@ -7,8 +7,8 @@
 %global __requires_exclude pkg-config
 
 Name: dracut
-Version: 060
-Release: 2%{?dist}
+Version: 101
+Release: 1%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -17,58 +17,80 @@ Summary: Initramfs generator using udev
 # except util/* which is GPLv2
 License: GPL-2.0-or-later AND LGPL-2.1-or-later AND GPL-2.0-only
 
-URL: https://github.com/dracutdevs/dracut/wiki/
+URL: https://github.com/dracut-ng/dracut-ng/wiki/
 
-# Currently upstream does not create releases, therefore
-# source is created from commit 856e7acdb1462803c2517c8d64afb2e34c73c735
-# Reference PR: https://github.com/dracutdevs/dracut/pull/2509
-# Unpacked archive: https://github.com/pvalena/dracut-fedora/tree/v60-srpm-unpacked
-Source0: dracut-%{version}.tar.xz
-#Source0: https://github.com/dracutdevs/dracut/archive/refs/tags/%%{version}.tar.gz
+Source0: https://github.com/dracut-ng/dracut-ng/archive/refs/tags/%{version}.tar.gz
 
 Source1: https://www.gnu.org/licenses/lgpl-2.1.txt
 # feat(kernel-install): do nothing when $KERNEL_INSTALL_INITRD_GENERATOR says so
 # Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
 Patch1:  0001-feat-kernel-install-do-nothing-when-KERNEL_INSTALL_I.patch
-# fix(systemd-pcrphase): rename systemd-pcrphase binary to systemd-pcrextend
-# Author: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
-Patch2:  0002-fix-systemd-pcrphase-rename-systemd-pcrphase-binary-.patch
-# fix(resume): add new systemd-hibernate-resume.service
-# Author: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
-Patch3:  0003-fix-resume-add-new-systemd-hibernate-resume.service.patch
-# fix: wait 12 hours before halt on media check fail
-# Author: Adam Williamson <awilliam@redhat.com>
-Patch4:  0004-fix-wait-12-hours-before-halt-on-media-check-fail.patch
-# feat(network): include 98-default-mac-none.link if it exists
-# Author: Dusty Mabe <dusty@dustymabe.com>
-Patch5:  0005-feat-network-include-98-default-mac-none.link-if-it-.patch
-# feat(kernel-modules): add Qualcomm IPC router to enable USB
-# Author: Jeremy Linton <jeremy.linton@arm.com>
-Patch6:  0006-feat-kernel-modules-add-Qualcomm-IPC-router-to-enabl.patch
 # fix(kernel-install): do not generate an initrd when one was specified
 # Author: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
-Patch7:  0007-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
-# fix(pkcs11): delete trailing dot on libcryptsetup-token-systemd-pkcs11.so
-# Author: innovara <fombuena@outlook.com>
-Patch8:  0008-fix-pkcs11-delete-trailing-dot-on-libcryptsetup-toke.patch
-# fix(pcsc): add --disable-polkit to pcscd.service
-# Author: Manuel Fombuena <mfombuena@innovara.co.uk>
-Patch9:  0009-fix-pcsc-add-disable-polkit-to-pcscd.service.patch
-# fix(pcsc): add opensc load module file
-# Author: Manuel Fombuena <mfombuena@innovara.co.uk>
-Patch10: 0010-fix-pcsc-add-opensc-load-module-file.patch
-
-# Not done with source-git, sorry, sometimes provenpackagers need to do stuff
-# fix(systemd): explicitly install some libs that will not be statically included
-# Author: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
-# https://github.com/dracut-ng/dracut-ng/commit/04b362d713235459cff1f370efb4cd5e36e4a358
-# Needed for system to boot with systemd 256
-# https://github.com/systemd/systemd/issues/32508
-Patch100: 0001-fix-systemd-explicitly-install-some-libs-that-will-n.patch
+Patch2:  0002-fix-kernel-install-do-not-generate-an-initrd-when-on.patch
+# refactor(cms): use zdev to simplify handling CMSDASD=... boot option
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch3:  0003-refactor-cms-use-zdev-to-simplify-handling-CMSDASD-..patch
+# refactor(cms): use consolidated zfcp config with zdev from s390-tools
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch4:  0004-refactor-cms-use-consolidated-zfcp-config-with-zdev-.patch
+# refactor(cms): use consolidated dasd config with zdev from s390-tools
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch5:  0005-refactor-cms-use-consolidated-dasd-config-with-zdev-.patch
+# refactor(cms): use consolidated network config with zdev from s390-tools
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch6:  0006-refactor-cms-use-consolidated-network-config-with-zd.patch
+# refactor(cms): remove now unnecessary inclusion of full s390utils-base
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch7:  0007-refactor-cms-remove-now-unnecessary-inclusion-of-ful.patch
+# feat(zfcp_rules): remove zfcp handling consolidated in s390-tools
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch8:  0008-feat-zfcp_rules-remove-zfcp-handling-consolidated-in.patch
+# feat(zfcp): minimize zfcp handling consolidated in s390-tools
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch9:  0009-feat-zfcp-minimize-zfcp-handling-consolidated-in-s39.patch
+# feat(dasd_rules): remove dasd handling consolidated in s390-tools
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch10: 0010-feat-dasd_rules-remove-dasd-handling-consolidated-in.patch
+# feat(dasd_mod): minimize dasd handling consolidated in s390-tools
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch11: 0011-feat-dasd_mod-minimize-dasd-handling-consolidated-in.patch
+# feat(dasd): minimize dasd handling consolidated in s390-tools
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch12: 0012-feat-dasd-minimize-dasd-handling-consolidated-in-s39.patch
+# feat(znet): use zdev for consolidated device configuration
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch13: 0013-feat-znet-use-zdev-for-consolidated-device-configura.patch
+# docs(dracut.cmdline): generalize description of rd.znet
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch14: 0014-docs-dracut.cmdline-generalize-description-of-rd.zne.patch
+# feat(qeth_rules): remove qeth handling consolidated in 95znet
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch15: 0015-feat-qeth_rules-remove-qeth-handling-consolidated-in.patch
+# fix(znet): append to udev rules so each rd.znet_ifname is effective
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch16: 0016-fix-znet-append-to-udev-rules-so-each-rd.znet_ifname.patch
+# refactor(ifcfg): delete code duplication using iface_get_subchannels()
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch17: 0017-refactor-ifcfg-delete-code-duplication-using-iface_g.patch
+# feat(ifcfg): minimize s390-specific network configuration aspects
+# Author: Steffen Maier <maier@linux.ibm.com>
+Patch18: 0018-feat-ifcfg-minimize-s390-specific-network-configurat.patch
 # fix(dracut): move hooks directory from /usr/lib to /var/lib
 # Author: Laszlo Gombos <laszlo.gombos@gmail.com>
-# Co-authored-by: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
-Patch101: 0001-fix-dracut-move-hooks-directory-from-usr-lib-to-var-.patch
+Patch19: 0019-fix-dracut-move-hooks-directory-from-usr-lib-to-var-.patch
+# fix(systemd): explicitly install some libs that will not be statically included
+# Author: Antonio Alvarez Feijoo <antonio.feijoo@suse.com>
+Patch20: 0020-fix-systemd-explicitly-install-some-libs-that-will-n.patch
+# fix(nvmf): move /etc/nvme/host{nqn,id} requirement to hostonly
+# Author: Tomas Bzatek <tbzatek@redhat.com>
+Patch21: 0021-fix-nvmf-move-etc-nvme-host-nqn-id-requirement-to-ho.patch
+# feat(hwdb): add hwdb module to install hwdb.bin on demand
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch22: 0022-feat-hwdb-add-hwdb-module-to-install-hwdb.bin-on-dem.patch
+# fix(rngd): install system service file
+# Author: Pavel Valena <pvalena@redhat.com>
+Patch23: 0023-fix-rngd-install-system-service-file.patch
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
@@ -198,7 +220,7 @@ in a squashfs image, result in a smaller initramfs size and reduce runtime memor
 usage.
 
 %prep
-%autosetup -n %{name}-%{version} -S git_am
+%autosetup -n %{name}-ng-%{version} -S git_am
 cp %{SOURCE1} .
 
 %build
@@ -234,11 +256,8 @@ rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/81cio_ignore
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/91zipl
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95dasd
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95dasd_mod
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95dasd_rules
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95dcssblk
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95qeth_rules
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95zfcp
-rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95zfcp_rules
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/95znet
 %else
 rm -fr -- $RPM_BUILD_ROOT/%{dracutlibdir}/modules.d/00warpclock
@@ -335,6 +354,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/09dbus
 %{dracutlibdir}/modules.d/10i18n
 %{dracutlibdir}/modules.d/30convertfs
+%{dracutlibdir}/modules.d/45net-lib
 %{dracutlibdir}/modules.d/45url-lib
 %{dracutlibdir}/modules.d/50drm
 %{dracutlibdir}/modules.d/50plymouth
@@ -365,6 +385,7 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/91tpm2-tss
 %{dracutlibdir}/modules.d/95debug
 %{dracutlibdir}/modules.d/95fstab-sys
+%{dracutlibdir}/modules.d/95hwdb
 %{dracutlibdir}/modules.d/95lunmask
 %{dracutlibdir}/modules.d/95resume
 %{dracutlibdir}/modules.d/95rootfs-block
@@ -378,11 +399,8 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{dracutlibdir}/modules.d/91zipl
 %{dracutlibdir}/modules.d/95dasd
 %{dracutlibdir}/modules.d/95dasd_mod
-%{dracutlibdir}/modules.d/95dasd_rules
 %{dracutlibdir}/modules.d/95dcssblk
-%{dracutlibdir}/modules.d/95qeth_rules
 %{dracutlibdir}/modules.d/95zfcp
-%{dracutlibdir}/modules.d/95zfcp_rules
 %endif
 %{dracutlibdir}/modules.d/96securityfs
 %{dracutlibdir}/modules.d/97masterkey
@@ -473,6 +491,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu May 16 2024 Pavel Valena <pvalena@redhat.com> - 101-1
+- Update to dracut 101.
+
 * Fri Apr 26 2024 Adam Williamson <awilliam@redhat.com> - 060-2
 - Backport fix to pull in required libs for systemd (dracut-ng PR #118)
 - Backport fix to move hook directory for systemd (dracut-ng PR #194)
