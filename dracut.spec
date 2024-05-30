@@ -8,7 +8,7 @@
 
 Name: dracut
 Version: 101
-Release: 1%{?dist}
+Release: 1.rv64%{?dist}
 
 Summary: Initramfs generator using udev
 
@@ -91,6 +91,11 @@ Patch22: 0022-feat-hwdb-add-hwdb-module-to-install-hwdb.bin-on-dem.patch
 # fix(rngd): install system service file
 # Author: Pavel Valena <pvalena@redhat.com>
 Patch23: 0023-fix-rngd-install-system-service-file.patch
+
+# Fix:
+# dracut: Architecture 'riscv64' not supported to create a UEFI executable
+Patch30: 0001-Add-support-for-riscv64-UEFI.patch
+
 
 # Please use source-git to work with this spec file:
 # HowTo: https://packit.dev/source-git/work-with-source-git
@@ -491,6 +496,9 @@ echo 'dracut_rescue_image="yes"' > $RPM_BUILD_ROOT%{dracutlibdir}/dracut.conf.d/
 %{_prefix}/lib/kernel/install.d/51-dracut-rescue.install
 
 %changelog
+* Thu May 30 2024 David Abdurachmanov <davidlt@rivosinc.com> - 059-22.0.riscv64
+- Allow riscv64 for UEFI executables
+
 * Thu May 16 2024 Pavel Valena <pvalena@redhat.com> - 101-1
 - Update to dracut 101.
 

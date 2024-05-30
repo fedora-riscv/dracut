@@ -1,0 +1,26 @@
+		From 0842df719cfc4bdb06b17b06f7441c8c421b451d Mon Sep 17 00:00:00 2001
+From: rpm-build <rpm-build>
+Date: Tue, 26 Mar 2024 15:41:07 +0000
+Subject: [PATCH] Add support for riscv64 UEFI
+
+Signed-off-by: rpm-build <rpm-build>
+---
+ dracut.sh | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/dracut.sh b/dracut.sh
+index 9dcd661..13c32b3 100755
+--- a/dracut.sh
++++ b/dracut.sh
+@@ -1457,6 +1457,9 @@ if [[ ! $print_cmdline ]]; then
+             aarch64)
+                 EFI_MACHINE_TYPE_NAME=aa64
+                 ;;
++            riscv64)
++                EFI_MACHINE_TYPE_NAME=riscv64
++                ;;
+             *)
+                 dfatal "Architecture '${DRACUT_ARCH:-$(uname -m)}' not supported to create a UEFI executable"
+                 exit 1
+-- 
+2.44.0
